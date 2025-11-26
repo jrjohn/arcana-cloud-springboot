@@ -11,7 +11,7 @@
 [![Code Style](https://img.shields.io/badge/code_style-Google_Java-blue.svg)](https://google.github.io/styleguide/javaguide.html)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-Enterprise-grade cloud platform with **gRPC-first architecture** (2.5x faster than HTTP REST), **OSGi Plugin System** (Apache Felix) for hot-deployable extensions, **Server-Side Rendering** with GraalJS for React and Angular, supporting dual-protocol communication and three flexible deployment modes (Monolithic, Layered, Microservices).
+Enterprise-grade cloud platform with **dual-protocol architecture** (gRPC 2.5x faster / HTTP REST), **OSGi Plugin System** (Apache Felix) for hot-deployable extensions, **Server-Side Rendering** with GraalJS for React and Angular, supporting **five deployment modes** with full plugin synchronization across Kubernetes clusters.
 
 ## Architecture
 
@@ -91,12 +91,13 @@ mindmap
     Architecture
       Three-Layer Clean Architecture
       Dual Protocol Support gRPC/REST
-      Multiple Deployment Modes
+      Five Deployment Modes
     Plugin System
       OSGi Apache Felix
       Hot Deployment
       Extension Points
       Spring-OSGi Bridge
+      Distributed Sync
     SSR Engine
       GraalJS Runtime
       React Next.js Support
@@ -106,10 +107,84 @@ mindmap
       OAuth2 + JWT
       Role-Based Access
       Token Refresh
+      TLS/mTLS gRPC
     Performance
       gRPC 2.5x Faster
       Redis Caching
       Connection Pooling
+```
+
+## Deployment Modes
+
+The platform supports five deployment configurations with full plugin support:
+
+```mermaid
+flowchart TB
+    subgraph Monolithic["1. Monolithic"]
+        M_ALL[All Layers<br/>REST + gRPC<br/>Plugins Local]
+    end
+
+    subgraph LayeredHTTP["2. Layered + HTTP"]
+        LH_C[Controller<br/>:8080] -->|HTTP| LH_S[Service<br/>:8081]
+        LH_S -->|HTTP| LH_R[Repository<br/>:8082]
+    end
+
+    subgraph LayeredGRPC["3. Layered + gRPC"]
+        LG_C[Controller<br/>:8080] -->|gRPC :9090| LG_S[Service<br/>:8081]
+        LG_S -->|gRPC :9091| LG_R[Repository<br/>:8082]
+    end
+
+    subgraph K8sHTTP["4. K8s + HTTP"]
+        KH_C[Controller Pods] -->|HTTP| KH_S[Service Pods]
+        KH_S -->|Redis| KH_REDIS[(Plugin Sync)]
+        KH_S -->|PVC| KH_PVC[(Shared Plugins)]
+    end
+
+    subgraph K8sGRPC["5. K8s + gRPC"]
+        KG_C[Controller Pods] -->|gRPC + TLS| KG_S[Service Pods]
+        KG_S -->|Redis| KG_REDIS[(Plugin Sync)]
+        KG_S -->|PVC| KG_PVC[(Shared Plugins)]
+    end
+
+    style Monolithic fill:#d1fae5
+    style LayeredHTTP fill:#fef3c7
+    style LayeredGRPC fill:#dbeafe
+    style K8sHTTP fill:#fce7f3
+    style K8sGRPC fill:#e0e7ff
+```
+
+### Deployment Mode Comparison
+
+| Mode | Protocol | Plugin Location | Plugin Sync | Health Probes | Use Case |
+|------|----------|-----------------|-------------|---------------|----------|
+| **Monolithic** | N/A | Local filesystem | N/A | HTTP | Development, small deployments |
+| **Layered + HTTP** | HTTP REST | Service Layer | HTTP Proxy | HTTP | Simple multi-tier, no gRPC support |
+| **Layered + gRPC** | gRPC | Service Layer | gRPC | HTTP/gRPC | High-performance multi-tier |
+| **K8s + HTTP** | HTTP REST | Shared PVC | Redis + HTTP | HTTP | Cloud-native, HTTP only |
+| **K8s + gRPC** | gRPC + TLS | Shared PVC | Redis + gRPC | gRPC | Production, maximum performance |
+
+### Kubernetes Plugin Architecture
+
+```mermaid
+sequenceDiagram
+    participant Admin as Admin
+    participant C1 as Controller Pod 1
+    participant S1 as Service Pod 1
+    participant S2 as Service Pod 2
+    participant Redis as Redis
+    participant PVC as Shared PVC
+
+    Admin->>C1: POST /api/v1/plugins/install
+    C1->>S1: Proxy plugin install
+    S1->>PVC: Store plugin JAR
+    S1->>Redis: Register plugin metadata
+    Redis-->>S2: Plugin event notification
+    S2->>PVC: Load plugin JAR
+    S2->>S2: Install & enable plugin
+    S1-->>C1: Plugin installed
+    C1-->>Admin: Success response
+
+    Note over S1,S2: Both pods now serve plugin endpoints
 ```
 
 ## Plugin System (OSGi)
@@ -346,7 +421,14 @@ arcana-cloud-springboot/
 │       └── com/arcana/cloud/plugin/runtime/
 │           ├── osgi/                # Felix framework
 │           ├── bridge/              # Spring-OSGi bridge
-│           └── extension/           # Extension registry
+│           ├── extension/           # Extension registry
+│           ├── distributed/         # K8s distributed sync
+│           │   ├── DistributedPluginRegistry.java
+│           │   ├── ClusterPluginSynchronizer.java
+│           │   ├── PluginBinaryStore.java
+│           │   └── HttpPluginRegistryClient.java
+│           └── http/                # HTTP mode support
+│               └── PluginHttpClient.java
 │
 ├── arcana-ssr-engine/               # SSR Engine
 │   └── src/main/java/
@@ -385,6 +467,12 @@ arcana-cloud-springboot/
 │   ├── monolithic/
 │   ├── layered/
 │   └── kubernetes/
+│       ├── controller-deployment.yaml      # gRPC mode
+│       ├── controller-deployment-http.yaml # HTTP mode
+│       ├── service-deployment.yaml         # gRPC mode
+│       ├── service-deployment-http.yaml    # HTTP mode
+│       ├── config-http.yaml                # ConfigMaps
+│       └── network-policy.yaml             # Network isolation
 │
 └── docs/                            # Documentation
     └── plugin-development-guide.md
@@ -424,28 +512,55 @@ cd arcana-web/angular-app && npm install && npm run build:ssr
 ### 3. Run with Docker
 
 ```bash
-# Monolithic mode
+# Monolithic mode (default)
 ./scripts/start-docker-monolithic.sh
 
-# Layered mode
-./scripts/start-layered.sh
+# Layered mode with HTTP
+COMMUNICATION_PROTOCOL=http ./scripts/start-layered.sh
+
+# Layered mode with gRPC
+COMMUNICATION_PROTOCOL=grpc ./scripts/start-layered.sh
 ```
 
-### 4. Install a Plugin
+### 4. Run on Kubernetes
+
+```bash
+# Create namespace
+kubectl create namespace arcana-cloud
+
+# Deploy with HTTP mode
+kubectl apply -f deployment/kubernetes/config-http.yaml
+kubectl apply -f deployment/kubernetes/controller-deployment-http.yaml
+kubectl apply -f deployment/kubernetes/service-deployment-http.yaml
+
+# Or deploy with gRPC mode
+kubectl apply -f deployment/kubernetes/config-http.yaml  # Use grpc config
+kubectl apply -f deployment/kubernetes/controller-deployment.yaml
+kubectl apply -f deployment/kubernetes/service-deployment.yaml
+
+# Apply network policies (recommended for production)
+kubectl apply -f deployment/kubernetes/network-policy.yaml
+```
+
+### 5. Install a Plugin
 
 ```bash
 # Copy plugin JAR to plugins directory
 cp plugins/arcana-audit-plugin/build/libs/*.jar plugins/
 
 # Plugins are automatically discovered and loaded
+
+# Or install via REST API
+curl -X POST -F "file=@my-plugin.jar" http://localhost:8080/api/v1/plugins/install
 ```
 
-### 5. Access the Application
+### 6. Access the Application
 
 | Service | URL |
 |---------|-----|
 | REST API | http://localhost:8080 |
 | Swagger UI | http://localhost:8080/swagger-ui.html |
+| Plugin Health | http://localhost:8080/api/v1/plugins/health |
 | React App | http://localhost:3000 |
 | Angular App | http://localhost:4000 |
 | gRPC Server | localhost:9090 |
@@ -472,6 +587,15 @@ cp plugins/arcana-audit-plugin/build/libs/*.jar plugins/
 | `POST` | `/api/v1/plugins/{key}/disable` | Disable plugin |
 | `POST` | `/api/v1/plugins/install` | Install plugin (multipart) |
 | `DELETE` | `/api/v1/plugins/{key}` | Uninstall plugin |
+| `GET` | `/api/v1/plugins/health` | Plugin system health status |
+| `GET` | `/api/v1/plugins/health/ready` | Readiness probe (K8s) |
+| `GET` | `/api/v1/plugins/health/live` | Liveness probe (K8s) |
+
+### Plugin Proxy (Layered HTTP Mode)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `*` | `/api/v1/proxy/plugins/{key}/**` | Proxy requests to plugin on service layer |
 
 ### SSR
 
@@ -496,6 +620,8 @@ cp plugins/arcana-audit-plugin/build/libs/*.jar plugins/
 
 ## Environment Variables
 
+### Core Configuration
+
 | Variable | Description | Default |
 |----------|-------------|---------|
 | `DATABASE_URL` | MySQL connection URL | `jdbc:mysql://localhost:3306/arcana_cloud` |
@@ -504,7 +630,39 @@ cp plugins/arcana-audit-plugin/build/libs/*.jar plugins/
 | `REDIS_HOST` | Redis host | `localhost` |
 | `REDIS_PORT` | Redis port | `6379` |
 | `JWT_SECRET` | JWT signing secret | - |
-| `DEPLOYMENT_MODE` | Deployment mode | `monolithic` |
+
+### Deployment Configuration
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DEPLOYMENT_MODE` | Deployment mode (`monolithic`, `layered`) | `monolithic` |
+| `DEPLOYMENT_LAYER` | Layer type (`controller`, `service`, `repository`) | - |
+| `COMMUNICATION_PROTOCOL` | Inter-layer protocol (`http`, `grpc`) | `grpc` |
+| `SERVICE_HTTP_URL` | Service layer HTTP URL | `http://localhost:8081` |
+| `SERVICE_GRPC_URL` | Service layer gRPC URL | `localhost:9090` |
+
+### Plugin Configuration
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `ARCANA_PLUGIN_ENABLED` | Enable plugin system | `true` |
+| `ARCANA_PLUGIN_PLUGINS_DIRECTORY` | Plugin storage directory | `plugins` |
+| `ARCANA_PLUGIN_DISTRIBUTED_ENABLED` | Enable distributed plugin sync | `false` |
+| `ARCANA_PLUGIN_SYNC_INTERVAL` | Plugin sync interval (ms) | `30000` |
+
+### gRPC TLS Configuration
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `GRPC_CLIENT_TLS_ENABLED` | Enable TLS for gRPC | `false` |
+| `GRPC_CLIENT_TLS_TRUST_CERT_PATH` | CA certificate path | - |
+| `GRPC_CLIENT_TLS_CLIENT_CERT_PATH` | Client certificate path (mTLS) | - |
+| `GRPC_CLIENT_TLS_CLIENT_KEY_PATH` | Client private key path (mTLS) | - |
+
+### SSR Configuration
+
+| Variable | Description | Default |
+|----------|-------------|---------|
 | `ARCANA_SSR_ENABLED` | Enable SSR | `true` |
 | `ARCANA_SSR_REACT_ENABLED` | Enable React SSR | `true` |
 | `ARCANA_SSR_ANGULAR_ENABLED` | Enable Angular SSR | `true` |

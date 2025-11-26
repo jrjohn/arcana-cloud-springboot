@@ -1,0 +1,155 @@
+###############################################################################
+# Kubernetes Deployment for Service Layer - HTTP Mode
+#
+# This deployment uses HTTP health probes instead of gRPC.
+# Use this for environments where gRPC health probes are not supported
+# or when using HTTP-only communication between layers.
+###############################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcana-service
+  namespace: arcana-cloud
+  labels:
+    app: arcana-service
+    layer: service
+    protocol: http
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: arcana-service
+      layer: service
+  template:
+    metadata:
+      labels:
+        app: arcana-service
+        layer: service
+        protocol: http
+    spec:
+      containers:
+      - name: service
+        image: arcana-cloud-java:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+          name: http
+        env:
+        - name: DEPLOYMENT_MODE
+          value: "layered"
+        - name: DEPLOYMENT_LAYER
+          value: "service"
+        - name: COMMUNICATION_PROTOCOL
+          value: "http"  # Use HTTP instead of gRPC
+        - name: SERVER_PORT
+          value: "8081"
+        - name: REPOSITORY_HTTP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: arcana-config
+              key: repository.http.url
+        - name: REDIS_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: arcana-config
+              key: redis.host
+        - name: REDIS_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: arcana-config
+              key: redis.port
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: arcana-secrets
+              key: jwt.secret
+        # Plugin configuration
+        - name: ARCANA_PLUGIN_ENABLED
+          value: "true"
+        - name: ARCANA_PLUGIN_DISTRIBUTED_ENABLED
+          value: "true"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        # Startup probe - wait for application to be ready
+        startupProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8081
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 30  # 30 * 5s = 150s max startup time
+        # Liveness probe - check if application is alive
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8081
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        # Readiness probe - check if plugins and services are ready
+        readinessProbe:
+          httpGet:
+            path: /api/v1/plugins/health/ready
+            port: 8081
+          initialDelaySeconds: 0
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        volumeMounts:
+        - name: plugins-volume
+          mountPath: /app/plugins
+        - name: plugin-cache
+          mountPath: /app/plugin-cache
+      volumes:
+      # Shared plugin storage (PersistentVolumeClaim)
+      - name: plugins-volume
+        persistentVolumeClaim:
+          claimName: arcana-plugins-pvc
+      # Local cache for plugin binaries
+      - name: plugin-cache
+        emptyDir: {}
+
+---
+# Service for HTTP-mode service layer
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-service
+  namespace: arcana-cloud
+  labels:
+    app: arcana-service
+    layer: service
+    protocol: http
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8081
+    targetPort: 8081
+    protocol: TCP
+    name: http
+  selector:
+    app: arcana-service
+    layer: service
+
+---
+# PersistentVolumeClaim for shared plugin storage
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: arcana-plugins-pvc
+  namespace: arcana-cloud
+spec:
+  accessModes:
+    - ReadWriteMany  # Required for multi-pod access
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard  # Adjust based on your cluster

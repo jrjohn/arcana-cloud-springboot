@@ -1,0 +1,133 @@
+###############################################################################
+# Kubernetes Deployment for Controller Layer - HTTP Mode
+#
+# This deployment uses HTTP communication to the Service Layer.
+# Use this for environments where gRPC is not available or preferred.
+###############################################################################
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcana-controller
+  namespace: arcana-cloud
+  labels:
+    app: arcana-controller
+    layer: controller
+    protocol: http
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: arcana-controller
+      layer: controller
+  template:
+    metadata:
+      labels:
+        app: arcana-controller
+        layer: controller
+        protocol: http
+    spec:
+      containers:
+      - name: controller
+        image: arcana-cloud-java:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: DEPLOYMENT_MODE
+          value: "layered"
+        - name: DEPLOYMENT_LAYER
+          value: "controller"
+        - name: COMMUNICATION_PROTOCOL
+          value: "http"  # Use HTTP instead of gRPC
+        - name: SERVICE_HTTP_URL
+          valueFrom:
+            configMapKeyRef:
+              name: arcana-config
+              key: service.http.url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: arcana-secrets
+              key: jwt.secret
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        # Startup probe
+        startupProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 30
+        # Liveness probe
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        # Readiness probe
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 0
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+
+---
+# Service for Controller Layer
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-controller
+  namespace: arcana-cloud
+  labels:
+    app: arcana-controller
+    layer: controller
+    protocol: http
+spec:
+  type: ClusterIP
+  ports:
+  - port: 8080
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: arcana-controller
+    layer: controller
+
+---
+# Ingress for external access
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: arcana-ingress
+  namespace: arcana-cloud
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: arcana.local  # Change to your domain
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: arcana-controller
+            port:
+              number: 8080

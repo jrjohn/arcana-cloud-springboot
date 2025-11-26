@@ -1,0 +1,86 @@
+###############################################################################
+# Kubernetes ConfigMap for HTTP Mode Deployment
+#
+# This configuration is used when deploying with HTTP communication
+# between layers instead of gRPC.
+###############################################################################
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: arcana-config
+  namespace: arcana-cloud
+data:
+  # Communication Protocol
+  communication.protocol: "http"
+
+  # Service Layer HTTP URL (used by Controller)
+  service.http.url: "http://arcana-service:8081"
+
+  # Repository Layer HTTP URL (used by Service)
+  repository.http.url: "http://arcana-repository:8082"
+
+  # Redis Configuration (for distributed plugin registry)
+  redis.host: "redis"
+  redis.port: "6379"
+
+  # Plugin Configuration
+  arcana.plugin.enabled: "true"
+  arcana.plugin.auto-install: "true"
+  arcana.plugin.plugins-directory: "/app/plugins"
+  arcana.plugin.distributed.enabled: "true"
+  arcana.plugin.sync.interval: "30000"
+
+  # Database Configuration
+  database.host: "mysql"
+  database.port: "3306"
+  database.name: "arcana_cloud"
+
+---
+# ConfigMap for gRPC Mode (alternative)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: arcana-config-grpc
+  namespace: arcana-cloud
+data:
+  # Communication Protocol
+  communication.protocol: "grpc"
+
+  # Service Layer gRPC URL (used by Controller)
+  service.grpc.url: "arcana-service:9090"
+
+  # Repository Layer gRPC URL (used by Service)
+  repository.grpc.url: "arcana-repository:9091"
+
+  # Redis Configuration
+  redis.host: "redis"
+  redis.port: "6379"
+
+  # Plugin Configuration
+  arcana.plugin.enabled: "true"
+  arcana.plugin.auto-install: "true"
+  arcana.plugin.plugins-directory: "/app/plugins"
+  arcana.plugin.distributed.enabled: "true"
+  arcana.plugin.sync.interval: "30000"
+
+  # Database Configuration
+  database.host: "mysql"
+  database.port: "3306"
+  database.name: "arcana_cloud"
+
+  # gRPC TLS Configuration (optional)
+  grpc.client.tls.enabled: "false"
+
+---
+# Secrets for sensitive data
+apiVersion: v1
+kind: Secret
+metadata:
+  name: arcana-secrets
+  namespace: arcana-cloud
+type: Opaque
+stringData:
+  jwt.secret: "your-super-secret-jwt-key-change-in-production"
+  database.username: "arcana"
+  database.password: "arcana_password"
