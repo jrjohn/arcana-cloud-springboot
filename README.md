@@ -152,6 +152,54 @@ flowchart LR
     style Plugins fill:#dbeafe
 ```
 
+### Plugin Lifecycle
+
+```mermaid
+sequenceDiagram
+    participant Admin as Administrator
+    participant PM as Plugin Manager
+    participant Felix as Apache Felix
+    participant Bundle as Plugin Bundle
+    participant Bridge as Spring-OSGi Bridge
+    participant Spring as Spring Context
+    participant Ext as Extension Registry
+
+    Admin->>PM: installPlugin(jarFile)
+    PM->>PM: Validate plugin descriptor
+    PM->>Felix: installBundle(jar)
+    Felix->>Bundle: Create bundle instance
+    Felix-->>PM: Bundle installed (INSTALLED)
+
+    Admin->>PM: enablePlugin(key)
+    PM->>Felix: startBundle(bundleId)
+    Felix->>Bundle: Activator.start()
+    Bundle->>Bundle: Initialize resources
+    Bundle-->>Felix: Started (ACTIVE)
+
+    Felix->>Bridge: onBundleStarted(bundle)
+    Bridge->>Bridge: Scan for extensions
+    Bridge->>Spring: registerBean(pluginServices)
+    Bridge->>Ext: registerExtensions(rest, events, jobs)
+    Ext->>Spring: mapEndpoints(restControllers)
+    Ext-->>Bridge: Extensions registered
+    Bridge-->>PM: Plugin fully activated
+    PM-->>Admin: Plugin enabled successfully
+
+    Note over Admin,Ext: Plugin is now active and serving requests
+
+    Admin->>PM: disablePlugin(key)
+    PM->>Ext: unregisterExtensions(key)
+    Ext->>Spring: unmapEndpoints()
+    PM->>Bridge: onBundleStopping(bundle)
+    Bridge->>Spring: unregisterBeans(pluginServices)
+    PM->>Felix: stopBundle(bundleId)
+    Felix->>Bundle: Activator.stop()
+    Bundle->>Bundle: Cleanup resources
+    Bundle-->>Felix: Stopped (RESOLVED)
+    Felix-->>PM: Bundle stopped
+    PM-->>Admin: Plugin disabled
+```
+
 ### Plugin Extension Points
 
 | Extension | Description | Example |
