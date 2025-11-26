@@ -32,6 +32,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
     implementation("org.springframework.boot:spring-boot-starter-web")
 
+    // Redis for distributed plugin registry
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
+
     // Apache Felix OSGi Framework
     implementation("org.apache.felix:org.apache.felix.framework:7.0.5")
     implementation("org.apache.felix:org.apache.felix.scr:2.2.6")

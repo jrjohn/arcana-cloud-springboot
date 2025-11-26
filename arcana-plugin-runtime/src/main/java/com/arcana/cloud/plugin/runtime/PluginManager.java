@@ -24,6 +24,9 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * High-level plugin manager that coordinates the OSGi framework
@@ -47,14 +50,18 @@ public class PluginManager implements PluginAccessor {
 
     private final List<PluginLifecycleListener> lifecycleListeners;
     private final Map<String, PluginWrapper> pluginWrappers;
+    private final List<Consumer<Boolean>> readinessListeners;
 
     private volatile boolean initialized = false;
+    private final CountDownLatch initializationLatch = new CountDownLatch(1);
+    private static final long INITIALIZATION_TIMEOUT_SECONDS = 120;
 
     public PluginManager(PluginConfiguration config, ApplicationContext applicationContext) {
         this.config = config;
         this.applicationContext = applicationContext;
         this.lifecycleListeners = new CopyOnWriteArrayList<>();
         this.pluginWrappers = new HashMap<>();
+        this.readinessListeners = new CopyOnWriteArrayList<>();
     }
 
     @PostConstruct
@@ -101,11 +108,20 @@ public class PluginManager implements PluginAccessor {
             }
 
             initialized = true;
+
+            // Signal that initialization is complete
+            initializationLatch.countDown();
+
+            // Notify readiness listeners (e.g., gRPC health service)
+            notifyReadinessListeners(true);
+
             log.info("Plugin system initialized successfully. {} plugins installed",
                 osgiPluginManager.getPluginKeys().size());
 
         } catch (Exception e) {
             log.error("Failed to initialize plugin system", e);
+            initializationLatch.countDown(); // Release latch even on failure
+            notifyReadinessListeners(false);
             throw new RuntimeException("Plugin system initialization failed", e);
         }
     }
@@ -302,6 +318,81 @@ public class PluginManager implements PluginAccessor {
      */
     public SpringOSGiBridge getSpringOSGiBridge() {
         return springOSGiBridge;
+    }
+
+    /**
+     * Waits for plugin system initialization to complete.
+     *
+     * <p>This method blocks until the plugin system is fully initialized,
+     * or until the timeout is reached. Use this to ensure plugins are
+     * ready before starting services that depend on them (e.g., gRPC server).</p>
+     *
+     * @return true if initialization completed successfully, false if timeout
+     * @throws InterruptedException if the wait is interrupted
+     */
+    public boolean waitForInitialization() throws InterruptedException {
+        log.debug("Waiting for plugin system initialization...");
+        boolean completed = initializationLatch.await(INITIALIZATION_TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        if (completed) {
+            log.debug("Plugin system initialization complete");
+        } else {
+            log.warn("Plugin system initialization timed out after {} seconds", INITIALIZATION_TIMEOUT_SECONDS);
+        }
+        return completed && initialized;
+    }
+
+    /**
+     * Waits for plugin system initialization with a custom timeout.
+     *
+     * @param timeout the maximum time to wait
+     * @param unit the time unit
+     * @return true if initialization completed successfully
+     * @throws InterruptedException if the wait is interrupted
+     */
+    public boolean waitForInitialization(long timeout, TimeUnit unit) throws InterruptedException {
+        boolean completed = initializationLatch.await(timeout, unit);
+        return completed && initialized;
+    }
+
+    /**
+     * Checks if the plugin system is ready.
+     *
+     * @return true if initialized and ready
+     */
+    public boolean isReady() {
+        return initialized && initializationLatch.getCount() == 0;
+    }
+
+    /**
+     * Adds a readiness listener that will be notified when initialization completes.
+     *
+     * @param listener the listener (receives true on success, false on failure)
+     */
+    public void addReadinessListener(Consumer<Boolean> listener) {
+        readinessListeners.add(listener);
+        // If already initialized, notify immediately
+        if (initializationLatch.getCount() == 0) {
+            listener.accept(initialized);
+        }
+    }
+
+    /**
+     * Removes a readiness listener.
+     *
+     * @param listener the listener
+     */
+    public void removeReadinessListener(Consumer<Boolean> listener) {
+        readinessListeners.remove(listener);
+    }
+
+    private void notifyReadinessListeners(boolean ready) {
+        for (Consumer<Boolean> listener : readinessListeners) {
+            try {
+                listener.accept(ready);
+            } catch (Exception e) {
+                log.error("Error notifying readiness listener", e);
+            }
+        }
     }
 
     private void onPluginStateChanged(String pluginKey, int eventType, PluginState newState) {
