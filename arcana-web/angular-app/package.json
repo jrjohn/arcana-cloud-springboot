@@ -1,0 +1,47 @@
+{
+  "name": "arcana-cloud-angular",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:ssr": "ng build && ng run arcana-cloud-angular:server",
+    "serve:ssr": "node dist/server/main.js",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless",
+    "lint": "ng lint"
+  },
+  "dependencies": {
+    "@angular/animations": "17.0.8",
+    "@angular/common": "17.0.8",
+    "@angular/compiler": "17.0.8",
+    "@angular/core": "17.0.8",
+    "@angular/forms": "17.0.8",
+    "@angular/platform-browser": "17.0.8",
+    "@angular/platform-browser-dynamic": "17.0.8",
+    "@angular/platform-server": "17.0.8",
+    "@angular/router": "17.0.8",
+    "@angular/ssr": "17.0.8",
+    "express": "4.18.2",
+    "rxjs": "7.8.1",
+    "tslib": "2.6.2",
+    "zone.js": "0.14.2"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "17.0.8",
+    "@angular/cli": "17.0.8",
+    "@angular/compiler-cli": "17.0.8",
+    "@types/express": "4.17.21",
+    "@types/jasmine": "5.1.4",
+    "@types/node": "20.10.6",
+    "jasmine-core": "5.1.1",
+    "karma": "6.4.2",
+    "karma-chrome-launcher": "3.2.0",
+    "karma-coverage": "2.2.1",
+    "karma-jasmine": "5.1.0",
+    "karma-jasmine-html-reporter": "2.1.0",
+    "typescript": "5.3.3"
+  }
+}

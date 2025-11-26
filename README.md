@@ -5,10 +5,11 @@
 ![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
 ![gRPC](https://img.shields.io/badge/gRPC-Protocol-244C5A?style=for-the-badge&logo=grpc&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8.0-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-7.0-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![OSGi](https://img.shields.io/badge/OSGi-Plugin%20System-FF6600?style=for-the-badge)
+![React](https://img.shields.io/badge/React-Next.js-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Angular](https://img.shields.io/badge/Angular-17-DD0031?style=for-the-badge&logo=angular&logoColor=white)
 
-**Enterprise-grade microservices platform with gRPC-first architecture**
+**Enterprise-grade microservices platform with OSGi plugins and Server-Side Rendering**
 
 [![Tests](https://img.shields.io/badge/Tests-172%20Passed-success?style=flat-square)](docs/test-report.html)
 [![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square)]()
@@ -21,14 +22,19 @@
 
 ## Overview
 
-A production-ready enterprise platform built with **Spring Boot 4.0** and **Java 21**, featuring a gRPC-first architecture that delivers **2.5x faster** performance compared to HTTP REST endpoints. The system supports three flexible deployment modes and emphasizes clean architecture principles.
+A production-ready enterprise platform built with **Spring Boot 4.0** and **Java 21**, featuring:
+
+- **gRPC-first architecture** delivering **2.5x faster** performance
+- **OSGi Plugin System** (Apache Felix) for hot-deployable extensions
+- **Server-Side Rendering** with GraalJS for React and Angular
+- **Three deployment modes**: Monolithic, Layered, Microservices
 
 ## Architecture
 
 ```mermaid
 flowchart TB
     subgraph Client["Client Layer"]
-        WEB[Web Client]
+        WEB[Web Client - React/Angular]
         MOB[Mobile Client]
         API[API Consumer]
     end
@@ -36,11 +42,19 @@ flowchart TB
     subgraph Gateway["API Gateway"]
         REST[REST API :8080]
         GRPC[gRPC Server :9090]
+        SSR[SSR Engine]
+    end
+
+    subgraph Plugins["Plugin System (OSGi)"]
+        PM[Plugin Manager]
+        PB[Plugin Bundles]
+        EXT[Extension Registry]
     end
 
     subgraph Controller["Controller Layer"]
         AUTH[AuthController]
         USER[UserController]
+        PLUG[PluginController]
     end
 
     subgraph Service["Service Layer"]
@@ -49,42 +63,39 @@ flowchart TB
         JWT[JwtTokenProvider]
     end
 
-    subgraph Repository["Repository Layer"]
-        UR[UserRepository]
-        TR[TokenRepository]
-    end
-
     subgraph Data["Data Layer"]
         MYSQL[(MySQL 8.0)]
         REDIS[(Redis 7.0)]
     end
 
+    WEB --> SSR
     WEB --> REST
     MOB --> REST
     API --> GRPC
 
+    SSR --> REST
     REST --> AUTH
     REST --> USER
+    REST --> PLUG
     GRPC --> AUTH
     GRPC --> USER
 
+    PLUG --> PM
+    PM --> PB
+    PM --> EXT
+
     AUTH --> AS
-    AUTH --> JWT
     USER --> US
 
-    AS --> UR
-    AS --> TR
-    US --> UR
-
-    UR --> MYSQL
-    TR --> MYSQL
+    AS --> MYSQL
+    US --> MYSQL
     JWT --> REDIS
 
     style Client fill:#e0f2fe
     style Gateway fill:#fef3c7
-    style Controller fill:#fce7f3
-    style Service fill:#d1fae5
-    style Repository fill:#e0e7ff
+    style Plugins fill:#fce7f3
+    style Controller fill:#d1fae5
+    style Service fill:#e0e7ff
     style Data fill:#f3f4f6
 ```
 
@@ -95,8 +106,18 @@ mindmap
   root((Arcana Cloud))
     Architecture
       Three-Layer Clean Architecture
-      Dual Protocol Support
+      Dual Protocol Support gRPC/REST
       Multiple Deployment Modes
+    Plugin System
+      OSGi Apache Felix
+      Hot Deployment
+      Extension Points
+      Spring-OSGi Bridge
+    SSR Engine
+      GraalJS Runtime
+      React Next.js Support
+      Angular Universal Support
+      Render Caching
     Security
       OAuth2 + JWT
       Role-Based Access
@@ -105,156 +126,236 @@ mindmap
       gRPC 2.5x Faster
       Redis Caching
       Connection Pooling
-    DevOps
-      Docker Support
-      Kubernetes Ready
-      Health Checks
-    Testing
-      172 Tests
-      100% Pass Rate
-      Integration Tests
 ```
 
-## Project Quality Metrics
+## Plugin System (OSGi)
 
-<div align="center">
-
-| Metric | Score | Status |
-|:------:|:-----:|:------:|
-| **Overall Grade** | A+ | Excellent |
-| **Test Coverage** | 100% | All Tests Pass |
-| **Architecture** | 48/50 | 96% |
-| **Code Quality** | 18/20 | 90% |
-| **Documentation** | 9/10 | 90% |
-
-</div>
-
-## Performance Benchmarks
-
-```mermaid
-xychart-beta
-    title "gRPC vs HTTP REST Performance (ms)"
-    x-axis ["Get User", "List Users", "Create User", "Update User", "Delete User"]
-    y-axis "Response Time (ms)" 0 --> 20
-    bar [9.0, 11.0, 16.0, 14.0, 12.0]
-    bar [1.5, 9.0, 12.0, 10.0, 8.0]
-```
-
-| Operation | HTTP (ms) | gRPC (ms) | Speedup |
-|-----------|-----------|-----------|---------|
-| Get User | ~9.0 | ~1.5 | **6.0x** |
-| List Users | ~11.0 | ~9.0 | 1.2x |
-| Create User | ~16.0 | ~12.0 | 1.3x |
-| Update User | ~14.0 | ~10.0 | 1.4x |
-| Delete User | ~12.0 | ~8.0 | 1.5x |
-| **Average** | ~12.5 | ~7.5 | **2.5x** |
-
-## Deployment Modes
+The platform features a JIRA-style plugin architecture using Apache Felix OSGi:
 
 ```mermaid
 flowchart LR
-    subgraph Monolithic["Mode 1: Monolithic"]
-        M1[Single Container]
-        M1 --> M2[All Layers Combined]
-        M2 --> M3[Best for Development]
+    subgraph Host["Host Application"]
+        SM[Spring Context]
+        BR[Spring-OSGi Bridge]
+        PM[Plugin Manager]
     end
 
-    subgraph Layered["Mode 2: Layered"]
-        L1[Controller Container]
-        L2[Service Container]
-        L3[Repository Container]
-        L1 <-->|gRPC/HTTP| L2
-        L2 <-->|gRPC/HTTP| L3
+    subgraph Felix["Apache Felix OSGi"]
+        FW[Framework]
+        SR[Service Registry]
+        BL[Bundle Lifecycle]
     end
 
-    subgraph Microservices["Mode 3: Microservices"]
-        MS1[Auth Service]
-        MS2[User Service]
-        MS3[Token Service]
-        MS1 <--> MS2
-        MS2 <--> MS3
+    subgraph Plugins["Plugin Bundles"]
+        P1[Audit Plugin]
+        P2[Custom Plugin]
+        P3[SSR Views]
     end
 
-    style Monolithic fill:#dbeafe
-    style Layered fill:#d1fae5
-    style Microservices fill:#fef3c7
+    SM <--> BR
+    BR <--> SR
+    PM --> FW
+    FW --> BL
+    BL --> P1
+    BL --> P2
+    BL --> P3
+    P1 --> SR
+    P2 --> SR
+    P3 --> SR
+
+    style Host fill:#d1fae5
+    style Felix fill:#fef3c7
+    style Plugins fill:#dbeafe
 ```
 
-| Mode | Containers | Communication | Best For |
-|------|------------|---------------|----------|
-| **Monolithic** | 1 | In-process | Development, Small deployments |
-| **Layered** | 3+ | gRPC/HTTP | Production, Balanced scaling |
-| **Microservices** | 11+ | gRPC/HTTP | Enterprise, Maximum scalability |
+### Plugin Extension Points
 
-## Test Suite Overview
+| Extension | Description | Example |
+|-----------|-------------|---------|
+| `@RestEndpointExtension` | Add REST endpoints | `/api/v1/plugins/audit/entries` |
+| `@ServiceExtension` | Register services | `AuditService` |
+| `@EventListenerExtension` | Handle platform events | `UserEventListener` |
+| `@ScheduledJobExtension` | Scheduled tasks | `AuditCleanupJob` |
+| `@SSRViewExtension` | SSR-rendered views | Plugin dashboards |
+| `@WebFragmentExtension` | UI components | Menu items, panels |
 
-```mermaid
-pie title Test Distribution by Category
-    "Entity Tests" : 36
-    "Repository Tests" : 23
-    "Service Tests" : 30
-    "Security Tests" : 28
-    "Controller Tests" : 19
-    "Integration Tests" : 36
+### Creating a Plugin
+
+```java
+// Plugin main class
+@ArcanaPlugin(
+    key = "com.example.myplugin",
+    name = "My Plugin",
+    version = "1.0.0"
+)
+public class MyPlugin implements Plugin {
+    @Override
+    public void onEnable() {
+        // Plugin enabled
+    }
+
+    @Override
+    public void onDisable() {
+        // Plugin disabled
+    }
+}
+
+// REST extension
+@RestEndpointExtension(
+    key = "my-api",
+    path = "/api/v1/plugins/myplugin"
+)
+@RestController
+public class MyPluginController {
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello from plugin!";
+    }
+}
 ```
 
-### Test Results Summary
+### Plugin Descriptor (arcana-plugin.xml)
 
-| Category | Test Class | Tests | Status |
-|----------|------------|-------|--------|
-| Entity | UserTest | 13 | Passed |
-| Entity | OAuthTokenTest | 14 | Passed |
-| Entity | UserRoleTest | 9 | Passed |
-| Repository | UserRepositoryTest | 12 | Passed |
-| Repository | OAuthTokenRepositoryTest | 11 | Passed |
-| Service | UserServiceTest | 14 | Passed |
-| Service | AuthServiceTest | 16 | Passed |
-| Security | JwtTokenProviderTest | 14 | Passed |
-| Security | UserPrincipalTest | 14 | Passed |
-| Controller | AuthControllerTest | 4 | Passed |
-| Controller | UserControllerTest | 5 | Passed |
-| Mapper | UserMapperTest | 10 | Passed |
-| Integration | AuthWorkflowTest | 8 | Passed |
-| Integration | UserManagementWorkflowTest | 10 | Passed |
-| Integration | ValidationTest | 18 | Passed |
-| **Total** | **15 Classes** | **172** | **100% Pass** |
+```xml
+<arcana-plugin key="com.example.myplugin" name="My Plugin" version="1.0.0">
+    <plugin-info>
+        <description>My awesome plugin</description>
+        <vendor name="My Company" url="https://example.com"/>
+        <min-platform-version>1.0.0</min-platform-version>
+    </plugin-info>
 
-## Tech Stack
+    <service-extension key="my-service"
+                       interface="com.example.MyService"
+                       class="com.example.MyServiceImpl"/>
+
+    <rest-extension key="my-rest"
+                    path="/api/v1/plugins/myplugin"
+                    class="com.example.MyController"/>
+
+    <database-migration>
+        <location>db/migration</location>
+        <table-prefix>plugin_my_</table-prefix>
+    </database-migration>
+</arcana-plugin>
+```
+
+## Server-Side Rendering (SSR)
+
+The SSR Engine supports both React (Next.js) and Angular Universal:
 
 ```mermaid
-flowchart LR
-    subgraph Core["Core Framework"]
-        JAVA[Java 21 LTS]
-        SB[Spring Boot 4.0]
-        SEC[Spring Security 6.3]
+sequenceDiagram
+    participant C as Browser
+    participant S as Spring Boot
+    participant E as SSR Engine
+    participant G as GraalJS
+    participant R as React/Angular
+
+    C->>S: GET /dashboard
+    S->>E: render(path, props)
+    E->>E: Check Cache
+    alt Cache Hit
+        E-->>S: Cached HTML
+    else Cache Miss
+        E->>G: Execute JS
+        G->>R: renderToString()
+        R-->>G: HTML
+        G-->>E: HTML
+        E->>E: Cache Result
+        E-->>S: Fresh HTML
     end
+    S-->>C: HTML + Hydration Script
+    C->>C: Hydrate (Client-side)
+```
 
-    subgraph Data["Data Layer"]
-        JPA[Spring Data JPA]
-        FLY[Flyway Migrations]
-        MS[MapStruct]
-    end
+### SSR Configuration
 
-    subgraph Comm["Communication"]
-        GRPC2[gRPC + Protobuf]
-        REST2[REST + JSON]
-    end
+```yaml
+arcana:
+  ssr:
+    enabled: true
+    react-enabled: true
+    angular-enabled: true
+    react-app-dir: arcana-web/react-app
+    angular-app-dir: arcana-web/angular-app
+    cache-enabled: true
+    default-cache-duration: 60
+    graal-pool-size: 4
+    render-timeout: 5000
+    use-external-node: false  # Set true for production
+    node-server-url: http://localhost:3001
+```
 
-    subgraph Infra["Infrastructure"]
-        MYSQL2[MySQL 8.0]
-        REDIS2[Redis 7.0]
-        DOCK[Docker]
-        K8S[Kubernetes]
-    end
+## Project Structure
 
-    Core --> Data
-    Data --> Comm
-    Comm --> Infra
-
-    style Core fill:#d1fae5
-    style Data fill:#dbeafe
-    style Comm fill:#fef3c7
-    style Infra fill:#fce7f3
+```
+arcana-cloud-springboot/
+├── build.gradle.kts                 # Root build configuration
+├── settings.gradle.kts              # Subproject definitions
+│
+├── src/main/java/                   # Main application
+│   └── com/arcana/cloud/
+│       ├── controller/              # REST controllers
+│       ├── service/                 # Business logic
+│       ├── repository/              # Data access
+│       ├── entity/                  # JPA entities
+│       └── security/                # Security components
+│
+├── arcana-plugin-api/               # Plugin SDK
+│   └── src/main/java/
+│       └── com/arcana/cloud/plugin/
+│           ├── api/                 # Core interfaces
+│           ├── extension/           # Extension annotations
+│           ├── event/               # Event classes
+│           └── lifecycle/           # Lifecycle management
+│
+├── arcana-plugin-runtime/           # OSGi Runtime
+│   └── src/main/java/
+│       └── com/arcana/cloud/plugin/runtime/
+│           ├── osgi/                # Felix framework
+│           ├── bridge/              # Spring-OSGi bridge
+│           └── extension/           # Extension registry
+│
+├── arcana-ssr-engine/               # SSR Engine
+│   └── src/main/java/
+│       └── com/arcana/cloud/ssr/
+│           ├── renderer/            # React/Angular renderers
+│           ├── cache/               # Render caching
+│           └── context/             # Request context
+│
+├── plugins/                         # Plugin bundles
+│   └── arcana-audit-plugin/         # Sample audit plugin
+│       ├── src/main/java/
+│       ├── src/main/resources/
+│       │   ├── arcana-plugin.xml
+│       │   └── db/migration/
+│       └── build.gradle.kts
+│
+├── arcana-web/                      # Web applications
+│   ├── react-app/                   # Next.js application
+│   │   ├── src/
+│   │   │   ├── pages/
+│   │   │   ├── components/
+│   │   │   ├── plugins/             # Plugin views
+│   │   │   └── services/
+│   │   └── package.json
+│   │
+│   └── angular-app/                 # Angular Universal
+│       ├── src/
+│       │   └── app/
+│       │       ├── pages/
+│       │       ├── components/
+│       │       ├── plugins/
+│       │       └── services/
+│       └── package.json
+│
+├── deployment/                      # Docker & K8s configs
+│   ├── monolithic/
+│   ├── layered/
+│   └── kubernetes/
+│
+└── docs/                            # Documentation
+    └── plugin-development-guide.md
 ```
 
 ## Quick Start
@@ -264,57 +365,59 @@ flowchart LR
 - Java 21+
 - Gradle 8.x
 - Docker & Docker Compose
-- MySQL 8.0+ (or use Docker)
-- Redis 7.0+ (or use Docker)
+- Node.js 20+ (for web apps)
+- MySQL 8.0+ / Redis 7.0+
 
 ### 1. Clone and Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/jrjohn/arcana-cloud-springboot.git
 cd arcana-cloud-springboot
-
-# Copy environment file
 cp .env.example .env
-# Edit .env with your configuration
 ```
 
-### 2. Run with Docker (Recommended)
+### 2. Build the Project
 
-**Monolithic Mode:**
 ```bash
+# Build all Java modules
+./gradlew build
+
+# Build React app
+cd arcana-web/react-app && npm install && npm run build
+
+# Build Angular app
+cd arcana-web/angular-app && npm install && npm run build:ssr
+```
+
+### 3. Run with Docker
+
+```bash
+# Monolithic mode
 ./scripts/start-docker-monolithic.sh
-```
 
-**Layered Mode (gRPC):**
-```bash
+# Layered mode
 ./scripts/start-layered.sh
 ```
 
-**Layered Mode (HTTP):**
-```bash
-docker-compose -f deployment/layered/docker-compose-http.yml up --build
-```
-
-### 3. Run Locally (Development)
+### 4. Install a Plugin
 
 ```bash
-# Start MySQL and Redis
-docker-compose -f deployment/monolithic/docker-compose.yml up -d mysql redis
+# Copy plugin JAR to plugins directory
+cp plugins/arcana-audit-plugin/build/libs/*.jar plugins/
 
-# Build and run
-./gradlew bootRun
+# Plugins are automatically discovered and loaded
 ```
 
-### 4. Access the Application
+### 5. Access the Application
 
 | Service | URL |
 |---------|-----|
 | REST API | http://localhost:8080 |
 | Swagger UI | http://localhost:8080/swagger-ui.html |
-| API Docs | http://localhost:8080/v3/api-docs |
-| Health Check | http://localhost:8080/actuator/health |
+| React App | http://localhost:3000 |
+| Angular App | http://localhost:4000 |
 | gRPC Server | localhost:9090 |
+| SSR Status | http://localhost:8080/api/v1/ssr/status |
 
 ## API Endpoints
 
@@ -326,133 +429,38 @@ docker-compose -f deployment/monolithic/docker-compose.yml up -d mysql redis
 | `POST` | `/api/v1/auth/login` | Login |
 | `POST` | `/api/v1/auth/refresh` | Refresh token |
 | `POST` | `/api/v1/auth/logout` | Logout |
-| `POST` | `/api/v1/auth/logout-all` | Logout all sessions |
 
-### Users (Admin)
+### Plugins
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| `GET` | `/api/v1/users` | List all users |
-| `GET` | `/api/v1/users/{id}` | Get user by ID |
-| `POST` | `/api/v1/users` | Create user |
-| `PUT` | `/api/v1/users/{id}` | Update user |
-| `DELETE` | `/api/v1/users/{id}` | Delete user |
+| `GET` | `/api/v1/plugins` | List all plugins |
+| `GET` | `/api/v1/plugins/{key}` | Get plugin details |
+| `POST` | `/api/v1/plugins/{key}/enable` | Enable plugin |
+| `POST` | `/api/v1/plugins/{key}/disable` | Disable plugin |
+| `POST` | `/api/v1/plugins/install` | Install plugin (multipart) |
+| `DELETE` | `/api/v1/plugins/{key}` | Uninstall plugin |
 
-## Project Structure
+### SSR
 
-```
-arcana-cloud-springboot/
-├── build.gradle.kts                # Gradle build configuration
-├── src/main/java/com/arcana/cloud/
-│   ├── ArcanaCloudApplication.java
-│   ├── config/                     # Configuration classes
-│   ├── controller/                 # REST controllers
-│   │   └── internal/               # Internal HTTP controllers
-│   ├── service/                    # Business logic
-│   │   ├── interfaces/
-│   │   ├── impl/
-│   │   ├── grpc/                   # gRPC services
-│   │   └── client/                 # gRPC/HTTP clients
-│   ├── repository/                 # Data access
-│   ├── entity/                     # JPA entities
-│   ├── dto/                        # Data transfer objects
-│   ├── mapper/                     # MapStruct mappers
-│   ├── security/                   # Security components
-│   ├── exception/                  # Exception handling
-│   └── util/                       # Utilities
-├── src/main/proto/                 # Protocol Buffer definitions
-├── src/main/resources/
-│   ├── application.properties
-│   └── db/migration/               # Flyway migrations
-├── src/test/java/                  # Test classes (172 tests)
-│   ├── entity/                     # Entity tests
-│   ├── repository/                 # Repository tests
-│   ├── service/                    # Service tests
-│   ├── controller/                 # Controller tests
-│   ├── security/                   # Security tests
-│   ├── mapper/                     # Mapper tests
-│   └── integration/                # Integration tests
-├── deployment/                     # Docker & K8s configs
-│   ├── monolithic/
-│   ├── layered/
-│   └── kubernetes/
-├── docs/                           # Documentation
-│   └── test-report.html            # Test report
-└── scripts/                        # Utility scripts
-```
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/v1/ssr/react/{component}` | Render React component |
+| `POST` | `/api/v1/ssr/angular/{component}` | Render Angular component |
+| `POST` | `/api/v1/ssr/plugin/{key}/{view}` | Render plugin view |
+| `GET` | `/api/v1/ssr/status` | SSR engine status |
+| `DELETE` | `/api/v1/ssr/cache` | Clear SSR cache |
 
-## Security Implementation
+## Performance Benchmarks
 
-```mermaid
-sequenceDiagram
-    participant C as Client
-    participant A as AuthController
-    participant S as AuthService
-    participant J as JwtProvider
-    participant R as Redis
-    participant D as Database
-
-    C->>A: POST /auth/login
-    A->>S: login(credentials)
-    S->>D: findUser(username)
-    D-->>S: User
-    S->>S: validatePassword()
-    S->>J: generateTokens(user)
-    J->>R: storeToken(refreshToken)
-    J-->>S: tokens
-    S-->>A: AuthResponse
-    A-->>C: {accessToken, refreshToken}
-
-    Note over C,D: Token Refresh Flow
-
-    C->>A: POST /auth/refresh
-    A->>S: refreshToken(token)
-    S->>J: validateRefreshToken()
-    J->>R: checkToken()
-    R-->>J: valid
-    J->>J: generateNewTokens()
-    J->>R: revokeOld, storeNew
-    J-->>S: newTokens
-    S-->>A: AuthResponse
-    A-->>C: {newAccessToken, newRefreshToken}
-```
-
-## Testing
-
-```bash
-# Run all tests
-./gradlew test
-
-# Run with coverage report
-./gradlew test jacocoTestReport
-
-# View test report
-open build/reports/tests/test/index.html
-
-# View coverage report
-open build/reports/jacoco/test/html/index.html
-
-# View fancy test report
-open docs/test-report.html
-```
-
-## Kubernetes Deployment
-
-```bash
-# Create namespace
-kubectl apply -f deployment/kubernetes/namespace.yaml
-
-# Apply configurations
-kubectl apply -f deployment/kubernetes/configmap.yaml
-kubectl apply -f deployment/kubernetes/secrets.yaml
-
-# Deploy services
-kubectl apply -f deployment/kubernetes/repository-deployment.yaml
-kubectl apply -f deployment/kubernetes/service-deployment.yaml
-kubectl apply -f deployment/kubernetes/controller-deployment.yaml
-kubectl apply -f deployment/kubernetes/services.yaml
-kubectl apply -f deployment/kubernetes/ingress.yaml
-```
+| Operation | HTTP (ms) | gRPC (ms) | Speedup |
+|-----------|-----------|-----------|---------|
+| Get User | ~9.0 | ~1.5 | **6.0x** |
+| List Users | ~11.0 | ~9.0 | 1.2x |
+| Create User | ~16.0 | ~12.0 | 1.3x |
+| Update User | ~14.0 | ~10.0 | 1.4x |
+| Delete User | ~12.0 | ~8.0 | 1.5x |
+| **Average** | ~12.5 | ~7.5 | **2.5x** |
 
 ## Environment Variables
 
@@ -463,17 +471,30 @@ kubectl apply -f deployment/kubernetes/ingress.yaml
 | `DATABASE_PASSWORD` | Database password | `arcana_pass` |
 | `REDIS_HOST` | Redis host | `localhost` |
 | `REDIS_PORT` | Redis port | `6379` |
-| `JWT_SECRET` | JWT signing secret (min 32 chars) | - |
-| `JWT_EXPIRATION` | Access token expiration (ms) | `3600000` |
+| `JWT_SECRET` | JWT signing secret | - |
 | `DEPLOYMENT_MODE` | Deployment mode | `monolithic` |
-| `DEPLOYMENT_LAYER` | Layer for layered mode | - |
-| `COMMUNICATION_PROTOCOL` | Protocol (grpc/http) | `grpc` |
+| `ARCANA_SSR_ENABLED` | Enable SSR | `true` |
+| `ARCANA_SSR_REACT_ENABLED` | Enable React SSR | `true` |
+| `ARCANA_SSR_ANGULAR_ENABLED` | Enable Angular SSR | `true` |
 
-## Default Credentials
+## Testing
 
-| Username | Password | Role |
-|----------|----------|------|
-| admin | Admin@123 | ADMIN |
+```bash
+# Run all tests
+./gradlew test
+
+# Run with coverage
+./gradlew test jacocoTestReport
+
+# View test report
+open build/reports/tests/test/index.html
+```
+
+## Documentation
+
+- [Plugin Development Guide](docs/plugin-development-guide.md)
+- [API Documentation](http://localhost:8080/swagger-ui.html)
+- [Test Report](docs/test-report.html)
 
 ## Contributing
 
@@ -491,6 +512,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-**Built with Spring Boot 4.0 | Java 21 | gRPC**
+**Built with Spring Boot 4.0 | Java 21 | OSGi | GraalJS | React | Angular**
 
 </div>

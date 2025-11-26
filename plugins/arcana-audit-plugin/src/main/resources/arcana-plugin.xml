@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<arcana-plugin key="com.arcana.plugin.audit"
+               name="Audit Log Plugin"
+               version="1.0.0">
+
+    <plugin-info>
+        <description>Comprehensive audit logging for Arcana Cloud platform</description>
+        <version>1.0.0</version>
+        <vendor name="Arcana Cloud" url="https://arcana.cloud"/>
+        <min-platform-version>1.0.0</min-platform-version>
+    </plugin-info>
+
+    <!-- Main Plugin Class -->
+    <plugin-class>com.arcana.plugin.audit.AuditPlugin</plugin-class>
+
+    <!-- Service Extensions -->
+    <service-extension key="audit-service"
+                       interface="com.arcana.plugin.audit.api.AuditService"
+                       class="com.arcana.plugin.audit.AuditServiceImpl">
+        <description>Audit logging service for tracking user and system events</description>
+        <property name="priority" value="100"/>
+    </service-extension>
+
+    <!-- REST Extensions -->
+    <rest-extension key="audit-rest"
+                    path="/api/v1/plugins/audit"
+                    class="com.arcana.plugin.audit.AuditRestController">
+        <description>Audit log REST API endpoints</description>
+        <requires-permission>ADMIN</requires-permission>
+    </rest-extension>
+
+    <!-- Event Listeners -->
+    <event-listener key="user-event-listener"
+                    class="com.arcana.plugin.audit.UserEventListener">
+        <description>Listens to user lifecycle events for auditing</description>
+        <event>com.arcana.cloud.plugin.event.UserCreatedEvent</event>
+        <event>com.arcana.cloud.plugin.event.UserUpdatedEvent</event>
+        <event>com.arcana.cloud.plugin.event.UserDeletedEvent</event>
+        <event>com.arcana.cloud.plugin.event.UserLoginEvent</event>
+        <event>com.arcana.cloud.plugin.event.UserLogoutEvent</event>
+    </event-listener>
+
+    <!-- Web Resources -->
+    <web-resource key="audit-resources">
+        <description>CSS and JavaScript for audit UI components</description>
+        <resource type="css" location="/web/css/audit.css"/>
+        <resource type="javascript" location="/web/js/audit.js"/>
+    </web-resource>
+
+    <!-- Web Fragment -->
+    <web-fragment key="audit-summary-widget"
+                  location="dashboard.widgets"
+                  class="com.arcana.plugin.audit.AuditSummaryWidget">
+        <description>Dashboard widget showing audit log summary</description>
+        <weight>50</weight>
+        <requires-permission>ADMIN</requires-permission>
+    </web-fragment>
+
+    <!-- Scheduled Jobs -->
+    <scheduled-job key="audit-cleanup"
+                   class="com.arcana.plugin.audit.AuditCleanupJob"
+                   cron="0 0 2 * * ?">
+        <description>Clean up old audit logs (runs daily at 2 AM)</description>
+        <property name="retention.days" value="90"/>
+    </scheduled-job>
+
+    <!-- Database Migrations -->
+    <database-migration>
+        <location>db/migration</location>
+        <table-prefix>plugin_audit_</table-prefix>
+    </database-migration>
+
+</arcana-plugin>
