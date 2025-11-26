@@ -1,0 +1,169 @@
+{
+  "reportMetadata": {
+    "generatedAt": "2025-11-26 13:59:14",
+    "baseUrl": "http://localhost:8080",
+    "mode": "monolithic"
+  },
+  "summary": {
+    "totalTests": 14,
+    "passed": 14,
+    "failed": 0,
+    "passRate": 100.0
+  },
+  "results": [
+    {
+      "name": "Health Check",
+      "method": "GET",
+      "endpoint": "/actuator/health",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 12.39,
+      "response_body": "{\"components\":{\"db\":{\"details\":{\"database\":\"MySQL\",\"validationQuery\":\"isValid()\"},\"status\":\"UP\"},\"diskSpace\":{\"details\":{\"total\":1962747092992,\"free\":1817215787008,\"threshold\":10485760,\"path\":\"/app/.\",\"exists\":true},\"status\":\"UP\"},\"livenessState\":{\"status\":\"UP\"},\"ping\":{\"status\":\"UP\"},\"readinessState\":{\"status\":\"UP\"},\"redis\":{\"details\":{\"version\":\"7.0.15\"},\"status\":\"UP\"},\"ssl\":{\"details\":{\"expiringChains\":[],\"invalidChains\":[],\"validChains\":[]},\"status\":\"UP\"}},\"groups\":[\"liveness\",\"readiness\"],\"status\":\"UP\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Register New User",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/register",
+      "status": "PASS",
+      "expected_status": 201,
+      "actual_status": 201,
+      "duration_ms": 101.11,
+      "response_body": "{\"success\":true,\"message\":\"User registered successfully\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxNSIsInVzZXJuYW1lIjoidGVzdHVzZXI5Ym9yNHciLCJlbWFpbCI6InRlc3Q5Ym9yNHdAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEzNjc1NCwiZXhwIjoxNzY0MTQwMzU0fQ.FjGPgVD8tqZwVU5FEYFy_hPh0yieIhG8BHf4mq_XOts3O45Hd-L7hR4RMQe5Ii-P\",\"refreshToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxNSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTM2NzU0LCJleHAiOjE3NjY3Mjg3NTR9.i7xmvKLLERkpCK-i-5UspfTS-uXcvrljGyH2Xx9ug3isxXFwU7pm2chgF2dHf6qe\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":15,\"username\":\"testuser9bor4w\",\"email\":\"test9bor4w@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:14.931139\",\"updatedAt\":\"2025-11-26T05:59:14.931174\"}},\"timestamp\":\"2025-11-26T05:59:14.942099959\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Admin Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 78.86,
+      "response_body": "{\"success\":true,\"message\":\"Login successful\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwidXNlcm5hbWUiOiJzeXNhZG1pbiIsImVtYWlsIjoic3lzYWRtaW5AYXJjYW5hLWNsb3VkLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc2NDEzNjc1NSwiZXhwIjoxNzY0MTQwMzU1fQ.Hdar2AicvO-Op-j6pwKCAEcuzt6nfrQnT5C0jS6tsE4r921zXL9Q-HlyBcfZ6NL3\",\"refreshToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxIiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3NjQxMzY3NTUsImV4cCI6MTc2NjcyODc1NX0.cOELCrTPoXdXV5rnZ_Iep1nxWzwtJ25VG2hATl6sSzVJJlxUREaapjAYTJLCRAlZ\"",
+      "error_message": ""
+    },
+    {
+      "name": "User Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 76.32,
+      "response_body": "{\"success\":true,\"message\":\"Login successful\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxNSIsInVzZXJuYW1lIjoidGVzdHVzZXI5Ym9yNHciLCJlbWFpbCI6InRlc3Q5Ym9yNHdAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEzNjc1NSwiZXhwIjoxNzY0MTQwMzU1fQ.dHzo1Hfq5k7yz4s7IEYRTiGeT3XSbHX4DLh6R5qaYQg-lDPkN1QBWcHKSgLdWRTn\",\"refreshToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxNSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTM2NzU1LCJleHAiOjE3NjY3Mjg3NTV9.WVHPgwQFaWgKNlWbmBUzKC4Ygl29IhzQIqykipT11kAr6uP8G0S9j_YKtVHf1Wjo\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":15,\"username\":\"testuser9bor4w\",\"email\":\"test9bor4w@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15\",\"updatedAt\":\"2025-11-26T05:59:15\"}},\"timestamp\":\"2025-11-26T05:59:15.097769626\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Invalid Login (should fail)",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 401,
+      "actual_status": 401,
+      "duration_ms": 21.66,
+      "response_body": "{\"success\":false,\"message\":\"Invalid username or password\",\"timestamp\":\"2025-11-26T05:59:15.120254792\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Refresh Token",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/refresh",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 27.62,
+      "response_body": "{\"success\":true,\"message\":\"Token refreshed successfully\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxNiIsInVzZXJuYW1lIjoicmVmcmVzaHRyejAxciIsImVtYWlsIjoicmVmcmVzaHRyejAxckBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzY0MTM2NzU1LCJleHAiOjE3NjQxNDAzNTV9.rhceFf7eD3GYjvwU7vr7BNPHzk-QT_JcCNYcrBho8zXIlEcvp06wZXhsD7GzVjmK\",\"refreshToken\":\"eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxNiIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTM2NzU1LCJleHAiOjE3NjY3Mjg3NTV9.QcOa8QEUSjegMWPpmTTnCsPapDUxCzpPzvYX7PlgdC3xVGrtOwurLdeXbPnXohod\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":16,\"username\":\"refreshtrz01r\",\"email\":\"refreshtrz01r@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15\",\"updatedAt\":\"2025-11-26T05:59:15\"}},\"timestamp\":\"2025-11-26T05:59:15.225223751\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get Current User Profile",
+      "method": "GET",
+      "endpoint": "/api/v1/me",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 27.33,
+      "response_body": "{\"success\":true,\"data\":{\"id\":15,\"username\":\"testuser9bor4w\",\"email\":\"test9bor4w@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15\",\"updatedAt\":\"2025-11-26T05:59:15\"},\"timestamp\":\"2025-11-26T05:59:15.252668459\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get All Users (Admin)",
+      "method": "GET",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 22.46,
+      "response_body": "{\"success\":true,\"data\":{\"content\":[{\"id\":15,\"username\":\"testuser9bor4w\",\"email\":\"test9bor4w@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15\",\"updatedAt\":\"2025-11-26T05:59:15\"},{\"id\":16,\"username\":\"refreshtrz01r\",\"email\":\"refreshtrz01r@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15\",\"updatedAt\":\"2025-11-26T05:59:15\"},{\"id\":13,\"username\":\"refreshz0fe2r\",\"email\":\"refreshz0fe2r@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:58:19\",\"updatedAt\":\"2025-11-26T05:58:19\"},{\"id\":12,\"username\":\"testuserz4pkhn\",\"email\":\"testz4pkhn@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:58:18\",\"updatedAt\":\"2025-11-26T05:58:18\"},{\"id\":9,\"username\":\"testuser515acs\",\"email\":\"test515acs@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:57:54\",\"updatedAt\":\"2025-11-26T05:57:54\"},{\"id\":10,\"username\":\"refreshs73f9v\",\"email\":\"refreshs73f9v@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:57:54\",\"updatedAt\":\"2025-11-26T05:57:54\"},{\"id\":6,\"username\":\"testuserkr2xvh\",\"email\":\"testkr2xvh@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:18:49\",\"updatedAt\":\"2025-11-26T04:18:49\"},{\"id\":7,\"username\":\"refreshwe86fx\",\"email\":\"refreshwe86fx@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:18:49\",\"updatedAt\":\"2025-11-26T04:18:49\"},{\"id\":4,\"username\":\"refresh6ya0s1\",\"email\":\"refresh6ya0s1@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVeri",
+      "error_message": ""
+    },
+    {
+      "name": "Get User By ID (Admin)",
+      "method": "GET",
+      "endpoint": "/api/v1/users/15",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 15.5,
+      "response_body": "{\"success\":true,\"data\":{\"id\":15,\"username\":\"testuser9bor4w\",\"email\":\"test9bor4w@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15\",\"updatedAt\":\"2025-11-26T05:59:15\"},\"timestamp\":\"2025-11-26T05:59:15.291259709\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Create User (Admin)",
+      "method": "POST",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 201,
+      "actual_status": 201,
+      "duration_ms": 78.06,
+      "response_body": "{\"success\":true,\"message\":\"User created successfully\",\"data\":{\"id\":17,\"username\":\"adminuser9bor4w\",\"email\":\"admin9bor4w@example.com\",\"firstName\":\"Admin\",\"lastName\":\"Created\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15.366108\",\"updatedAt\":\"2025-11-26T05:59:15.366124\"},\"timestamp\":\"2025-11-26T05:59:15.368955209\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Update User (Admin)",
+      "method": "PUT",
+      "endpoint": "/api/v1/users/17",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 25.12,
+      "response_body": "{\"success\":true,\"message\":\"User updated successfully\",\"data\":{\"id\":17,\"username\":\"adminuser9bor4w\",\"email\":\"admin9bor4w@example.com\",\"firstName\":\"Updated\",\"lastName\":\"Name\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:15\",\"updatedAt\":\"2025-11-26T05:59:15.390804\"},\"timestamp\":\"2025-11-26T05:59:15.394648959\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Delete User (Admin)",
+      "method": "DELETE",
+      "endpoint": "/api/v1/users/17",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 18.56,
+      "response_body": "{\"success\":true,\"message\":\"User deleted successfully\",\"timestamp\":\"2025-11-26T05:59:15.413424417\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get Users Without Auth (should fail)",
+      "method": "GET",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 403,
+      "actual_status": 403,
+      "duration_ms": 11.69,
+      "response_body": "",
+      "error_message": ""
+    },
+    {
+      "name": "Logout",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/logout",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 14.15,
+      "response_body": "{\"success\":true,\"message\":\"Logged out successfully\",\"timestamp\":\"2025-11-26T05:59:15.439282417\"}",
+      "error_message": ""
+    }
+  ]
+}

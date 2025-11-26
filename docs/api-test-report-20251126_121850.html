@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcana Cloud API Test Report</title>
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-light: #818cf8;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --warning-color: #f59e0b;
+            --bg-color: #0f172a;
+            --card-bg: #1e293b;
+            --text-color: #e2e8f0;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .summary-card .value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .summary-card .label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .summary-card.total .value { color: var(--primary-light); }
+        .summary-card.passed .value { color: var(--success-color); }
+        .summary-card.failed .value { color: var(--error-color); }
+        .summary-card.rate .value { color: var(--warning-color); }
+
+        .mode-section {
+            background: var(--card-bg);
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .mode-header {
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .mode-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .mode-header .icon {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mode-stats {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+        }
+
+        .mode-stats span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .mode-stats .pass { color: var(--success-color); }
+        .mode-stats .fail { color: var(--error-color); }
+
+        .mode-content {
+            padding: 1.5rem 2rem;
+        }
+
+        .test-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .test-table th,
+        .test-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .test-table th {
+            background: rgba(99, 102, 241, 0.1);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .test-table tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .status-badge.pass {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .status-badge.fail {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--error-color);
+        }
+
+        .method-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: monospace;
+        }
+
+        .method-badge.GET { background: rgba(16, 185, 129, 0.3); color: #10b981; }
+        .method-badge.POST { background: rgba(99, 102, 241, 0.3); color: #818cf8; }
+        .method-badge.PUT { background: rgba(245, 158, 11, 0.3); color: #f59e0b; }
+        .method-badge.DELETE { background: rgba(239, 68, 68, 0.3); color: #ef4444; }
+
+        .endpoint {
+            font-family: 'Consolas', monospace;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .duration {
+            color: var(--text-muted);
+            font-family: monospace;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--border-color);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar .fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--primary-light);
+            text-decoration: none;
+        }
+
+        .chart-container {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .donut-chart {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .donut-chart svg {
+            transform: rotate(-90deg);
+        }
+
+        .donut-chart circle {
+            fill: none;
+            stroke-width: 20;
+        }
+
+        .donut-chart .bg {
+            stroke: var(--border-color);
+        }
+
+        .donut-chart .progress {
+            stroke: var(--success-color);
+            stroke-dasharray: 0 314;
+            transition: stroke-dasharray 1s ease-out;
+        }
+
+        .donut-chart .center-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .donut-chart .percentage {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--success-color);
+        }
+
+        .donut-chart .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+
+        .mode-section:nth-child(1) { animation-delay: 0.1s; }
+        .mode-section:nth-child(2) { animation-delay: 0.2s; }
+        .mode-section:nth-child(3) { animation-delay: 0.3s; }
+
+        .unavailable {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px dashed var(--error-color);
+        }
+
+        .unavailable .mode-header {
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.5), transparent);
+        }
+
+        .unavailable .mode-content {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="animate-in">
+            <h1>Arcana Cloud API Test Report</h1>
+            <p>Comprehensive API Testing Results - 2025-11-26 12:18:50</p>
+        </header>
+
+        <div class="summary-grid">
+            <div class="summary-card total animate-in">
+                <div class="value">28</div>
+                <div class="label">Total Tests</div>
+            </div>
+            <div class="summary-card passed animate-in">
+                <div class="value">28</div>
+                <div class="label">Passed</div>
+            </div>
+            <div class="summary-card failed animate-in">
+                <div class="value">0</div>
+                <div class="label">Failed</div>
+            </div>
+            <div class="summary-card rate animate-in">
+                <div class="value">100.0%</div>
+                <div class="label">Pass Rate</div>
+            </div>
+        </div>
+
+        <div class="chart-container animate-in">
+            <div class="donut-chart">
+                <svg width="150" height="150" viewBox="0 0 150 150">
+                    <circle class="bg" cx="75" cy="75" r="50"></circle>
+                    <circle class="progress" cx="75" cy="75" r="50"
+                            style="stroke-dasharray: 314.0 314"></circle>
+                </svg>
+                <div class="center-text">
+                    <div class="percentage">100.0%</div>
+                    <div class="label">Overall</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mode-section animate-in">
+            <div class="mode-header" onclick="this.parentElement.querySelector('.mode-content').classList.toggle('hidden')">
+                <h2>
+                    <span class="icon">🏢</span>
+                    Monolithic Mode
+                </h2>
+                <div class="mode-stats">
+                    <span class="pass">✓ 14 Passed</span>
+                    <span class="fail">✗ 0 Failed</span>
+                    <span>100.0%</span>
+                </div>
+            </div>
+            <div class="mode-content">
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">
+                    Base URL: <code>http://localhost:8080</code>
+                </p>
+                <div class="progress-bar">
+                    <div class="fill" style="width: 100.0%"></div>
+                </div>
+                <table class="test-table">
+                    <thead>
+                        <tr>
+                            <th>Test Name</th>
+                            <th>Method</th>
+                            <th>Endpoint</th>
+                            <th>Expected</th>
+                            <th>Actual</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>Health Check</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/actuator/health</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">16.15ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Register New User</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/register</td>
+                            <td>201</td>
+                            <td>201</td>
+                            <td class="duration">91.61ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Admin Login</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/login</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">72.97ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>User Login</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/login</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">72.65ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Invalid Login (should fail)</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/login</td>
+                            <td>401</td>
+                            <td>401</td>
+                            <td class="duration">12.43ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Refresh Token</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/refresh</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">17.54ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get Current User Profile</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/me</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">16.04ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get All Users (Admin)</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/users</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">14.32ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get User By ID (Admin)</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/users/6</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">13.52ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Create User (Admin)</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/users</td>
+                            <td>201</td>
+                            <td>201</td>
+                            <td class="duration">72.32ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Update User (Admin)</td>
+                            <td><span class="method-badge PUT">PUT</span></td>
+                            <td class="endpoint">/api/v1/users/8</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">16.74ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Delete User (Admin)</td>
+                            <td><span class="method-badge DELETE">DELETE</span></td>
+                            <td class="endpoint">/api/v1/users/8</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">17.28ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get Users Without Auth (should fail)</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/users</td>
+                            <td>403</td>
+                            <td>403</td>
+                            <td class="duration">8.85ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Logout</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/logout</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">14.05ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mode-section unavailable animate-in">
+            <div class="mode-header">
+                <h2>
+                    <span class="icon">📡</span>
+                    Layered Mode
+                </h2>
+                <div class="mode-stats">
+                    <span class="fail">⚠️ Service Unavailable</span>
+                </div>
+            </div>
+            <div class="mode-content">
+                <p>Service at <code>http://localhost:8090</code> is not available.</p>
+                <p style="margin-top: 1rem;">Please ensure the service is running and try again.</p>
+            </div>
+        </div>
+
+        <div class="mode-section animate-in">
+            <div class="mode-header" onclick="this.parentElement.querySelector('.mode-content').classList.toggle('hidden')">
+                <h2>
+                    <span class="icon">☸️</span>
+                    Microservices Mode
+                </h2>
+                <div class="mode-stats">
+                    <span class="pass">✓ 14 Passed</span>
+                    <span class="fail">✗ 0 Failed</span>
+                    <span>100.0%</span>
+                </div>
+            </div>
+            <div class="mode-content">
+                <p style="margin-bottom: 1rem; color: var(--text-muted);">
+                    Base URL: <code>http://localhost:30080</code>
+                </p>
+                <div class="progress-bar">
+                    <div class="fill" style="width: 100.0%"></div>
+                </div>
+                <table class="test-table">
+                    <thead>
+                        <tr>
+                            <th>Test Name</th>
+                            <th>Method</th>
+                            <th>Endpoint</th>
+                            <th>Expected</th>
+                            <th>Actual</th>
+                            <th>Duration</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr>
+                            <td>Health Check</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/actuator/health</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">13.76ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Register New User</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/register</td>
+                            <td>201</td>
+                            <td>201</td>
+                            <td class="duration">86.71ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Admin Login</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/login</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">78.26ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>User Login</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/login</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">73.52ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Invalid Login (should fail)</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/login</td>
+                            <td>401</td>
+                            <td>401</td>
+                            <td class="duration">13.68ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Refresh Token</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/refresh</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">22.49ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get Current User Profile</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/me</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">13.29ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get All Users (Admin)</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/users</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">17.46ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get User By ID (Admin)</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/users/29</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">12.06ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Create User (Admin)</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/users</td>
+                            <td>201</td>
+                            <td>201</td>
+                            <td class="duration">71.84ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Update User (Admin)</td>
+                            <td><span class="method-badge PUT">PUT</span></td>
+                            <td class="endpoint">/api/v1/users/31</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">14.91ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Delete User (Admin)</td>
+                            <td><span class="method-badge DELETE">DELETE</span></td>
+                            <td class="endpoint">/api/v1/users/31</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">16.58ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Get Users Without Auth (should fail)</td>
+                            <td><span class="method-badge GET">GET</span></td>
+                            <td class="endpoint">/api/v1/users</td>
+                            <td>403</td>
+                            <td>403</td>
+                            <td class="duration">9.39ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                        <tr>
+                            <td>Logout</td>
+                            <td><span class="method-badge POST">POST</span></td>
+                            <td class="endpoint">/api/v1/auth/logout</td>
+                            <td>200</td>
+                            <td>200</td>
+                            <td class="duration">15.28ms</td>
+                            <td><span class="status-badge pass">✓ PASS</span></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            <p>Generated by Arcana Cloud API Test Suite</p>
+            <p>Report generated at 2025-11-26 12:18:50</p>
+        </footer>
+    </div>
+
+    <script>
+        // Animate progress bars on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const progressBars = document.querySelectorAll('.progress-bar .fill');
+            setTimeout(() => {
+                progressBars.forEach(bar => {
+                    bar.style.width = bar.style.width;
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>

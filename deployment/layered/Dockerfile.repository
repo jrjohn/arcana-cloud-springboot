@@ -1,0 +1,25 @@
+# Repository Layer Dockerfile
+FROM gradle:8.10-jdk21 AS build
+
+WORKDIR /app
+COPY build.gradle.kts settings.gradle.kts gradle.properties ./
+COPY src ./src
+
+RUN gradle build -x test --no-daemon
+
+FROM eclipse-temurin:21-jre-alpine
+
+WORKDIR /app
+COPY --from=build /app/build/libs/*.jar app.jar
+
+ENV DEPLOYMENT_MODE=layered
+ENV DEPLOYMENT_LAYER=repository
+ENV JAVA_OPTS="-Xmx256m -Xms128m -XX:+UseG1GC"
+ENV SPRING_PROFILES_ACTIVE=layered
+
+EXPOSE 8082 9091
+
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8082/actuator/health || exit 1
+
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

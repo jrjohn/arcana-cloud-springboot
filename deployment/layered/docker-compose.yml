@@ -1,0 +1,111 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: arcana-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: arcana_cloud
+      MYSQL_USER: arcana
+      MYSQL_PASSWORD: arcana_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - arcana-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: arcana-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - arcana-network
+
+  repository:
+    build:
+      context: ../..
+      dockerfile: deployment/layered/Dockerfile.repository
+    container_name: arcana-repository
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: repository
+      SERVER_PORT: 8082
+      GRPC_SERVER_PORT: 9091
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/arcana_cloud?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_pass
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+    ports:
+      - "8082:8082"
+      - "9091:9091"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - arcana-network
+
+  service:
+    build:
+      context: ../..
+      dockerfile: deployment/layered/Dockerfile.service
+    container_name: arcana-service
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: service
+      COMMUNICATION_PROTOCOL: grpc
+      SERVER_PORT: 8081
+      GRPC_SERVER_PORT: 9090
+      REPOSITORY_GRPC_URL: repository:9091
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production-must-be-32-chars
+    ports:
+      - "8081:8081"
+      - "9090:9090"
+    depends_on:
+      - repository
+    networks:
+      - arcana-network
+
+  controller:
+    build:
+      context: ../..
+      dockerfile: deployment/layered/Dockerfile.controller
+    container_name: arcana-controller
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: controller
+      COMMUNICATION_PROTOCOL: grpc
+      SERVER_PORT: 8080
+      SERVICE_GRPC_URL: service:9090
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production-must-be-32-chars
+    ports:
+      - "8080:8080"
+    depends_on:
+      - service
+    networks:
+      - arcana-network
+
+volumes:
+  mysql_data:
+  redis_data:
+
+networks:
+  arcana-network:
+    driver: bridge

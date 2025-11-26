@@ -1,0 +1,103 @@
+{
+  "reportMetadata": {
+    "generatedAt": "2025-11-26 12:01:22",
+    "baseUrl": "http://localhost:30080",
+    "mode": "monolithic"
+  },
+  "summary": {
+    "totalTests": 8,
+    "passed": 5,
+    "failed": 3,
+    "passRate": 62.5
+  },
+  "results": [
+    {
+      "name": "Health Check",
+      "method": "GET",
+      "endpoint": "/actuator/health",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 16.0,
+      "response_body": "{\"components\":{\"db\":{\"details\":{\"database\":\"MySQL\",\"validationQuery\":\"isValid()\"},\"status\":\"UP\"},\"diskSpace\":{\"details\":{\"total\":1962747092992,\"free\":1817979731968,\"threshold\":10485760,\"path\":\"/app/.\",\"exists\":true},\"status\":\"UP\"},\"livenessState\":{\"status\":\"UP\"},\"ping\":{\"status\":\"UP\"},\"readinessState\":{\"status\":\"UP\"},\"redis\":{\"details\":{\"version\":\"7.0.15\"},\"status\":\"UP\"},\"ssl\":{\"details\":{\"expiringChains\":[],\"invalidChains\":[],\"validChains\":[]},\"status\":\"UP\"}},\"groups\":[\"liveness\",\"readiness\"],\"status\":\"UP\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Register New User",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/register",
+      "status": "PASS",
+      "expected_status": 201,
+      "actual_status": 201,
+      "duration_ms": 91.66,
+      "response_body": "{\"success\":true,\"message\":\"User registered successfully\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsInVzZXJuYW1lIjoidGVzdHVzZXJtMzFiYjMiLCJlbWFpbCI6InRlc3RtMzFiYjNAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEyOTY4MywiZXhwIjoxNzY0MTMzMjgzfQ.ru84L5Gbo2E1FIFIgtlxJPHooX5RrANubatoESC-YpVFxfx1i8fCRHgXaBL3Hv_QlaPA66C-djcX2Znbb4AAnQ\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTI5NjgzLCJleHAiOjE3NjY3MjE2ODN9.gwVaK1M7gBw3OcTC3abaWKHl-41-CtPcOZv8f2-0uOW1F5hRwyjG97QlMnWI4IEy6bGT2aM28KJdw2H4zGdcsA\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":10,\"username\":\"testuserm31bb3\",\"email\":\"testm31bb3@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:23.10625\",\"updatedAt\":\"2025-11-26T04:01:23.106272\"}},\"timestamp\":\"2025-11-26T04:01:23.110428756\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Admin Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "FAIL",
+      "expected_status": 200,
+      "actual_status": 401,
+      "duration_ms": 67.12,
+      "response_body": "{\"success\":false,\"message\":\"Invalid username or password\",\"timestamp\":\"2025-11-26T04:01:23.177404506\"}",
+      "error_message": ""
+    },
+    {
+      "name": "User Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 68.62,
+      "response_body": "{\"success\":true,\"message\":\"Login successful\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsInVzZXJuYW1lIjoidGVzdHVzZXJtMzFiYjMiLCJlbWFpbCI6InRlc3RtMzFiYjNAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEyOTY4MywiZXhwIjoxNzY0MTMzMjgzfQ.ru84L5Gbo2E1FIFIgtlxJPHooX5RrANubatoESC-YpVFxfx1i8fCRHgXaBL3Hv_QlaPA66C-djcX2Znbb4AAnQ\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMCIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTI5NjgzLCJleHAiOjE3NjY3MjE2ODN9.gwVaK1M7gBw3OcTC3abaWKHl-41-CtPcOZv8f2-0uOW1F5hRwyjG97QlMnWI4IEy6bGT2aM28KJdw2H4zGdcsA\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":10,\"username\":\"testuserm31bb3\",\"email\":\"testm31bb3@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:23\",\"updatedAt\":\"2025-11-26T04:01:23\"}},\"timestamp\":\"2025-11-26T04:01:23.246168423\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Invalid Login (should fail)",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 401,
+      "actual_status": 401,
+      "duration_ms": 12.3,
+      "response_body": "{\"success\":false,\"message\":\"Invalid username or password\",\"timestamp\":\"2025-11-26T04:01:23.258892131\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Refresh Token",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/refresh",
+      "status": "FAIL",
+      "expected_status": 200,
+      "actual_status": 500,
+      "duration_ms": 14.6,
+      "response_body": "{\"success\":false,\"message\":\"Internal server error\",\"timestamp\":\"2025-11-26T04:01:23.273545381\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get Current User Profile",
+      "method": "GET",
+      "endpoint": "/api/v1/me",
+      "status": "FAIL",
+      "expected_status": 200,
+      "actual_status": 500,
+      "duration_ms": 18.89,
+      "response_body": "{\"success\":false,\"message\":\"Internal server error\",\"timestamp\":\"2025-11-26T04:01:23.292176548\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Logout",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/logout",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 16.36,
+      "response_body": "{\"success\":true,\"message\":\"Logged out successfully\",\"timestamp\":\"2025-11-26T04:01:23.308632215\"}",
+      "error_message": ""
+    }
+  ]
+}

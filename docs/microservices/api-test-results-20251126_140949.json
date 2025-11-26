@@ -1,0 +1,169 @@
+{
+  "reportMetadata": {
+    "generatedAt": "2025-11-26 14:09:49",
+    "baseUrl": "http://localhost:30080",
+    "mode": "microservices"
+  },
+  "summary": {
+    "totalTests": 14,
+    "passed": 14,
+    "failed": 0,
+    "passRate": 100.0
+  },
+  "results": [
+    {
+      "name": "Health Check",
+      "method": "GET",
+      "endpoint": "/actuator/health",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 13.83,
+      "response_body": "{\"components\":{\"db\":{\"details\":{\"database\":\"MySQL\",\"validationQuery\":\"isValid()\"},\"status\":\"UP\"},\"diskSpace\":{\"details\":{\"total\":1962747092992,\"free\":1817067372544,\"threshold\":10485760,\"path\":\"/app/.\",\"exists\":true},\"status\":\"UP\"},\"livenessState\":{\"status\":\"UP\"},\"ping\":{\"status\":\"UP\"},\"readinessState\":{\"status\":\"UP\"},\"redis\":{\"details\":{\"version\":\"7.0.15\"},\"status\":\"UP\"},\"ssl\":{\"details\":{\"expiringChains\":[],\"invalidChains\":[],\"validChains\":[]},\"status\":\"UP\"}},\"groups\":[\"liveness\",\"readiness\"],\"status\":\"UP\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Register New User",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/register",
+      "status": "PASS",
+      "expected_status": 201,
+      "actual_status": 201,
+      "duration_ms": 119.38,
+      "response_body": "{\"success\":true,\"message\":\"User registered successfully\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MSIsInVzZXJuYW1lIjoidGVzdHVzZXI3dmhybHIiLCJlbWFpbCI6InRlc3Q3dmhybHJAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEzNzM4OSwiZXhwIjoxNzY0MTQwOTg5fQ.AIaJkVuSOP2XgEyq1v42ni5_bFX0oiWA4AaXpxXO8bHHtFpzZku7fU7U7TVpNeNoi1FywUKB9xr3hB3GGGXARg\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTM3Mzg5LCJleHAiOjE3NjY3MjkzODl9.ZsivG47HH9wOL-KE3gz-P12BDZgGEL4dGkraSSn2rsses5eRNXciSUlXi2aLhe_qWz5jl_U-7_EtbJcWq5Mhdg\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":41,\"username\":\"testuser7vhrlr\",\"email\":\"test7vhrlr@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:49.398017\",\"updatedAt\":\"2025-11-26T06:09:49.398064\"}},\"timestamp\":\"2025-11-26T06:09:49.409846002\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Admin Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 77.17,
+      "response_body": "{\"success\":true,\"message\":\"Login successful\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOCIsInVzZXJuYW1lIjoic3lzYWRtaW4iLCJlbWFpbCI6InN5c2FkbWluQGFyY2FuYS1jbG91ZC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjQxMzczODksImV4cCI6MTc2NDE0MDk4OX0.ahIER7p24XrRgO3vTWSa42ix9kG1jdwBZWuaeA5ABeSpQAqbYznXp85TW61XkvP35ZTB4PxApeDOKZxcwROEqQ\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIyOCIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTM3Mzg5LCJleHAiOjE3NjY3MjkzODl9.rnvjmhyvsS47sUxfKX8ccweP5WSuEZXXEynmYSeAR",
+      "error_message": ""
+    },
+    {
+      "name": "User Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 107.74,
+      "response_body": "{\"success\":true,\"message\":\"Login successful\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MSIsInVzZXJuYW1lIjoidGVzdHVzZXI3dmhybHIiLCJlbWFpbCI6InRlc3Q3dmhybHJAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEzNzM4OSwiZXhwIjoxNzY0MTQwOTg5fQ.AIaJkVuSOP2XgEyq1v42ni5_bFX0oiWA4AaXpxXO8bHHtFpzZku7fU7U7TVpNeNoi1FywUKB9xr3hB3GGGXARg\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTM3Mzg5LCJleHAiOjE3NjY3MjkzODl9.ZsivG47HH9wOL-KE3gz-P12BDZgGEL4dGkraSSn2rsses5eRNXciSUlXi2aLhe_qWz5jl_U-7_EtbJcWq5Mhdg\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":41,\"username\":\"testuser7vhrlr\",\"email\":\"test7vhrlr@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:49\",\"updatedAt\":\"2025-11-26T06:09:49\"}},\"timestamp\":\"2025-11-26T06:09:49.594910002\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Invalid Login (should fail)",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 401,
+      "actual_status": 401,
+      "duration_ms": 21.43,
+      "response_body": "{\"success\":false,\"message\":\"Invalid username or password\",\"timestamp\":\"2025-11-26T06:09:49.615126502\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Refresh Token",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/refresh",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 33.04,
+      "response_body": "{\"success\":true,\"message\":\"Token refreshed successfully\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MiIsInVzZXJuYW1lIjoicmVmcmVzaGg1c3lpcCIsImVtYWlsIjoicmVmcmVzaGg1c3lpcEBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzY0MTM3Mzg5LCJleHAiOjE3NjQxNDA5ODl9.DMpbcCggCzcnVIZldSoaQPJr_bYpjfom3XEF9J_xBWbb1c6nlQnIgOcjoiNsOXuDToPvWYIzy4iDYjBww84aaw\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0MiIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTM3Mzg5LCJleHAiOjE3NjY3MjkzODl9.MVSXNeEucHzp9v0XySu6Y5ppIhe-kndNQkxoSLcZxC8SKnMnbiiYVTUJYCtW2dBKsF21m-olisNU1Cq_rbKCFQ\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":42,\"username\":\"refreshh5syip\",\"email\":\"refreshh5syip@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:50\",\"updatedAt\":\"2025-11-26T06:09:50\"}},\"timestamp\":\"2025-11-26T06:09:49.733130544\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get Current User Profile",
+      "method": "GET",
+      "endpoint": "/api/v1/me",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 31.08,
+      "response_body": "{\"success\":true,\"data\":{\"id\":41,\"username\":\"testuser7vhrlr\",\"email\":\"test7vhrlr@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:49\",\"updatedAt\":\"2025-11-26T06:09:49\"},\"timestamp\":\"2025-11-26T06:09:49.766933128\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get All Users (Admin)",
+      "method": "GET",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 36.56,
+      "response_body": "{\"success\":true,\"data\":{\"content\":[{\"id\":42,\"username\":\"refreshh5syip\",\"email\":\"refreshh5syip@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:50\",\"updatedAt\":\"2025-11-26T06:09:50\"},{\"id\":41,\"username\":\"testuser7vhrlr\",\"email\":\"test7vhrlr@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:49\",\"updatedAt\":\"2025-11-26T06:09:49\"},{\"id\":39,\"username\":\"refreshxydxpw\",\"email\":\"refreshxydxpw@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:18\",\"updatedAt\":\"2025-11-26T05:59:18\"},{\"id\":38,\"username\":\"testuser0e7xfs\",\"email\":\"test0e7xfs@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:59:17\",\"updatedAt\":\"2025-11-26T05:59:17\"},{\"id\":36,\"username\":\"refreshstgg32\",\"email\":\"refreshstgg32@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:58:20\",\"updatedAt\":\"2025-11-26T05:58:20\"},{\"id\":35,\"username\":\"testuserqhutm5\",\"email\":\"testqhutm5@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:58:20\",\"updatedAt\":\"2025-11-26T05:58:20\"},{\"id\":33,\"username\":\"refreshxhv1ke\",\"email\":\"refreshxhv1ke@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:57:57\",\"updatedAt\":\"2025-11-26T05:57:57\"},{\"id\":32,\"username\":\"testuseruvxztm\",\"email\":\"testuvxztm@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T05:57:56\",\"updatedAt\":\"2025-11-26T05:57:56\"},{\"id\":30,\"username\":\"refreshdghyej\",\"email\":\"refreshdghyej@example.com\",\"firstName\":\"Refresh\",\"lastName\":\"Test\",\"role\":\"USER\",\"isActive\":true,\"is",
+      "error_message": ""
+    },
+    {
+      "name": "Get User By ID (Admin)",
+      "method": "GET",
+      "endpoint": "/api/v1/users/41",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 23.31,
+      "response_body": "{\"success\":true,\"data\":{\"id\":41,\"username\":\"testuser7vhrlr\",\"email\":\"test7vhrlr@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:49\",\"updatedAt\":\"2025-11-26T06:09:49\"},\"timestamp\":\"2025-11-26T06:09:49.827241836\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Create User (Admin)",
+      "method": "POST",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 201,
+      "actual_status": 201,
+      "duration_ms": 87.1,
+      "response_body": "{\"success\":true,\"message\":\"User created successfully\",\"data\":{\"id\":43,\"username\":\"adminuser7vhrlr\",\"email\":\"admin7vhrlr@example.com\",\"firstName\":\"Admin\",\"lastName\":\"Created\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:49.912212\",\"updatedAt\":\"2025-11-26T06:09:49.912229\"},\"timestamp\":\"2025-11-26T06:09:49.914946461\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Update User (Admin)",
+      "method": "PUT",
+      "endpoint": "/api/v1/users/43",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 25.48,
+      "response_body": "{\"success\":true,\"message\":\"User updated successfully\",\"data\":{\"id\":43,\"username\":\"adminuser7vhrlr\",\"email\":\"admin7vhrlr@example.com\",\"firstName\":\"Updated\",\"lastName\":\"Name\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T06:09:50\",\"updatedAt\":\"2025-11-26T06:09:49.938576\"},\"timestamp\":\"2025-11-26T06:09:49.940610294\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Delete User (Admin)",
+      "method": "DELETE",
+      "endpoint": "/api/v1/users/43",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 19.97,
+      "response_body": "{\"success\":true,\"message\":\"User deleted successfully\",\"timestamp\":\"2025-11-26T06:09:49.960962044\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get Users Without Auth (should fail)",
+      "method": "GET",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 403,
+      "actual_status": 403,
+      "duration_ms": 10.06,
+      "response_body": "",
+      "error_message": ""
+    },
+    {
+      "name": "Logout",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/logout",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 15.66,
+      "response_body": "{\"success\":true,\"message\":\"Logged out successfully\",\"timestamp\":\"2025-11-26T06:09:49.986713086\"}",
+      "error_message": ""
+    }
+  ]
+}

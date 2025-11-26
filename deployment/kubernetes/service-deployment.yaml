@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcana-service
+  namespace: arcana-cloud
+  labels:
+    app: arcana-service
+    layer: service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: arcana-service
+      layer: service
+  template:
+    metadata:
+      labels:
+        app: arcana-service
+        layer: service
+    spec:
+      containers:
+      - name: service
+        image: arcana-cloud-java:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8081
+          name: http
+        - containerPort: 9090
+          name: grpc
+        env:
+        - name: DEPLOYMENT_MODE
+          value: "layered"
+        - name: DEPLOYMENT_LAYER
+          value: "service"
+        - name: SERVER_PORT
+          value: "8081"
+        - name: GRPC_SERVER_PORT
+          value: "9090"
+        - name: COMMUNICATION_PROTOCOL
+          valueFrom:
+            configMapKeyRef:
+              name: arcana-config
+              key: communication.protocol
+        - name: REPOSITORY_GRPC_URL
+          valueFrom:
+            configMapKeyRef:
+              name: arcana-config
+              key: repository.grpc.url
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: arcana-secrets
+              key: jwt.secret
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8081
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3

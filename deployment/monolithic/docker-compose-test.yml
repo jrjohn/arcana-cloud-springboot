@@ -1,0 +1,76 @@
+version: '3.8'
+
+# Monolithic mode Docker Compose for testing
+# Uses different ports to avoid conflicts with existing services
+# App: 8080, MySQL: 3308, Redis: 6381
+
+services:
+  mysql-mono:
+    image: mysql:8.0
+    container_name: arcana-java-mono-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: arcana_cloud_mono
+      MYSQL_USER: arcana
+      MYSQL_PASSWORD: arcana_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - mysql_mono_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - arcana-mono-network
+
+  redis-mono:
+    image: redis:7.0-alpine
+    container_name: arcana-java-mono-redis
+    ports:
+      - "6381:6379"
+    volumes:
+      - redis_mono_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - arcana-mono-network
+
+  app:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: arcana-java-mono-app
+    environment:
+      SPRING_PROFILES_ACTIVE: monolithic
+      DEPLOYMENT_MODE: monolithic
+      SERVER_PORT: 8080
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-mono:3306/arcana_cloud_mono?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_pass
+      SPRING_DATA_REDIS_HOST: redis-mono
+      SPRING_DATA_REDIS_PORT: 6379
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production-must-be-32-chars
+      SPRING_FLYWAY_ENABLED: "true"
+    ports:
+      - "8080:8080"
+      - "9093:9090"
+    depends_on:
+      mysql-mono:
+        condition: service_healthy
+      redis-mono:
+        condition: service_healthy
+    networks:
+      - arcana-mono-network
+
+volumes:
+  mysql_mono_data:
+  redis_mono_data:
+
+networks:
+  arcana-mono-network:
+    driver: bridge

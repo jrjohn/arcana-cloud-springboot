@@ -1,0 +1,169 @@
+{
+  "reportMetadata": {
+    "generatedAt": "2025-11-26 12:01:58",
+    "baseUrl": "http://localhost:30080",
+    "mode": "monolithic"
+  },
+  "summary": {
+    "totalTests": 14,
+    "passed": 10,
+    "failed": 4,
+    "passRate": 71.4
+  },
+  "results": [
+    {
+      "name": "Health Check",
+      "method": "GET",
+      "endpoint": "/actuator/health",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 10.25,
+      "response_body": "{\"components\":{\"db\":{\"details\":{\"database\":\"MySQL\",\"validationQuery\":\"isValid()\"},\"status\":\"UP\"},\"diskSpace\":{\"details\":{\"total\":1962747092992,\"free\":1817979588608,\"threshold\":10485760,\"path\":\"/app/.\",\"exists\":true},\"status\":\"UP\"},\"livenessState\":{\"status\":\"UP\"},\"ping\":{\"status\":\"UP\"},\"readinessState\":{\"status\":\"UP\"},\"redis\":{\"details\":{\"version\":\"7.0.15\"},\"status\":\"UP\"},\"ssl\":{\"details\":{\"expiringChains\":[],\"invalidChains\":[],\"validChains\":[]},\"status\":\"UP\"}},\"groups\":[\"liveness\",\"readiness\"],\"status\":\"UP\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Register New User",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/register",
+      "status": "PASS",
+      "expected_status": 201,
+      "actual_status": 201,
+      "duration_ms": 79.76,
+      "response_body": "{\"success\":true,\"message\":\"User registered successfully\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMyIsInVzZXJuYW1lIjoidGVzdHVzZXJoOWNmMDkiLCJlbWFpbCI6InRlc3RoOWNmMDlAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEyOTcxOCwiZXhwIjoxNzY0MTMzMzE4fQ.p0UmGQSyaxumZtyuUax1KY5ooc-PSRitCiKbbPaAiE6g-kkAM6iEUwdI5dNVqZFIT1-t8uIafX6fz_PuRuV-BA\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMyIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTI5NzE4LCJleHAiOjE3NjY3MjE3MTh9.AH6AzwP53O4S0DOHwx3YpPDuG_M05HYP8Y4hiDhbEX34YnZt40maRnOnsoDyuwMolaBqMJTE0SEUxSJb_QbyMQ\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":13,\"username\":\"testuserh9cf09\",\"email\":\"testh9cf09@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:58.352606\",\"updatedAt\":\"2025-11-26T04:01:58.352622\"}},\"timestamp\":\"2025-11-26T04:01:58.357489175\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Admin Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 68.3,
+      "response_body": "{\"success\":true,\"message\":\"Login successful\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMiIsInVzZXJuYW1lIjoic3lzYWRtaW4iLCJlbWFpbCI6InN5c2FkbWluQGFyY2FuYS1jbG91ZC5jb20iLCJyb2xlIjoiQURNSU4iLCJpYXQiOjE3NjQxMjk3MTgsImV4cCI6MTc2NDEzMzMxOH0.SzT1RbG8WIMQSvagiMdiytSNwRMw9XnNpUdqgAVV2wJZtmyvL4bNCtbSQDhMVjOzkZSJJ5imeWxR2LmLqCgjWg\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMiIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTI5NzE4LCJleHAiOjE3NjY3MjE3MTh9.xnZyFpBUPKTCfYhq4N75hXF2nUSvCMIbjXFCYYELwWb-nNjF2BdNj2qdxiFqfuLN3jPXMM-YABlSv0UV_L_v-Q\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":12,\"username\":\"sysadmin\",\"email\":\"sysadmin@arcana-cloud.com\",\"firstName\":\"System\",\"lastName\":\"Admin\",\"role\":\"ADMIN\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:39\",\"updatedAt\":\"2025-11-26T04:01:44\"}},\"timestamp\":\"2025-11-26T04:01:58.425911592\"}",
+      "error_message": ""
+    },
+    {
+      "name": "User Login",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 71.72,
+      "response_body": "{\"success\":true,\"message\":\"Login successful\",\"data\":{\"accessToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMyIsInVzZXJuYW1lIjoidGVzdHVzZXJoOWNmMDkiLCJlbWFpbCI6InRlc3RoOWNmMDlAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NDEyOTcxOCwiZXhwIjoxNzY0MTMzMzE4fQ.p0UmGQSyaxumZtyuUax1KY5ooc-PSRitCiKbbPaAiE6g-kkAM6iEUwdI5dNVqZFIT1-t8uIafX6fz_PuRuV-BA\",\"refreshToken\":\"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMyIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY0MTI5NzE4LCJleHAiOjE3NjY3MjE3MTh9.AH6AzwP53O4S0DOHwx3YpPDuG_M05HYP8Y4hiDhbEX34YnZt40maRnOnsoDyuwMolaBqMJTE0SEUxSJb_QbyMQ\",\"tokenType\":\"Bearer\",\"expiresIn\":3600,\"user\":{\"id\":13,\"username\":\"testuserh9cf09\",\"email\":\"testh9cf09@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:58\",\"updatedAt\":\"2025-11-26T04:01:58\"}},\"timestamp\":\"2025-11-26T04:01:58.497736051\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Invalid Login (should fail)",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/login",
+      "status": "PASS",
+      "expected_status": 401,
+      "actual_status": 401,
+      "duration_ms": 12.45,
+      "response_body": "{\"success\":false,\"message\":\"Invalid username or password\",\"timestamp\":\"2025-11-26T04:01:58.510222801\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Refresh Token",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/refresh",
+      "status": "FAIL",
+      "expected_status": 200,
+      "actual_status": 500,
+      "duration_ms": 13.68,
+      "response_body": "{\"success\":false,\"message\":\"Internal server error\",\"timestamp\":\"2025-11-26T04:01:58.524070301\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get Current User Profile",
+      "method": "GET",
+      "endpoint": "/api/v1/me",
+      "status": "FAIL",
+      "expected_status": 200,
+      "actual_status": 500,
+      "duration_ms": 15.77,
+      "response_body": "{\"success\":false,\"message\":\"Internal server error\",\"timestamp\":\"2025-11-26T04:01:58.538706842\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get All Users (Admin)",
+      "method": "GET",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 33.68,
+      "response_body": "{\"success\":true,\"data\":{\"content\":[{\"id\":13,\"username\":\"testuserh9cf09\",\"email\":\"testh9cf09@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:58\",\"updatedAt\":\"2025-11-26T04:01:58\"},{\"id\":12,\"username\":\"sysadmin\",\"email\":\"sysadmin@arcana-cloud.com\",\"firstName\":\"System\",\"lastName\":\"Admin\",\"role\":\"ADMIN\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:39\",\"updatedAt\":\"2025-11-26T04:01:44\"},{\"id\":10,\"username\":\"testuserm31bb3\",\"email\":\"testm31bb3@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:23\",\"updatedAt\":\"2025-11-26T04:01:23\"},{\"id\":11,\"username\":\"testusert3wm1g\",\"email\":\"testt3wm1g@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:23\",\"updatedAt\":\"2025-11-26T04:01:23\"},{\"id\":9,\"username\":\"admin\",\"email\":\"admin@arcana-cloud.com\",\"firstName\":\"System\",\"lastName\":\"Administrator\",\"role\":\"ADMIN\",\"isActive\":true,\"isVerified\":true,\"createdAt\":\"2025-11-26T04:01:14\",\"updatedAt\":\"2025-11-26T04:01:14\"},{\"id\":7,\"username\":\"testuser00cnbt\",\"email\":\"test00cnbt@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T03:59:55\",\"updatedAt\":\"2025-11-26T03:59:55\"},{\"id\":8,\"username\":\"testuserwh8jbh\",\"email\":\"testwh8jbh@example.com\",\"firstName\":\"Test\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T03:59:55\",\"updatedAt\":\"2025-11-26T03:59:55\"},{\"id\":6,\"username\":\"restuser001\",\"email\":\"restuser001@example.com\",\"firstName\":\"REST\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T03:51:21\",\"updatedAt\":\"2025-11-26T03:51:21\"},{\"id\":5,\"username\":\"layereduser456\",\"email\":\"layered456@example.com\",\"firstName\":\"Layered\",\"lastName\":\"User\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt",
+      "error_message": ""
+    },
+    {
+      "name": "Get User By ID (Admin)",
+      "method": "GET",
+      "endpoint": "/api/v1/users/13",
+      "status": "FAIL",
+      "expected_status": 200,
+      "actual_status": 500,
+      "duration_ms": 14.84,
+      "response_body": "{\"success\":false,\"message\":\"Internal server error\",\"timestamp\":\"2025-11-26T04:01:58.588593217\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Create User (Admin)",
+      "method": "POST",
+      "endpoint": "/api/v1/users",
+      "status": "PASS",
+      "expected_status": 201,
+      "actual_status": 201,
+      "duration_ms": 74.12,
+      "response_body": "{\"success\":true,\"message\":\"User created successfully\",\"data\":{\"id\":14,\"username\":\"adminuserh9cf09\",\"email\":\"adminh9cf09@example.com\",\"firstName\":\"Admin\",\"lastName\":\"Created\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:58.659287\",\"updatedAt\":\"2025-11-26T04:01:58.659304\"},\"timestamp\":\"2025-11-26T04:01:58.662468759\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Update User (Admin)",
+      "method": "PUT",
+      "endpoint": "/api/v1/users/14",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 32.17,
+      "response_body": "{\"success\":true,\"message\":\"User updated successfully\",\"data\":{\"id\":14,\"username\":\"adminuserh9cf09\",\"email\":\"adminh9cf09@example.com\",\"firstName\":\"Updated\",\"lastName\":\"Name\",\"role\":\"USER\",\"isActive\":true,\"isVerified\":false,\"createdAt\":\"2025-11-26T04:01:59\",\"updatedAt\":\"2025-11-26T04:01:58.690649\"},\"timestamp\":\"2025-11-26T04:01:58.694620176\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Delete User (Admin)",
+      "method": "DELETE",
+      "endpoint": "/api/v1/users/14",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 43.29,
+      "response_body": "{\"success\":true,\"message\":\"User deleted successfully\",\"timestamp\":\"2025-11-26T04:01:58.738268801\"}",
+      "error_message": ""
+    },
+    {
+      "name": "Get Users Without Auth (should fail)",
+      "method": "GET",
+      "endpoint": "/api/v1/users",
+      "status": "FAIL",
+      "expected_status": 401,
+      "actual_status": 403,
+      "duration_ms": 38.01,
+      "response_body": "",
+      "error_message": ""
+    },
+    {
+      "name": "Logout",
+      "method": "POST",
+      "endpoint": "/api/v1/auth/logout",
+      "status": "PASS",
+      "expected_status": 200,
+      "actual_status": 200,
+      "duration_ms": 14.47,
+      "response_body": "{\"success\":true,\"message\":\"Logged out successfully\",\"timestamp\":\"2025-11-26T04:01:58.790910926\"}",
+      "error_message": ""
+    }
+  ]
+}

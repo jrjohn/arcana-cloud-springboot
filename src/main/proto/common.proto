@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package arcana.cloud;
+
+option java_multiple_files = true;
+option java_package = "com.arcana.cloud.grpc";
+option java_outer_classname = "CommonProto";
+
+message Empty {}
+
+message PageRequest {
+  int32 page = 1;
+  int32 size = 2;
+}
+
+message PageInfo {
+  int32 page = 1;
+  int32 size = 2;
+  int64 total_elements = 3;
+  int32 total_pages = 4;
+}

@@ -1,0 +1,125 @@
+# Layered mode Docker Compose for testing (HTTP Communication)
+# Uses HTTP for inter-service communication instead of gRPC
+# Controller: 8090 (external), Service: 8091 (internal), Repository: 8092 (internal)
+# MySQL: 3307, Redis: 6380
+
+services:
+  mysql-java:
+    image: mysql:8.0
+    container_name: arcana-java-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_pass
+      MYSQL_DATABASE: arcana_cloud_layered
+      MYSQL_USER: arcana
+      MYSQL_PASSWORD: arcana_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_java_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - arcana-java-network
+
+  redis-java:
+    image: redis:7.0-alpine
+    container_name: arcana-java-redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_java_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - arcana-java-network
+
+  repository:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: arcana-java-repository
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: repository
+      COMMUNICATION_PROTOCOL: grpc
+      SERVER_PORT: 8092
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-java:3306/arcana_cloud_layered?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_pass
+      SPRING_DATA_REDIS_HOST: redis-java
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_FLYWAY_ENABLED: "true"
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production-must-be-32-chars
+    expose:
+      - "8092"
+    depends_on:
+      mysql-java:
+        condition: service_healthy
+      redis-java:
+        condition: service_healthy
+    networks:
+      - arcana-java-network
+
+  service:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: arcana-java-service
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: service
+      COMMUNICATION_PROTOCOL: grpc
+      SERVER_PORT: 8091
+      REPOSITORY_HTTP_URL: http://repository:8092
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-java:3306/arcana_cloud_layered?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_pass
+      SPRING_DATA_REDIS_HOST: redis-java
+      SPRING_DATA_REDIS_PORT: 6379
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production-must-be-32-chars
+    expose:
+      - "8091"
+      - "9090"
+    depends_on:
+      - repository
+    networks:
+      - arcana-java-network
+
+  controller:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    container_name: arcana-java-controller
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: controller
+      COMMUNICATION_PROTOCOL: grpc
+      SERVER_PORT: 8090
+      SERVICE_HTTP_URL: http://service:8091
+      SERVICE_GRPC_URL: service:9090
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-java:3306/arcana_cloud_layered?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_pass
+      SPRING_DATA_REDIS_HOST: redis-java
+      SPRING_DATA_REDIS_PORT: 6379
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production-must-be-32-chars
+    ports:
+      - "8090:8090"
+    depends_on:
+      - service
+    networks:
+      - arcana-java-network
+
+volumes:
+  mysql_java_data:
+  redis_java_data:
+
+networks:
+  arcana-java-network:
+    driver: bridge

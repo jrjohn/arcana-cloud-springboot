@@ -1,0 +1,134 @@
+# ConfigMap for Spring Boot Java Application (Monolithic)
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: arcana-java-config
+  namespace: arcana-cloud
+data:
+  SPRING_PROFILES_ACTIVE: "monolithic"
+  DEPLOYMENT_MODE: "monolithic"
+  # Database
+  SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-service:3306/arcana_cloud_java?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+  SPRING_DATASOURCE_USERNAME: "arcana"
+  # Redis
+  SPRING_DATA_REDIS_HOST: "redis-service"
+  SPRING_DATA_REDIS_PORT: "6379"
+
+---
+# Secret for Spring Boot Java Application
+apiVersion: v1
+kind: Secret
+metadata:
+  name: arcana-java-secrets
+  namespace: arcana-cloud
+type: Opaque
+stringData:
+  SPRING_DATASOURCE_PASSWORD: "arcana_pass"
+  JWT_SECRET: "your-256-bit-secret-key-change-this-in-production-must-be-at-least-32-characters"
+
+---
+# Monolithic Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcana-java-monolithic
+  namespace: arcana-cloud
+  labels:
+    app: arcana-java
+    mode: monolithic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arcana-java
+      mode: monolithic
+  template:
+    metadata:
+      labels:
+        app: arcana-java
+        mode: monolithic
+    spec:
+      containers:
+      - name: app
+        image: arcana-cloud-java:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+          name: http
+        - containerPort: 9090
+          name: grpc
+        env:
+        - name: SERVER_PORT
+          value: "8080"
+        - name: SPRING_GRPC_SERVER_PORT
+          value: "9090"
+        envFrom:
+        - configMapRef:
+            name: arcana-java-config
+        - secretRef:
+            name: arcana-java-secrets
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        livenessProbe:
+          httpGet:
+            path: /actuator/health/liveness
+            port: 8080
+          initialDelaySeconds: 90
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health/readiness
+            port: 8080
+          initialDelaySeconds: 60
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+
+---
+# Monolithic Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-java-monolithic
+  namespace: arcana-cloud
+  labels:
+    app: arcana-java
+spec:
+  selector:
+    app: arcana-java
+    mode: monolithic
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+  - name: grpc
+    port: 9090
+    targetPort: 9090
+  type: ClusterIP
+
+---
+# NodePort Service for external access
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-java-external
+  namespace: arcana-cloud
+  labels:
+    app: arcana-java
+spec:
+  selector:
+    app: arcana-java
+    mode: monolithic
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
+    nodePort: 30080
+  type: NodePort

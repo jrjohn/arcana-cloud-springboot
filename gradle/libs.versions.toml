@@ -1,0 +1,123 @@
+[versions]
+# Spring Boot 4.0
+spring-boot = "4.0.0"
+spring-dependency-management = "1.1.7"
+
+# gRPC and Protobuf (Spring gRPC for Spring Boot 4.0)
+grpc = "1.68.2"
+protobuf = "4.29.2"
+spring-grpc = "1.0.0-RC1"
+protobuf-plugin = "0.9.5"
+
+# JWT
+jjwt = "0.12.6"
+
+# Utilities
+mapstruct = "1.6.3"
+lombok-mapstruct-binding = "0.2.0"
+jakarta-annotation = "3.0.0"
+javax-annotation = "1.3.2"
+
+# API Documentation (3.0.0-RC1 for Spring Boot 4.0)
+springdoc = "3.0.0-RC1"
+
+# Testing
+testcontainers = "1.20.4"
+
+# Code Quality
+checkstyle = "10.21.1"
+
+[libraries]
+# Spring Boot Starters
+spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
+spring-boot-starter-data-jpa = { module = "org.springframework.boot:spring-boot-starter-data-jpa" }
+spring-boot-starter-data-redis = { module = "org.springframework.boot:spring-boot-starter-data-redis" }
+spring-boot-starter-security = { module = "org.springframework.boot:spring-boot-starter-security" }
+spring-boot-starter-validation = { module = "org.springframework.boot:spring-boot-starter-validation" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-starter-cache = { module = "org.springframework.boot:spring-boot-starter-cache" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-boot-jackson = { module = "org.springframework.boot:spring-boot-jackson" }
+
+# Spring gRPC (Official Spring project for Spring Boot 4.0)
+spring-grpc-dependencies = { module = "org.springframework.grpc:spring-grpc-dependencies", version.ref = "spring-grpc" }
+spring-grpc-spring-boot-starter = { module = "org.springframework.grpc:spring-grpc-spring-boot-starter" }
+
+# gRPC Core Dependencies
+grpc-protobuf = { module = "io.grpc:grpc-protobuf", version.ref = "grpc" }
+grpc-stub = { module = "io.grpc:grpc-stub", version.ref = "grpc" }
+grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc" }
+protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
+
+# JWT
+jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
+jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
+jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
+
+# Database
+mysql-connector-j = { module = "com.mysql:mysql-connector-j" }
+flyway-core = { module = "org.flywaydb:flyway-core" }
+flyway-mysql = { module = "org.flywaydb:flyway-mysql" }
+h2 = { module = "com.h2database:h2" }
+
+# API Documentation
+springdoc-openapi-starter-webmvc-ui = { module = "org.springdoc:springdoc-openapi-starter-webmvc-ui", version.ref = "springdoc" }
+
+# Utilities
+lombok = { module = "org.projectlombok:lombok" }
+mapstruct = { module = "org.mapstruct:mapstruct", version.ref = "mapstruct" }
+mapstruct-processor = { module = "org.mapstruct:mapstruct-processor", version.ref = "mapstruct" }
+lombok-mapstruct-binding = { module = "org.projectlombok:lombok-mapstruct-binding", version.ref = "lombok-mapstruct-binding" }
+jakarta-annotation-api = { module = "jakarta.annotation:jakarta.annotation-api", version.ref = "jakarta-annotation" }
+javax-annotation-api = { module = "javax.annotation:javax.annotation-api", version.ref = "javax-annotation" }
+
+# Metrics
+micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
+
+# Testing
+spring-security-test = { module = "org.springframework.security:spring-security-test" }
+spring-boot-data-jpa-test = { module = "org.springframework.boot:spring-boot-data-jpa-test" }
+spring-boot-webmvc-test = { module = "org.springframework.boot:spring-boot-webmvc-test" }
+testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-mysql = { module = "org.testcontainers:mysql", version.ref = "testcontainers" }
+testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
+
+[bundles]
+spring-boot-starters = [
+    "spring-boot-starter-web",
+    "spring-boot-starter-data-jpa",
+    "spring-boot-starter-data-redis",
+    "spring-boot-starter-security",
+    "spring-boot-starter-validation",
+    "spring-boot-starter-actuator",
+    "spring-boot-starter-cache"
+]
+grpc = [
+    "spring-grpc-spring-boot-starter",
+    "grpc-protobuf",
+    "grpc-stub",
+    "grpc-netty-shaded",
+    "protobuf-java"
+]
+jjwt = [
+    "jjwt-api"
+]
+jjwt-runtime = [
+    "jjwt-impl",
+    "jjwt-jackson"
+]
+flyway = [
+    "flyway-core",
+    "flyway-mysql"
+]
+testcontainers = [
+    "testcontainers",
+    "testcontainers-mysql",
+    "testcontainers-junit-jupiter"
+]
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf-plugin" }
