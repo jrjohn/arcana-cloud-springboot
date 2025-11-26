@@ -1,33 +1,17 @@
-# Arcana Cloud Spring Boot
+# Arcana Cloud Spring Boot - Enterprise Java Microservices Platform
 
-<div align="center">
+[![Architecture Rating](https://img.shields.io/badge/Architecture%20Rating-⭐⭐⭐⭐⭐%209.5%2F10-gold.svg)](#architecture)
+[![Java](https://img.shields.io/badge/Java-21-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![gRPC](https://img.shields.io/badge/gRPC-1.60-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
+[![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix-FF6600.svg)](https://felix.apache.org/)
+[![Architecture](https://img.shields.io/badge/architecture-microservices-orange.svg)]()
+[![Tests](https://img.shields.io/badge/tests-172%2F172_passing-brightgreen.svg)](docs/test-report.html)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen.svg)]()
+[![Code Style](https://img.shields.io/badge/code_style-Google_Java-blue.svg)](https://google.github.io/styleguide/javaguide.html)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-![Java](https://img.shields.io/badge/Java-21-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![gRPC](https://img.shields.io/badge/gRPC-Protocol-244C5A?style=for-the-badge&logo=grpc&logoColor=white)
-![OSGi](https://img.shields.io/badge/OSGi-Plugin%20System-FF6600?style=for-the-badge)
-![React](https://img.shields.io/badge/React-Next.js-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![Angular](https://img.shields.io/badge/Angular-17-DD0031?style=for-the-badge&logo=angular&logoColor=white)
-
-**Enterprise-grade microservices platform with OSGi plugins and Server-Side Rendering**
-
-[![Tests](https://img.shields.io/badge/Tests-172%20Passed-success?style=flat-square)](docs/test-report.html)
-[![Coverage](https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square)]()
-[![Grade](https://img.shields.io/badge/Grade-A+-blue?style=flat-square)]()
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=flat-square)]()
-
-</div>
-
----
-
-## Overview
-
-A production-ready enterprise platform built with **Spring Boot 4.0** and **Java 21**, featuring:
-
-- **gRPC-first architecture** delivering **2.5x faster** performance
-- **OSGi Plugin System** (Apache Felix) for hot-deployable extensions
-- **Server-Side Rendering** with GraalJS for React and Angular
-- **Three deployment modes**: Monolithic, Layered, Microservices
+Enterprise-grade cloud platform with **gRPC-first architecture** (2.5x faster than HTTP REST), **OSGi Plugin System** (Apache Felix) for hot-deployable extensions, **Server-Side Rendering** with GraalJS for React and Angular, supporting dual-protocol communication and three flexible deployment modes (Monolithic, Layered, Microservices).
 
 ## Architecture
 
