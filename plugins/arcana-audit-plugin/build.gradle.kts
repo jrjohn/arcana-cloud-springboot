@@ -43,6 +43,8 @@ dependencies {
 }
 
 tasks.jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
     manifest {
         attributes(
             "Bundle-ManifestVersion" to "2",
@@ -68,13 +70,6 @@ tasks.jar {
             ).joinToString(","),
             "Export-Package" to "com.arcana.plugin.audit.api;version=\"1.0.0\""
         )
-    }
-
-    from(sourceSets.main.get().resources) {
-        include("arcana-plugin.xml")
-        include("META-INF/**")
-        include("db/**")
-        include("web/**")
     }
 }
 

@@ -86,6 +86,11 @@ dependencies {
     testImplementation(libs.bundles.testcontainers)
     testRuntimeOnly(libs.h2)
     testRuntimeOnly(libs.junit.platform.launcher)
+
+    // Plugin testing dependencies
+    testImplementation(project(":arcana-plugin-api"))
+    testImplementation(project(":arcana-plugin-runtime"))
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
 }
 
 protobuf {
@@ -108,6 +113,16 @@ protobuf {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+        showStandardStreams = false
+    }
+    // Fork every 20 test classes to balance isolation vs overhead
+    forkEvery = 20
+    // Set timeouts to prevent infinite hangs
+    systemProperty("junit.jupiter.execution.timeout.default", "60s")
+    // Ensure Gradle test executor exits cleanly
+    jvmArgs("-XX:+HeapDumpOnOutOfMemoryError")
 }
 
 tasks.jacocoTestReport {

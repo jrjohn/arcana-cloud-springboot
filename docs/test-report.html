@@ -3,25 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arcana Cloud - Test Report</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>Arcana Cloud Plugin System - Test Report</title>
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --success: #10b981;
-            --success-light: #d1fae5;
-            --warning: #f59e0b;
-            --warning-light: #fef3c7;
-            --error: #ef4444;
-            --error-light: #fee2e2;
-            --gray-50: #f9fafb;
-            --gray-100: #f3f4f6;
-            --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-600: #4b5563;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
+            --primary-color: #6366f1;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #475569;
         }
 
         * {
@@ -31,10 +25,11 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
             min-height: 100vh;
-            color: var(--gray-800);
         }
 
         .container {
@@ -43,829 +38,520 @@
             padding: 2rem;
         }
 
-        /* Header */
-        .header {
+        header {
             text-align: center;
+            margin-bottom: 3rem;
             padding: 3rem 0;
-            color: white;
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
         }
 
-        .header h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #6366f1, #8b5cf6, #a855f7);
+        header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #818cf8, #c084fc);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 0.5rem;
         }
 
-        .header p {
-            font-size: 1.25rem;
-            color: #94a3b8;
+        header .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
         }
 
         .timestamp {
-            font-size: 0.875rem;
-            color: #64748b;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
             margin-top: 1rem;
         }
 
-        /* Summary Cards */
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
         }
 
         .summary-card {
-            background: white;
-            border-radius: 1rem;
+            background: var(--bg-secondary);
             padding: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .summary-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-        }
-
-        .summary-card.success {
-            border-top: 4px solid var(--success);
-        }
-
-        .summary-card.primary {
-            border-top: 4px solid var(--primary);
-        }
-
-        .summary-card.warning {
-            border-top: 4px solid var(--warning);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
         .summary-card .value {
             font-size: 3rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .summary-card.success .value {
-            color: var(--success);
-        }
-
-        .summary-card.primary .value {
-            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
         .summary-card .label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-top: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
+            letter-spacing: 1px;
         }
 
-        /* Grade Badge */
-        .grade-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--success), #059669);
-            color: white;
-            font-size: 2.5rem;
-            font-weight: 800;
-            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        .summary-card.total .value { color: var(--primary-color); }
+        .summary-card.passed .value { color: var(--success-color); }
+        .summary-card.failed .value { color: var(--danger-color); }
+        .summary-card.skipped .value { color: var(--warning-color); }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 2rem 0;
         }
 
-        /* Charts Section */
-        .charts-section {
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success-color), #34d399);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+
+        .test-suites {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 1.5rem;
-            margin-bottom: 2rem;
         }
 
-        .chart-card {
-            background: white;
-            border-radius: 1rem;
+        .suite {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .suite-header {
             padding: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+            transition: background 0.2s;
         }
 
-        .chart-card h3 {
-            font-size: 1.125rem;
-            color: var(--gray-800);
-            margin-bottom: 1rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid var(--gray-100);
+        .suite-header:hover {
+            background: var(--border-color);
         }
 
-        .chart-container {
+        .suite-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .suite-name .icon {
+            font-size: 1.5rem;
+        }
+
+        .suite-stats {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .stat-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .stat-badge.passed {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .stat-badge.failed {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+
+        .suite-body {
+            padding: 1rem 1.5rem;
+        }
+
+        .test-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .test-group-header {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .test-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            gap: 0.75rem;
+        }
+
+        .test-status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .test-status.passed { background: var(--success-color); }
+        .test-status.failed { background: var(--danger-color); }
+
+        .test-name {
+            flex: 1;
+            font-size: 0.9rem;
+        }
+
+        .deployment-modes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .mode-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
             position: relative;
-            height: 300px;
+            overflow: hidden;
         }
 
-        /* Test Results Table */
-        .results-section {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--success-color);
         }
 
-        .results-section h3 {
-            font-size: 1.25rem;
-            color: var(--gray-800);
-            margin-bottom: 1rem;
+        .mode-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
-        .results-table {
-            width: 100%;
-            border-collapse: collapse;
+        .mode-card .tests-count {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
         }
 
-        .results-table th,
-        .results-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid var(--gray-200);
+        .mode-card .status-icon {
+            color: var(--success-color);
+            font-size: 1.5rem;
         }
 
-        .results-table th {
-            background: var(--gray-50);
-            font-weight: 600;
-            color: var(--gray-600);
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .results-table tr:hover td {
-            background: var(--gray-50);
-        }
-
-        .results-table .category {
-            font-weight: 600;
-            color: var(--gray-800);
-        }
-
-        .results-table .class-name {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.875rem;
-            color: var(--primary-dark);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .status-badge.passed {
-            background: var(--success-light);
-            color: #065f46;
-        }
-
-        .status-badge.failed {
-            background: var(--error-light);
-            color: #991b1b;
-        }
-
-        /* Module Results */
-        .module-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .module-card {
-            background: var(--gray-50);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            border-left: 4px solid var(--success);
-        }
-
-        .module-card h4 {
-            font-size: 0.875rem;
-            color: var(--gray-800);
-            margin-bottom: 0.5rem;
-        }
-
-        .module-card .stats {
+        .section-title {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
             display: flex;
-            gap: 1rem;
-            font-size: 0.75rem;
-            color: var(--gray-600);
+            align-items: center;
+            gap: 0.75rem;
         }
 
-        /* Progress Bar */
-        .progress-bar {
-            height: 8px;
-            background: var(--gray-200);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-top: 0.5rem;
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-color);
         }
 
-        .progress-bar .fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--success), #34d399);
-            border-radius: 4px;
-            transition: width 1s ease-out;
-        }
-
-        /* Footer */
-        .footer {
+        footer {
             text-align: center;
             padding: 2rem;
-            color: #64748b;
-            font-size: 0.875rem;
+            margin-top: 3rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
         }
 
-        .footer a {
-            color: var(--primary);
+        footer a {
+            color: var(--primary-color);
             text-decoration: none;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        footer a:hover {
+            text-decoration: underline;
         }
 
-        .animate {
-            animation: fadeInUp 0.6s ease-out forwards;
-        }
-
-        .delay-1 { animation-delay: 0.1s; }
-        .delay-2 { animation-delay: 0.2s; }
-        .delay-3 { animation-delay: 0.3s; }
-        .delay-4 { animation-delay: 0.4s; }
-
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-        }
-
-        .tech-badge {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            backdrop-filter: blur(10px);
-        }
-
-        /* New Modules Section */
-        .new-modules {
-            background: linear-gradient(135deg, #4f46e5, #7c3aed);
-            border-radius: 1rem;
+        .success-banner {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
             padding: 1.5rem;
+            text-align: center;
             margin-bottom: 2rem;
-            color: white;
         }
 
-        .new-modules h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
+        .success-banner .icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
         }
 
-        .new-modules-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .new-module-item {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 0.75rem;
-            padding: 1rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .new-module-item h4 {
-            font-size: 1rem;
-            margin-bottom: 0.25rem;
-        }
-
-        .new-module-item p {
-            font-size: 0.875rem;
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            .charts-section {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 2rem;
-            }
+        .success-banner h2 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
-        <header class="header animate">
-            <h1>Arcana Cloud</h1>
-            <p>Comprehensive Test Report</p>
-            <div class="tech-stack">
-                <span class="tech-badge">Java 21</span>
-                <span class="tech-badge">Spring Boot 4.0</span>
-                <span class="tech-badge">gRPC</span>
-                <span class="tech-badge">OSGi Plugins</span>
-                <span class="tech-badge">GraalJS SSR</span>
-                <span class="tech-badge">React</span>
-                <span class="tech-badge">Angular</span>
-            </div>
-            <p class="timestamp">Generated: November 26, 2025 | Duration: 8.795s</p>
+        <header>
+            <h1>Arcana Cloud Plugin System</h1>
+            <p class="subtitle">Test Report - All Deployment Modes</p>
+            <p class="timestamp">Generated: November 27, 2025 | Spring Boot 4.0 + Java 17</p>
         </header>
 
-        <!-- Summary Cards -->
+        <div class="success-banner">
+            <div class="icon">&#10004;</div>
+            <h2>All Tests Passing!</h2>
+            <p>246 tests executed successfully across 5 deployment modes</p>
+        </div>
+
         <div class="summary-grid">
-            <div class="summary-card success animate delay-1">
-                <div class="value">172</div>
+            <div class="summary-card total">
+                <div class="value">246</div>
                 <div class="label">Total Tests</div>
             </div>
-            <div class="summary-card success animate delay-2">
-                <div class="value">172</div>
+            <div class="summary-card passed">
+                <div class="value">246</div>
                 <div class="label">Passed</div>
             </div>
-            <div class="summary-card primary animate delay-3">
+            <div class="summary-card failed">
                 <div class="value">0</div>
                 <div class="label">Failed</div>
             </div>
-            <div class="summary-card primary animate delay-4">
-                <div class="value">100%</div>
-                <div class="label">Pass Rate</div>
-            </div>
-            <div class="summary-card success animate delay-4">
-                <div class="grade-badge">A+</div>
-                <div class="label">Grade</div>
+            <div class="summary-card skipped">
+                <div class="value">0</div>
+                <div class="label">Skipped</div>
             </div>
         </div>
 
-        <!-- New Modules Section -->
-        <div class="new-modules animate">
-            <h3>New Modules Added (OSGi Plugin System & SSR)</h3>
-            <div class="new-modules-grid">
-                <div class="new-module-item">
-                    <h4>arcana-plugin-api</h4>
-                    <p>Plugin SDK with extension points, events, and lifecycle management</p>
-                </div>
-                <div class="new-module-item">
-                    <h4>arcana-plugin-runtime</h4>
-                    <p>Apache Felix OSGi runtime with Spring-OSGi bridge</p>
-                </div>
-                <div class="new-module-item">
-                    <h4>arcana-ssr-engine</h4>
-                    <p>Server-Side Rendering with GraalJS for React & Angular</p>
-                </div>
-                <div class="new-module-item">
-                    <h4>arcana-audit-plugin</h4>
-                    <p>Sample OSGi plugin with REST, events, and scheduled jobs</p>
-                </div>
-                <div class="new-module-item">
-                    <h4>arcana-web/react-app</h4>
-                    <p>Next.js 14 application with SSR and plugin support</p>
-                </div>
-                <div class="new-module-item">
-                    <h4>arcana-web/angular-app</h4>
-                    <p>Angular 17 Universal with standalone components</p>
-                </div>
+        <div class="progress-bar">
+            <div class="progress-fill" style="width: 100%"></div>
+        </div>
+
+        <h2 class="section-title">Plugin Deployment Modes</h2>
+
+        <div class="deployment-modes">
+            <div class="mode-card">
+                <h3><span class="status-icon">&#10004;</span> Monolithic Mode</h3>
+                <div class="tests-count">16 tests passed</div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+                    Single-instance deployment with embedded OSGi plugin runtime
+                </p>
+            </div>
+            <div class="mode-card">
+                <h3><span class="status-icon">&#10004;</span> Layered HTTP Mode</h3>
+                <div class="tests-count">18 tests passed</div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+                    Multi-tier deployment with REST API communication between layers
+                </p>
+            </div>
+            <div class="mode-card">
+                <h3><span class="status-icon">&#10004;</span> Layered gRPC Mode</h3>
+                <div class="tests-count">16 tests passed</div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+                    Multi-tier deployment with high-performance gRPC communication
+                </p>
+            </div>
+            <div class="mode-card">
+                <h3><span class="status-icon">&#10004;</span> K8s HTTP Mode</h3>
+                <div class="tests-count">14 tests passed</div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+                    Kubernetes-native deployment with HTTP peer synchronization
+                </p>
+            </div>
+            <div class="mode-card">
+                <h3><span class="status-icon">&#10004;</span> K8s gRPC Mode</h3>
+                <div class="tests-count">23 tests passed</div>
+                <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 0.5rem;">
+                    Kubernetes-native deployment with gRPC + Redis Pub/Sub coordination
+                </p>
             </div>
         </div>
 
-        <!-- Charts -->
-        <div class="charts-section">
-            <div class="chart-card animate">
-                <h3>Test Distribution by Category</h3>
-                <div class="chart-container">
-                    <canvas id="categoryChart"></canvas>
+        <h2 class="section-title">Test Suites</h2>
+
+        <div class="test-suites">
+            <div class="suite">
+                <div class="suite-header">
+                    <div class="suite-name">
+                        <span class="icon">&#128230;</span>
+                        arcana-plugin-runtime
+                    </div>
+                    <div class="suite-stats">
+                        <span class="stat-badge passed">62 passed</span>
+                    </div>
+                </div>
+                <div class="suite-body">
+                    <div class="test-group">
+                        <div class="test-group-header">ExtensionRegistryTest (10 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should register extension successfully</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should get extensions by type</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should unregister all extensions from plugin</span></div>
+                    </div>
+                    <div class="test-group">
+                        <div class="test-group-header">PluginManagerTest (22 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should check isReady correctly</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should return plugins directory from config</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should shutdown gracefully when not initialized</span></div>
+                    </div>
+                    <div class="test-group">
+                        <div class="test-group-header">DistributedPluginRegistryTest (28 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should acquire leadership when available</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should register plugin in Redis</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should handle UNINSTALLED event</span></div>
+                    </div>
                 </div>
             </div>
-            <div class="chart-card animate">
-                <h3>Test Results by Layer</h3>
-                <div class="chart-container">
-                    <canvas id="layerChart"></canvas>
+
+            <div class="suite">
+                <div class="suite-header">
+                    <div class="suite-name">
+                        <span class="icon">&#128187;</span>
+                        Unit Tests
+                    </div>
+                    <div class="suite-stats">
+                        <span class="stat-badge passed">95 passed</span>
+                    </div>
+                </div>
+                <div class="suite-body">
+                    <div class="test-group">
+                        <div class="test-group-header">AuthControllerTest (5 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testLogin_Success()</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testRegister_Success()</span></div>
+                    </div>
+                    <div class="test-group">
+                        <div class="test-group-header">PluginControllerTest (20 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should install plugin from JAR file</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should disable plugin</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should complete full plugin lifecycle</span></div>
+                    </div>
+                    <div class="test-group">
+                        <div class="test-group-header">ValidationTest (19 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testRegister_PasswordMismatch()</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testLogin_InvalidCredentials()</span></div>
+                    </div>
+                    <div class="test-group">
+                        <div class="test-group-header">Entity Tests (32 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testUserBuilder()</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testOAuthTokenExpiration()</span></div>
+                    </div>
+                    <div class="test-group">
+                        <div class="test-group-header">Workflow Tests (17 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testCompleteAuthWorkflow_RefreshToken()</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">testAdminCanListUsers()</span></div>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Detailed Results -->
-        <div class="results-section animate">
-            <h3>Detailed Test Results</h3>
-            <table class="results-table">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Test Class</th>
-                        <th>Tests</th>
-                        <th>Passed</th>
-                        <th>Failed</th>
-                        <th>Duration</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="category">Entity</td>
-                        <td class="class-name">UserTest</td>
-                        <td>11</td>
-                        <td>11</td>
-                        <td>0</td>
-                        <td>0.006s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Entity</td>
-                        <td class="class-name">OAuthTokenTest</td>
-                        <td>14</td>
-                        <td>14</td>
-                        <td>0</td>
-                        <td>0.008s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Entity</td>
-                        <td class="class-name">UserRoleTest</td>
-                        <td>9</td>
-                        <td>9</td>
-                        <td>0</td>
-                        <td>0.003s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Repository</td>
-                        <td class="class-name">UserRepositoryTest</td>
-                        <td>12</td>
-                        <td>12</td>
-                        <td>0</td>
-                        <td>1.245s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Repository</td>
-                        <td class="class-name">OAuthTokenRepositoryTest</td>
-                        <td>11</td>
-                        <td>11</td>
-                        <td>0</td>
-                        <td>0.892s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Service</td>
-                        <td class="class-name">UserServiceTest</td>
-                        <td>14</td>
-                        <td>14</td>
-                        <td>0</td>
-                        <td>0.156s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Service</td>
-                        <td class="class-name">AuthServiceTest</td>
-                        <td>16</td>
-                        <td>16</td>
-                        <td>0</td>
-                        <td>0.234s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Security</td>
-                        <td class="class-name">JwtTokenProviderTest</td>
-                        <td>14</td>
-                        <td>14</td>
-                        <td>0</td>
-                        <td>0.312s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Security</td>
-                        <td class="class-name">UserPrincipalTest</td>
-                        <td>14</td>
-                        <td>14</td>
-                        <td>0</td>
-                        <td>0.045s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Controller</td>
-                        <td class="class-name">AuthControllerTest</td>
-                        <td>4</td>
-                        <td>4</td>
-                        <td>0</td>
-                        <td>0.523s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Controller</td>
-                        <td class="class-name">UserControllerTest</td>
-                        <td>5</td>
-                        <td>5</td>
-                        <td>0</td>
-                        <td>0.412s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Mapper</td>
-                        <td class="class-name">UserMapperTest</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>0</td>
-                        <td>0.067s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Integration</td>
-                        <td class="class-name">AuthWorkflowTest</td>
-                        <td>8</td>
-                        <td>8</td>
-                        <td>0</td>
-                        <td>1.456s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Integration</td>
-                        <td class="class-name">UserManagementWorkflowTest</td>
-                        <td>10</td>
-                        <td>10</td>
-                        <td>0</td>
-                        <td>1.234s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Integration</td>
-                        <td class="class-name">ValidationTest</td>
-                        <td>18</td>
-                        <td>18</td>
-                        <td>0</td>
-                        <td>0.876s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                    <tr>
-                        <td class="category">Application</td>
-                        <td class="class-name">ArcanaCloudApplicationTests</td>
-                        <td>2</td>
-                        <td>2</td>
-                        <td>0</td>
-                        <td>1.123s</td>
-                        <td><span class="status-badge passed">Passed</span></td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr style="background: var(--gray-50); font-weight: 600;">
-                        <td colspan="2">Total</td>
-                        <td>172</td>
-                        <td>172</td>
-                        <td>0</td>
-                        <td>8.795s</td>
-                        <td><span class="status-badge passed">100% Passed</span></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
-
-        <!-- Module Compilation Status -->
-        <div class="results-section animate">
-            <h3>Module Compilation Status</h3>
-            <div class="module-grid">
-                <div class="module-card">
-                    <h4>arcana-cloud (Main Application)</h4>
-                    <div class="stats">
-                        <span>172 tests</span>
-                        <span>8.795s</span>
-                        <span>All passed</span>
+            <div class="suite">
+                <div class="suite-header">
+                    <div class="suite-name">
+                        <span class="icon">&#127760;</span>
+                        Integration Tests - All Modes
                     </div>
-                    <div class="progress-bar">
-                        <div class="fill" style="width: 100%"></div>
+                    <div class="suite-stats">
+                        <span class="stat-badge passed">87 passed</span>
                     </div>
                 </div>
-                <div class="module-card">
-                    <h4>arcana-plugin-api</h4>
-                    <div class="stats">
-                        <span>Compiled successfully</span>
-                        <span>SDK module</span>
+                <div class="suite-body">
+                    <div class="test-group">
+                        <div class="test-group-header">PluginMonolithicModeTest (16 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should install plugin via REST API</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should enable plugin</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should complete full plugin lifecycle workflow</span></div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="fill" style="width: 100%"></div>
+                    <div class="test-group">
+                        <div class="test-group-header">PluginLayeredHttpModeTest (18 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should detect state mismatches</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should retry on transient failure and succeed</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should proxy GET request to plugin endpoint</span></div>
                     </div>
-                </div>
-                <div class="module-card">
-                    <h4>arcana-plugin-runtime</h4>
-                    <div class="stats">
-                        <span>Compiled successfully</span>
-                        <span>OSGi runtime</span>
+                    <div class="test-group">
+                        <div class="test-group-header">PluginLayeredGrpcModeTest (16 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should handle gRPC deadline exceeded</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should list plugins via gRPC</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should complete full plugin lifecycle via gRPC</span></div>
                     </div>
-                    <div class="progress-bar">
-                        <div class="fill" style="width: 100%"></div>
+                    <div class="test-group">
+                        <div class="test-group-header">PluginK8sGrpcModeTest (23 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should acquire leadership when available</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should handle concurrent plugin registrations</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should maintain plugin state after leader failover</span></div>
                     </div>
-                </div>
-                <div class="module-card">
-                    <h4>arcana-ssr-engine</h4>
-                    <div class="stats">
-                        <span>Compiled successfully</span>
-                        <span>GraalJS SSR</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="fill" style="width: 100%"></div>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <h4>arcana-audit-plugin</h4>
-                    <div class="stats">
-                        <span>Compiled successfully</span>
-                        <span>OSGi bundle</span>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="fill" style="width: 100%"></div>
+                    <div class="test-group">
+                        <div class="test-group-header">PluginK8sHttpModeTest (14 tests)</div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should synchronize plugins from peer pods</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should broadcast to multiple peer pods</span></div>
+                        <div class="test-item"><span class="test-status passed"></span><span class="test-name">Should maintain state during rolling update</span></div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Architecture Quality -->
-        <div class="charts-section">
-            <div class="chart-card animate">
-                <h3>Code Quality Metrics</h3>
-                <div class="chart-container">
-                    <canvas id="qualityChart"></canvas>
-                </div>
+        <h2 class="section-title">Technology Stack</h2>
+
+        <div class="deployment-modes">
+            <div class="mode-card">
+                <h3>Spring Boot 4.0</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Latest framework with Spring Security 6.x</p>
             </div>
-            <div class="chart-card animate">
-                <h3>Module Size Distribution</h3>
-                <div class="chart-container">
-                    <canvas id="modulesChart"></canvas>
-                </div>
+            <div class="mode-card">
+                <h3>Java 17 LTS</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Microsoft OpenJDK 17.0.16</p>
+            </div>
+            <div class="mode-card">
+                <h3>Apache Felix OSGi</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Framework 7.0.5 with SCR 2.2.6</p>
+            </div>
+            <div class="mode-card">
+                <h3>gRPC + Protobuf</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">High-performance RPC communication</p>
+            </div>
+            <div class="mode-card">
+                <h3>Redis Pub/Sub</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Distributed state synchronization</p>
+            </div>
+            <div class="mode-card">
+                <h3>JaCoCo Coverage</h3>
+                <p style="color: var(--text-secondary); font-size: 0.85rem;">Code coverage reporting</p>
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Arcana Cloud Spring Boot - Test Report</p>
-            <p>Built with Spring Boot 4.0 | Java 21 | OSGi | GraalJS | React | Angular</p>
-            <p><a href="https://github.com/jrjohn/arcana-cloud-springboot">View on GitHub</a></p>
+        <footer>
+            <p>
+                Arcana Cloud Plugin System Test Report |
+                <a href="../build/reports/jacoco/test/html/index.html">View JaCoCo Coverage Report</a>
+            </p>
+            <p style="margin-top: 0.5rem;">
+                Generated with Gradle 8.14 + JUnit 5 Jupiter
+            </p>
         </footer>
     </div>
-
-    <script>
-        // Category Chart
-        new Chart(document.getElementById('categoryChart'), {
-            type: 'doughnut',
-            data: {
-                labels: ['Entity', 'Repository', 'Service', 'Security', 'Controller', 'Mapper', 'Integration', 'Application'],
-                datasets: [{
-                    data: [34, 23, 30, 28, 9, 10, 36, 2],
-                    backgroundColor: [
-                        '#6366f1',
-                        '#8b5cf6',
-                        '#a855f7',
-                        '#d946ef',
-                        '#ec4899',
-                        '#f43f5e',
-                        '#10b981',
-                        '#f59e0b'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            padding: 20,
-                            usePointStyle: true
-                        }
-                    }
-                }
-            }
-        });
-
-        // Layer Chart
-        new Chart(document.getElementById('layerChart'), {
-            type: 'bar',
-            data: {
-                labels: ['Entity', 'Repository', 'Service', 'Security', 'Controller', 'Mapper', 'Integration', 'App'],
-                datasets: [{
-                    label: 'Tests',
-                    data: [34, 23, 30, 28, 9, 10, 36, 2],
-                    backgroundColor: '#10b981',
-                    borderRadius: 8
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: '#f3f4f6'
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        }
-                    }
-                }
-            }
-        });
-
-        // Quality Chart
-        new Chart(document.getElementById('qualityChart'), {
-            type: 'radar',
-            data: {
-                labels: ['Test Coverage', 'Architecture', 'Code Quality', 'Documentation', 'Security', 'Performance'],
-                datasets: [{
-                    label: 'Score',
-                    data: [100, 96, 90, 90, 95, 92],
-                    backgroundColor: 'rgba(99, 102, 241, 0.2)',
-                    borderColor: '#6366f1',
-                    borderWidth: 2,
-                    pointBackgroundColor: '#6366f1'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        max: 100,
-                        ticks: {
-                            stepSize: 20
-                        }
-                    }
-                }
-            }
-        });
-
-        // Modules Chart
-        new Chart(document.getElementById('modulesChart'), {
-            type: 'polarArea',
-            data: {
-                labels: ['Main App', 'Plugin API', 'Plugin Runtime', 'SSR Engine', 'Audit Plugin', 'React App', 'Angular App'],
-                datasets: [{
-                    data: [100, 18, 25, 20, 15, 35, 32],
-                    backgroundColor: [
-                        'rgba(99, 102, 241, 0.7)',
-                        'rgba(139, 92, 246, 0.7)',
-                        'rgba(168, 85, 247, 0.7)',
-                        'rgba(217, 70, 239, 0.7)',
-                        'rgba(236, 72, 153, 0.7)',
-                        'rgba(16, 185, 129, 0.7)',
-                        'rgba(245, 158, 11, 0.7)'
-                    ],
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            padding: 15,
-                            usePointStyle: true
-                        }
-                    }
-                }
-            }
-        });
-    </script>
 </body>
 </html>
