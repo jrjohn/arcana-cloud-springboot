@@ -7,7 +7,7 @@
 [![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%207.0.5-FF6600.svg)](https://felix.apache.org/)
 [![Architecture](https://img.shields.io/badge/architecture-microservices-orange.svg)]()
 [![Tests](https://img.shields.io/badge/tests-246%2F246_passing-brightgreen.svg)](docs/test-report.html)
-[![Coverage](https://img.shields.io/badge/coverage-JaCoCo-brightgreen.svg)](build/reports/jacoco/test/html/index.html)
+[![Coverage](https://img.shields.io/badge/coverage-JaCoCo-brightgreen.svg)](#testing)
 [![Code Style](https://img.shields.io/badge/code_style-Google_Java-blue.svg)](https://google.github.io/styleguide/javaguide.html)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
@@ -750,10 +750,11 @@ For detailed testing documentation, see [docs/TESTING.md](docs/TESTING.md) or vi
 ## Documentation
 
 - [Test Report](docs/test-report.html) - Interactive HTML report with 246 tests across all deployment modes
-- [JaCoCo Coverage Report](build/reports/jacoco/test/html/index.html) - Code coverage analysis
 - [Testing Guide](docs/TESTING.md) - Detailed testing documentation
 - [Plugin Development Guide](docs/plugin-development-guide.md) - Create custom plugins
 - [API Documentation](http://localhost:8080/swagger-ui.html) - Swagger UI (when running)
+
+> **Note:** Run `./gradlew test jacocoTestReport` to generate JaCoCo coverage report at `build/reports/jacoco/test/html/index.html`
 
 ## Contributing
 
@@ -773,6 +774,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 **Built with Spring Boot 4.0 | Java 17 LTS | Apache Felix OSGi 7.0.5 | gRPC | GraalJS | React | Angular**
 
-[View Test Report](docs/test-report.html) | [View Coverage Report](build/reports/jacoco/test/html/index.html)
+[View Test Report](docs/test-report.html)
 
 </div>
