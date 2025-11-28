@@ -80,6 +80,52 @@ class AuthWorkflowTest {
     @Test
     @Order(2)
     void testCompleteAuthWorkflow_AccessProtectedResource() throws Exception {
+        // Ensure we have a valid token - login if necessary
+        if (accessToken == null || userId == null) {
+            // First register the user if not already registered
+            RegisterRequest registerRequest = RegisterRequest.builder()
+                .username("workflowuser")
+                .email("workflow@example.com")
+                .password("WorkflowPass123")
+                .confirmPassword("WorkflowPass123")
+                .firstName("Workflow")
+                .lastName("User")
+                .build();
+
+            try {
+                MvcResult result = mockMvc.perform(post("/api/v1/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonMapper.writeValueAsString(registerRequest)))
+                    .andReturn();
+
+                if (result.getResponse().getStatus() == 201) {
+                    JsonNode response = jsonMapper.readTree(result.getResponse().getContentAsString());
+                    accessToken = response.get("data").get("accessToken").asText();
+                    userId = response.get("data").get("user").get("id").asLong();
+                }
+            } catch (Exception e) {
+                // User might already exist, try login
+            }
+
+            // Login if registration failed
+            if (accessToken == null) {
+                LoginRequest loginRequest = LoginRequest.builder()
+                    .usernameOrEmail("workflowuser")
+                    .password("WorkflowPass123")
+                    .build();
+
+                MvcResult loginResult = mockMvc.perform(post("/api/v1/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonMapper.writeValueAsString(loginRequest)))
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+                JsonNode response = jsonMapper.readTree(loginResult.getResponse().getContentAsString());
+                accessToken = response.get("data").get("accessToken").asText();
+                userId = response.get("data").get("user").get("id").asLong();
+            }
+        }
+
         // Use the access token to access user by ID (owner can access their own profile)
         mockMvc.perform(get("/api/v1/users/" + userId)
                 .header("Authorization", "Bearer " + accessToken))
@@ -160,6 +206,24 @@ class AuthWorkflowTest {
     @Test
     @Order(6)
     void testCompleteAuthWorkflow_UseRefreshedToken() throws Exception {
+        // Ensure we have a valid token - login if necessary
+        if (accessToken == null || userId == null) {
+            LoginRequest loginRequest = LoginRequest.builder()
+                .usernameOrEmail("workflowuser")
+                .password("WorkflowPass123")
+                .build();
+
+            MvcResult loginResult = mockMvc.perform(post("/api/v1/auth/login")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(jsonMapper.writeValueAsString(loginRequest)))
+                .andExpect(status().isOk())
+                .andReturn();
+
+            JsonNode response = jsonMapper.readTree(loginResult.getResponse().getContentAsString());
+            accessToken = response.get("data").get("accessToken").asText();
+            userId = response.get("data").get("user").get("id").asLong();
+        }
+
         mockMvc.perform(get("/api/v1/users/" + userId)
                 .header("Authorization", "Bearer " + accessToken))
             .andExpect(status().isOk())

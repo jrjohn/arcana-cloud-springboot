@@ -8,7 +8,7 @@ version = "1.0.0"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(25)
     }
     withSourcesJar()
     withJavadocJar()

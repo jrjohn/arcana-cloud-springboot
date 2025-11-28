@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InternalUserController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.controller.internal</a> &gt; <span class="el_source">InternalUserController.java</span></div><h1>InternalUserController.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.controller.internal;
+
+import com.arcana.cloud.dto.response.ApiResponse;
+import com.arcana.cloud.dto.response.PagedResponse;
+import com.arcana.cloud.dto.response.UserResponse;
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.mapper.UserMapper;
+import com.arcana.cloud.service.interfaces.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * Internal REST controller for UserService.
+ * Active in: service layer of layered mode when using HTTP communication.
+ * Provides HTTP endpoints for controller layer to consume (alternative to gRPC).
+ */
+@RestController
+@RequestMapping(&quot;/internal/api/v1/users&quot;)
+@RequiredArgsConstructor
+<span class="nc" id="L35">@Slf4j</span>
+@ConditionalOnExpression(
+    &quot;'${deployment.layer:}' == 'service' and '${communication.protocol:grpc}' == 'http'&quot;
+)
+public class InternalUserController {
+
+    private final UserService userService;
+    private final UserMapper userMapper;
+
+    @GetMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; getUser(@PathVariable Long id) {
+<span class="nc" id="L46">        log.debug(&quot;Internal HTTP: Getting user by id: {}&quot;, id);</span>
+<span class="nc" id="L47">        User user = userService.getUserById(id);</span>
+<span class="nc" id="L48">        return ResponseEntity.ok(ApiResponse.success(userMapper.toResponse(user), &quot;User retrieved&quot;));</span>
+    }
+
+    @GetMapping(&quot;/username/{username}&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; getUserByUsername(
+            @PathVariable String username) {
+<span class="nc" id="L54">        log.debug(&quot;Internal HTTP: Getting user by username: {}&quot;, username);</span>
+<span class="nc" id="L55">        return userService.findByUsername(username)</span>
+<span class="nc" id="L56">            .map(user -&gt; ResponseEntity.ok(</span>
+<span class="nc" id="L57">                ApiResponse.success(userMapper.toResponse(user), &quot;User found&quot;)))</span>
+<span class="nc" id="L58">            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="nc" id="L59">                .body(ApiResponse.error(&quot;User not found&quot;)));</span>
+    }
+
+    @GetMapping(&quot;/email/{email}&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; getUserByEmail(@PathVariable String email) {
+<span class="nc" id="L64">        log.debug(&quot;Internal HTTP: Getting user by email: {}&quot;, email);</span>
+<span class="nc" id="L65">        return userService.findByEmail(email)</span>
+<span class="nc" id="L66">            .map(user -&gt; ResponseEntity.ok(</span>
+<span class="nc" id="L67">                ApiResponse.success(userMapper.toResponse(user), &quot;User found&quot;)))</span>
+<span class="nc" id="L68">            .orElse(ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="nc" id="L69">                .body(ApiResponse.error(&quot;User not found&quot;)));</span>
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;ApiResponse&lt;PagedResponse&lt;UserResponse&gt;&gt;&gt; listUsers(
+            @RequestParam(defaultValue = &quot;0&quot;) int page,
+            @RequestParam(defaultValue = &quot;10&quot;) int size) {
+<span class="nc" id="L76">        log.debug(&quot;Internal HTTP: Listing users page: {}, size: {}&quot;, page, size);</span>
+<span class="nc" id="L77">        Page&lt;User&gt; usersPage = userService.getUsers(page, size);</span>
+<span class="nc" id="L78">        List&lt;UserResponse&gt; userResponses = usersPage.getContent().stream()</span>
+<span class="nc" id="L79">            .map(userMapper::toResponse)</span>
+<span class="nc" id="L80">            .toList();</span>
+
+<span class="nc" id="L82">        PagedResponse&lt;UserResponse&gt; pagedResponse = PagedResponse.&lt;UserResponse&gt;builder()</span>
+<span class="nc" id="L83">            .content(userResponses)</span>
+<span class="nc" id="L84">            .page(page)</span>
+<span class="nc" id="L85">            .size(size)</span>
+<span class="nc" id="L86">            .totalElements(usersPage.getTotalElements())</span>
+<span class="nc" id="L87">            .totalPages(usersPage.getTotalPages())</span>
+<span class="nc" id="L88">            .build();</span>
+
+<span class="nc" id="L90">        return ResponseEntity.ok(ApiResponse.success(pagedResponse, &quot;Users retrieved&quot;));</span>
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; createUser(@RequestBody UserCreateDto request) {
+<span class="nc" id="L95">        log.debug(&quot;Internal HTTP: Creating user: {}&quot;, request.getUsername());</span>
+<span class="nc" id="L96">        User user = User.builder()</span>
+<span class="nc" id="L97">            .username(request.getUsername())</span>
+<span class="nc" id="L98">            .email(request.getEmail())</span>
+<span class="nc" id="L99">            .password(request.getPassword())</span>
+<span class="nc" id="L100">            .firstName(request.getFirstName())</span>
+<span class="nc" id="L101">            .lastName(request.getLastName())</span>
+<span class="nc" id="L102">            .build();</span>
+
+<span class="nc" id="L104">        User createdUser = userService.createUser(user);</span>
+<span class="nc" id="L105">        return ResponseEntity</span>
+<span class="nc" id="L106">            .status(HttpStatus.CREATED)</span>
+<span class="nc" id="L107">            .body(ApiResponse.success(userMapper.toResponse(createdUser), &quot;User created&quot;));</span>
+    }
+
+    @PutMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; updateUser(
+            @PathVariable Long id,
+            @RequestBody UserUpdateDto request) {
+<span class="nc" id="L114">        log.debug(&quot;Internal HTTP: Updating user: {}&quot;, id);</span>
+<span class="nc" id="L115">        User userUpdate = User.builder()</span>
+<span class="nc" id="L116">            .username(request.getUsername())</span>
+<span class="nc" id="L117">            .email(request.getEmail())</span>
+<span class="nc" id="L118">            .password(request.getPassword())</span>
+<span class="nc" id="L119">            .firstName(request.getFirstName())</span>
+<span class="nc" id="L120">            .lastName(request.getLastName())</span>
+<span class="nc" id="L121">            .isActive(request.getIsActive())</span>
+<span class="nc" id="L122">            .isVerified(request.getIsVerified())</span>
+<span class="nc" id="L123">            .build();</span>
+
+<span class="nc" id="L125">        User updatedUser = userService.updateUser(id, userUpdate);</span>
+<span class="nc" id="L126">        return ResponseEntity.ok(ApiResponse.success(userMapper.toResponse(updatedUser), &quot;User updated&quot;));</span>
+    }
+
+    @DeleteMapping(&quot;/{id}&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; deleteUser(@PathVariable Long id) {
+<span class="nc" id="L131">        log.debug(&quot;Internal HTTP: Deleting user: {}&quot;, id);</span>
+<span class="nc" id="L132">        userService.deleteUser(id);</span>
+<span class="nc" id="L133">        return ResponseEntity.ok(ApiResponse.success(null, &quot;User deleted&quot;));</span>
+    }
+
+    @GetMapping(&quot;/exists/username/{username}&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;ExistsResponse&gt;&gt; existsByUsername(
+            @PathVariable String username) {
+<span class="nc" id="L139">        boolean exists = userService.existsByUsername(username);</span>
+<span class="nc" id="L140">        return ResponseEntity.ok(</span>
+<span class="nc" id="L141">            ApiResponse.success(new ExistsResponse(exists), &quot;Check complete&quot;));</span>
+    }
+
+    @GetMapping(&quot;/exists/email/{email}&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;ExistsResponse&gt;&gt; existsByEmail(@PathVariable String email) {
+<span class="nc" id="L146">        boolean exists = userService.existsByEmail(email);</span>
+<span class="nc" id="L147">        return ResponseEntity.ok(</span>
+<span class="nc" id="L148">            ApiResponse.success(new ExistsResponse(exists), &quot;Check complete&quot;));</span>
+    }
+
+    @lombok.Data
+    @lombok.NoArgsConstructor
+    @lombok.AllArgsConstructor
+    public static class UserCreateDto {
+        private String username;
+        private String email;
+        private String password;
+        private String firstName;
+        private String lastName;
+    }
+
+    @lombok.Data
+    public static class UserUpdateDto {
+        private String username;
+        private String email;
+        private String password;
+        private String firstName;
+        private String lastName;
+        private Boolean isActive;
+        private Boolean isVerified;
+    }
+
+    @lombok.Data
+    @lombok.AllArgsConstructor
+    public static class ExistsResponse {
+        private boolean exists;
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpUserServiceClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.service.client</a> &gt; <span class="el_source">HttpUserServiceClient.java</span></div><h1>HttpUserServiceClient.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.service.client;
+
+import com.arcana.cloud.dto.response.ApiResponse;
+import com.arcana.cloud.dto.response.PagedResponse;
+import com.arcana.cloud.dto.response.UserResponse;
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.entity.UserRole;
+import com.arcana.cloud.exception.ResourceNotFoundException;
+import com.arcana.cloud.service.interfaces.UserService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+@Service
+@ConditionalOnExpression(
+    &quot;'${communication.protocol:grpc}' == 'http' and '${deployment.layer:}' == 'controller'&quot;
+)
+<span class="nc" id="L33">@Slf4j</span>
+public class HttpUserServiceClient implements UserService {
+
+    @Value(&quot;${service.http.url:http://localhost:8081}&quot;)
+    private String serviceUrl;
+
+    private final RestTemplate restTemplate;
+
+<span class="nc" id="L41">    public HttpUserServiceClient() {</span>
+<span class="nc" id="L42">        this.restTemplate = new RestTemplate();</span>
+<span class="nc" id="L43">    }</span>
+
+    @Override
+    public User createUser(User user) {
+        try {
+<span class="nc" id="L48">            log.debug(&quot;HTTP client: Creating user via {}&quot;, serviceUrl);</span>
+<span class="nc" id="L49">            Map&lt;String, Object&gt; request = Map.of(</span>
+<span class="nc" id="L50">                &quot;username&quot;, user.getUsername(),</span>
+<span class="nc" id="L51">                &quot;email&quot;, user.getEmail(),</span>
+<span class="nc" id="L52">                &quot;password&quot;, user.getPassword(),</span>
+<span class="nc bnc" id="L53" title="All 2 branches missed.">                &quot;firstName&quot;, user.getFirstName() != null ? user.getFirstName() : &quot;&quot;,</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">                &quot;lastName&quot;, user.getLastName() != null ? user.getLastName() : &quot;&quot;</span>
+            );
+
+<span class="nc" id="L57">            ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users&quot;,
+                HttpMethod.POST,
+                new HttpEntity&lt;&gt;(request),
+<span class="nc" id="L61">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L64" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L65">                return fromResponse(response.getBody().getData());</span>
+            }
+<span class="nc" id="L67">            throw new RuntimeException(&quot;Failed to create user&quot;);</span>
+<span class="nc" id="L68">        } catch (RestClientException e) {</span>
+<span class="nc" id="L69">            log.error(&quot;HTTP error creating user&quot;, e);</span>
+<span class="nc" id="L70">            throw new RuntimeException(&quot;Failed to create user: &quot; + e.getMessage());</span>
+        }
+    }
+
+    @Override
+    public User getUserById(Long id) {
+        try {
+<span class="nc" id="L77">            log.debug(&quot;HTTP client: Getting user {} via {}&quot;, id, serviceUrl);</span>
+<span class="nc" id="L78">            ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users/&quot; + id,
+                HttpMethod.GET,
+                null,
+<span class="nc" id="L82">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L85" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L86">                return fromResponse(response.getBody().getData());</span>
+            }
+<span class="nc" id="L88">            throw new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id);</span>
+<span class="nc" id="L89">        } catch (RestClientException e) {</span>
+<span class="nc" id="L90">            log.error(&quot;HTTP error getting user&quot;, e);</span>
+<span class="nc" id="L91">            throw new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id);</span>
+        }
+    }
+
+    @Override
+    public Optional&lt;User&gt; findByUsername(String username) {
+        try {
+<span class="nc" id="L98">            log.debug(&quot;HTTP client: Finding user by username {} via {}&quot;, username, serviceUrl);</span>
+<span class="nc" id="L99">            ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users/username/&quot; + username,
+                HttpMethod.GET,
+                null,
+<span class="nc" id="L103">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L106" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L107">                return Optional.of(fromResponse(response.getBody().getData()));</span>
+            }
+<span class="nc" id="L109">            return Optional.empty();</span>
+<span class="nc" id="L110">        } catch (RestClientException e) {</span>
+<span class="nc" id="L111">            log.debug(&quot;User not found by username: {}&quot;, username);</span>
+<span class="nc" id="L112">            return Optional.empty();</span>
+        }
+    }
+
+    @Override
+    public Optional&lt;User&gt; findByEmail(String email) {
+        try {
+<span class="nc" id="L119">            log.debug(&quot;HTTP client: Finding user by email {} via {}&quot;, email, serviceUrl);</span>
+<span class="nc" id="L120">            ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users/email/&quot; + email,
+                HttpMethod.GET,
+                null,
+<span class="nc" id="L124">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L127" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L128">                return Optional.of(fromResponse(response.getBody().getData()));</span>
+            }
+<span class="nc" id="L130">            return Optional.empty();</span>
+<span class="nc" id="L131">        } catch (RestClientException e) {</span>
+<span class="nc" id="L132">            log.debug(&quot;User not found by email: {}&quot;, email);</span>
+<span class="nc" id="L133">            return Optional.empty();</span>
+        }
+    }
+
+    @Override
+    public Optional&lt;User&gt; findByUsernameOrEmail(String usernameOrEmail) {
+<span class="nc" id="L139">        Optional&lt;User&gt; byUsername = findByUsername(usernameOrEmail);</span>
+<span class="nc bnc" id="L140" title="All 2 branches missed.">        if (byUsername.isPresent()) {</span>
+<span class="nc" id="L141">            return byUsername;</span>
+        }
+<span class="nc" id="L143">        return findByEmail(usernameOrEmail);</span>
+    }
+
+    @Override
+    public Page&lt;User&gt; getUsers(int page, int size) {
+        try {
+<span class="nc" id="L149">            log.debug(&quot;HTTP client: Listing users page {} size {} via {}&quot;, page, size, serviceUrl);</span>
+<span class="nc" id="L150">            ResponseEntity&lt;ApiResponse&lt;PagedResponse&lt;UserResponse&gt;&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users?page=&quot; + page + &quot;&amp;size=&quot; + size,
+                HttpMethod.GET,
+                null,
+<span class="nc" id="L154">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L157" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L158">                PagedResponse&lt;UserResponse&gt; pagedResponse = response.getBody().getData();</span>
+<span class="nc" id="L159">                List&lt;User&gt; users = pagedResponse.getContent().stream()</span>
+<span class="nc" id="L160">                    .map(this::fromResponse)</span>
+<span class="nc" id="L161">                    .toList();</span>
+<span class="nc" id="L162">                return new PageImpl&lt;&gt;(users, PageRequest.of(page, size), pagedResponse.getTotalElements());</span>
+            }
+<span class="nc" id="L164">            return new PageImpl&lt;&gt;(Collections.emptyList());</span>
+<span class="nc" id="L165">        } catch (RestClientException e) {</span>
+<span class="nc" id="L166">            log.error(&quot;HTTP error listing users&quot;, e);</span>
+<span class="nc" id="L167">            return new PageImpl&lt;&gt;(Collections.emptyList());</span>
+        }
+    }
+
+    @Override
+    public User updateUser(Long id, User user) {
+        try {
+<span class="nc" id="L174">            log.debug(&quot;HTTP client: Updating user {} via {}&quot;, id, serviceUrl);</span>
+<span class="nc" id="L175">            Map&lt;String, Object&gt; request = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">            if (user.getUsername() != null) {</span>
+<span class="nc" id="L177">                request.put(&quot;username&quot;, user.getUsername());</span>
+            }
+<span class="nc bnc" id="L179" title="All 2 branches missed.">            if (user.getEmail() != null) {</span>
+<span class="nc" id="L180">                request.put(&quot;email&quot;, user.getEmail());</span>
+            }
+<span class="nc bnc" id="L182" title="All 2 branches missed.">            if (user.getPassword() != null) {</span>
+<span class="nc" id="L183">                request.put(&quot;password&quot;, user.getPassword());</span>
+            }
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            if (user.getFirstName() != null) {</span>
+<span class="nc" id="L186">                request.put(&quot;firstName&quot;, user.getFirstName());</span>
+            }
+<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (user.getLastName() != null) {</span>
+<span class="nc" id="L189">                request.put(&quot;lastName&quot;, user.getLastName());</span>
+            }
+<span class="nc bnc" id="L191" title="All 2 branches missed.">            if (user.getIsActive() != null) {</span>
+<span class="nc" id="L192">                request.put(&quot;isActive&quot;, user.getIsActive());</span>
+            }
+<span class="nc bnc" id="L194" title="All 2 branches missed.">            if (user.getIsVerified() != null) {</span>
+<span class="nc" id="L195">                request.put(&quot;isVerified&quot;, user.getIsVerified());</span>
+            }
+
+<span class="nc" id="L198">            ResponseEntity&lt;ApiResponse&lt;UserResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users/&quot; + id,
+                HttpMethod.PUT,
+                new HttpEntity&lt;&gt;(request),
+<span class="nc" id="L202">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L205" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L206">                return fromResponse(response.getBody().getData());</span>
+            }
+<span class="nc" id="L208">            throw new RuntimeException(&quot;Failed to update user&quot;);</span>
+<span class="nc" id="L209">        } catch (RestClientException e) {</span>
+<span class="nc" id="L210">            log.error(&quot;HTTP error updating user&quot;, e);</span>
+<span class="nc" id="L211">            throw new RuntimeException(&quot;Failed to update user: &quot; + e.getMessage());</span>
+        }
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        try {
+<span class="nc" id="L218">            log.debug(&quot;HTTP client: Deleting user {} via {}&quot;, id, serviceUrl);</span>
+<span class="nc" id="L219">            restTemplate.delete(serviceUrl + &quot;/internal/api/v1/users/&quot; + id);</span>
+<span class="nc" id="L220">        } catch (RestClientException e) {</span>
+<span class="nc" id="L221">            log.error(&quot;HTTP error deleting user&quot;, e);</span>
+<span class="nc" id="L222">            throw new RuntimeException(&quot;Failed to delete user: &quot; + e.getMessage());</span>
+<span class="nc" id="L223">        }</span>
+<span class="nc" id="L224">    }</span>
+
+    @Override
+    public boolean existsByUsername(String username) {
+        try {
+<span class="nc" id="L229">            ResponseEntity&lt;ApiResponse&lt;ExistsResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users/exists/username/&quot; + username,
+                HttpMethod.GET,
+                null,
+<span class="nc" id="L233">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+<span class="nc bnc" id="L235" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L236">                return response.getBody().getData().isExists();</span>
+            }
+<span class="nc" id="L238">            return false;</span>
+<span class="nc" id="L239">        } catch (RestClientException e) {</span>
+<span class="nc" id="L240">            return false;</span>
+        }
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+        try {
+<span class="nc" id="L247">            ResponseEntity&lt;ApiResponse&lt;ExistsResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/users/exists/email/&quot; + email,
+                HttpMethod.GET,
+                null,
+<span class="nc" id="L251">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+<span class="nc bnc" id="L253" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L254">                return response.getBody().getData().isExists();</span>
+            }
+<span class="nc" id="L256">            return false;</span>
+<span class="nc" id="L257">        } catch (RestClientException e) {</span>
+<span class="nc" id="L258">            return false;</span>
+        }
+    }
+
+    @lombok.Data
+    private static class ExistsResponse {
+        private boolean exists;
+    }
+
+    private User fromResponse(UserResponse response) {
+<span class="nc" id="L268">        return User.builder()</span>
+<span class="nc" id="L269">            .id(response.getId())</span>
+<span class="nc" id="L270">            .username(response.getUsername())</span>
+<span class="nc" id="L271">            .email(response.getEmail())</span>
+<span class="nc" id="L272">            .firstName(response.getFirstName())</span>
+<span class="nc" id="L273">            .lastName(response.getLastName())</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">            .role(response.getRole() != null ? response.getRole() : UserRole.USER)</span>
+<span class="nc" id="L275">            .isActive(response.getIsActive())</span>
+<span class="nc" id="L276">            .isVerified(response.getIsVerified())</span>
+<span class="nc" id="L277">            .createdAt(response.getCreatedAt())</span>
+<span class="nc" id="L278">            .updatedAt(response.getUpdatedAt())</span>
+<span class="nc" id="L279">            .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

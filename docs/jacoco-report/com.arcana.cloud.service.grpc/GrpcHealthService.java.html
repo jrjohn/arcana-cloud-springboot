@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GrpcHealthService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.service.grpc</a> &gt; <span class="el_source">GrpcHealthService.java</span></div><h1>GrpcHealthService.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.service.grpc;
+
+import io.grpc.health.v1.HealthCheckRequest;
+import io.grpc.health.v1.HealthCheckResponse;
+import io.grpc.health.v1.HealthGrpc;
+import io.grpc.stub.StreamObserver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.grpc.server.service.GrpcService;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+/**
+ * gRPC Health Check Service implementation.
+ *
+ * &lt;p&gt;Implements the standard gRPC health checking protocol for Kubernetes probes.
+ * This allows K8s to properly check gRPC server health in addition to HTTP endpoints.&lt;/p&gt;
+ *
+ * @see &lt;a href=&quot;https://github.com/grpc/grpc/blob/master/doc/health-checking.md&quot;&gt;gRPC Health Checking Protocol&lt;/a&gt;
+ */
+@GrpcService
+@ConditionalOnExpression(&quot;'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'&quot;)
+public class GrpcHealthService extends HealthGrpc.HealthImplBase {
+
+<span class="fc" id="L27">    private static final Logger log = LoggerFactory.getLogger(GrpcHealthService.class);</span>
+
+    private final Map&lt;String, HealthCheckResponse.ServingStatus&gt; serviceStatuses;
+<span class="fc" id="L30">    private volatile boolean pluginsReady = false;</span>
+
+<span class="fc" id="L32">    public GrpcHealthService() {</span>
+<span class="fc" id="L33">        this.serviceStatuses = new ConcurrentHashMap&lt;&gt;();</span>
+        // Set default status for empty service (overall server health)
+<span class="fc" id="L35">        serviceStatuses.put(&quot;&quot;, HealthCheckResponse.ServingStatus.SERVING);</span>
+        // Set default statuses for known services
+<span class="fc" id="L37">        serviceStatuses.put(&quot;grpc.health.v1.Health&quot;, HealthCheckResponse.ServingStatus.SERVING);</span>
+<span class="fc" id="L38">        serviceStatuses.put(&quot;arcana.cloud.AuthService&quot;, HealthCheckResponse.ServingStatus.SERVING);</span>
+<span class="fc" id="L39">        serviceStatuses.put(&quot;arcana.cloud.UserService&quot;, HealthCheckResponse.ServingStatus.SERVING);</span>
+<span class="fc" id="L40">        log.info(&quot;gRPC Health Service initialized&quot;);</span>
+<span class="fc" id="L41">    }</span>
+
+    @Override
+    public void check(HealthCheckRequest request, StreamObserver&lt;HealthCheckResponse&gt; responseObserver) {
+<span class="nc" id="L45">        String serviceName = request.getService();</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">        log.debug(&quot;Health check requested for service: '{}'&quot;, serviceName.isEmpty() ? &quot;(overall)&quot; : serviceName);</span>
+
+<span class="nc" id="L48">        HealthCheckResponse.ServingStatus status = serviceStatuses.getOrDefault(</span>
+            serviceName,
+            HealthCheckResponse.ServingStatus.SERVICE_UNKNOWN
+        );
+
+        // If checking overall health, also verify plugins are ready
+<span class="nc bnc" id="L54" title="All 4 branches missed.">        if (serviceName.isEmpty() &amp;&amp; !pluginsReady) {</span>
+<span class="nc" id="L55">            status = HealthCheckResponse.ServingStatus.NOT_SERVING;</span>
+        }
+
+<span class="nc" id="L58">        HealthCheckResponse response = HealthCheckResponse.newBuilder()</span>
+<span class="nc" id="L59">            .setStatus(status)</span>
+<span class="nc" id="L60">            .build();</span>
+
+<span class="nc" id="L62">        responseObserver.onNext(response);</span>
+<span class="nc" id="L63">        responseObserver.onCompleted();</span>
+<span class="nc" id="L64">    }</span>
+
+    @Override
+    public void watch(HealthCheckRequest request, StreamObserver&lt;HealthCheckResponse&gt; responseObserver) {
+        // For simplicity, we'll just return the current status
+        // In production, this could be enhanced to stream status changes
+<span class="nc" id="L70">        String serviceName = request.getService();</span>
+<span class="nc" id="L71">        HealthCheckResponse.ServingStatus status = serviceStatuses.getOrDefault(</span>
+            serviceName,
+            HealthCheckResponse.ServingStatus.SERVICE_UNKNOWN
+        );
+
+<span class="nc" id="L76">        HealthCheckResponse response = HealthCheckResponse.newBuilder()</span>
+<span class="nc" id="L77">            .setStatus(status)</span>
+<span class="nc" id="L78">            .build();</span>
+
+<span class="nc" id="L80">        responseObserver.onNext(response);</span>
+        // Keep the stream open for watching (don't complete immediately)
+<span class="nc" id="L82">    }</span>
+
+    /**
+     * Sets the serving status for a service.
+     *
+     * @param serviceName the service name (empty string for overall health)
+     * @param status the serving status
+     */
+    public void setStatus(String serviceName, HealthCheckResponse.ServingStatus status) {
+<span class="nc" id="L91">        serviceStatuses.put(serviceName, status);</span>
+<span class="nc" id="L92">        log.info(&quot;Service '{}' status changed to {}&quot;,</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">            serviceName.isEmpty() ? &quot;(overall)&quot; : serviceName, status);</span>
+<span class="nc" id="L94">    }</span>
+
+    /**
+     * Marks a service as serving.
+     *
+     * @param serviceName the service name
+     */
+    public void setServing(String serviceName) {
+<span class="nc" id="L102">        setStatus(serviceName, HealthCheckResponse.ServingStatus.SERVING);</span>
+<span class="nc" id="L103">    }</span>
+
+    /**
+     * Marks a service as not serving.
+     *
+     * @param serviceName the service name
+     */
+    public void setNotServing(String serviceName) {
+<span class="nc" id="L111">        setStatus(serviceName, HealthCheckResponse.ServingStatus.NOT_SERVING);</span>
+<span class="nc" id="L112">    }</span>
+
+    /**
+     * Marks plugins as ready.
+     * Called by PluginManager when all plugins are initialized.
+     */
+    public void setPluginsReady(boolean ready) {
+<span class="nc" id="L119">        this.pluginsReady = ready;</span>
+<span class="nc bnc" id="L120" title="All 2 branches missed.">        if (ready) {</span>
+<span class="nc" id="L121">            setStatus(&quot;arcana.cloud.PluginSystem&quot;, HealthCheckResponse.ServingStatus.SERVING);</span>
+        } else {
+<span class="nc" id="L123">            setStatus(&quot;arcana.cloud.PluginSystem&quot;, HealthCheckResponse.ServingStatus.NOT_SERVING);</span>
+        }
+<span class="nc" id="L125">        log.info(&quot;Plugin system ready status: {}&quot;, ready);</span>
+<span class="nc" id="L126">    }</span>
+
+    /**
+     * Returns whether plugins are ready.
+     *
+     * @return true if plugins are initialized
+     */
+    public boolean isPluginsReady() {
+<span class="nc" id="L134">        return pluginsReady;</span>
+    }
+
+    /**
+     * Clears all custom statuses and resets to default.
+     */
+    public void clearStatuses() {
+<span class="nc" id="L141">        serviceStatuses.clear();</span>
+<span class="nc" id="L142">        serviceStatuses.put(&quot;&quot;, HealthCheckResponse.ServingStatus.SERVING);</span>
+<span class="nc" id="L143">        pluginsReady = false;</span>
+<span class="nc" id="L144">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

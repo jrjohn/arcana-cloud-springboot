@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GrpcConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.config</a> &gt; <span class="el_source">GrpcConfig.java</span></div><h1>GrpcConfig.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.config;
+
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
+import io.grpc.netty.shaded.io.grpc.netty.GrpcSslContexts;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
+import io.grpc.netty.shaded.io.netty.handler.ssl.SslContext;
+import io.grpc.netty.shaded.io.netty.handler.ssl.SslContextBuilder;
+import jakarta.annotation.PreDestroy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import javax.net.ssl.SSLException;
+import java.io.File;
+import java.util.concurrent.TimeUnit;
+
+/**
+ * gRPC Configuration with TLS/mTLS support and resilience patterns.
+ *
+ * &lt;p&gt;Supports three modes:&lt;/p&gt;
+ * &lt;ul&gt;
+ *   &lt;li&gt;Plaintext (development/testing)&lt;/li&gt;
+ *   &lt;li&gt;TLS (server authentication only)&lt;/li&gt;
+ *   &lt;li&gt;mTLS (mutual authentication)&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+@Configuration
+<span class="fc" id="L32">public class GrpcConfig {</span>
+
+<span class="fc" id="L34">    private static final Logger log = LoggerFactory.getLogger(GrpcConfig.class);</span>
+
+    @Value(&quot;${service.grpc.url:localhost:9090}&quot;)
+    private String serviceGrpcUrl;
+
+    @Value(&quot;${repository.grpc.url:localhost:9091}&quot;)
+    private String repositoryGrpcUrl;
+
+    // TLS Configuration
+    @Value(&quot;${grpc.client.tls.enabled:false}&quot;)
+    private boolean tlsEnabled;
+
+    @Value(&quot;${grpc.client.tls.trust-cert-path:}&quot;)
+    private String trustCertPath;
+
+    @Value(&quot;${grpc.client.tls.client-cert-path:}&quot;)
+    private String clientCertPath;
+
+    @Value(&quot;${grpc.client.tls.client-key-path:}&quot;)
+    private String clientKeyPath;
+
+    // Resilience Configuration
+    @Value(&quot;${grpc.client.keepalive.time:30}&quot;)
+    private long keepAliveTimeSeconds;
+
+    @Value(&quot;${grpc.client.keepalive.timeout:10}&quot;)
+    private long keepAliveTimeoutSeconds;
+
+    @Value(&quot;${grpc.client.retry.max-attempts:3}&quot;)
+    private int maxRetryAttempts;
+
+    @Value(&quot;${grpc.client.retry.initial-backoff-ms:100}&quot;)
+    private long initialBackoffMs;
+
+    @Value(&quot;${grpc.client.retry.max-backoff-ms:2000}&quot;)
+    private long maxBackoffMs;
+
+    @Value(&quot;${grpc.client.deadline-ms:30000}&quot;)
+    private long deadlineMs;
+
+    @Value(&quot;${grpc.client.max-inbound-message-size:16777216}&quot;)
+    private int maxInboundMessageSize;
+
+    private ManagedChannel serviceChannel;
+    private ManagedChannel repositoryChannel;
+
+    @Bean
+    @ConditionalOnProperty(name = &quot;deployment.layer&quot;, havingValue = &quot;controller&quot;)
+    public ManagedChannel serviceChannel() {
+<span class="nc" id="L83">        log.info(&quot;Creating gRPC service channel to {} (TLS: {})&quot;, serviceGrpcUrl, tlsEnabled);</span>
+<span class="nc" id="L84">        this.serviceChannel = createChannel(serviceGrpcUrl);</span>
+<span class="nc" id="L85">        return this.serviceChannel;</span>
+    }
+
+    @Bean
+    @ConditionalOnProperty(name = &quot;deployment.layer&quot;, havingValue = &quot;service&quot;)
+    public ManagedChannel repositoryChannel() {
+<span class="nc" id="L91">        log.info(&quot;Creating gRPC repository channel to {} (TLS: {})&quot;, repositoryGrpcUrl, tlsEnabled);</span>
+<span class="nc" id="L92">        this.repositoryChannel = createChannel(repositoryGrpcUrl);</span>
+<span class="nc" id="L93">        return this.repositoryChannel;</span>
+    }
+
+    /**
+     * Creates a managed gRPC channel with configured resilience and security settings.
+     */
+    private ManagedChannel createChannel(String target) {
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (tlsEnabled) {</span>
+<span class="nc" id="L101">            return createSecureChannel(target);</span>
+        } else {
+<span class="nc" id="L103">            return createPlaintextChannel(target);</span>
+        }
+    }
+
+    /**
+     * Creates a plaintext channel (for development/testing).
+     */
+    private ManagedChannel createPlaintextChannel(String target) {
+<span class="nc" id="L111">        return ManagedChannelBuilder.forTarget(target)</span>
+<span class="nc" id="L112">            .usePlaintext()</span>
+<span class="nc" id="L113">            .keepAliveTime(keepAliveTimeSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L114">            .keepAliveTimeout(keepAliveTimeoutSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L115">            .keepAliveWithoutCalls(true)</span>
+<span class="nc" id="L116">            .maxInboundMessageSize(maxInboundMessageSize)</span>
+            // Enable retry
+<span class="nc" id="L118">            .enableRetry()</span>
+<span class="nc" id="L119">            .maxRetryAttempts(maxRetryAttempts)</span>
+            // Default service config with retry policy
+<span class="nc" id="L121">            .defaultServiceConfig(getDefaultServiceConfig())</span>
+<span class="nc" id="L122">            .build();</span>
+    }
+
+    /**
+     * Creates a TLS/mTLS secured channel.
+     */
+    private ManagedChannel createSecureChannel(String target) {
+        try {
+<span class="nc" id="L130">            SslContext sslContext = buildSslContext();</span>
+
+<span class="nc" id="L132">            return NettyChannelBuilder.forTarget(target)</span>
+<span class="nc" id="L133">                .sslContext(sslContext)</span>
+<span class="nc" id="L134">                .keepAliveTime(keepAliveTimeSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L135">                .keepAliveTimeout(keepAliveTimeoutSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L136">                .keepAliveWithoutCalls(true)</span>
+<span class="nc" id="L137">                .maxInboundMessageSize(maxInboundMessageSize)</span>
+<span class="nc" id="L138">                .enableRetry()</span>
+<span class="nc" id="L139">                .maxRetryAttempts(maxRetryAttempts)</span>
+<span class="nc" id="L140">                .defaultServiceConfig(getDefaultServiceConfig())</span>
+<span class="nc" id="L141">                .build();</span>
+
+<span class="nc" id="L143">        } catch (SSLException e) {</span>
+<span class="nc" id="L144">            log.error(&quot;Failed to create secure gRPC channel, falling back to plaintext&quot;, e);</span>
+<span class="nc" id="L145">            return createPlaintextChannel(target);</span>
+        }
+    }
+
+    /**
+     * Builds SSL context for TLS/mTLS.
+     */
+    private SslContext buildSslContext() throws SSLException {
+<span class="nc" id="L153">        SslContextBuilder builder = GrpcSslContexts.forClient();</span>
+
+        // Trust certificate (CA certificate for server verification)
+<span class="nc bnc" id="L156" title="All 4 branches missed.">        if (trustCertPath != null &amp;&amp; !trustCertPath.isEmpty()) {</span>
+<span class="nc" id="L157">            File trustCert = new File(trustCertPath);</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">            if (trustCert.exists()) {</span>
+<span class="nc" id="L159">                builder.trustManager(trustCert);</span>
+<span class="nc" id="L160">                log.info(&quot;Loaded trust certificate from: {}&quot;, trustCertPath);</span>
+            }
+        }
+
+        // Client certificate and key (for mTLS)
+<span class="nc bnc" id="L165" title="All 6 branches missed.">        if (clientCertPath != null &amp;&amp; !clientCertPath.isEmpty()</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">            &amp;&amp; clientKeyPath != null &amp;&amp; !clientKeyPath.isEmpty()) {</span>
+<span class="nc" id="L167">            File clientCert = new File(clientCertPath);</span>
+<span class="nc" id="L168">            File clientKey = new File(clientKeyPath);</span>
+<span class="nc bnc" id="L169" title="All 4 branches missed.">            if (clientCert.exists() &amp;&amp; clientKey.exists()) {</span>
+<span class="nc" id="L170">                builder.keyManager(clientCert, clientKey);</span>
+<span class="nc" id="L171">                log.info(&quot;Loaded client certificate for mTLS from: {}&quot;, clientCertPath);</span>
+            }
+        }
+
+<span class="nc" id="L175">        return builder.build();</span>
+    }
+
+    /**
+     * Returns default service config with retry policy.
+     */
+    private java.util.Map&lt;String, Object&gt; getDefaultServiceConfig() {
+        // Retry policy for idempotent methods
+<span class="nc" id="L183">        java.util.Map&lt;String, Object&gt; retryPolicy = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L184">        retryPolicy.put(&quot;maxAttempts&quot;, (double) maxRetryAttempts);</span>
+<span class="nc" id="L185">        retryPolicy.put(&quot;initialBackoff&quot;, initialBackoffMs + &quot;ms&quot;);</span>
+<span class="nc" id="L186">        retryPolicy.put(&quot;maxBackoff&quot;, maxBackoffMs + &quot;ms&quot;);</span>
+<span class="nc" id="L187">        retryPolicy.put(&quot;backoffMultiplier&quot;, 2.0);</span>
+<span class="nc" id="L188">        retryPolicy.put(&quot;retryableStatusCodes&quot;, java.util.List.of(&quot;UNAVAILABLE&quot;, &quot;DEADLINE_EXCEEDED&quot;));</span>
+
+<span class="nc" id="L190">        java.util.Map&lt;String, Object&gt; methodConfig = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L191">        methodConfig.put(&quot;name&quot;, java.util.List.of(java.util.Map.of()));</span>
+<span class="nc" id="L192">        methodConfig.put(&quot;retryPolicy&quot;, retryPolicy);</span>
+<span class="nc" id="L193">        methodConfig.put(&quot;timeout&quot;, deadlineMs + &quot;ms&quot;);</span>
+
+<span class="nc" id="L195">        java.util.Map&lt;String, Object&gt; serviceConfig = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L196">        serviceConfig.put(&quot;methodConfig&quot;, java.util.List.of(methodConfig));</span>
+
+        // Load balancing policy for Kubernetes DNS
+<span class="nc" id="L199">        serviceConfig.put(&quot;loadBalancingPolicy&quot;, &quot;round_robin&quot;);</span>
+
+<span class="nc" id="L201">        return serviceConfig;</span>
+    }
+
+    @PreDestroy
+    public void shutdown() {
+<span class="nc" id="L206">        log.info(&quot;Shutting down gRPC channels&quot;);</span>
+<span class="nc" id="L207">        shutdownChannel(serviceChannel, &quot;service&quot;);</span>
+<span class="nc" id="L208">        shutdownChannel(repositoryChannel, &quot;repository&quot;);</span>
+<span class="nc" id="L209">    }</span>
+
+    private void shutdownChannel(ManagedChannel channel, String name) {
+<span class="nc bnc" id="L212" title="All 4 branches missed.">        if (channel != null &amp;&amp; !channel.isShutdown()) {</span>
+            try {
+<span class="nc" id="L214">                channel.shutdown();</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">                if (!channel.awaitTermination(5, TimeUnit.SECONDS)) {</span>
+<span class="nc" id="L216">                    log.warn(&quot;gRPC {} channel did not terminate gracefully, forcing shutdown&quot;, name);</span>
+<span class="nc" id="L217">                    channel.shutdownNow();</span>
+                }
+<span class="nc" id="L219">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L220">                log.warn(&quot;Interrupted while shutting down gRPC {} channel&quot;, name);</span>
+<span class="nc" id="L221">                channel.shutdownNow();</span>
+<span class="nc" id="L222">                Thread.currentThread().interrupt();</span>
+<span class="nc" id="L223">            }</span>
+        }
+<span class="nc" id="L225">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.service.impl</a> &gt; <span class="el_source">AuthServiceImpl.java</span></div><h1>AuthServiceImpl.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.service.impl;
+
+import com.arcana.cloud.dto.request.LoginRequest;
+import com.arcana.cloud.dto.request.RefreshTokenRequest;
+import com.arcana.cloud.dto.request.RegisterRequest;
+import com.arcana.cloud.dto.response.AuthResponse;
+import com.arcana.cloud.entity.OAuthToken;
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.entity.UserRole;
+import com.arcana.cloud.exception.UnauthorizedException;
+import com.arcana.cloud.exception.ValidationException;
+import com.arcana.cloud.mapper.UserMapper;
+import com.arcana.cloud.repository.OAuthTokenRepository;
+import com.arcana.cloud.repository.UserRepository;
+import com.arcana.cloud.security.JwtTokenProvider;
+import com.arcana.cloud.security.UserPrincipal;
+import com.arcana.cloud.service.interfaces.AuthService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+
+/**
+ * AuthService implementation with direct database access.
+ * Active in: monolithic mode OR service layer of layered mode.
+ */
+@Service
+@RequiredArgsConstructor
+<span class="fc" id="L34">@Slf4j</span>
+@Transactional
+@ConditionalOnExpression(&quot;'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'&quot;)
+public class AuthServiceImpl implements AuthService {
+
+    private final UserRepository userRepository;
+    private final OAuthTokenRepository tokenRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtTokenProvider tokenProvider;
+    private final UserMapper userMapper;
+
+    @Value(&quot;${jwt.expiration:3600000}&quot;)
+    private Long accessTokenExpiration;
+
+    @Value(&quot;${jwt.refresh.expiration:2592000000}&quot;)
+    private Long refreshTokenExpiration;
+
+    @Override
+    public AuthResponse register(RegisterRequest request) {
+<span class="fc" id="L53">        log.info(&quot;Registering new user with username: {}&quot;, request.getUsername());</span>
+
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (!request.getPassword().equals(request.getConfirmPassword())) {</span>
+<span class="fc" id="L56">            throw new ValidationException(&quot;Passwords do not match&quot;);</span>
+        }
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (userRepository.existsByUsername(request.getUsername())) {</span>
+<span class="fc" id="L60">            throw new ValidationException(&quot;Username already exists&quot;);</span>
+        }
+
+<span class="fc bfc" id="L63" title="All 2 branches covered.">        if (userRepository.existsByEmail(request.getEmail())) {</span>
+<span class="fc" id="L64">            throw new ValidationException(&quot;Email already exists&quot;);</span>
+        }
+
+<span class="fc" id="L67">        User user = User.builder()</span>
+<span class="fc" id="L68">            .username(request.getUsername())</span>
+<span class="fc" id="L69">            .email(request.getEmail())</span>
+<span class="fc" id="L70">            .password(passwordEncoder.encode(request.getPassword()))</span>
+<span class="fc" id="L71">            .firstName(request.getFirstName())</span>
+<span class="fc" id="L72">            .lastName(request.getLastName())</span>
+<span class="fc" id="L73">            .role(UserRole.USER)</span>
+<span class="fc" id="L74">            .isActive(true)</span>
+<span class="fc" id="L75">            .isVerified(false)</span>
+<span class="fc" id="L76">            .build();</span>
+
+<span class="fc" id="L78">        User savedUser = userRepository.save(user);</span>
+<span class="fc" id="L79">        log.info(&quot;User registered successfully with id: {}&quot;, savedUser.getId());</span>
+
+<span class="fc" id="L81">        return generateAuthResponse(savedUser);</span>
+    }
+
+    @Override
+    public AuthResponse login(LoginRequest request) {
+<span class="fc" id="L86">        log.info(&quot;Login attempt for user: {}&quot;, request.getUsernameOrEmail());</span>
+
+<span class="fc" id="L88">        User user = userRepository.findByUsernameOrEmail(</span>
+<span class="fc" id="L89">                request.getUsernameOrEmail(),</span>
+<span class="fc" id="L90">                request.getUsernameOrEmail()</span>
+            )
+<span class="fc" id="L92">            .orElseThrow(() -&gt; new UnauthorizedException(&quot;Invalid username or password&quot;));</span>
+
+<span class="fc bfc" id="L94" title="All 2 branches covered.">        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {</span>
+<span class="fc" id="L95">            throw new UnauthorizedException(&quot;Invalid username or password&quot;);</span>
+        }
+
+<span class="fc bfc" id="L98" title="All 2 branches covered.">        if (!user.getIsActive()) {</span>
+<span class="fc" id="L99">            throw new UnauthorizedException(&quot;Account is disabled&quot;);</span>
+        }
+
+<span class="fc" id="L102">        log.info(&quot;User logged in successfully: {}&quot;, user.getUsername());</span>
+<span class="fc" id="L103">        return generateAuthResponse(user);</span>
+    }
+
+    @Override
+    public AuthResponse refreshToken(RefreshTokenRequest request) {
+<span class="fc" id="L108">        log.info(&quot;Refreshing token&quot;);</span>
+
+<span class="fc bfc" id="L110" title="All 2 branches covered.">        if (!tokenProvider.validateToken(request.getRefreshToken())) {</span>
+<span class="fc" id="L111">            throw new UnauthorizedException(&quot;Invalid refresh token&quot;);</span>
+        }
+
+<span class="fc" id="L114">        Long userId = tokenProvider.getUserIdFromToken(request.getRefreshToken());</span>
+<span class="fc" id="L115">        User user = userRepository.findById(userId)</span>
+<span class="fc" id="L116">            .orElseThrow(() -&gt; new UnauthorizedException(&quot;User not found&quot;));</span>
+
+<span class="fc bfc" id="L118" title="All 2 branches covered.">        if (!user.getIsActive()) {</span>
+<span class="fc" id="L119">            throw new UnauthorizedException(&quot;Account is disabled&quot;);</span>
+        }
+
+<span class="fc" id="L122">        OAuthToken existingToken = tokenRepository.findByRefreshToken(request.getRefreshToken())</span>
+<span class="fc" id="L123">            .orElseThrow(() -&gt; new UnauthorizedException(&quot;Invalid refresh token&quot;));</span>
+
+<span class="fc bfc" id="L125" title="All 2 branches covered.">        if (existingToken.getIsRevoked()) {</span>
+<span class="fc" id="L126">            throw new UnauthorizedException(&quot;Token has been revoked&quot;);</span>
+        }
+
+<span class="fc" id="L129">        existingToken.setIsRevoked(true);</span>
+<span class="fc" id="L130">        tokenRepository.save(existingToken);</span>
+
+<span class="fc" id="L132">        log.info(&quot;Token refreshed successfully for user: {}&quot;, user.getUsername());</span>
+<span class="fc" id="L133">        return generateAuthResponse(user);</span>
+    }
+
+    @Override
+    public void logout(String accessToken) {
+<span class="fc" id="L138">        log.info(&quot;Logging out user&quot;);</span>
+<span class="fc" id="L139">        tokenRepository.revokeByAccessToken(accessToken);</span>
+<span class="fc" id="L140">    }</span>
+
+    @Override
+    public void logoutAll(Long userId) {
+<span class="fc" id="L144">        log.info(&quot;Logging out all sessions for user: {}&quot;, userId);</span>
+<span class="fc" id="L145">        User user = userRepository.findById(userId)</span>
+<span class="fc" id="L146">            .orElseThrow(() -&gt; new ValidationException(&quot;User not found&quot;));</span>
+<span class="fc" id="L147">        tokenRepository.revokeAllTokensByUser(user);</span>
+<span class="fc" id="L148">    }</span>
+
+    private AuthResponse generateAuthResponse(User user) {
+<span class="fc" id="L151">        UserPrincipal principal = UserPrincipal.create(user);</span>
+
+<span class="fc" id="L153">        String accessToken = tokenProvider.generateAccessToken(principal);</span>
+<span class="fc" id="L154">        String refreshToken = tokenProvider.generateRefreshToken(principal);</span>
+
+<span class="fc" id="L156">        LocalDateTime now = LocalDateTime.now();</span>
+<span class="fc" id="L157">        OAuthToken token = OAuthToken.builder()</span>
+<span class="fc" id="L158">            .user(user)</span>
+<span class="fc" id="L159">            .accessToken(accessToken)</span>
+<span class="fc" id="L160">            .refreshToken(refreshToken)</span>
+<span class="fc" id="L161">            .expiresAt(now.plusSeconds(accessTokenExpiration / 1000))</span>
+<span class="fc" id="L162">            .refreshExpiresAt(now.plusSeconds(refreshTokenExpiration / 1000))</span>
+<span class="fc" id="L163">            .build();</span>
+
+<span class="fc" id="L165">        tokenRepository.save(token);</span>
+
+<span class="fc" id="L167">        return AuthResponse.builder()</span>
+<span class="fc" id="L168">            .accessToken(accessToken)</span>
+<span class="fc" id="L169">            .refreshToken(refreshToken)</span>
+<span class="fc" id="L170">            .tokenType(&quot;Bearer&quot;)</span>
+<span class="fc" id="L171">            .expiresIn(accessTokenExpiration / 1000)</span>
+<span class="fc" id="L172">            .user(userMapper.toResponse(user))</span>
+<span class="fc" id="L173">            .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

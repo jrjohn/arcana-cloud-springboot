@@ -7,6 +7,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Timeout;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,6 +19,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,6 +40,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * </ul>
  */
 @DisplayName("Plugin K8s HTTP Mode Integration Tests")
+@Timeout(30)
 class PluginK8sHttpModeTest {
 
     private MockWebServer peer1Mock;
@@ -56,17 +60,32 @@ class PluginK8sHttpModeTest {
         peer1Url = peer1Url.substring(0, peer1Url.length() - 1);
         peer2Url = peer2Url.substring(0, peer2Url.length() - 1);
 
+        // Use RestTemplate with timeouts to prevent hanging on connection issues
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(2000);
+        factory.setReadTimeout(2000);
+        RestTemplate restTemplate = new RestTemplate(factory);
+
         registryClient = new HttpPluginRegistryClient(
-            new RestTemplate(),
+            restTemplate,
             List.of(peer1Url, peer2Url),
             INSTANCE_ID
         );
     }
 
     @AfterEach
-    void tearDown() throws IOException {
-        peer1Mock.shutdown();
-        peer2Mock.shutdown();
+    void tearDown() {
+        // Shutdown mock servers with proper cleanup to prevent hanging
+        try {
+            peer1Mock.shutdown();
+        } catch (IOException e) {
+            // Ignore shutdown errors
+        }
+        try {
+            peer2Mock.shutdown();
+        } catch (IOException e) {
+            // Ignore shutdown errors
+        }
     }
 
     @Nested

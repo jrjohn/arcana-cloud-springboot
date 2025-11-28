@@ -15,7 +15,7 @@ version = "1.0.0-SNAPSHOT"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -117,10 +117,12 @@ tasks.withType<Test> {
         events("passed", "skipped", "failed")
         showStandardStreams = false
     }
-    // Fork every 20 test classes to balance isolation vs overhead
-    forkEvery = 20
+    // Fork every test class to ensure complete isolation (prevents hangs)
+    forkEvery = 1
+    // Limit max parallel forks to prevent resource exhaustion
+    maxParallelForks = 1
     // Set timeouts to prevent infinite hangs
-    systemProperty("junit.jupiter.execution.timeout.default", "60s")
+    systemProperty("junit.jupiter.execution.timeout.default", "30s")
     // Ensure Gradle test executor exits cleanly
     jvmArgs("-XX:+HeapDumpOnOutOfMemoryError")
 }

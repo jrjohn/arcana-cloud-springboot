@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>HttpAuthServiceClient.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.service.client</a> &gt; <span class="el_source">HttpAuthServiceClient.java</span></div><h1>HttpAuthServiceClient.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.service.client;
+
+import com.arcana.cloud.dto.request.LoginRequest;
+import com.arcana.cloud.dto.request.RefreshTokenRequest;
+import com.arcana.cloud.dto.request.RegisterRequest;
+import com.arcana.cloud.dto.response.ApiResponse;
+import com.arcana.cloud.dto.response.AuthResponse;
+import com.arcana.cloud.exception.UnauthorizedException;
+import com.arcana.cloud.service.interfaces.AuthService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+/**
+ * HTTP client for AuthService.
+ * Active when communication.protocol=http.
+ * Calls AuthService on the service layer via HTTP REST.
+ */
+@Service
+@ConditionalOnExpression(
+    &quot;'${communication.protocol:grpc}' == 'http' and '${deployment.layer:}' == 'controller'&quot;
+)
+<span class="nc" id="L30">@Slf4j</span>
+public class HttpAuthServiceClient implements AuthService {
+
+    @Value(&quot;${service.http.url:http://localhost:8081}&quot;)
+    private String serviceUrl;
+
+    private final RestTemplate restTemplate;
+
+<span class="nc" id="L38">    public HttpAuthServiceClient() {</span>
+<span class="nc" id="L39">        this.restTemplate = new RestTemplate();</span>
+<span class="nc" id="L40">    }</span>
+
+    @Override
+    public AuthResponse register(RegisterRequest request) {
+        try {
+<span class="nc" id="L45">            log.debug(&quot;HTTP client: Registering user via {}&quot;, serviceUrl);</span>
+<span class="nc" id="L46">            ResponseEntity&lt;ApiResponse&lt;AuthResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/auth/register&quot;,
+                HttpMethod.POST,
+                new HttpEntity&lt;&gt;(request),
+<span class="nc" id="L50">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L53" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L54">                return response.getBody().getData();</span>
+            }
+<span class="nc" id="L56">            throw new RuntimeException(&quot;Failed to register user: &quot;</span>
+<span class="nc bnc" id="L57" title="All 2 branches missed.">                + (response.getBody() != null ? response.getBody().getMessage() : &quot;Unknown error&quot;));</span>
+<span class="nc" id="L58">        } catch (RestClientException e) {</span>
+<span class="nc" id="L59">            log.error(&quot;HTTP error during registration&quot;, e);</span>
+<span class="nc" id="L60">            throw new RuntimeException(&quot;Failed to register user: &quot; + e.getMessage());</span>
+        }
+    }
+
+    @Override
+    public AuthResponse login(LoginRequest request) {
+        try {
+<span class="nc" id="L67">            log.debug(&quot;HTTP client: Login attempt via {}&quot;, serviceUrl);</span>
+<span class="nc" id="L68">            ResponseEntity&lt;ApiResponse&lt;AuthResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/auth/login&quot;,
+                HttpMethod.POST,
+                new HttpEntity&lt;&gt;(request),
+<span class="nc" id="L72">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L75" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L76">                return response.getBody().getData();</span>
+            }
+<span class="nc" id="L78">            throw new UnauthorizedException(&quot;Invalid credentials&quot;);</span>
+<span class="nc" id="L79">        } catch (RestClientException e) {</span>
+<span class="nc" id="L80">            log.error(&quot;HTTP error during login&quot;, e);</span>
+<span class="nc" id="L81">            throw new UnauthorizedException(&quot;Invalid credentials&quot;);</span>
+        }
+    }
+
+    @Override
+    public AuthResponse refreshToken(RefreshTokenRequest request) {
+        try {
+<span class="nc" id="L88">            log.debug(&quot;HTTP client: Refreshing token via {}&quot;, serviceUrl);</span>
+<span class="nc" id="L89">            ResponseEntity&lt;ApiResponse&lt;AuthResponse&gt;&gt; response = restTemplate.exchange(</span>
+                serviceUrl + &quot;/internal/api/v1/auth/refresh&quot;,
+                HttpMethod.POST,
+                new HttpEntity&lt;&gt;(request),
+<span class="nc" id="L93">                new ParameterizedTypeReference&lt;&gt;() { }</span>
+            );
+
+<span class="nc bnc" id="L96" title="All 4 branches missed.">            if (response.getBody() != null &amp;&amp; response.getBody().isSuccess()) {</span>
+<span class="nc" id="L97">                return response.getBody().getData();</span>
+            }
+<span class="nc" id="L99">            throw new UnauthorizedException(&quot;Invalid refresh token&quot;);</span>
+<span class="nc" id="L100">        } catch (RestClientException e) {</span>
+<span class="nc" id="L101">            log.error(&quot;HTTP error refreshing token&quot;, e);</span>
+<span class="nc" id="L102">            throw new UnauthorizedException(&quot;Invalid refresh token&quot;);</span>
+        }
+    }
+
+    @Override
+    public void logout(String token) {
+        try {
+<span class="nc" id="L109">            log.debug(&quot;HTTP client: Logout via {}&quot;, serviceUrl);</span>
+<span class="nc" id="L110">            restTemplate.postForEntity(</span>
+                serviceUrl + &quot;/internal/api/v1/auth/logout?accessToken=&quot; + token,
+                HttpEntity.EMPTY,
+                Void.class
+            );
+<span class="nc" id="L115">        } catch (RestClientException e) {</span>
+<span class="nc" id="L116">            log.error(&quot;HTTP error during logout&quot;, e);</span>
+            // Silently ignore logout errors
+<span class="nc" id="L118">        }</span>
+<span class="nc" id="L119">    }</span>
+
+    @Override
+    public void logoutAll(Long userId) {
+        try {
+<span class="nc" id="L124">            log.debug(&quot;HTTP client: Logout all via {}&quot;, serviceUrl);</span>
+<span class="nc" id="L125">            restTemplate.postForEntity(</span>
+                serviceUrl + &quot;/internal/api/v1/auth/logout-all?userId=&quot; + userId,
+                HttpEntity.EMPTY,
+                Void.class
+            );
+<span class="nc" id="L130">        } catch (RestClientException e) {</span>
+<span class="nc" id="L131">            log.error(&quot;HTTP error during logout all&quot;, e);</span>
+            // Silently ignore logout errors
+<span class="nc" id="L133">        }</span>
+<span class="nc" id="L134">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

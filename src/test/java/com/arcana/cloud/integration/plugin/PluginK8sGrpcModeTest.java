@@ -7,6 +7,7 @@ import com.arcana.cloud.plugin.runtime.distributed.DistributedPluginRegistry.Plu
 import com.arcana.cloud.plugin.runtime.distributed.DistributedPluginRegistry.PluginEventType;
 import com.arcana.cloud.plugin.runtime.distributed.DistributedPluginRegistry.PluginRegistryEntry;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
@@ -48,6 +49,7 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("Plugin K8s gRPC Mode Integration Tests")
+@Timeout(30)
 class PluginK8sGrpcModeTest {
 
     @Mock

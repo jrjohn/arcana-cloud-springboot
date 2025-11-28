@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.service.impl</a> &gt; <span class="el_source">UserServiceImpl.java</span></div><h1>UserServiceImpl.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.service.impl;
+
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.exception.ResourceNotFoundException;
+import com.arcana.cloud.exception.ValidationException;
+import com.arcana.cloud.repository.UserRepository;
+import com.arcana.cloud.service.interfaces.UserService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
+/**
+ * UserService implementation with direct database access.
+ * Active in: monolithic mode OR service layer of layered mode.
+ */
+@Service
+@Primary
+@RequiredArgsConstructor
+<span class="fc" id="L30">@Slf4j</span>
+@Transactional
+@ConditionalOnExpression(&quot;'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'&quot;)
+public class UserServiceImpl implements UserService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    @Override
+    public User createUser(User user) {
+<span class="fc" id="L40">        log.info(&quot;Creating new user with username: {}&quot;, user.getUsername());</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (userRepository.existsByUsername(user.getUsername())) {</span>
+<span class="fc" id="L43">            throw new ValidationException(&quot;Username already exists&quot;);</span>
+        }
+
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (userRepository.existsByEmail(user.getEmail())) {</span>
+<span class="fc" id="L47">            throw new ValidationException(&quot;Email already exists&quot;);</span>
+        }
+
+<span class="fc" id="L50">        user.setPassword(passwordEncoder.encode(user.getPassword()));</span>
+<span class="fc" id="L51">        User savedUser = userRepository.save(user);</span>
+<span class="fc" id="L52">        log.info(&quot;User created successfully with id: {}&quot;, savedUser.getId());</span>
+<span class="fc" id="L53">        return savedUser;</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    @Cacheable(value = &quot;users&quot;, key = &quot;#id&quot;)
+    public User getUserById(Long id) {
+<span class="fc" id="L60">        log.debug(&quot;Fetching user by id: {}&quot;, id);</span>
+<span class="fc" id="L61">        return userRepository.findById(id)</span>
+<span class="fc" id="L62">            .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id));</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; findByUsername(String username) {
+<span class="fc" id="L68">        log.debug(&quot;Fetching user by username: {}&quot;, username);</span>
+<span class="fc" id="L69">        return userRepository.findByUsername(username);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; findByEmail(String email) {
+<span class="fc" id="L75">        log.debug(&quot;Fetching user by email: {}&quot;, email);</span>
+<span class="fc" id="L76">        return userRepository.findByEmail(email);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; findByUsernameOrEmail(String usernameOrEmail) {
+<span class="nc" id="L82">        log.debug(&quot;Fetching user by username or email: {}&quot;, usernameOrEmail);</span>
+<span class="nc" id="L83">        return userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page&lt;User&gt; getUsers(int page, int size) {
+<span class="fc" id="L89">        log.debug(&quot;Fetching users page: {}, size: {}&quot;, page, size);</span>
+<span class="fc" id="L90">        PageRequest pageRequest = PageRequest.of(page, size, Sort.by(&quot;createdAt&quot;).descending());</span>
+<span class="fc" id="L91">        return userRepository.findAll(pageRequest);</span>
+    }
+
+    @Override
+    @CacheEvict(value = &quot;users&quot;, key = &quot;#id&quot;)
+    public User updateUser(Long id, User userUpdate) {
+<span class="fc" id="L97">        log.info(&quot;Updating user with id: {}&quot;, id);</span>
+
+<span class="fc" id="L99">        User existingUser = userRepository.findById(id)</span>
+<span class="fc" id="L100">            .orElseThrow(() -&gt; new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id));</span>
+
+<span class="pc bpc" id="L102" title="3 of 4 branches missed.">        if (userUpdate.getUsername() != null &amp;&amp; !userUpdate.getUsername().equals(existingUser.getUsername())) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            if (userRepository.existsByUsername(userUpdate.getUsername())) {</span>
+<span class="nc" id="L104">                throw new ValidationException(&quot;Username already exists&quot;);</span>
+            }
+<span class="nc" id="L106">            existingUser.setUsername(userUpdate.getUsername());</span>
+        }
+
+<span class="pc bpc" id="L109" title="3 of 4 branches missed.">        if (userUpdate.getEmail() != null &amp;&amp; !userUpdate.getEmail().equals(existingUser.getEmail())) {</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            if (userRepository.existsByEmail(userUpdate.getEmail())) {</span>
+<span class="nc" id="L111">                throw new ValidationException(&quot;Email already exists&quot;);</span>
+            }
+<span class="nc" id="L113">            existingUser.setEmail(userUpdate.getEmail());</span>
+        }
+
+<span class="pc bpc" id="L116" title="1 of 2 branches missed.">        if (userUpdate.getPassword() != null) {</span>
+<span class="nc" id="L117">            existingUser.setPassword(passwordEncoder.encode(userUpdate.getPassword()));</span>
+        }
+
+<span class="pc bpc" id="L120" title="1 of 2 branches missed.">        if (userUpdate.getFirstName() != null) {</span>
+<span class="fc" id="L121">            existingUser.setFirstName(userUpdate.getFirstName());</span>
+        }
+
+<span class="pc bpc" id="L124" title="1 of 2 branches missed.">        if (userUpdate.getLastName() != null) {</span>
+<span class="fc" id="L125">            existingUser.setLastName(userUpdate.getLastName());</span>
+        }
+
+<span class="fc bfc" id="L128" title="All 2 branches covered.">        if (userUpdate.getIsActive() != null) {</span>
+<span class="fc" id="L129">            existingUser.setIsActive(userUpdate.getIsActive());</span>
+        }
+
+<span class="fc bfc" id="L132" title="All 2 branches covered.">        if (userUpdate.getIsVerified() != null) {</span>
+<span class="fc" id="L133">            existingUser.setIsVerified(userUpdate.getIsVerified());</span>
+        }
+
+<span class="fc" id="L136">        User savedUser = userRepository.save(existingUser);</span>
+<span class="fc" id="L137">        log.info(&quot;User updated successfully with id: {}&quot;, savedUser.getId());</span>
+<span class="fc" id="L138">        return savedUser;</span>
+    }
+
+    @Override
+    @CacheEvict(value = &quot;users&quot;, key = &quot;#id&quot;)
+    public void deleteUser(Long id) {
+<span class="fc" id="L144">        log.info(&quot;Deleting user with id: {}&quot;, id);</span>
+
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        if (!userRepository.existsById(id)) {</span>
+<span class="fc" id="L147">            throw new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id);</span>
+        }
+
+<span class="fc" id="L150">        userRepository.deleteById(id);</span>
+<span class="fc" id="L151">        log.info(&quot;User deleted successfully with id: {}&quot;, id);</span>
+<span class="fc" id="L152">    }</span>
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByUsername(String username) {
+<span class="nc" id="L157">        return userRepository.existsByUsername(username);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByEmail(String email) {
+<span class="nc" id="L163">        return userRepository.existsByEmail(email);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

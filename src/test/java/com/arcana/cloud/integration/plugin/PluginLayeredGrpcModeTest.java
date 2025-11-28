@@ -1,6 +1,7 @@
 package com.arcana.cloud.integration.plugin;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -32,6 +33,7 @@ import static org.mockito.Mockito.*;
  */
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Plugin Layered gRPC Mode Integration Tests")
+@Timeout(30)
 class PluginLayeredGrpcModeTest {
 
     /**

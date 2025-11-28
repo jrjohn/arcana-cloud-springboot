@@ -4,6 +4,7 @@ import com.arcana.cloud.config.TestSecurityConfig;
 import com.arcana.cloud.controller.PluginController;
 import com.arcana.cloud.security.JwtAuthenticationFilter;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Timeout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -41,6 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DisplayName("Plugin Monolithic Mode Integration Tests")
 @Import(TestSecurityConfig.class)
+@Timeout(60)
 class PluginMonolithicModeTest {
 
     @Autowired

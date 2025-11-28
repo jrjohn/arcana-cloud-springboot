@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserGrpcService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.service.grpc</a> &gt; <span class="el_source">UserGrpcService.java</span></div><h1>UserGrpcService.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.service.grpc;
+
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.grpc.CreateUserRequest;
+import com.arcana.cloud.grpc.DeleteUserRequest;
+import com.arcana.cloud.grpc.DeleteUserResponse;
+import com.arcana.cloud.grpc.ExistsByEmailRequest;
+import com.arcana.cloud.grpc.ExistsByUsernameRequest;
+import com.arcana.cloud.grpc.ExistsResponse;
+import com.arcana.cloud.grpc.GetUserByEmailRequest;
+import com.arcana.cloud.grpc.GetUserByUsernameRequest;
+import com.arcana.cloud.grpc.GetUserRequest;
+import com.arcana.cloud.grpc.ListUsersRequest;
+import com.arcana.cloud.grpc.ListUsersResponse;
+import com.arcana.cloud.grpc.PageInfo;
+import com.arcana.cloud.grpc.UpdateUserRequest;
+import com.arcana.cloud.grpc.UserResponse;
+import com.arcana.cloud.grpc.UserServiceGrpc;
+import com.arcana.cloud.service.interfaces.UserService;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+
+/**
+ * gRPC server for UserService.
+ * Active in: monolithic mode OR service layer of layered mode.
+ * Exposes UserService operations over gRPC for controller layer to consume.
+ */
+@Service
+@RequiredArgsConstructor
+<span class="fc" id="L38">@Slf4j</span>
+@ConditionalOnExpression(&quot;'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'&quot;)
+public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
+
+    private final UserService userService;
+<span class="fc" id="L43">    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;</span>
+
+    @Override
+    public void getUser(GetUserRequest request, StreamObserver&lt;UserResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L48">            log.debug(&quot;gRPC: Getting user by id: {}&quot;, request.getUserId());</span>
+<span class="nc" id="L49">            User user = userService.getUserById(request.getUserId());</span>
+<span class="nc" id="L50">            responseObserver.onNext(toGrpcResponse(user));</span>
+<span class="nc" id="L51">            responseObserver.onCompleted();</span>
+<span class="nc" id="L52">        } catch (Exception e) {</span>
+<span class="nc" id="L53">            log.error(&quot;gRPC: Error getting user&quot;, e);</span>
+<span class="nc" id="L54">            responseObserver.onError(Status.NOT_FOUND</span>
+<span class="nc" id="L55">                .withDescription(&quot;User not found&quot;)</span>
+<span class="nc" id="L56">                .asRuntimeException());</span>
+<span class="nc" id="L57">        }</span>
+<span class="nc" id="L58">    }</span>
+
+    @Override
+    public void getUserByUsername(GetUserByUsernameRequest request, StreamObserver&lt;UserResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L63">            log.debug(&quot;gRPC: Getting user by username: {}&quot;, request.getUsername());</span>
+<span class="nc" id="L64">            Optional&lt;User&gt; user = userService.findByUsername(request.getUsername());</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">            if (user.isPresent()) {</span>
+<span class="nc" id="L66">                responseObserver.onNext(toGrpcResponse(user.get()));</span>
+<span class="nc" id="L67">                responseObserver.onCompleted();</span>
+            } else {
+<span class="nc" id="L69">                responseObserver.onError(Status.NOT_FOUND</span>
+<span class="nc" id="L70">                    .withDescription(&quot;User not found&quot;)</span>
+<span class="nc" id="L71">                    .asRuntimeException());</span>
+            }
+<span class="nc" id="L73">        } catch (Exception e) {</span>
+<span class="nc" id="L74">            log.error(&quot;gRPC: Error getting user by username&quot;, e);</span>
+<span class="nc" id="L75">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L76">                .withDescription(&quot;Internal error&quot;)</span>
+<span class="nc" id="L77">                .asRuntimeException());</span>
+<span class="nc" id="L78">        }</span>
+<span class="nc" id="L79">    }</span>
+
+    @Override
+    public void getUserByEmail(GetUserByEmailRequest request, StreamObserver&lt;UserResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L84">            log.debug(&quot;gRPC: Getting user by email: {}&quot;, request.getEmail());</span>
+<span class="nc" id="L85">            Optional&lt;User&gt; user = userService.findByEmail(request.getEmail());</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">            if (user.isPresent()) {</span>
+<span class="nc" id="L87">                responseObserver.onNext(toGrpcResponse(user.get()));</span>
+<span class="nc" id="L88">                responseObserver.onCompleted();</span>
+            } else {
+<span class="nc" id="L90">                responseObserver.onError(Status.NOT_FOUND</span>
+<span class="nc" id="L91">                    .withDescription(&quot;User not found&quot;)</span>
+<span class="nc" id="L92">                    .asRuntimeException());</span>
+            }
+<span class="nc" id="L94">        } catch (Exception e) {</span>
+<span class="nc" id="L95">            log.error(&quot;gRPC: Error getting user by email&quot;, e);</span>
+<span class="nc" id="L96">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L97">                .withDescription(&quot;Internal error&quot;)</span>
+<span class="nc" id="L98">                .asRuntimeException());</span>
+<span class="nc" id="L99">        }</span>
+<span class="nc" id="L100">    }</span>
+
+    @Override
+    public void createUser(CreateUserRequest request, StreamObserver&lt;UserResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L105">            log.debug(&quot;gRPC: Creating user: {}&quot;, request.getUsername());</span>
+<span class="nc" id="L106">            User user = User.builder()</span>
+<span class="nc" id="L107">                .username(request.getUsername())</span>
+<span class="nc" id="L108">                .email(request.getEmail())</span>
+<span class="nc" id="L109">                .password(request.getPassword())</span>
+<span class="nc" id="L110">                .firstName(request.getFirstName())</span>
+<span class="nc" id="L111">                .lastName(request.getLastName())</span>
+<span class="nc" id="L112">                .build();</span>
+
+<span class="nc" id="L114">            User createdUser = userService.createUser(user);</span>
+<span class="nc" id="L115">            responseObserver.onNext(toGrpcResponse(createdUser));</span>
+<span class="nc" id="L116">            responseObserver.onCompleted();</span>
+<span class="nc" id="L117">        } catch (Exception e) {</span>
+<span class="nc" id="L118">            log.error(&quot;gRPC: Error creating user&quot;, e);</span>
+<span class="nc" id="L119">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L120">                .withDescription(&quot;Failed to create user: &quot; + e.getMessage())</span>
+<span class="nc" id="L121">                .asRuntimeException());</span>
+<span class="nc" id="L122">        }</span>
+<span class="nc" id="L123">    }</span>
+
+    @Override
+    public void updateUser(UpdateUserRequest request, StreamObserver&lt;UserResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L128">            log.debug(&quot;gRPC: Updating user: {}&quot;, request.getUserId());</span>
+<span class="nc" id="L129">            User userUpdate = User.builder()</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                .username(request.hasUsername() ? request.getUsername() : null)</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">                .email(request.hasEmail() ? request.getEmail() : null)</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">                .password(request.hasPassword() ? request.getPassword() : null)</span>
+<span class="nc bnc" id="L133" title="All 2 branches missed.">                .firstName(request.hasFirstName() ? request.getFirstName() : null)</span>
+<span class="nc bnc" id="L134" title="All 2 branches missed.">                .lastName(request.hasLastName() ? request.getLastName() : null)</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">                .isActive(request.hasIsActive() ? request.getIsActive() : null)</span>
+<span class="nc bnc" id="L136" title="All 2 branches missed.">                .isVerified(request.hasIsVerified() ? request.getIsVerified() : null)</span>
+<span class="nc" id="L137">                .build();</span>
+
+<span class="nc" id="L139">            User updatedUser = userService.updateUser(request.getUserId(), userUpdate);</span>
+<span class="nc" id="L140">            responseObserver.onNext(toGrpcResponse(updatedUser));</span>
+<span class="nc" id="L141">            responseObserver.onCompleted();</span>
+<span class="nc" id="L142">        } catch (Exception e) {</span>
+<span class="nc" id="L143">            log.error(&quot;gRPC: Error updating user&quot;, e);</span>
+<span class="nc" id="L144">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L145">                .withDescription(&quot;Failed to update user: &quot; + e.getMessage())</span>
+<span class="nc" id="L146">                .asRuntimeException());</span>
+<span class="nc" id="L147">        }</span>
+<span class="nc" id="L148">    }</span>
+
+    @Override
+    public void deleteUser(DeleteUserRequest request, StreamObserver&lt;DeleteUserResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L153">            log.debug(&quot;gRPC: Deleting user: {}&quot;, request.getUserId());</span>
+<span class="nc" id="L154">            userService.deleteUser(request.getUserId());</span>
+<span class="nc" id="L155">            responseObserver.onNext(DeleteUserResponse.newBuilder()</span>
+<span class="nc" id="L156">                .setSuccess(true)</span>
+<span class="nc" id="L157">                .setMessage(&quot;User deleted successfully&quot;)</span>
+<span class="nc" id="L158">                .build());</span>
+<span class="nc" id="L159">            responseObserver.onCompleted();</span>
+<span class="nc" id="L160">        } catch (Exception e) {</span>
+<span class="nc" id="L161">            log.error(&quot;gRPC: Error deleting user&quot;, e);</span>
+<span class="nc" id="L162">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L163">                .withDescription(&quot;Failed to delete user: &quot; + e.getMessage())</span>
+<span class="nc" id="L164">                .asRuntimeException());</span>
+<span class="nc" id="L165">        }</span>
+<span class="nc" id="L166">    }</span>
+
+    @Override
+    public void listUsers(ListUsersRequest request, StreamObserver&lt;ListUsersResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L171">            log.debug(&quot;gRPC: Listing users page: {}, size: {}&quot;, request.getPage(), request.getSize());</span>
+<span class="nc" id="L172">            Page&lt;User&gt; usersPage = userService.getUsers(request.getPage(), request.getSize());</span>
+
+<span class="nc" id="L174">            ListUsersResponse.Builder responseBuilder = ListUsersResponse.newBuilder();</span>
+<span class="nc" id="L175">            usersPage.getContent().forEach(user -&gt; responseBuilder.addUsers(toGrpcResponse(user)));</span>
+
+<span class="nc" id="L177">            responseBuilder.setPageInfo(PageInfo.newBuilder()</span>
+<span class="nc" id="L178">                .setPage(request.getPage())</span>
+<span class="nc" id="L179">                .setSize(request.getSize())</span>
+<span class="nc" id="L180">                .setTotalElements(usersPage.getTotalElements())</span>
+<span class="nc" id="L181">                .setTotalPages(usersPage.getTotalPages())</span>
+<span class="nc" id="L182">                .build());</span>
+
+<span class="nc" id="L184">            responseObserver.onNext(responseBuilder.build());</span>
+<span class="nc" id="L185">            responseObserver.onCompleted();</span>
+<span class="nc" id="L186">        } catch (Exception e) {</span>
+<span class="nc" id="L187">            log.error(&quot;gRPC: Error listing users&quot;, e);</span>
+<span class="nc" id="L188">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L189">                .withDescription(&quot;Failed to list users&quot;)</span>
+<span class="nc" id="L190">                .asRuntimeException());</span>
+<span class="nc" id="L191">        }</span>
+<span class="nc" id="L192">    }</span>
+
+    @Override
+    public void existsByUsername(ExistsByUsernameRequest request, StreamObserver&lt;ExistsResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L197">            boolean exists = userService.existsByUsername(request.getUsername());</span>
+<span class="nc" id="L198">            responseObserver.onNext(ExistsResponse.newBuilder().setExists(exists).build());</span>
+<span class="nc" id="L199">            responseObserver.onCompleted();</span>
+<span class="nc" id="L200">        } catch (Exception e) {</span>
+<span class="nc" id="L201">            log.error(&quot;gRPC: Error checking username existence&quot;, e);</span>
+<span class="nc" id="L202">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L203">                .withDescription(&quot;Internal error&quot;)</span>
+<span class="nc" id="L204">                .asRuntimeException());</span>
+<span class="nc" id="L205">        }</span>
+<span class="nc" id="L206">    }</span>
+
+    @Override
+    public void existsByEmail(ExistsByEmailRequest request, StreamObserver&lt;ExistsResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L211">            boolean exists = userService.existsByEmail(request.getEmail());</span>
+<span class="nc" id="L212">            responseObserver.onNext(ExistsResponse.newBuilder().setExists(exists).build());</span>
+<span class="nc" id="L213">            responseObserver.onCompleted();</span>
+<span class="nc" id="L214">        } catch (Exception e) {</span>
+<span class="nc" id="L215">            log.error(&quot;gRPC: Error checking email existence&quot;, e);</span>
+<span class="nc" id="L216">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L217">                .withDescription(&quot;Internal error&quot;)</span>
+<span class="nc" id="L218">                .asRuntimeException());</span>
+<span class="nc" id="L219">        }</span>
+<span class="nc" id="L220">    }</span>
+
+    private UserResponse toGrpcResponse(User user) {
+<span class="nc" id="L223">        return UserResponse.newBuilder()</span>
+<span class="nc" id="L224">            .setId(user.getId())</span>
+<span class="nc" id="L225">            .setUsername(user.getUsername())</span>
+<span class="nc" id="L226">            .setEmail(user.getEmail())</span>
+<span class="nc bnc" id="L227" title="All 2 branches missed.">            .setFirstName(user.getFirstName() != null ? user.getFirstName() : &quot;&quot;)</span>
+<span class="nc bnc" id="L228" title="All 2 branches missed.">            .setLastName(user.getLastName() != null ? user.getLastName() : &quot;&quot;)</span>
+<span class="nc" id="L229">            .setRole(user.getRole().name())</span>
+<span class="nc bnc" id="L230" title="All 4 branches missed.">            .setIsActive(user.getIsActive() != null &amp;&amp; user.getIsActive())</span>
+<span class="nc bnc" id="L231" title="All 4 branches missed.">            .setIsVerified(user.getIsVerified() != null &amp;&amp; user.getIsVerified())</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">            .setCreatedAt(user.getCreatedAt() != null ? user.getCreatedAt().format(FORMATTER) : &quot;&quot;)</span>
+<span class="nc bnc" id="L233" title="All 2 branches missed.">            .setUpdatedAt(user.getUpdatedAt() != null ? user.getUpdatedAt().format(FORMATTER) : &quot;&quot;)</span>
+<span class="nc" id="L234">            .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,12 +1,12 @@
 # Arcana Cloud Spring Boot - Enterprise Java Microservices Platform
 
 [![Architecture Rating](https://img.shields.io/badge/Architecture%20Rating-⭐⭐⭐⭐⭐%209.5%2F10-gold.svg)](#architecture)
-[![Java](https://img.shields.io/badge/Java-17%20LTS-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
+[![Java](https://img.shields.io/badge/Java-25-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![gRPC](https://img.shields.io/badge/gRPC-1.60-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
 [![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%207.0.5-FF6600.svg)](https://felix.apache.org/)
 [![Architecture](https://img.shields.io/badge/architecture-microservices-orange.svg)]()
-[![Tests](https://img.shields.io/badge/tests-246%2F246_passing-brightgreen.svg)](docs/test-report.html)
+[![Tests](https://img.shields.io/badge/tests-128%2F128_passing-brightgreen.svg)](docs/test-report/index.html)
 [![Coverage](https://img.shields.io/badge/coverage-JaCoCo-brightgreen.svg)](#testing)
 [![Code Style](https://img.shields.io/badge/code_style-Google_Java-blue.svg)](https://google.github.io/styleguide/javaguide.html)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -482,8 +482,8 @@ arcana-cloud-springboot/
 
 ### Prerequisites
 
-- Java 17 LTS (Microsoft OpenJDK 17.0.16 recommended)
-- Gradle 8.14+
+- Java 25 (OpenJDK 25.0.1 recommended)
+- Gradle 9.2.1+
 - Docker & Docker Compose
 - Node.js 20+ (for web apps)
 - MySQL 8.0+ / Redis 7.0+
@@ -669,50 +669,44 @@ curl -X POST -F "file=@my-plugin.jar" http://localhost:8080/api/v1/plugins/insta
 
 ## Testing
 
-The project includes **246 comprehensive tests** covering unit tests and integration tests for the plugin system across all 5 deployment modes. All tests pass with 100% success rate.
+The project includes **128 comprehensive integration tests** covering all 5 deployment modes plus authentication and user management workflows. All tests pass with 100% success rate.
 
 ### Test Summary
 
 | Category | Tests | Status |
 |----------|-------|--------|
-| arcana-plugin-runtime | 62 | Passing |
-| Unit Tests | 95 | Passing |
-| Integration Tests | 87 | Passing |
-| **Total** | **246** | **100% Passing** |
+| Authentication Workflow | 8 | Passing |
+| User Management Workflow | 9 | Passing |
+| Plugin Monolithic Mode | 16 | Passing |
+| Plugin Layered HTTP Mode | 19 | Passing |
+| Plugin Layered gRPC Mode | 16 | Passing |
+| Plugin K8s HTTP Mode | 17 | Passing |
+| Plugin K8s gRPC Mode | 43 | Passing |
+| **Total** | **128** | **100% Passing** |
 
 ### Integration Tests by Deployment Mode
 
 | Mode | Tests | Description |
 |------|-------|-------------|
 | Monolithic | 16 | Single JVM, direct method calls |
-| Layered HTTP | 18 | Multi-tier with REST API |
+| Layered HTTP | 19 | Multi-tier with REST API |
 | Layered gRPC | 16 | Multi-tier with Protocol Buffers |
-| K8s HTTP | 14 | Kubernetes with REST + Service Discovery |
-| K8s gRPC | 23 | Kubernetes with gRPC + Health Protocol |
+| K8s HTTP | 17 | Kubernetes with REST + Service Discovery |
+| K8s gRPC | 43 | Kubernetes with gRPC + Health Protocol |
 
 ### Test Structure
 
 ```
 src/test/java/com/arcana/cloud/
-├── controller/                    # REST API unit tests
-│   ├── PluginControllerTest.java
-│   └── PluginProxyControllerTest.java
-└── integration/plugin/            # Integration tests by deployment mode
-    ├── PluginMonolithicModeTest.java
-    ├── PluginLayeredHttpModeTest.java
-    ├── PluginLayeredGrpcModeTest.java
-    ├── PluginK8sHttpModeTest.java
-    └── PluginK8sGrpcModeTest.java
-
-arcana-plugin-runtime/src/test/java/
-└── com/arcana/cloud/plugin/
-    ├── runtime/                   # Plugin runtime unit tests
-    │   ├── PluginManagerTest.java
-    │   ├── ExtensionRegistryTest.java
-    │   └── DistributedPluginRegistryTest.java
-    └── http/                      # HTTP client tests
-        ├── HttpPluginRegistryClientTest.java
-        └── PluginHttpClientTest.java
+├── integration/                   # Integration tests
+│   ├── AuthWorkflowTest.java      # Authentication workflow tests
+│   ├── UserManagementWorkflowTest.java  # User CRUD tests
+│   └── plugin/                    # Plugin tests by deployment mode
+│       ├── PluginMonolithicModeTest.java
+│       ├── PluginLayeredHttpModeTest.java
+│       ├── PluginLayeredGrpcModeTest.java
+│       ├── PluginK8sHttpModeTest.java
+│       └── PluginK8sGrpcModeTest.java
 ```
 
 ### Running Tests
@@ -745,16 +739,17 @@ open build/reports/tests/test/index.html
 open build/reports/jacoco/test/html/index.html
 ```
 
-For detailed testing documentation, see [docs/TESTING.md](docs/TESTING.md) or view the [HTML Test Report](docs/test-report.html).
+For detailed testing documentation, see [docs/TESTING.md](docs/TESTING.md) or view the [HTML Test Report](docs/test-report/index.html).
 
 ## Documentation
 
-- [Test Report](docs/test-report.html) - Interactive HTML report with 246 tests across all deployment modes
+- [Test Report](docs/test-report/index.html) - Interactive HTML report with 128 tests across all deployment modes
+- [JaCoCo Coverage Report](docs/jacoco-report/index.html) - Code coverage analysis
 - [Testing Guide](docs/TESTING.md) - Detailed testing documentation
 - [Plugin Development Guide](docs/plugin-development-guide.md) - Create custom plugins
 - [API Documentation](http://localhost:8080/swagger-ui.html) - Swagger UI (when running)
 
-> **Note:** Run `./gradlew test jacocoTestReport` to generate JaCoCo coverage report at `build/reports/jacoco/test/html/index.html`
+> **Note:** Run `./gradlew test jacocoTestReport` to regenerate coverage report
 
 ## Contributing
 
@@ -772,8 +767,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-**Built with Spring Boot 4.0 | Java 17 LTS | Apache Felix OSGi 7.0.5 | gRPC | GraalJS | React | Angular**
+**Built with Spring Boot 4.0 | Java 25 | Gradle 9.2.1 | Apache Felix OSGi 7.0.5 | gRPC | GraalJS | React | Angular**
 
-[View Test Report](docs/test-report.html)
+[View Test Report](docs/test-report/index.html)
 
 </div>

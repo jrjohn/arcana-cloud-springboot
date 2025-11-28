@@ -1,0 +1,664 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthServiceGrpc.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.grpc</a> &gt; <span class="el_source">AuthServiceGrpc.java</span></div><h1>AuthServiceGrpc.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.grpc;
+
+import static io.grpc.MethodDescriptor.generateFullMethodName;
+
+/**
+ */
+@javax.annotation.Generated(
+    value = &quot;by gRPC proto compiler (version 1.68.2)&quot;,
+    comments = &quot;Source: auth_service.proto&quot;)
+@io.grpc.stub.annotations.GrpcGenerated
+public final class AuthServiceGrpc {
+
+  private AuthServiceGrpc() {}
+
+  public static final java.lang.String SERVICE_NAME = &quot;arcana.cloud.AuthService&quot;;
+
+  // Static method descriptors that strictly reflect the proto.
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.RegisterRequest,
+      com.arcana.cloud.grpc.AuthResponse&gt; getRegisterMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;Register&quot;,
+      requestType = com.arcana.cloud.grpc.RegisterRequest.class,
+      responseType = com.arcana.cloud.grpc.AuthResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.RegisterRequest,
+      com.arcana.cloud.grpc.AuthResponse&gt; getRegisterMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.RegisterRequest, com.arcana.cloud.grpc.AuthResponse&gt; getRegisterMethod;
+    if ((getRegisterMethod = AuthServiceGrpc.getRegisterMethod) == null) {
+      synchronized (AuthServiceGrpc.class) {
+        if ((getRegisterMethod = AuthServiceGrpc.getRegisterMethod) == null) {
+          AuthServiceGrpc.getRegisterMethod = getRegisterMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.RegisterRequest, com.arcana.cloud.grpc.AuthResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;Register&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.RegisterRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.AuthResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AuthServiceMethodDescriptorSupplier(&quot;Register&quot;))
+              .build();
+        }
+      }
+    }
+    return getRegisterMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LoginRequest,
+      com.arcana.cloud.grpc.AuthResponse&gt; getLoginMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;Login&quot;,
+      requestType = com.arcana.cloud.grpc.LoginRequest.class,
+      responseType = com.arcana.cloud.grpc.AuthResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LoginRequest,
+      com.arcana.cloud.grpc.AuthResponse&gt; getLoginMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LoginRequest, com.arcana.cloud.grpc.AuthResponse&gt; getLoginMethod;
+    if ((getLoginMethod = AuthServiceGrpc.getLoginMethod) == null) {
+      synchronized (AuthServiceGrpc.class) {
+        if ((getLoginMethod = AuthServiceGrpc.getLoginMethod) == null) {
+          AuthServiceGrpc.getLoginMethod = getLoginMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.LoginRequest, com.arcana.cloud.grpc.AuthResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;Login&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.LoginRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.AuthResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AuthServiceMethodDescriptorSupplier(&quot;Login&quot;))
+              .build();
+        }
+      }
+    }
+    return getLoginMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.RefreshTokenRequest,
+      com.arcana.cloud.grpc.AuthResponse&gt; getRefreshTokenMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;RefreshToken&quot;,
+      requestType = com.arcana.cloud.grpc.RefreshTokenRequest.class,
+      responseType = com.arcana.cloud.grpc.AuthResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.RefreshTokenRequest,
+      com.arcana.cloud.grpc.AuthResponse&gt; getRefreshTokenMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.RefreshTokenRequest, com.arcana.cloud.grpc.AuthResponse&gt; getRefreshTokenMethod;
+    if ((getRefreshTokenMethod = AuthServiceGrpc.getRefreshTokenMethod) == null) {
+      synchronized (AuthServiceGrpc.class) {
+        if ((getRefreshTokenMethod = AuthServiceGrpc.getRefreshTokenMethod) == null) {
+          AuthServiceGrpc.getRefreshTokenMethod = getRefreshTokenMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.RefreshTokenRequest, com.arcana.cloud.grpc.AuthResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;RefreshToken&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.RefreshTokenRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.AuthResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AuthServiceMethodDescriptorSupplier(&quot;RefreshToken&quot;))
+              .build();
+        }
+      }
+    }
+    return getRefreshTokenMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LogoutRequest,
+      com.arcana.cloud.grpc.LogoutResponse&gt; getLogoutMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;Logout&quot;,
+      requestType = com.arcana.cloud.grpc.LogoutRequest.class,
+      responseType = com.arcana.cloud.grpc.LogoutResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LogoutRequest,
+      com.arcana.cloud.grpc.LogoutResponse&gt; getLogoutMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LogoutRequest, com.arcana.cloud.grpc.LogoutResponse&gt; getLogoutMethod;
+    if ((getLogoutMethod = AuthServiceGrpc.getLogoutMethod) == null) {
+      synchronized (AuthServiceGrpc.class) {
+        if ((getLogoutMethod = AuthServiceGrpc.getLogoutMethod) == null) {
+          AuthServiceGrpc.getLogoutMethod = getLogoutMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.LogoutRequest, com.arcana.cloud.grpc.LogoutResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;Logout&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.LogoutRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.LogoutResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AuthServiceMethodDescriptorSupplier(&quot;Logout&quot;))
+              .build();
+        }
+      }
+    }
+    return getLogoutMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LogoutAllRequest,
+      com.arcana.cloud.grpc.LogoutResponse&gt; getLogoutAllMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;LogoutAll&quot;,
+      requestType = com.arcana.cloud.grpc.LogoutAllRequest.class,
+      responseType = com.arcana.cloud.grpc.LogoutResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LogoutAllRequest,
+      com.arcana.cloud.grpc.LogoutResponse&gt; getLogoutAllMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.LogoutAllRequest, com.arcana.cloud.grpc.LogoutResponse&gt; getLogoutAllMethod;
+    if ((getLogoutAllMethod = AuthServiceGrpc.getLogoutAllMethod) == null) {
+      synchronized (AuthServiceGrpc.class) {
+        if ((getLogoutAllMethod = AuthServiceGrpc.getLogoutAllMethod) == null) {
+          AuthServiceGrpc.getLogoutAllMethod = getLogoutAllMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.LogoutAllRequest, com.arcana.cloud.grpc.LogoutResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;LogoutAll&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.LogoutAllRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.LogoutResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AuthServiceMethodDescriptorSupplier(&quot;LogoutAll&quot;))
+              .build();
+        }
+      }
+    }
+    return getLogoutAllMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ValidateTokenRequest,
+      com.arcana.cloud.grpc.ValidateTokenResponse&gt; getValidateTokenMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;ValidateToken&quot;,
+      requestType = com.arcana.cloud.grpc.ValidateTokenRequest.class,
+      responseType = com.arcana.cloud.grpc.ValidateTokenResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ValidateTokenRequest,
+      com.arcana.cloud.grpc.ValidateTokenResponse&gt; getValidateTokenMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ValidateTokenRequest, com.arcana.cloud.grpc.ValidateTokenResponse&gt; getValidateTokenMethod;
+    if ((getValidateTokenMethod = AuthServiceGrpc.getValidateTokenMethod) == null) {
+      synchronized (AuthServiceGrpc.class) {
+        if ((getValidateTokenMethod = AuthServiceGrpc.getValidateTokenMethod) == null) {
+          AuthServiceGrpc.getValidateTokenMethod = getValidateTokenMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.ValidateTokenRequest, com.arcana.cloud.grpc.ValidateTokenResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;ValidateToken&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ValidateTokenRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ValidateTokenResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new AuthServiceMethodDescriptorSupplier(&quot;ValidateToken&quot;))
+              .build();
+        }
+      }
+    }
+    return getValidateTokenMethod;
+  }
+
+  /**
+   * Creates a new async stub that supports all call types for the service
+   */
+  public static AuthServiceStub newStub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory&lt;AuthServiceStub&gt; factory =
+<span class="nc" id="L209">      new io.grpc.stub.AbstractStub.StubFactory&lt;AuthServiceStub&gt;() {</span>
+        @java.lang.Override
+        public AuthServiceStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L212">          return new AuthServiceStub(channel, callOptions);</span>
+        }
+      };
+    return AuthServiceStub.newStub(factory, channel);
+  }
+
+  /**
+   * Creates a new blocking-style stub that supports unary and streaming output calls on the service
+   */
+  public static AuthServiceBlockingStub newBlockingStub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory&lt;AuthServiceBlockingStub&gt; factory =
+<span class="nc" id="L224">      new io.grpc.stub.AbstractStub.StubFactory&lt;AuthServiceBlockingStub&gt;() {</span>
+        @java.lang.Override
+        public AuthServiceBlockingStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L227">          return new AuthServiceBlockingStub(channel, callOptions);</span>
+        }
+      };
+    return AuthServiceBlockingStub.newStub(factory, channel);
+  }
+
+  /**
+   * Creates a new ListenableFuture-style stub that supports unary calls on the service
+   */
+  public static AuthServiceFutureStub newFutureStub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory&lt;AuthServiceFutureStub&gt; factory =
+<span class="nc" id="L239">      new io.grpc.stub.AbstractStub.StubFactory&lt;AuthServiceFutureStub&gt;() {</span>
+        @java.lang.Override
+        public AuthServiceFutureStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L242">          return new AuthServiceFutureStub(channel, callOptions);</span>
+        }
+      };
+    return AuthServiceFutureStub.newStub(factory, channel);
+  }
+
+  /**
+   */
+  public interface AsyncService {
+
+    /**
+     */
+    default void register(com.arcana.cloud.grpc.RegisterRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+<span class="nc" id="L256">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRegisterMethod(), responseObserver);</span>
+<span class="nc" id="L257">    }</span>
+
+    /**
+     */
+    default void login(com.arcana.cloud.grpc.LoginRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+<span class="nc" id="L263">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLoginMethod(), responseObserver);</span>
+<span class="nc" id="L264">    }</span>
+
+    /**
+     */
+    default void refreshToken(com.arcana.cloud.grpc.RefreshTokenRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+<span class="nc" id="L270">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getRefreshTokenMethod(), responseObserver);</span>
+<span class="nc" id="L271">    }</span>
+
+    /**
+     */
+    default void logout(com.arcana.cloud.grpc.LogoutRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.LogoutResponse&gt; responseObserver) {
+<span class="nc" id="L277">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLogoutMethod(), responseObserver);</span>
+<span class="nc" id="L278">    }</span>
+
+    /**
+     */
+    default void logoutAll(com.arcana.cloud.grpc.LogoutAllRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.LogoutResponse&gt; responseObserver) {
+<span class="nc" id="L284">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getLogoutAllMethod(), responseObserver);</span>
+<span class="nc" id="L285">    }</span>
+
+    /**
+     */
+    default void validateToken(com.arcana.cloud.grpc.ValidateTokenRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ValidateTokenResponse&gt; responseObserver) {
+<span class="nc" id="L291">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getValidateTokenMethod(), responseObserver);</span>
+<span class="nc" id="L292">    }</span>
+  }
+
+  /**
+   * Base class for the server implementation of the service AuthService.
+   */
+<span class="fc" id="L298">  public static abstract class AuthServiceImplBase</span>
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+<span class="nc" id="L302">      return AuthServiceGrpc.bindService(this);</span>
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service AuthService.
+   */
+  public static final class AuthServiceStub
+      extends io.grpc.stub.AbstractAsyncStub&lt;AuthServiceStub&gt; {
+    private AuthServiceStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L313">      super(channel, callOptions);</span>
+<span class="nc" id="L314">    }</span>
+
+    @java.lang.Override
+    protected AuthServiceStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L319">      return new AuthServiceStub(channel, callOptions);</span>
+    }
+
+    /**
+     */
+    public void register(com.arcana.cloud.grpc.RegisterRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+<span class="nc" id="L326">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L327">          getChannel().newCall(getRegisterMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L328">    }</span>
+
+    /**
+     */
+    public void login(com.arcana.cloud.grpc.LoginRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+<span class="nc" id="L334">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L335">          getChannel().newCall(getLoginMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L336">    }</span>
+
+    /**
+     */
+    public void refreshToken(com.arcana.cloud.grpc.RefreshTokenRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+<span class="nc" id="L342">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L343">          getChannel().newCall(getRefreshTokenMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L344">    }</span>
+
+    /**
+     */
+    public void logout(com.arcana.cloud.grpc.LogoutRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.LogoutResponse&gt; responseObserver) {
+<span class="nc" id="L350">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L351">          getChannel().newCall(getLogoutMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L352">    }</span>
+
+    /**
+     */
+    public void logoutAll(com.arcana.cloud.grpc.LogoutAllRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.LogoutResponse&gt; responseObserver) {
+<span class="nc" id="L358">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L359">          getChannel().newCall(getLogoutAllMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L360">    }</span>
+
+    /**
+     */
+    public void validateToken(com.arcana.cloud.grpc.ValidateTokenRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ValidateTokenResponse&gt; responseObserver) {
+<span class="nc" id="L366">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L367">          getChannel().newCall(getValidateTokenMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L368">    }</span>
+  }
+
+  /**
+   * A stub to allow clients to do synchronous rpc calls to service AuthService.
+   */
+  public static final class AuthServiceBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub&lt;AuthServiceBlockingStub&gt; {
+    private AuthServiceBlockingStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L378">      super(channel, callOptions);</span>
+<span class="nc" id="L379">    }</span>
+
+    @java.lang.Override
+    protected AuthServiceBlockingStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L384">      return new AuthServiceBlockingStub(channel, callOptions);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.AuthResponse register(com.arcana.cloud.grpc.RegisterRequest request) {
+<span class="nc" id="L390">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L391">          getChannel(), getRegisterMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.AuthResponse login(com.arcana.cloud.grpc.LoginRequest request) {
+<span class="nc" id="L397">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L398">          getChannel(), getLoginMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.AuthResponse refreshToken(com.arcana.cloud.grpc.RefreshTokenRequest request) {
+<span class="nc" id="L404">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L405">          getChannel(), getRefreshTokenMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.LogoutResponse logout(com.arcana.cloud.grpc.LogoutRequest request) {
+<span class="nc" id="L411">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L412">          getChannel(), getLogoutMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.LogoutResponse logoutAll(com.arcana.cloud.grpc.LogoutAllRequest request) {
+<span class="nc" id="L418">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L419">          getChannel(), getLogoutAllMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.ValidateTokenResponse validateToken(com.arcana.cloud.grpc.ValidateTokenRequest request) {
+<span class="nc" id="L425">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L426">          getChannel(), getValidateTokenMethod(), getCallOptions(), request);</span>
+    }
+  }
+
+  /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service AuthService.
+   */
+  public static final class AuthServiceFutureStub
+      extends io.grpc.stub.AbstractFutureStub&lt;AuthServiceFutureStub&gt; {
+    private AuthServiceFutureStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L437">      super(channel, callOptions);</span>
+<span class="nc" id="L438">    }</span>
+
+    @java.lang.Override
+    protected AuthServiceFutureStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L443">      return new AuthServiceFutureStub(channel, callOptions);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.AuthResponse&gt; register(
+        com.arcana.cloud.grpc.RegisterRequest request) {
+<span class="nc" id="L450">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L451">          getChannel().newCall(getRegisterMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.AuthResponse&gt; login(
+        com.arcana.cloud.grpc.LoginRequest request) {
+<span class="nc" id="L458">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L459">          getChannel().newCall(getLoginMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.AuthResponse&gt; refreshToken(
+        com.arcana.cloud.grpc.RefreshTokenRequest request) {
+<span class="nc" id="L466">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L467">          getChannel().newCall(getRefreshTokenMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.LogoutResponse&gt; logout(
+        com.arcana.cloud.grpc.LogoutRequest request) {
+<span class="nc" id="L474">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L475">          getChannel().newCall(getLogoutMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.LogoutResponse&gt; logoutAll(
+        com.arcana.cloud.grpc.LogoutAllRequest request) {
+<span class="nc" id="L482">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L483">          getChannel().newCall(getLogoutAllMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.ValidateTokenResponse&gt; validateToken(
+        com.arcana.cloud.grpc.ValidateTokenRequest request) {
+<span class="nc" id="L490">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L491">          getChannel().newCall(getValidateTokenMethod(), getCallOptions()), request);</span>
+    }
+  }
+
+  private static final int METHODID_REGISTER = 0;
+  private static final int METHODID_LOGIN = 1;
+  private static final int METHODID_REFRESH_TOKEN = 2;
+  private static final int METHODID_LOGOUT = 3;
+  private static final int METHODID_LOGOUT_ALL = 4;
+  private static final int METHODID_VALIDATE_TOKEN = 5;
+
+  private static final class MethodHandlers&lt;Req, Resp&gt; implements
+      io.grpc.stub.ServerCalls.UnaryMethod&lt;Req, Resp&gt;,
+      io.grpc.stub.ServerCalls.ServerStreamingMethod&lt;Req, Resp&gt;,
+      io.grpc.stub.ServerCalls.ClientStreamingMethod&lt;Req, Resp&gt;,
+      io.grpc.stub.ServerCalls.BidiStreamingMethod&lt;Req, Resp&gt; {
+    private final AsyncService serviceImpl;
+    private final int methodId;
+
+<span class="nc" id="L510">    MethodHandlers(AsyncService serviceImpl, int methodId) {</span>
+<span class="nc" id="L511">      this.serviceImpl = serviceImpl;</span>
+<span class="nc" id="L512">      this.methodId = methodId;</span>
+<span class="nc" id="L513">    }</span>
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings(&quot;unchecked&quot;)
+    public void invoke(Req request, io.grpc.stub.StreamObserver&lt;Resp&gt; responseObserver) {
+<span class="nc bnc" id="L518" title="All 7 branches missed.">      switch (methodId) {</span>
+        case METHODID_REGISTER:
+<span class="nc" id="L520">          serviceImpl.register((com.arcana.cloud.grpc.RegisterRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt;) responseObserver);
+<span class="nc" id="L522">          break;</span>
+        case METHODID_LOGIN:
+<span class="nc" id="L524">          serviceImpl.login((com.arcana.cloud.grpc.LoginRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt;) responseObserver);
+<span class="nc" id="L526">          break;</span>
+        case METHODID_REFRESH_TOKEN:
+<span class="nc" id="L528">          serviceImpl.refreshToken((com.arcana.cloud.grpc.RefreshTokenRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt;) responseObserver);
+<span class="nc" id="L530">          break;</span>
+        case METHODID_LOGOUT:
+<span class="nc" id="L532">          serviceImpl.logout((com.arcana.cloud.grpc.LogoutRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.LogoutResponse&gt;) responseObserver);
+<span class="nc" id="L534">          break;</span>
+        case METHODID_LOGOUT_ALL:
+<span class="nc" id="L536">          serviceImpl.logoutAll((com.arcana.cloud.grpc.LogoutAllRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.LogoutResponse&gt;) responseObserver);
+<span class="nc" id="L538">          break;</span>
+        case METHODID_VALIDATE_TOKEN:
+<span class="nc" id="L540">          serviceImpl.validateToken((com.arcana.cloud.grpc.ValidateTokenRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ValidateTokenResponse&gt;) responseObserver);
+<span class="nc" id="L542">          break;</span>
+        default:
+<span class="nc" id="L544">          throw new AssertionError();</span>
+      }
+<span class="nc" id="L546">    }</span>
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings(&quot;unchecked&quot;)
+    public io.grpc.stub.StreamObserver&lt;Req&gt; invoke(
+        io.grpc.stub.StreamObserver&lt;Resp&gt; responseObserver) {
+<span class="nc" id="L552">      switch (methodId) {</span>
+        default:
+<span class="nc" id="L554">          throw new AssertionError();</span>
+      }
+    }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getRegisterMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.RegisterRequest,
+              com.arcana.cloud.grpc.AuthResponse&gt;(
+                service, METHODID_REGISTER)))
+        .addMethod(
+          getLoginMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.LoginRequest,
+              com.arcana.cloud.grpc.AuthResponse&gt;(
+                service, METHODID_LOGIN)))
+        .addMethod(
+          getRefreshTokenMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.RefreshTokenRequest,
+              com.arcana.cloud.grpc.AuthResponse&gt;(
+                service, METHODID_REFRESH_TOKEN)))
+        .addMethod(
+          getLogoutMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.LogoutRequest,
+              com.arcana.cloud.grpc.LogoutResponse&gt;(
+                service, METHODID_LOGOUT)))
+        .addMethod(
+          getLogoutAllMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.LogoutAllRequest,
+              com.arcana.cloud.grpc.LogoutResponse&gt;(
+                service, METHODID_LOGOUT_ALL)))
+        .addMethod(
+          getValidateTokenMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.ValidateTokenRequest,
+              com.arcana.cloud.grpc.ValidateTokenResponse&gt;(
+                service, METHODID_VALIDATE_TOKEN)))
+        .build();
+  }
+
+  private static abstract class AuthServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+<span class="nc" id="L608">    AuthServiceBaseDescriptorSupplier() {}</span>
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
+<span class="nc" id="L612">      return com.arcana.cloud.grpc.AuthServiceProto.getDescriptor();</span>
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
+<span class="nc" id="L617">      return getFileDescriptor().findServiceByName(&quot;AuthService&quot;);</span>
+    }
+  }
+
+  private static final class AuthServiceFileDescriptorSupplier
+      extends AuthServiceBaseDescriptorSupplier {
+<span class="nc" id="L623">    AuthServiceFileDescriptorSupplier() {}</span>
+  }
+
+  private static final class AuthServiceMethodDescriptorSupplier
+      extends AuthServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
+    private final java.lang.String methodName;
+
+<span class="nc" id="L631">    AuthServiceMethodDescriptorSupplier(java.lang.String methodName) {</span>
+<span class="nc" id="L632">      this.methodName = methodName;</span>
+<span class="nc" id="L633">    }</span>
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
+<span class="nc" id="L637">      return getServiceDescriptor().findMethodByName(methodName);</span>
+    }
+  }
+
+  private static volatile io.grpc.ServiceDescriptor serviceDescriptor;
+
+  public static io.grpc.ServiceDescriptor getServiceDescriptor() {
+    io.grpc.ServiceDescriptor result = serviceDescriptor;
+    if (result == null) {
+      synchronized (AuthServiceGrpc.class) {
+        result = serviceDescriptor;
+        if (result == null) {
+          serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
+              .setSchemaDescriptor(new AuthServiceFileDescriptorSupplier())
+              .addMethod(getRegisterMethod())
+              .addMethod(getLoginMethod())
+              .addMethod(getRefreshTokenMethod())
+              .addMethod(getLogoutMethod())
+              .addMethod(getLogoutAllMethod())
+              .addMethod(getValidateTokenMethod())
+              .build();
+        }
+      }
+    }
+    return result;
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

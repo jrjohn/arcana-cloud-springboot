@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PluginController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.controller</a> &gt; <span class="el_source">PluginController.java</span></div><h1>PluginController.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.controller;
+
+import com.arcana.cloud.dto.response.ApiResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.time.Instant;
+import java.util.*;
+
+/**
+ * REST Controller for plugin management.
+ *
+ * &lt;p&gt;Provides HTTP endpoints for:&lt;/p&gt;
+ * &lt;ul&gt;
+ *   &lt;li&gt;Plugin installation, enabling, disabling, and uninstallation&lt;/li&gt;
+ *   &lt;li&gt;Plugin listing and status queries&lt;/li&gt;
+ *   &lt;li&gt;Plugin health checks for Kubernetes/layered deployments&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+@RestController
+@RequestMapping(&quot;/api/v1/plugins&quot;)
+@Tag(name = &quot;Plugins&quot;, description = &quot;Plugin management APIs&quot;)
+@ConditionalOnExpression(&quot;'${deployment.layer:}' == '' or '${deployment.layer:}' == 'controller' or '${deployment.layer:}' == 'service'&quot;)
+<span class="fc" id="L36">public class PluginController {</span>
+
+<span class="fc" id="L38">    private static final Logger log = LoggerFactory.getLogger(PluginController.class);</span>
+
+    @Value(&quot;${arcana.plugin.enabled:true}&quot;)
+    private boolean pluginSystemEnabled;
+
+    @Value(&quot;${arcana.plugin.plugins-directory:plugins}&quot;)
+    private String pluginsDirectory;
+
+    // These would be injected from PluginManager in a real implementation
+    // For now, we'll use a simple in-memory tracking
+<span class="fc" id="L48">    private final Map&lt;String, PluginInfo&gt; plugins = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L49">    private volatile boolean pluginsInitialized = false;</span>
+    private Instant initializationTime;
+
+    /**
+     * Returns list of all installed plugins.
+     */
+    @GetMapping
+    @Operation(summary = &quot;List all plugins&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;List&lt;PluginInfo&gt;&gt;&gt; listPlugins() {
+<span class="pc bpc" id="L58" title="1 of 2 branches missed.">        if (!pluginSystemEnabled) {</span>
+<span class="nc" id="L59">            return ResponseEntity.ok(ApiResponse.success(Collections.emptyList(), &quot;Plugin system is disabled&quot;));</span>
+        }
+
+<span class="fc" id="L62">        List&lt;PluginInfo&gt; pluginList = new ArrayList&lt;&gt;(plugins.values());</span>
+<span class="fc" id="L63">        return ResponseEntity.ok(ApiResponse.success(pluginList, &quot;Plugins retrieved successfully&quot;));</span>
+    }
+
+    /**
+     * Returns details of a specific plugin.
+     */
+    @GetMapping(&quot;/{key}&quot;)
+    @Operation(summary = &quot;Get plugin details&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;PluginInfo&gt;&gt; getPlugin(@PathVariable String key) {
+<span class="fc" id="L72">        PluginInfo plugin = plugins.get(key);</span>
+<span class="fc bfc" id="L73" title="All 2 branches covered.">        if (plugin == null) {</span>
+<span class="fc" id="L74">            return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="fc" id="L75">                .body(ApiResponse.error(&quot;Plugin not found: &quot; + key));</span>
+        }
+<span class="fc" id="L77">        return ResponseEntity.ok(ApiResponse.success(plugin, &quot;Plugin retrieved successfully&quot;));</span>
+    }
+
+    /**
+     * Installs a new plugin from uploaded JAR file.
+     */
+    @PostMapping(&quot;/install&quot;)
+    @Operation(summary = &quot;Install a plugin&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;PluginInfo&gt;&gt; installPlugin(
+            @RequestParam(&quot;file&quot;) MultipartFile file) {
+
+<span class="pc bpc" id="L88" title="1 of 2 branches missed.">        if (!pluginSystemEnabled) {</span>
+<span class="nc" id="L89">            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)</span>
+<span class="nc" id="L90">                .body(ApiResponse.error(&quot;Plugin system is disabled&quot;));</span>
+        }
+
+<span class="fc bfc" id="L93" title="All 2 branches covered.">        if (file.isEmpty()) {</span>
+<span class="fc" id="L94">            return ResponseEntity.badRequest()</span>
+<span class="fc" id="L95">                .body(ApiResponse.error(&quot;No file provided&quot;));</span>
+        }
+
+<span class="fc" id="L98">        String filename = file.getOriginalFilename();</span>
+<span class="pc bpc" id="L99" title="1 of 4 branches missed.">        if (filename == null || !filename.endsWith(&quot;.jar&quot;)) {</span>
+<span class="fc" id="L100">            return ResponseEntity.badRequest()</span>
+<span class="fc" id="L101">                .body(ApiResponse.error(&quot;File must be a JAR file&quot;));</span>
+        }
+
+        try {
+            // Save to plugins directory
+<span class="fc" id="L106">            Path pluginPath = Path.of(pluginsDirectory, filename);</span>
+<span class="fc" id="L107">            Files.createDirectories(pluginPath.getParent());</span>
+<span class="fc" id="L108">            Files.copy(file.getInputStream(), pluginPath, StandardCopyOption.REPLACE_EXISTING);</span>
+
+            // Extract plugin key from filename (simplified)
+<span class="fc" id="L111">            String pluginKey = filename.replace(&quot;.jar&quot;, &quot;&quot;).replaceAll(&quot;-\\d+\\.\\d+\\.\\d+.*&quot;, &quot;&quot;);</span>
+
+<span class="fc" id="L113">            PluginInfo pluginInfo = new PluginInfo(</span>
+                pluginKey,
+<span class="fc" id="L115">                filename.replace(&quot;.jar&quot;, &quot;&quot;),</span>
+                &quot;1.0.0&quot;,
+                &quot;INSTALLED&quot;,
+<span class="fc" id="L118">                Instant.now()</span>
+            );
+<span class="fc" id="L120">            plugins.put(pluginKey, pluginInfo);</span>
+
+<span class="fc" id="L122">            log.info(&quot;Plugin installed: {}&quot;, pluginKey);</span>
+<span class="fc" id="L123">            return ResponseEntity.status(HttpStatus.CREATED)</span>
+<span class="fc" id="L124">                .body(ApiResponse.success(pluginInfo, &quot;Plugin installed successfully&quot;));</span>
+
+<span class="nc" id="L126">        } catch (IOException e) {</span>
+<span class="nc" id="L127">            log.error(&quot;Failed to install plugin&quot;, e);</span>
+<span class="nc" id="L128">            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)</span>
+<span class="nc" id="L129">                .body(ApiResponse.error(&quot;Failed to install plugin: &quot; + e.getMessage()));</span>
+        }
+    }
+
+    /**
+     * Enables a plugin.
+     */
+    @PostMapping(&quot;/{key}/enable&quot;)
+    @Operation(summary = &quot;Enable a plugin&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;PluginInfo&gt;&gt; enablePlugin(@PathVariable String key) {
+<span class="fc" id="L139">        PluginInfo plugin = plugins.get(key);</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        if (plugin == null) {</span>
+<span class="fc" id="L141">            return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="fc" id="L142">                .body(ApiResponse.error(&quot;Plugin not found: &quot; + key));</span>
+        }
+
+<span class="fc" id="L145">        plugin.setState(&quot;ACTIVE&quot;);</span>
+<span class="fc" id="L146">        log.info(&quot;Plugin enabled: {}&quot;, key);</span>
+<span class="fc" id="L147">        return ResponseEntity.ok(ApiResponse.success(plugin, &quot;Plugin enabled successfully&quot;));</span>
+    }
+
+    /**
+     * Disables a plugin.
+     */
+    @PostMapping(&quot;/{key}/disable&quot;)
+    @Operation(summary = &quot;Disable a plugin&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;PluginInfo&gt;&gt; disablePlugin(@PathVariable String key) {
+<span class="fc" id="L156">        PluginInfo plugin = plugins.get(key);</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">        if (plugin == null) {</span>
+<span class="fc" id="L158">            return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="fc" id="L159">                .body(ApiResponse.error(&quot;Plugin not found: &quot; + key));</span>
+        }
+
+<span class="fc" id="L162">        plugin.setState(&quot;RESOLVED&quot;);</span>
+<span class="fc" id="L163">        log.info(&quot;Plugin disabled: {}&quot;, key);</span>
+<span class="fc" id="L164">        return ResponseEntity.ok(ApiResponse.success(plugin, &quot;Plugin disabled successfully&quot;));</span>
+    }
+
+    /**
+     * Uninstalls a plugin.
+     */
+    @DeleteMapping(&quot;/{key}&quot;)
+    @Operation(summary = &quot;Uninstall a plugin&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;Void&gt;&gt; uninstallPlugin(@PathVariable String key) {
+<span class="fc" id="L173">        PluginInfo plugin = plugins.remove(key);</span>
+<span class="fc bfc" id="L174" title="All 2 branches covered.">        if (plugin == null) {</span>
+<span class="fc" id="L175">            return ResponseEntity.status(HttpStatus.NOT_FOUND)</span>
+<span class="fc" id="L176">                .body(ApiResponse.error(&quot;Plugin not found: &quot; + key));</span>
+        }
+
+<span class="fc" id="L179">        log.info(&quot;Plugin uninstalled: {}&quot;, key);</span>
+<span class="fc" id="L180">        return ResponseEntity.ok(ApiResponse.success(null, &quot;Plugin uninstalled successfully&quot;));</span>
+    }
+
+    /**
+     * Returns plugin system health status.
+     * Used by Kubernetes HTTP health probes.
+     */
+    @GetMapping(&quot;/health&quot;)
+    @Operation(summary = &quot;Plugin system health check&quot;)
+    public ResponseEntity&lt;ApiResponse&lt;PluginHealthStatus&gt;&gt; getHealth() {
+<span class="fc" id="L190">        PluginHealthStatus health = new PluginHealthStatus(</span>
+            pluginSystemEnabled,
+            pluginsInitialized,
+<span class="fc" id="L193">            plugins.size(),</span>
+<span class="fc" id="L194">            (int) plugins.values().stream().filter(p -&gt; &quot;ACTIVE&quot;.equals(p.getState())).count(),</span>
+            initializationTime
+        );
+
+<span class="pc bpc" id="L198" title="1 of 2 branches missed.">        if (!pluginSystemEnabled) {</span>
+<span class="nc" id="L199">            return ResponseEntity.ok(ApiResponse.success(health, &quot;Plugin system disabled&quot;));</span>
+        }
+
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        if (!pluginsInitialized) {</span>
+<span class="fc" id="L203">            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)</span>
+<span class="fc" id="L204">                .body(ApiResponse.success(health, &quot;Plugin system initializing&quot;));</span>
+        }
+
+<span class="fc" id="L207">        return ResponseEntity.ok(ApiResponse.success(health, &quot;Plugin system healthy&quot;));</span>
+    }
+
+    /**
+     * Returns readiness status for Kubernetes readiness probe.
+     */
+    @GetMapping(&quot;/health/ready&quot;)
+    @Operation(summary = &quot;Plugin readiness check&quot;)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; getReadiness() {
+<span class="fc" id="L216">        Map&lt;String, Object&gt; status = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        status.put(&quot;status&quot;, pluginsInitialized ? &quot;UP&quot; : &quot;DOWN&quot;);</span>
+<span class="fc" id="L218">        status.put(&quot;pluginSystemEnabled&quot;, pluginSystemEnabled);</span>
+<span class="fc" id="L219">        status.put(&quot;pluginsInitialized&quot;, pluginsInitialized);</span>
+<span class="fc" id="L220">        status.put(&quot;pluginCount&quot;, plugins.size());</span>
+
+<span class="fc bfc" id="L222" title="All 2 branches covered.">        if (pluginsInitialized) {</span>
+<span class="fc" id="L223">            return ResponseEntity.ok(status);</span>
+        } else {
+<span class="fc" id="L225">            return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(status);</span>
+        }
+    }
+
+    /**
+     * Returns liveness status for Kubernetes liveness probe.
+     */
+    @GetMapping(&quot;/health/live&quot;)
+    @Operation(summary = &quot;Plugin liveness check&quot;)
+    public ResponseEntity&lt;Map&lt;String, Object&gt;&gt; getLiveness() {
+<span class="fc" id="L235">        Map&lt;String, Object&gt; status = new LinkedHashMap&lt;&gt;();</span>
+<span class="fc" id="L236">        status.put(&quot;status&quot;, &quot;UP&quot;);</span>
+<span class="fc" id="L237">        status.put(&quot;pluginSystemEnabled&quot;, pluginSystemEnabled);</span>
+<span class="fc" id="L238">        return ResponseEntity.ok(status);</span>
+    }
+
+    /**
+     * Marks plugins as initialized (called by PluginManager).
+     */
+    public void setPluginsInitialized(boolean initialized) {
+<span class="fc" id="L245">        this.pluginsInitialized = initialized;</span>
+<span class="fc bfc" id="L246" title="All 2 branches covered.">        if (initialized) {</span>
+<span class="fc" id="L247">            this.initializationTime = Instant.now();</span>
+        }
+<span class="fc" id="L249">    }</span>
+
+    /**
+     * Registers a plugin (called by PluginManager).
+     */
+    public void registerPlugin(String key, String name, String version, String state) {
+<span class="fc" id="L255">        plugins.put(key, new PluginInfo(key, name, version, state, Instant.now()));</span>
+<span class="fc" id="L256">    }</span>
+
+    /**
+     * Plugin information DTO.
+     */
+    public static class PluginInfo {
+        private String key;
+        private String name;
+        private String version;
+        private String state;
+        private Instant installedAt;
+        private Map&lt;String, String&gt; metadata;
+
+<span class="nc" id="L269">        public PluginInfo() {}</span>
+
+<span class="fc" id="L271">        public PluginInfo(String key, String name, String version, String state, Instant installedAt) {</span>
+<span class="fc" id="L272">            this.key = key;</span>
+<span class="fc" id="L273">            this.name = name;</span>
+<span class="fc" id="L274">            this.version = version;</span>
+<span class="fc" id="L275">            this.state = state;</span>
+<span class="fc" id="L276">            this.installedAt = installedAt;</span>
+<span class="fc" id="L277">            this.metadata = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L278">        }</span>
+
+<span class="fc" id="L280">        public String getKey() { return key; }</span>
+<span class="nc" id="L281">        public void setKey(String key) { this.key = key; }</span>
+
+<span class="fc" id="L283">        public String getName() { return name; }</span>
+<span class="nc" id="L284">        public void setName(String name) { this.name = name; }</span>
+
+<span class="fc" id="L286">        public String getVersion() { return version; }</span>
+<span class="nc" id="L287">        public void setVersion(String version) { this.version = version; }</span>
+
+<span class="fc" id="L289">        public String getState() { return state; }</span>
+<span class="fc" id="L290">        public void setState(String state) { this.state = state; }</span>
+
+<span class="fc" id="L292">        public Instant getInstalledAt() { return installedAt; }</span>
+<span class="nc" id="L293">        public void setInstalledAt(Instant installedAt) { this.installedAt = installedAt; }</span>
+
+<span class="fc" id="L295">        public Map&lt;String, String&gt; getMetadata() { return metadata; }</span>
+<span class="nc" id="L296">        public void setMetadata(Map&lt;String, String&gt; metadata) { this.metadata = metadata; }</span>
+    }
+
+    /**
+     * Plugin health status DTO.
+     */
+    public static class PluginHealthStatus {
+        private boolean enabled;
+        private boolean initialized;
+        private int totalPlugins;
+        private int activePlugins;
+        private Instant initializationTime;
+
+<span class="nc" id="L309">        public PluginHealthStatus() {}</span>
+
+        public PluginHealthStatus(boolean enabled, boolean initialized, int totalPlugins,
+<span class="fc" id="L312">                                  int activePlugins, Instant initializationTime) {</span>
+<span class="fc" id="L313">            this.enabled = enabled;</span>
+<span class="fc" id="L314">            this.initialized = initialized;</span>
+<span class="fc" id="L315">            this.totalPlugins = totalPlugins;</span>
+<span class="fc" id="L316">            this.activePlugins = activePlugins;</span>
+<span class="fc" id="L317">            this.initializationTime = initializationTime;</span>
+<span class="fc" id="L318">        }</span>
+
+<span class="fc" id="L320">        public boolean isEnabled() { return enabled; }</span>
+<span class="nc" id="L321">        public void setEnabled(boolean enabled) { this.enabled = enabled; }</span>
+
+<span class="fc" id="L323">        public boolean isInitialized() { return initialized; }</span>
+<span class="nc" id="L324">        public void setInitialized(boolean initialized) { this.initialized = initialized; }</span>
+
+<span class="fc" id="L326">        public int getTotalPlugins() { return totalPlugins; }</span>
+<span class="nc" id="L327">        public void setTotalPlugins(int totalPlugins) { this.totalPlugins = totalPlugins; }</span>
+
+<span class="fc" id="L329">        public int getActivePlugins() { return activePlugins; }</span>
+<span class="nc" id="L330">        public void setActivePlugins(int activePlugins) { this.activePlugins = activePlugins; }</span>
+
+<span class="fc" id="L332">        public Instant getInitializationTime() { return initializationTime; }</span>
+<span class="nc" id="L333">        public void setInitializationTime(Instant initializationTime) { this.initializationTime = initializationTime; }</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserServiceGrpc.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.grpc</a> &gt; <span class="el_source">UserServiceGrpc.java</span></div><h1>UserServiceGrpc.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.grpc;
+
+import static io.grpc.MethodDescriptor.generateFullMethodName;
+
+/**
+ */
+@javax.annotation.Generated(
+    value = &quot;by gRPC proto compiler (version 1.68.2)&quot;,
+    comments = &quot;Source: user_service.proto&quot;)
+@io.grpc.stub.annotations.GrpcGenerated
+public final class UserServiceGrpc {
+
+  private UserServiceGrpc() {}
+
+  public static final java.lang.String SERVICE_NAME = &quot;arcana.cloud.UserService&quot;;
+
+  // Static method descriptors that strictly reflect the proto.
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getGetUserMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;GetUser&quot;,
+      requestType = com.arcana.cloud.grpc.GetUserRequest.class,
+      responseType = com.arcana.cloud.grpc.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getGetUserMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserRequest, com.arcana.cloud.grpc.UserResponse&gt; getGetUserMethod;
+    if ((getGetUserMethod = UserServiceGrpc.getGetUserMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getGetUserMethod = UserServiceGrpc.getGetUserMethod) == null) {
+          UserServiceGrpc.getGetUserMethod = getGetUserMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.GetUserRequest, com.arcana.cloud.grpc.UserResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;GetUser&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.GetUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;GetUser&quot;))
+              .build();
+        }
+      }
+    }
+    return getGetUserMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.CreateUserRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getCreateUserMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;CreateUser&quot;,
+      requestType = com.arcana.cloud.grpc.CreateUserRequest.class,
+      responseType = com.arcana.cloud.grpc.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.CreateUserRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getCreateUserMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.CreateUserRequest, com.arcana.cloud.grpc.UserResponse&gt; getCreateUserMethod;
+    if ((getCreateUserMethod = UserServiceGrpc.getCreateUserMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getCreateUserMethod = UserServiceGrpc.getCreateUserMethod) == null) {
+          UserServiceGrpc.getCreateUserMethod = getCreateUserMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.CreateUserRequest, com.arcana.cloud.grpc.UserResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;CreateUser&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.CreateUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;CreateUser&quot;))
+              .build();
+        }
+      }
+    }
+    return getCreateUserMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.UpdateUserRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getUpdateUserMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;UpdateUser&quot;,
+      requestType = com.arcana.cloud.grpc.UpdateUserRequest.class,
+      responseType = com.arcana.cloud.grpc.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.UpdateUserRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getUpdateUserMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.UpdateUserRequest, com.arcana.cloud.grpc.UserResponse&gt; getUpdateUserMethod;
+    if ((getUpdateUserMethod = UserServiceGrpc.getUpdateUserMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getUpdateUserMethod = UserServiceGrpc.getUpdateUserMethod) == null) {
+          UserServiceGrpc.getUpdateUserMethod = getUpdateUserMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.UpdateUserRequest, com.arcana.cloud.grpc.UserResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;UpdateUser&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.UpdateUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;UpdateUser&quot;))
+              .build();
+        }
+      }
+    }
+    return getUpdateUserMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.DeleteUserRequest,
+      com.arcana.cloud.grpc.DeleteUserResponse&gt; getDeleteUserMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;DeleteUser&quot;,
+      requestType = com.arcana.cloud.grpc.DeleteUserRequest.class,
+      responseType = com.arcana.cloud.grpc.DeleteUserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.DeleteUserRequest,
+      com.arcana.cloud.grpc.DeleteUserResponse&gt; getDeleteUserMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.DeleteUserRequest, com.arcana.cloud.grpc.DeleteUserResponse&gt; getDeleteUserMethod;
+    if ((getDeleteUserMethod = UserServiceGrpc.getDeleteUserMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getDeleteUserMethod = UserServiceGrpc.getDeleteUserMethod) == null) {
+          UserServiceGrpc.getDeleteUserMethod = getDeleteUserMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.DeleteUserRequest, com.arcana.cloud.grpc.DeleteUserResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;DeleteUser&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.DeleteUserRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.DeleteUserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;DeleteUser&quot;))
+              .build();
+        }
+      }
+    }
+    return getDeleteUserMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ListUsersRequest,
+      com.arcana.cloud.grpc.ListUsersResponse&gt; getListUsersMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;ListUsers&quot;,
+      requestType = com.arcana.cloud.grpc.ListUsersRequest.class,
+      responseType = com.arcana.cloud.grpc.ListUsersResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ListUsersRequest,
+      com.arcana.cloud.grpc.ListUsersResponse&gt; getListUsersMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ListUsersRequest, com.arcana.cloud.grpc.ListUsersResponse&gt; getListUsersMethod;
+    if ((getListUsersMethod = UserServiceGrpc.getListUsersMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getListUsersMethod = UserServiceGrpc.getListUsersMethod) == null) {
+          UserServiceGrpc.getListUsersMethod = getListUsersMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.ListUsersRequest, com.arcana.cloud.grpc.ListUsersResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;ListUsers&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ListUsersRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ListUsersResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;ListUsers&quot;))
+              .build();
+        }
+      }
+    }
+    return getListUsersMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserByUsernameRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getGetUserByUsernameMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;GetUserByUsername&quot;,
+      requestType = com.arcana.cloud.grpc.GetUserByUsernameRequest.class,
+      responseType = com.arcana.cloud.grpc.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserByUsernameRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getGetUserByUsernameMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserByUsernameRequest, com.arcana.cloud.grpc.UserResponse&gt; getGetUserByUsernameMethod;
+    if ((getGetUserByUsernameMethod = UserServiceGrpc.getGetUserByUsernameMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getGetUserByUsernameMethod = UserServiceGrpc.getGetUserByUsernameMethod) == null) {
+          UserServiceGrpc.getGetUserByUsernameMethod = getGetUserByUsernameMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.GetUserByUsernameRequest, com.arcana.cloud.grpc.UserResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;GetUserByUsername&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.GetUserByUsernameRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;GetUserByUsername&quot;))
+              .build();
+        }
+      }
+    }
+    return getGetUserByUsernameMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserByEmailRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getGetUserByEmailMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;GetUserByEmail&quot;,
+      requestType = com.arcana.cloud.grpc.GetUserByEmailRequest.class,
+      responseType = com.arcana.cloud.grpc.UserResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserByEmailRequest,
+      com.arcana.cloud.grpc.UserResponse&gt; getGetUserByEmailMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.GetUserByEmailRequest, com.arcana.cloud.grpc.UserResponse&gt; getGetUserByEmailMethod;
+    if ((getGetUserByEmailMethod = UserServiceGrpc.getGetUserByEmailMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getGetUserByEmailMethod = UserServiceGrpc.getGetUserByEmailMethod) == null) {
+          UserServiceGrpc.getGetUserByEmailMethod = getGetUserByEmailMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.GetUserByEmailRequest, com.arcana.cloud.grpc.UserResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;GetUserByEmail&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.GetUserByEmailRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.UserResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;GetUserByEmail&quot;))
+              .build();
+        }
+      }
+    }
+    return getGetUserByEmailMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ExistsByUsernameRequest,
+      com.arcana.cloud.grpc.ExistsResponse&gt; getExistsByUsernameMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;ExistsByUsername&quot;,
+      requestType = com.arcana.cloud.grpc.ExistsByUsernameRequest.class,
+      responseType = com.arcana.cloud.grpc.ExistsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ExistsByUsernameRequest,
+      com.arcana.cloud.grpc.ExistsResponse&gt; getExistsByUsernameMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ExistsByUsernameRequest, com.arcana.cloud.grpc.ExistsResponse&gt; getExistsByUsernameMethod;
+    if ((getExistsByUsernameMethod = UserServiceGrpc.getExistsByUsernameMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getExistsByUsernameMethod = UserServiceGrpc.getExistsByUsernameMethod) == null) {
+          UserServiceGrpc.getExistsByUsernameMethod = getExistsByUsernameMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.ExistsByUsernameRequest, com.arcana.cloud.grpc.ExistsResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;ExistsByUsername&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ExistsByUsernameRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ExistsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;ExistsByUsername&quot;))
+              .build();
+        }
+      }
+    }
+    return getExistsByUsernameMethod;
+  }
+
+  private static volatile io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ExistsByEmailRequest,
+      com.arcana.cloud.grpc.ExistsResponse&gt; getExistsByEmailMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + &quot;ExistsByEmail&quot;,
+      requestType = com.arcana.cloud.grpc.ExistsByEmailRequest.class,
+      responseType = com.arcana.cloud.grpc.ExistsResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ExistsByEmailRequest,
+      com.arcana.cloud.grpc.ExistsResponse&gt; getExistsByEmailMethod() {
+    io.grpc.MethodDescriptor&lt;com.arcana.cloud.grpc.ExistsByEmailRequest, com.arcana.cloud.grpc.ExistsResponse&gt; getExistsByEmailMethod;
+    if ((getExistsByEmailMethod = UserServiceGrpc.getExistsByEmailMethod) == null) {
+      synchronized (UserServiceGrpc.class) {
+        if ((getExistsByEmailMethod = UserServiceGrpc.getExistsByEmailMethod) == null) {
+          UserServiceGrpc.getExistsByEmailMethod = getExistsByEmailMethod =
+              io.grpc.MethodDescriptor.&lt;com.arcana.cloud.grpc.ExistsByEmailRequest, com.arcana.cloud.grpc.ExistsResponse&gt;newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, &quot;ExistsByEmail&quot;))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ExistsByEmailRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.arcana.cloud.grpc.ExistsResponse.getDefaultInstance()))
+              .setSchemaDescriptor(new UserServiceMethodDescriptorSupplier(&quot;ExistsByEmail&quot;))
+              .build();
+        }
+      }
+    }
+    return getExistsByEmailMethod;
+  }
+
+  /**
+   * Creates a new async stub that supports all call types for the service
+   */
+  public static UserServiceStub newStub(io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory&lt;UserServiceStub&gt; factory =
+<span class="nc" id="L302">      new io.grpc.stub.AbstractStub.StubFactory&lt;UserServiceStub&gt;() {</span>
+        @java.lang.Override
+        public UserServiceStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L305">          return new UserServiceStub(channel, callOptions);</span>
+        }
+      };
+    return UserServiceStub.newStub(factory, channel);
+  }
+
+  /**
+   * Creates a new blocking-style stub that supports unary and streaming output calls on the service
+   */
+  public static UserServiceBlockingStub newBlockingStub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory&lt;UserServiceBlockingStub&gt; factory =
+<span class="nc" id="L317">      new io.grpc.stub.AbstractStub.StubFactory&lt;UserServiceBlockingStub&gt;() {</span>
+        @java.lang.Override
+        public UserServiceBlockingStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L320">          return new UserServiceBlockingStub(channel, callOptions);</span>
+        }
+      };
+    return UserServiceBlockingStub.newStub(factory, channel);
+  }
+
+  /**
+   * Creates a new ListenableFuture-style stub that supports unary calls on the service
+   */
+  public static UserServiceFutureStub newFutureStub(
+      io.grpc.Channel channel) {
+    io.grpc.stub.AbstractStub.StubFactory&lt;UserServiceFutureStub&gt; factory =
+<span class="nc" id="L332">      new io.grpc.stub.AbstractStub.StubFactory&lt;UserServiceFutureStub&gt;() {</span>
+        @java.lang.Override
+        public UserServiceFutureStub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L335">          return new UserServiceFutureStub(channel, callOptions);</span>
+        }
+      };
+    return UserServiceFutureStub.newStub(factory, channel);
+  }
+
+  /**
+   */
+  public interface AsyncService {
+
+    /**
+     */
+    default void getUser(com.arcana.cloud.grpc.GetUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L349">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetUserMethod(), responseObserver);</span>
+<span class="nc" id="L350">    }</span>
+
+    /**
+     */
+    default void createUser(com.arcana.cloud.grpc.CreateUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L356">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateUserMethod(), responseObserver);</span>
+<span class="nc" id="L357">    }</span>
+
+    /**
+     */
+    default void updateUser(com.arcana.cloud.grpc.UpdateUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L363">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getUpdateUserMethod(), responseObserver);</span>
+<span class="nc" id="L364">    }</span>
+
+    /**
+     */
+    default void deleteUser(com.arcana.cloud.grpc.DeleteUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.DeleteUserResponse&gt; responseObserver) {
+<span class="nc" id="L370">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteUserMethod(), responseObserver);</span>
+<span class="nc" id="L371">    }</span>
+
+    /**
+     */
+    default void listUsers(com.arcana.cloud.grpc.ListUsersRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ListUsersResponse&gt; responseObserver) {
+<span class="nc" id="L377">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getListUsersMethod(), responseObserver);</span>
+<span class="nc" id="L378">    }</span>
+
+    /**
+     */
+    default void getUserByUsername(com.arcana.cloud.grpc.GetUserByUsernameRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L384">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetUserByUsernameMethod(), responseObserver);</span>
+<span class="nc" id="L385">    }</span>
+
+    /**
+     */
+    default void getUserByEmail(com.arcana.cloud.grpc.GetUserByEmailRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L391">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetUserByEmailMethod(), responseObserver);</span>
+<span class="nc" id="L392">    }</span>
+
+    /**
+     */
+    default void existsByUsername(com.arcana.cloud.grpc.ExistsByUsernameRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ExistsResponse&gt; responseObserver) {
+<span class="nc" id="L398">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getExistsByUsernameMethod(), responseObserver);</span>
+<span class="nc" id="L399">    }</span>
+
+    /**
+     */
+    default void existsByEmail(com.arcana.cloud.grpc.ExistsByEmailRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ExistsResponse&gt; responseObserver) {
+<span class="nc" id="L405">      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getExistsByEmailMethod(), responseObserver);</span>
+<span class="nc" id="L406">    }</span>
+  }
+
+  /**
+   * Base class for the server implementation of the service UserService.
+   */
+<span class="fc" id="L412">  public static abstract class UserServiceImplBase</span>
+      implements io.grpc.BindableService, AsyncService {
+
+    @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
+<span class="nc" id="L416">      return UserServiceGrpc.bindService(this);</span>
+    }
+  }
+
+  /**
+   * A stub to allow clients to do asynchronous rpc calls to service UserService.
+   */
+  public static final class UserServiceStub
+      extends io.grpc.stub.AbstractAsyncStub&lt;UserServiceStub&gt; {
+    private UserServiceStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L427">      super(channel, callOptions);</span>
+<span class="nc" id="L428">    }</span>
+
+    @java.lang.Override
+    protected UserServiceStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L433">      return new UserServiceStub(channel, callOptions);</span>
+    }
+
+    /**
+     */
+    public void getUser(com.arcana.cloud.grpc.GetUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L440">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L441">          getChannel().newCall(getGetUserMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L442">    }</span>
+
+    /**
+     */
+    public void createUser(com.arcana.cloud.grpc.CreateUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L448">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L449">          getChannel().newCall(getCreateUserMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L450">    }</span>
+
+    /**
+     */
+    public void updateUser(com.arcana.cloud.grpc.UpdateUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L456">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L457">          getChannel().newCall(getUpdateUserMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L458">    }</span>
+
+    /**
+     */
+    public void deleteUser(com.arcana.cloud.grpc.DeleteUserRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.DeleteUserResponse&gt; responseObserver) {
+<span class="nc" id="L464">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L465">          getChannel().newCall(getDeleteUserMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L466">    }</span>
+
+    /**
+     */
+    public void listUsers(com.arcana.cloud.grpc.ListUsersRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ListUsersResponse&gt; responseObserver) {
+<span class="nc" id="L472">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L473">          getChannel().newCall(getListUsersMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L474">    }</span>
+
+    /**
+     */
+    public void getUserByUsername(com.arcana.cloud.grpc.GetUserByUsernameRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L480">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L481">          getChannel().newCall(getGetUserByUsernameMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L482">    }</span>
+
+    /**
+     */
+    public void getUserByEmail(com.arcana.cloud.grpc.GetUserByEmailRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt; responseObserver) {
+<span class="nc" id="L488">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L489">          getChannel().newCall(getGetUserByEmailMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L490">    }</span>
+
+    /**
+     */
+    public void existsByUsername(com.arcana.cloud.grpc.ExistsByUsernameRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ExistsResponse&gt; responseObserver) {
+<span class="nc" id="L496">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L497">          getChannel().newCall(getExistsByUsernameMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L498">    }</span>
+
+    /**
+     */
+    public void existsByEmail(com.arcana.cloud.grpc.ExistsByEmailRequest request,
+        io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ExistsResponse&gt; responseObserver) {
+<span class="nc" id="L504">      io.grpc.stub.ClientCalls.asyncUnaryCall(</span>
+<span class="nc" id="L505">          getChannel().newCall(getExistsByEmailMethod(), getCallOptions()), request, responseObserver);</span>
+<span class="nc" id="L506">    }</span>
+  }
+
+  /**
+   * A stub to allow clients to do synchronous rpc calls to service UserService.
+   */
+  public static final class UserServiceBlockingStub
+      extends io.grpc.stub.AbstractBlockingStub&lt;UserServiceBlockingStub&gt; {
+    private UserServiceBlockingStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L516">      super(channel, callOptions);</span>
+<span class="nc" id="L517">    }</span>
+
+    @java.lang.Override
+    protected UserServiceBlockingStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L522">      return new UserServiceBlockingStub(channel, callOptions);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.UserResponse getUser(com.arcana.cloud.grpc.GetUserRequest request) {
+<span class="nc" id="L528">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L529">          getChannel(), getGetUserMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.UserResponse createUser(com.arcana.cloud.grpc.CreateUserRequest request) {
+<span class="nc" id="L535">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L536">          getChannel(), getCreateUserMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.UserResponse updateUser(com.arcana.cloud.grpc.UpdateUserRequest request) {
+<span class="nc" id="L542">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L543">          getChannel(), getUpdateUserMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.DeleteUserResponse deleteUser(com.arcana.cloud.grpc.DeleteUserRequest request) {
+<span class="nc" id="L549">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L550">          getChannel(), getDeleteUserMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.ListUsersResponse listUsers(com.arcana.cloud.grpc.ListUsersRequest request) {
+<span class="nc" id="L556">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L557">          getChannel(), getListUsersMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.UserResponse getUserByUsername(com.arcana.cloud.grpc.GetUserByUsernameRequest request) {
+<span class="nc" id="L563">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L564">          getChannel(), getGetUserByUsernameMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.UserResponse getUserByEmail(com.arcana.cloud.grpc.GetUserByEmailRequest request) {
+<span class="nc" id="L570">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L571">          getChannel(), getGetUserByEmailMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.ExistsResponse existsByUsername(com.arcana.cloud.grpc.ExistsByUsernameRequest request) {
+<span class="nc" id="L577">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L578">          getChannel(), getExistsByUsernameMethod(), getCallOptions(), request);</span>
+    }
+
+    /**
+     */
+    public com.arcana.cloud.grpc.ExistsResponse existsByEmail(com.arcana.cloud.grpc.ExistsByEmailRequest request) {
+<span class="nc" id="L584">      return io.grpc.stub.ClientCalls.blockingUnaryCall(</span>
+<span class="nc" id="L585">          getChannel(), getExistsByEmailMethod(), getCallOptions(), request);</span>
+    }
+  }
+
+  /**
+   * A stub to allow clients to do ListenableFuture-style rpc calls to service UserService.
+   */
+  public static final class UserServiceFutureStub
+      extends io.grpc.stub.AbstractFutureStub&lt;UserServiceFutureStub&gt; {
+    private UserServiceFutureStub(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L596">      super(channel, callOptions);</span>
+<span class="nc" id="L597">    }</span>
+
+    @java.lang.Override
+    protected UserServiceFutureStub build(
+        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
+<span class="nc" id="L602">      return new UserServiceFutureStub(channel, callOptions);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.UserResponse&gt; getUser(
+        com.arcana.cloud.grpc.GetUserRequest request) {
+<span class="nc" id="L609">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L610">          getChannel().newCall(getGetUserMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.UserResponse&gt; createUser(
+        com.arcana.cloud.grpc.CreateUserRequest request) {
+<span class="nc" id="L617">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L618">          getChannel().newCall(getCreateUserMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.UserResponse&gt; updateUser(
+        com.arcana.cloud.grpc.UpdateUserRequest request) {
+<span class="nc" id="L625">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L626">          getChannel().newCall(getUpdateUserMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.DeleteUserResponse&gt; deleteUser(
+        com.arcana.cloud.grpc.DeleteUserRequest request) {
+<span class="nc" id="L633">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L634">          getChannel().newCall(getDeleteUserMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.ListUsersResponse&gt; listUsers(
+        com.arcana.cloud.grpc.ListUsersRequest request) {
+<span class="nc" id="L641">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L642">          getChannel().newCall(getListUsersMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.UserResponse&gt; getUserByUsername(
+        com.arcana.cloud.grpc.GetUserByUsernameRequest request) {
+<span class="nc" id="L649">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L650">          getChannel().newCall(getGetUserByUsernameMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.UserResponse&gt; getUserByEmail(
+        com.arcana.cloud.grpc.GetUserByEmailRequest request) {
+<span class="nc" id="L657">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L658">          getChannel().newCall(getGetUserByEmailMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.ExistsResponse&gt; existsByUsername(
+        com.arcana.cloud.grpc.ExistsByUsernameRequest request) {
+<span class="nc" id="L665">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L666">          getChannel().newCall(getExistsByUsernameMethod(), getCallOptions()), request);</span>
+    }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture&lt;com.arcana.cloud.grpc.ExistsResponse&gt; existsByEmail(
+        com.arcana.cloud.grpc.ExistsByEmailRequest request) {
+<span class="nc" id="L673">      return io.grpc.stub.ClientCalls.futureUnaryCall(</span>
+<span class="nc" id="L674">          getChannel().newCall(getExistsByEmailMethod(), getCallOptions()), request);</span>
+    }
+  }
+
+  private static final int METHODID_GET_USER = 0;
+  private static final int METHODID_CREATE_USER = 1;
+  private static final int METHODID_UPDATE_USER = 2;
+  private static final int METHODID_DELETE_USER = 3;
+  private static final int METHODID_LIST_USERS = 4;
+  private static final int METHODID_GET_USER_BY_USERNAME = 5;
+  private static final int METHODID_GET_USER_BY_EMAIL = 6;
+  private static final int METHODID_EXISTS_BY_USERNAME = 7;
+  private static final int METHODID_EXISTS_BY_EMAIL = 8;
+
+  private static final class MethodHandlers&lt;Req, Resp&gt; implements
+      io.grpc.stub.ServerCalls.UnaryMethod&lt;Req, Resp&gt;,
+      io.grpc.stub.ServerCalls.ServerStreamingMethod&lt;Req, Resp&gt;,
+      io.grpc.stub.ServerCalls.ClientStreamingMethod&lt;Req, Resp&gt;,
+      io.grpc.stub.ServerCalls.BidiStreamingMethod&lt;Req, Resp&gt; {
+    private final AsyncService serviceImpl;
+    private final int methodId;
+
+<span class="nc" id="L696">    MethodHandlers(AsyncService serviceImpl, int methodId) {</span>
+<span class="nc" id="L697">      this.serviceImpl = serviceImpl;</span>
+<span class="nc" id="L698">      this.methodId = methodId;</span>
+<span class="nc" id="L699">    }</span>
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings(&quot;unchecked&quot;)
+    public void invoke(Req request, io.grpc.stub.StreamObserver&lt;Resp&gt; responseObserver) {
+<span class="nc bnc" id="L704" title="All 10 branches missed.">      switch (methodId) {</span>
+        case METHODID_GET_USER:
+<span class="nc" id="L706">          serviceImpl.getUser((com.arcana.cloud.grpc.GetUserRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt;) responseObserver);
+<span class="nc" id="L708">          break;</span>
+        case METHODID_CREATE_USER:
+<span class="nc" id="L710">          serviceImpl.createUser((com.arcana.cloud.grpc.CreateUserRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt;) responseObserver);
+<span class="nc" id="L712">          break;</span>
+        case METHODID_UPDATE_USER:
+<span class="nc" id="L714">          serviceImpl.updateUser((com.arcana.cloud.grpc.UpdateUserRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt;) responseObserver);
+<span class="nc" id="L716">          break;</span>
+        case METHODID_DELETE_USER:
+<span class="nc" id="L718">          serviceImpl.deleteUser((com.arcana.cloud.grpc.DeleteUserRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.DeleteUserResponse&gt;) responseObserver);
+<span class="nc" id="L720">          break;</span>
+        case METHODID_LIST_USERS:
+<span class="nc" id="L722">          serviceImpl.listUsers((com.arcana.cloud.grpc.ListUsersRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ListUsersResponse&gt;) responseObserver);
+<span class="nc" id="L724">          break;</span>
+        case METHODID_GET_USER_BY_USERNAME:
+<span class="nc" id="L726">          serviceImpl.getUserByUsername((com.arcana.cloud.grpc.GetUserByUsernameRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt;) responseObserver);
+<span class="nc" id="L728">          break;</span>
+        case METHODID_GET_USER_BY_EMAIL:
+<span class="nc" id="L730">          serviceImpl.getUserByEmail((com.arcana.cloud.grpc.GetUserByEmailRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.UserResponse&gt;) responseObserver);
+<span class="nc" id="L732">          break;</span>
+        case METHODID_EXISTS_BY_USERNAME:
+<span class="nc" id="L734">          serviceImpl.existsByUsername((com.arcana.cloud.grpc.ExistsByUsernameRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ExistsResponse&gt;) responseObserver);
+<span class="nc" id="L736">          break;</span>
+        case METHODID_EXISTS_BY_EMAIL:
+<span class="nc" id="L738">          serviceImpl.existsByEmail((com.arcana.cloud.grpc.ExistsByEmailRequest) request,</span>
+              (io.grpc.stub.StreamObserver&lt;com.arcana.cloud.grpc.ExistsResponse&gt;) responseObserver);
+<span class="nc" id="L740">          break;</span>
+        default:
+<span class="nc" id="L742">          throw new AssertionError();</span>
+      }
+<span class="nc" id="L744">    }</span>
+
+    @java.lang.Override
+    @java.lang.SuppressWarnings(&quot;unchecked&quot;)
+    public io.grpc.stub.StreamObserver&lt;Req&gt; invoke(
+        io.grpc.stub.StreamObserver&lt;Resp&gt; responseObserver) {
+<span class="nc" id="L750">      switch (methodId) {</span>
+        default:
+<span class="nc" id="L752">          throw new AssertionError();</span>
+      }
+    }
+  }
+
+  public static final io.grpc.ServerServiceDefinition bindService(AsyncService service) {
+    return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
+        .addMethod(
+          getGetUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.GetUserRequest,
+              com.arcana.cloud.grpc.UserResponse&gt;(
+                service, METHODID_GET_USER)))
+        .addMethod(
+          getCreateUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.CreateUserRequest,
+              com.arcana.cloud.grpc.UserResponse&gt;(
+                service, METHODID_CREATE_USER)))
+        .addMethod(
+          getUpdateUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.UpdateUserRequest,
+              com.arcana.cloud.grpc.UserResponse&gt;(
+                service, METHODID_UPDATE_USER)))
+        .addMethod(
+          getDeleteUserMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.DeleteUserRequest,
+              com.arcana.cloud.grpc.DeleteUserResponse&gt;(
+                service, METHODID_DELETE_USER)))
+        .addMethod(
+          getListUsersMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.ListUsersRequest,
+              com.arcana.cloud.grpc.ListUsersResponse&gt;(
+                service, METHODID_LIST_USERS)))
+        .addMethod(
+          getGetUserByUsernameMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.GetUserByUsernameRequest,
+              com.arcana.cloud.grpc.UserResponse&gt;(
+                service, METHODID_GET_USER_BY_USERNAME)))
+        .addMethod(
+          getGetUserByEmailMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.GetUserByEmailRequest,
+              com.arcana.cloud.grpc.UserResponse&gt;(
+                service, METHODID_GET_USER_BY_EMAIL)))
+        .addMethod(
+          getExistsByUsernameMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.ExistsByUsernameRequest,
+              com.arcana.cloud.grpc.ExistsResponse&gt;(
+                service, METHODID_EXISTS_BY_USERNAME)))
+        .addMethod(
+          getExistsByEmailMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers&lt;
+              com.arcana.cloud.grpc.ExistsByEmailRequest,
+              com.arcana.cloud.grpc.ExistsResponse&gt;(
+                service, METHODID_EXISTS_BY_EMAIL)))
+        .build();
+  }
+
+  private static abstract class UserServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+<span class="nc" id="L827">    UserServiceBaseDescriptorSupplier() {}</span>
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
+<span class="nc" id="L831">      return com.arcana.cloud.grpc.UserServiceProto.getDescriptor();</span>
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
+<span class="nc" id="L836">      return getFileDescriptor().findServiceByName(&quot;UserService&quot;);</span>
+    }
+  }
+
+  private static final class UserServiceFileDescriptorSupplier
+      extends UserServiceBaseDescriptorSupplier {
+<span class="nc" id="L842">    UserServiceFileDescriptorSupplier() {}</span>
+  }
+
+  private static final class UserServiceMethodDescriptorSupplier
+      extends UserServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
+    private final java.lang.String methodName;
+
+<span class="nc" id="L850">    UserServiceMethodDescriptorSupplier(java.lang.String methodName) {</span>
+<span class="nc" id="L851">      this.methodName = methodName;</span>
+<span class="nc" id="L852">    }</span>
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
+<span class="nc" id="L856">      return getServiceDescriptor().findMethodByName(methodName);</span>
+    }
+  }
+
+  private static volatile io.grpc.ServiceDescriptor serviceDescriptor;
+
+  public static io.grpc.ServiceDescriptor getServiceDescriptor() {
+    io.grpc.ServiceDescriptor result = serviceDescriptor;
+    if (result == null) {
+      synchronized (UserServiceGrpc.class) {
+        result = serviceDescriptor;
+        if (result == null) {
+          serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
+              .setSchemaDescriptor(new UserServiceFileDescriptorSupplier())
+              .addMethod(getGetUserMethod())
+              .addMethod(getCreateUserMethod())
+              .addMethod(getUpdateUserMethod())
+              .addMethod(getDeleteUserMethod())
+              .addMethod(getListUsersMethod())
+              .addMethod(getGetUserByUsernameMethod())
+              .addMethod(getGetUserByEmailMethod())
+              .addMethod(getExistsByUsernameMethod())
+              .addMethod(getExistsByEmailMethod())
+              .build();
+        }
+      }
+    }
+    return result;
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

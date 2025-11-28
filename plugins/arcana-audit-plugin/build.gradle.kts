@@ -1,6 +1,6 @@
 plugins {
     java
-    id("biz.aQute.bnd.builder") version "6.4.0"
+    id("biz.aQute.bnd.builder") version "7.1.0"
 }
 
 group = "com.arcana.plugin"
@@ -8,7 +8,7 @@ version = "1.0.0"
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(25)
     }
 }
 
@@ -36,10 +36,6 @@ dependencies {
 
     // Logging
     compileOnly("org.slf4j:slf4j-api:2.0.9")
-
-    // Lombok
-    compileOnly("org.projectlombok:lombok:1.18.30")
-    annotationProcessor("org.projectlombok:lombok:1.18.30")
 }
 
 tasks.jar {

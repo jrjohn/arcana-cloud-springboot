@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AuthGrpcService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.service.grpc</a> &gt; <span class="el_source">AuthGrpcService.java</span></div><h1>AuthGrpcService.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.service.grpc;
+
+import com.arcana.cloud.dto.request.LoginRequest;
+import com.arcana.cloud.dto.request.RefreshTokenRequest;
+import com.arcana.cloud.dto.request.RegisterRequest;
+import com.arcana.cloud.dto.response.AuthResponse;
+import com.arcana.cloud.grpc.AuthServiceGrpc;
+import com.arcana.cloud.grpc.LogoutAllRequest;
+import com.arcana.cloud.grpc.LogoutRequest;
+import com.arcana.cloud.grpc.LogoutResponse;
+import com.arcana.cloud.grpc.UserInfo;
+import com.arcana.cloud.grpc.ValidateTokenRequest;
+import com.arcana.cloud.grpc.ValidateTokenResponse;
+import com.arcana.cloud.security.JwtTokenProvider;
+import com.arcana.cloud.service.interfaces.AuthService;
+import io.grpc.Status;
+import io.grpc.stub.StreamObserver;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.stereotype.Service;
+
+/**
+ * gRPC server for AuthService.
+ * Active in: monolithic mode OR service layer of layered mode.
+ * Exposes AuthService operations over gRPC for controller layer to consume.
+ */
+@Service
+@RequiredArgsConstructor
+<span class="fc" id="L30">@Slf4j</span>
+@ConditionalOnExpression(&quot;'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'&quot;)
+public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
+
+    private final AuthService authService;
+    private final JwtTokenProvider tokenProvider;
+
+    @Override
+    public void register(com.arcana.cloud.grpc.RegisterRequest request,
+                         StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L41">            log.debug(&quot;gRPC: Registering user: {}&quot;, request.getUsername());</span>
+
+<span class="nc" id="L43">            RegisterRequest registerRequest = RegisterRequest.builder()</span>
+<span class="nc" id="L44">                .username(request.getUsername())</span>
+<span class="nc" id="L45">                .email(request.getEmail())</span>
+<span class="nc" id="L46">                .password(request.getPassword())</span>
+<span class="nc" id="L47">                .confirmPassword(request.getConfirmPassword())</span>
+<span class="nc" id="L48">                .firstName(request.getFirstName())</span>
+<span class="nc" id="L49">                .lastName(request.getLastName())</span>
+<span class="nc" id="L50">                .build();</span>
+
+<span class="nc" id="L52">            AuthResponse response = authService.register(registerRequest);</span>
+<span class="nc" id="L53">            responseObserver.onNext(toGrpcResponse(response));</span>
+<span class="nc" id="L54">            responseObserver.onCompleted();</span>
+<span class="nc" id="L55">        } catch (Exception e) {</span>
+<span class="nc" id="L56">            log.error(&quot;gRPC: Error registering user&quot;, e);</span>
+<span class="nc" id="L57">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L58">                .withDescription(&quot;Failed to register: &quot; + e.getMessage())</span>
+<span class="nc" id="L59">                .asRuntimeException());</span>
+<span class="nc" id="L60">        }</span>
+<span class="nc" id="L61">    }</span>
+
+    @Override
+    public void login(com.arcana.cloud.grpc.LoginRequest request,
+                      StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L67">            log.debug(&quot;gRPC: Login attempt for: {}&quot;, request.getUsernameOrEmail());</span>
+
+<span class="nc" id="L69">            LoginRequest loginRequest = LoginRequest.builder()</span>
+<span class="nc" id="L70">                .usernameOrEmail(request.getUsernameOrEmail())</span>
+<span class="nc" id="L71">                .password(request.getPassword())</span>
+<span class="nc" id="L72">                .build();</span>
+
+<span class="nc" id="L74">            AuthResponse response = authService.login(loginRequest);</span>
+<span class="nc" id="L75">            responseObserver.onNext(toGrpcResponse(response));</span>
+<span class="nc" id="L76">            responseObserver.onCompleted();</span>
+<span class="nc" id="L77">        } catch (Exception e) {</span>
+<span class="nc" id="L78">            log.error(&quot;gRPC: Error during login&quot;, e);</span>
+<span class="nc" id="L79">            responseObserver.onError(Status.UNAUTHENTICATED</span>
+<span class="nc" id="L80">                .withDescription(&quot;Login failed: &quot; + e.getMessage())</span>
+<span class="nc" id="L81">                .asRuntimeException());</span>
+<span class="nc" id="L82">        }</span>
+<span class="nc" id="L83">    }</span>
+
+    @Override
+    public void refreshToken(com.arcana.cloud.grpc.RefreshTokenRequest request,
+                             StreamObserver&lt;com.arcana.cloud.grpc.AuthResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L89">            log.debug(&quot;gRPC: Refreshing token&quot;);</span>
+
+<span class="nc" id="L91">            RefreshTokenRequest refreshRequest = RefreshTokenRequest.builder()</span>
+<span class="nc" id="L92">                .refreshToken(request.getRefreshToken())</span>
+<span class="nc" id="L93">                .build();</span>
+
+<span class="nc" id="L95">            AuthResponse response = authService.refreshToken(refreshRequest);</span>
+<span class="nc" id="L96">            responseObserver.onNext(toGrpcResponse(response));</span>
+<span class="nc" id="L97">            responseObserver.onCompleted();</span>
+<span class="nc" id="L98">        } catch (Exception e) {</span>
+<span class="nc" id="L99">            log.error(&quot;gRPC: Error refreshing token&quot;, e);</span>
+<span class="nc" id="L100">            responseObserver.onError(Status.UNAUTHENTICATED</span>
+<span class="nc" id="L101">                .withDescription(&quot;Token refresh failed: &quot; + e.getMessage())</span>
+<span class="nc" id="L102">                .asRuntimeException());</span>
+<span class="nc" id="L103">        }</span>
+<span class="nc" id="L104">    }</span>
+
+    @Override
+    public void logout(LogoutRequest request, StreamObserver&lt;LogoutResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L109">            log.debug(&quot;gRPC: Logging out&quot;);</span>
+<span class="nc" id="L110">            authService.logout(request.getAccessToken());</span>
+<span class="nc" id="L111">            responseObserver.onNext(LogoutResponse.newBuilder()</span>
+<span class="nc" id="L112">                .setSuccess(true)</span>
+<span class="nc" id="L113">                .setMessage(&quot;Logged out successfully&quot;)</span>
+<span class="nc" id="L114">                .build());</span>
+<span class="nc" id="L115">            responseObserver.onCompleted();</span>
+<span class="nc" id="L116">        } catch (Exception e) {</span>
+<span class="nc" id="L117">            log.error(&quot;gRPC: Error during logout&quot;, e);</span>
+<span class="nc" id="L118">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L119">                .withDescription(&quot;Logout failed: &quot; + e.getMessage())</span>
+<span class="nc" id="L120">                .asRuntimeException());</span>
+<span class="nc" id="L121">        }</span>
+<span class="nc" id="L122">    }</span>
+
+    @Override
+    public void logoutAll(LogoutAllRequest request, StreamObserver&lt;LogoutResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L127">            log.debug(&quot;gRPC: Logging out all sessions for user: {}&quot;, request.getUserId());</span>
+<span class="nc" id="L128">            authService.logoutAll(request.getUserId());</span>
+<span class="nc" id="L129">            responseObserver.onNext(LogoutResponse.newBuilder()</span>
+<span class="nc" id="L130">                .setSuccess(true)</span>
+<span class="nc" id="L131">                .setMessage(&quot;All sessions logged out successfully&quot;)</span>
+<span class="nc" id="L132">                .build());</span>
+<span class="nc" id="L133">            responseObserver.onCompleted();</span>
+<span class="nc" id="L134">        } catch (Exception e) {</span>
+<span class="nc" id="L135">            log.error(&quot;gRPC: Error during logout all&quot;, e);</span>
+<span class="nc" id="L136">            responseObserver.onError(Status.INTERNAL</span>
+<span class="nc" id="L137">                .withDescription(&quot;Logout all failed: &quot; + e.getMessage())</span>
+<span class="nc" id="L138">                .asRuntimeException());</span>
+<span class="nc" id="L139">        }</span>
+<span class="nc" id="L140">    }</span>
+
+    @Override
+    public void validateToken(ValidateTokenRequest request,
+                              StreamObserver&lt;ValidateTokenResponse&gt; responseObserver) {
+        try {
+<span class="nc" id="L146">            log.debug(&quot;gRPC: Validating token&quot;);</span>
+<span class="nc" id="L147">            boolean valid = tokenProvider.validateToken(request.getToken());</span>
+
+<span class="nc" id="L149">            ValidateTokenResponse.Builder builder = ValidateTokenResponse.newBuilder()</span>
+<span class="nc" id="L150">                .setValid(valid);</span>
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            if (valid) {</span>
+<span class="nc" id="L153">                Long userId = tokenProvider.getUserIdFromToken(request.getToken());</span>
+<span class="nc" id="L154">                String username = tokenProvider.getUsernameFromToken(request.getToken());</span>
+<span class="nc" id="L155">                String role = tokenProvider.getRoleFromToken(request.getToken());</span>
+
+<span class="nc" id="L157">                builder.setUserId(userId)</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">                    .setUsername(username != null ? username : &quot;&quot;)</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">                    .setRole(role != null ? role : &quot;&quot;);</span>
+            }
+
+<span class="nc" id="L162">            responseObserver.onNext(builder.build());</span>
+<span class="nc" id="L163">            responseObserver.onCompleted();</span>
+<span class="nc" id="L164">        } catch (Exception e) {</span>
+<span class="nc" id="L165">            log.error(&quot;gRPC: Error validating token&quot;, e);</span>
+<span class="nc" id="L166">            responseObserver.onNext(ValidateTokenResponse.newBuilder()</span>
+<span class="nc" id="L167">                .setValid(false)</span>
+<span class="nc" id="L168">                .build());</span>
+<span class="nc" id="L169">            responseObserver.onCompleted();</span>
+<span class="nc" id="L170">        }</span>
+<span class="nc" id="L171">    }</span>
+
+    private com.arcana.cloud.grpc.AuthResponse toGrpcResponse(AuthResponse response) {
+<span class="nc" id="L174">        UserInfo.Builder userInfoBuilder = UserInfo.newBuilder();</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">        if (response.getUser() != null) {</span>
+<span class="nc" id="L176">            userInfoBuilder</span>
+<span class="nc" id="L177">                .setId(response.getUser().getId())</span>
+<span class="nc" id="L178">                .setUsername(response.getUser().getUsername())</span>
+<span class="nc" id="L179">                .setEmail(response.getUser().getEmail())</span>
+<span class="nc bnc" id="L180" title="All 2 branches missed.">                .setFirstName(response.getUser().getFirstName() != null ? response.getUser().getFirstName() : &quot;&quot;)</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">                .setLastName(response.getUser().getLastName() != null ? response.getUser().getLastName() : &quot;&quot;)</span>
+<span class="nc" id="L182">                .setRole(response.getUser().getRole().name())</span>
+<span class="nc bnc" id="L183" title="All 4 branches missed.">                .setIsActive(response.getUser().getIsActive() != null &amp;&amp; response.getUser().getIsActive())</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">                .setIsVerified(response.getUser().getIsVerified() != null &amp;&amp; response.getUser().getIsVerified());</span>
+        }
+
+<span class="nc" id="L187">        return com.arcana.cloud.grpc.AuthResponse.newBuilder()</span>
+<span class="nc" id="L188">            .setAccessToken(response.getAccessToken())</span>
+<span class="nc" id="L189">            .setRefreshToken(response.getRefreshToken())</span>
+<span class="nc" id="L190">            .setTokenType(response.getTokenType())</span>
+<span class="nc" id="L191">            .setExpiresIn(response.getExpiresIn())</span>
+<span class="nc" id="L192">            .setUser(userInfoBuilder.build())</span>
+<span class="nc" id="L193">            .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>
