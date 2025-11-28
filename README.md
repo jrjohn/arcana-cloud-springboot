@@ -6,7 +6,7 @@
 [![gRPC](https://img.shields.io/badge/gRPC-1.60-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
 [![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%207.0.5-FF6600.svg)](https://felix.apache.org/)
 [![Architecture](https://img.shields.io/badge/architecture-microservices-orange.svg)]()
-[![Tests](https://img.shields.io/badge/tests-128%2F128_passing-brightgreen.svg)](docs/test-report/index.html)
+[![Tests](https://img.shields.io/badge/tests-297%2F297_passing-brightgreen.svg)](docs/test-report/index.html)
 [![Coverage](https://img.shields.io/badge/coverage-JaCoCo-brightgreen.svg)](#testing)
 [![Code Style](https://img.shields.io/badge/code_style-Google_Java-blue.svg)](https://google.github.io/styleguide/javaguide.html)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -669,44 +669,63 @@ curl -X POST -F "file=@my-plugin.jar" http://localhost:8080/api/v1/plugins/insta
 
 ## Testing
 
-The project includes **128 comprehensive integration tests** covering all 5 deployment modes plus authentication and user management workflows. All tests pass with 100% success rate.
+The project includes **297 comprehensive tests** covering unit tests, integration tests across all 5 deployment modes, plus authentication and user management workflows. All tests pass with 100% success rate.
 
 ### Test Summary
 
 | Category | Tests | Status |
 |----------|-------|--------|
-| Authentication Workflow | 8 | Passing |
-| User Management Workflow | 9 | Passing |
+| **Unit Tests** | | |
+| Controller Tests | 42 | Passing |
+| Service Tests | 31 | Passing |
+| Plugin Runtime Tests | 63 | Passing |
+| Application Context | 1 | Passing |
+| **Integration Tests** | | |
+| Authentication Workflow | 32 | Passing |
+| User Management Workflow | 12 | Passing |
 | Plugin Monolithic Mode | 16 | Passing |
 | Plugin Layered HTTP Mode | 19 | Passing |
 | Plugin Layered gRPC Mode | 16 | Passing |
 | Plugin K8s HTTP Mode | 17 | Passing |
-| Plugin K8s gRPC Mode | 43 | Passing |
-| **Total** | **128** | **100% Passing** |
+| Plugin K8s gRPC Mode | 48 | Passing |
+| **Total** | **297** | **100% Passing** |
 
-### Integration Tests by Deployment Mode
+### Tests by Category
 
-| Mode | Tests | Description |
-|------|-------|-------------|
-| Monolithic | 16 | Single JVM, direct method calls |
-| Layered HTTP | 19 | Multi-tier with REST API |
-| Layered gRPC | 16 | Multi-tier with Protocol Buffers |
-| K8s HTTP | 17 | Kubernetes with REST + Service Discovery |
-| K8s gRPC | 43 | Kubernetes with gRPC + Health Protocol |
+| Category | Tests | Description |
+|----------|-------|-------------|
+| Unit Tests | 137 | Controller, Service, Plugin Runtime |
+| Integration Tests | 160 | All deployment modes and workflows |
+| **Total** | **297** | **100% Success Rate** |
 
 ### Test Structure
 
 ```
 src/test/java/com/arcana/cloud/
-├── integration/                   # Integration tests
-│   ├── AuthWorkflowTest.java      # Authentication workflow tests
-│   ├── UserManagementWorkflowTest.java  # User CRUD tests
-│   └── plugin/                    # Plugin tests by deployment mode
-│       ├── PluginMonolithicModeTest.java
-│       ├── PluginLayeredHttpModeTest.java
-│       ├── PluginLayeredGrpcModeTest.java
-│       ├── PluginK8sHttpModeTest.java
-│       └── PluginK8sGrpcModeTest.java
+├── controller/                    # Controller unit tests
+│   ├── AuthControllerTest.java
+│   ├── UserControllerTest.java
+│   ├── PluginControllerTest.java
+│   └── PluginProxyControllerTest.java
+├── service/                       # Service unit tests
+│   ├── AuthServiceTest.java
+│   └── UserServiceTest.java
+└── integration/                   # Integration tests
+    ├── AuthWorkflowTest.java
+    ├── UserManagementWorkflowTest.java
+    └── plugin/                    # Plugin tests by deployment mode
+        ├── PluginMonolithicModeTest.java
+        ├── PluginLayeredHttpModeTest.java
+        ├── PluginLayeredGrpcModeTest.java
+        ├── PluginK8sHttpModeTest.java
+        └── PluginK8sGrpcModeTest.java
+
+arcana-plugin-runtime/src/test/java/
+└── com/arcana/cloud/plugin/runtime/
+    ├── ExtensionRegistryTest.java
+    ├── PluginManagerTest.java
+    ├── DistributedPluginRegistryTest.java
+    └── HttpPluginRegistryClientTest.java
 ```
 
 ### Running Tests
@@ -743,7 +762,7 @@ For detailed testing documentation, see [docs/TESTING.md](docs/TESTING.md) or vi
 
 ## Documentation
 
-- [Test Report](docs/test-report/index.html) - Interactive HTML report with 128 tests across all deployment modes
+- [Test Report](docs/test-report/index.html) - Interactive HTML report with 297 tests (unit + integration)
 - [JaCoCo Coverage Report](docs/jacoco-report/index.html) - Code coverage analysis
 - [Testing Guide](docs/TESTING.md) - Detailed testing documentation
 - [Plugin Development Guide](docs/plugin-development-guide.md) - Create custom plugins

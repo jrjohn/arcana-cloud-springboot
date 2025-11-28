@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">1.857s</div>
+<div class="counter">1.858s</div>
 <p>duration</p>
 </div>
 </td>
@@ -82,27 +82,27 @@
 </thead>
 <tr>
 <td class="success">testAdminCanCreateUser()</td>
-<td class="success">0.638s</td>
+<td class="success">0.637s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testAdminCanDeleteUser()</td>
-<td class="success">0.152s</td>
+<td class="success">0.148s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testAdminCanGetUserById()</td>
-<td class="success">0.129s</td>
+<td class="success">0.131s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testAdminCanListUsers()</td>
-<td class="success">0.067s</td>
+<td class="success">0.066s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testAdminCanUpdateUser()</td>
-<td class="success">0.128s</td>
+<td class="success">0.127s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -112,17 +112,17 @@
 </tr>
 <tr>
 <td class="success">testUnauthorizedAccess()</td>
-<td class="success">0.063s</td>
+<td class="success">0.066s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testUserCanGetOwnProfile()</td>
-<td class="success">0.127s</td>
+<td class="success">0.129s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testUserCanUpdateOwnProfile()</td>
-<td class="success">0.146s</td>
+<td class="success">0.147s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -130,8 +130,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre id="class-stdout">14:50:30.238 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.arcana.cloud.integration.UserManagementWorkflowTest]: UserManagementWorkflowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-14:50:30.318 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.integration.UserManagementWorkflowTest
+<pre id="class-stdout">15:16:25.309 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.arcana.cloud.integration.UserManagementWorkflowTest]: UserManagementWorkflowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:16:25.387 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.integration.UserManagementWorkflowTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -142,25 +142,25 @@
 
  :: Spring Boot ::                (v4.0.0)
 
-2025-11-28 14:50:30 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Starting UserManagementWorkflowTest using Java 25.0.1 with PID 22714 (started by jrjohn in /Users/jrjohn/Documents/projects/arcana-cloud-springboot)
-2025-11-28 14:50:30 [Test worker] DEBUG c.a.c.i.UserManagementWorkflowTest - Running with Spring Boot v4.0.0, Spring v7.0.1
-2025-11-28 14:50:30 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - The following 1 profile is active: &quot;test&quot;
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 67 ms. Found 2 JPA repository interfaces.
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.OAuthTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-11-28 14:50:31 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 16 ms. Found 0 Redis repository interfaces.
-2025-11-28 14:50:31 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-28 14:50:31 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 7.1.8.Final
-2025-11-28 14:50:31 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-28 14:50:31 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-11-28 14:50:32 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-11-28 14:50:32 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-11-28 14:50:32 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-11-28 14:50:32 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-11-28 15:16:25 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Starting UserManagementWorkflowTest using Java 25.0.1 with PID 34637 (started by jrjohn in /Users/jrjohn/Documents/projects/arcana-cloud-springboot)
+2025-11-28 15:16:25 [Test worker] DEBUG c.a.c.i.UserManagementWorkflowTest - Running with Spring Boot v4.0.0, Spring v7.0.1
+2025-11-28 15:16:25 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - The following 1 profile is active: &quot;test&quot;
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 60 ms. Found 2 JPA repository interfaces.
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.OAuthTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
+2025-11-28 15:16:26 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-11-28 15:16:26 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 7.1.8.Final
+2025-11-28 15:16:27 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-11-28 15:16:27 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-11-28 15:16:27 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2025-11-28 15:16:27 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-11-28 15:16:27 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-11-28 15:16:27 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [jdbc:h2:mem:testdb]
 	Database driver: H2 JDBC Driver
 	Database dialect: H2Dialect
@@ -172,7 +172,7 @@
 	Pool: DatasourceConnectionProviderImpl
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-11-28 14:50:32 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-11-28 15:16:27 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists oauth_tokens cascade 
 Hibernate: 
@@ -212,24 +212,24 @@ Hibernate:
        add constraint FKo3ygyue8ry6098fk4tatyskce 
        foreign key (user_id) 
        references users
-2025-11-28 14:50:32 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-28 14:50:32 [Test worker] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.service.grpc.GrpcHealthService - gRPC Health Service initialized
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Initializing Arcana Cloud Plugin System
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Platform version: 1.0.0
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Starting Apache Felix OSGi framework...
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Apache Felix OSGi framework started successfully
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Framework version: 1.9
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Cache directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/.cache
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Initializing Spring-OSGi bridge
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'dataSource' to OSGi as [javax.sql.DataSource]
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'passwordEncoder' to OSGi as [org.springframework.security.crypto.password.PasswordEncoder]
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Scanning for plugins in: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 14:50:33 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: monolithic-test-plugin-1.0.0.jar
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
-2025-11-28 14:50:33 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: monolithic-test-plugin-1.0.0.jar
+2025-11-28 15:16:27 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-11-28 15:16:27 [Test worker] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.service.grpc.GrpcHealthService - gRPC Health Service initialized
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Initializing Arcana Cloud Plugin System
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Platform version: 1.0.0
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Starting Apache Felix OSGi framework...
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Apache Felix OSGi framework started successfully
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Framework version: 1.9
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Cache directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/.cache
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Initializing Spring-OSGi bridge
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'dataSource' to OSGi as [javax.sql.DataSource]
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'passwordEncoder' to OSGi as [org.springframework.security.crypto.password.PasswordEncoder]
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Scanning for plugins in: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: monolithic-test-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: monolithic-test-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
@@ -383,9 +383,321 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 14:50:33 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: workflow-plugin-1.0.0.jar
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
-2025-11-28 14:50:33 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: workflow-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: lifecycle-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: lifecycle-plugin-1.0.0.jar
+org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:397)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:217)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:426)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
+	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:160)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:128)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:422)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$0(ClassBasedTestDescriptor.java:334)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:333)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$1(ClassBasedTestDescriptor.java:322)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$0(ClassBasedTestDescriptor.java:321)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:27)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:126)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:70)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$0(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:110)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:135)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:104)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:64)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:194)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.zip.ZipException: zip END header not found
+	at java.base/java.util.zip.ZipFile$Source.findEND(ZipFile.java:1693)
+	at java.base/java.util.zip.ZipFile$Source.initCEN(ZipFile.java:1701)
+	at java.base/java.util.zip.ZipFile$Source.&lt;init&gt;(ZipFile.java:1542)
+	at java.base/java.util.zip.ZipFile$Source.get(ZipFile.java:1506)
+	at java.base/java.util.zip.ZipFile$CleanableResource.&lt;init&gt;(ZipFile.java:704)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:204)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:150)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:164)
+	at org.apache.felix.framework.util.SecureAction.openZipFile(SecureAction.java:802)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:169)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:151)
+	at org.apache.felix.framework.util.WeakZipFileFactory.create(WeakZipFileFactory.java:78)
+	at org.apache.felix.framework.cache.JarRevision.&lt;init&gt;(JarRevision.java:83)
+	at org.apache.felix.framework.cache.BundleArchive.createRevisionFromLocation(BundleArchive.java:819)
+	at org.apache.felix.framework.cache.BundleArchive.reviseInternal(BundleArchive.java:491)
+	at org.apache.felix.framework.cache.BundleArchive.&lt;init&gt;(BundleArchive.java:155)
+	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
+	... 131 common frames omitted
+2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: test-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: test-plugin-1.0.0.jar
+org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:397)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:217)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:426)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
+	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:160)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:128)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:422)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$0(ClassBasedTestDescriptor.java:334)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:333)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$1(ClassBasedTestDescriptor.java:322)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$0(ClassBasedTestDescriptor.java:321)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:27)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:126)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:70)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$0(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:110)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:135)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:104)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:64)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:194)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.zip.ZipException: zip END header not found
+	at java.base/java.util.zip.ZipFile$Source.findEND(ZipFile.java:1693)
+	at java.base/java.util.zip.ZipFile$Source.initCEN(ZipFile.java:1701)
+	at java.base/java.util.zip.ZipFile$Source.&lt;init&gt;(ZipFile.java:1542)
+	at java.base/java.util.zip.ZipFile$Source.get(ZipFile.java:1506)
+	at java.base/java.util.zip.ZipFile$CleanableResource.&lt;init&gt;(ZipFile.java:704)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:204)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:150)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:164)
+	at org.apache.felix.framework.util.SecureAction.openZipFile(SecureAction.java:802)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:169)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:151)
+	at org.apache.felix.framework.util.WeakZipFileFactory.create(WeakZipFileFactory.java:78)
+	at org.apache.felix.framework.cache.JarRevision.&lt;init&gt;(JarRevision.java:83)
+	at org.apache.felix.framework.cache.BundleArchive.createRevisionFromLocation(BundleArchive.java:819)
+	at org.apache.felix.framework.cache.BundleArchive.reviseInternal(BundleArchive.java:491)
+	at org.apache.felix.framework.cache.BundleArchive.&lt;init&gt;(BundleArchive.java:155)
+	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
+	... 131 common frames omitted
+2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: workflow-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: workflow-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
@@ -539,23 +851,23 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 14:50:33 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: arcana-audit-plugin-1.0.0.jar
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/arcana-audit-plugin-1.0.0.jar
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Plugin installed: com.arcana.plugin.audit (bundle id: 3)
-2025-11-28 14:50:33 [FelixDispatchQueue] DEBUG c.a.c.plugin.runtime.PluginManager - Plugin com.arcana.plugin.audit state changed to INSTALLED
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Installed 1 plugins
-2025-11-28 14:50:33 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Plugin system initialized successfully. 1 plugins installed
-2025-11-28 14:50:33 [Test worker] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-11-28 14:50:33 [Test worker] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-2025-11-28 14:50:33 [Test worker] WARN  i.n.r.d.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
-2025-11-28 14:50:34 [Test worker] DEBUG c.a.c.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2025-11-28 14:50:34 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-2025-11-28 14:50:34 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-2025-11-28 14:50:34 [Test worker] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
-2025-11-28 14:50:34 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 11 ms
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Started UserManagementWorkflowTest in 3.692 seconds (process running for 4.475)
-2025-11-28 14:50:34 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2025-11-28 14:50:34 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: arcana-audit-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/arcana-audit-plugin-1.0.0.jar
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Plugin installed: com.arcana.plugin.audit (bundle id: 5)
+2025-11-28 15:16:28 [FelixDispatchQueue] DEBUG c.a.c.plugin.runtime.PluginManager - Plugin com.arcana.plugin.audit state changed to INSTALLED
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Installed 1 plugins
+2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Plugin system initialized successfully. 1 plugins installed
+2025-11-28 15:16:28 [Test worker] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-11-28 15:16:28 [Test worker] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-11-28 15:16:28 [Test worker] WARN  i.n.r.d.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+2025-11-28 15:16:29 [Test worker] DEBUG c.a.c.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2025-11-28 15:16:29 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2025-11-28 15:16:29 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2025-11-28 15:16:29 [Test worker] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2025-11-28 15:16:29 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 12 ms
+2025-11-28 15:16:29 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Started UserManagementWorkflowTest in 3.742 seconds (process running for 4.55)
+2025-11-28 15:16:29 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2025-11-28 15:16:29 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
 Hibernate: 
     select
         u1_0.id,
@@ -580,7 +892,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: createduser1764312634560
+2025-11-28 15:16:29 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: createduser1764314189668
 Hibernate: 
     select
         u1_0.id 
@@ -606,7 +918,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 2
+2025-11-28 15:16:29 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 2
 Hibernate: 
     select
         u1_0.id,
@@ -631,7 +943,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: selfupdateuser1764312634837
+2025-11-28 15:16:29 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: selfupdateuser1764314189951
 Hibernate: 
     select
         u1_0.id 
@@ -657,7 +969,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 4
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 4
 Hibernate: 
     insert 
     into
@@ -665,8 +977,8 @@ Hibernate:
         (access_token, client_ip, created_at, expires_at, is_revoked, refresh_expires_at, refresh_token, token_type, user_id, user_agent, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 4
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 4
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 4
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 4
 Hibernate: 
     select
         u1_0.id,
@@ -691,7 +1003,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:34 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: deleteuser1764312634982
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: deleteuser1764314190099
 Hibernate: 
     select
         u1_0.id 
@@ -717,8 +1029,8 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 6
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Deleting user with id: 6
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 6
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Deleting user with id: 6
 Hibernate: 
     select
         count(*) 
@@ -726,9 +1038,9 @@ Hibernate:
         users u1_0 
     where
         u1_0.id=?
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User deleted successfully with id: 6
-2025-11-28 14:50:35 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 6
-2025-11-28 14:50:35 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Resource not found: User not found with id: '6'
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User deleted successfully with id: 6
+2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 6
+2025-11-28 15:16:30 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Resource not found: User not found with id: '6'
 Hibernate: 
     select
         u1_0.id,
@@ -753,7 +1065,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643126351370
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141902460
 Hibernate: 
     select
         u1_0.id 
@@ -779,8 +1091,8 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 8
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643126352061
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 8
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141903131
 Hibernate: 
     select
         u1_0.id 
@@ -806,8 +1118,8 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 9
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643126352702
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 9
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141903802
 Hibernate: 
     select
         u1_0.id 
@@ -833,8 +1145,8 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 10
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643126353333
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 10
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141904433
 Hibernate: 
     select
         u1_0.id 
@@ -860,8 +1172,8 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 11
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643126353964
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 11
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141905064
 Hibernate: 
     select
         u1_0.id 
@@ -887,8 +1199,8 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 12
-2025-11-28 14:50:35 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 3
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 12
+2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 3
 Hibernate: 
     select
         u1_0.id,
@@ -915,7 +1227,7 @@ Hibernate:
         count(u1_0.id) 
     from
         users u1_0
-2025-11-28 14:50:35 [Test worker] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+2025-11-28 15:16:30 [Test worker] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
@@ -943,7 +1255,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 10
+2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 10
 Hibernate: 
     select
         u1_0.id,
@@ -989,7 +1301,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: updateuser1764312635610
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: updateuser1764314190720
 Hibernate: 
     select
         u1_0.id 
@@ -1015,9 +1327,9 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 15
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 15
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 15
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 15
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 15
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 15
 Hibernate: 
     select
         u1_0.id,
@@ -1042,7 +1354,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: getbyiduser1764312635739
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: getbyiduser1764314190849
 Hibernate: 
     select
         u1_0.id 
@@ -1068,8 +1380,8 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 17
-2025-11-28 14:50:35 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 17
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 17
+2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 17
 Hibernate: 
     select
         u1_0.id,
@@ -1094,7 +1406,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: profileuser1764312635868
+2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: profileuser1764314190979
 Hibernate: 
     select
         u1_0.id 
@@ -1120,7 +1432,7 @@ Hibernate:
         (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 19
+2025-11-28 15:16:31 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 19
 Hibernate: 
     insert 
     into
@@ -1128,7 +1440,7 @@ Hibernate:
         (access_token, client_ip, created_at, expires_at, is_revoked, refresh_expires_at, refresh_token, token_type, user_id, user_agent, id) 
     values
         (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 14:50:35 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 19
+2025-11-28 15:16:31 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 19
 Hibernate: 
     select
         u1_0.id,
@@ -1177,7 +1489,7 @@ WARNING: Dynamic loading of agents will be disallowed by default in a future rel
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2025年11月28日 下午2:51:20</p>
+<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2025年11月28日 下午3:17:32</p>
 </div>
 </div>
 </body>
