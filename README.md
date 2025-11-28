@@ -43,6 +43,12 @@ flowchart TB
         AS[AuthService]
         US[UserService]
         JWT[JwtTokenProvider]
+        CB[Circuit Breaker]
+    end
+
+    subgraph Repository["Repository Layer"]
+        UR[UserRepository]
+        TR[TokenRepository]
     end
 
     subgraph Data["Data Layer"]
@@ -69,15 +75,21 @@ flowchart TB
     AUTH --> AS
     USER --> US
 
-    AS --> MYSQL
-    US --> MYSQL
-    JWT --> REDIS
+    AS --> CB
+    US --> CB
+    CB --> UR
+    CB --> TR
+    JWT --> TR
+
+    UR --> MYSQL
+    TR --> REDIS
 
     style Client fill:#e0f2fe
     style Gateway fill:#fef3c7
     style Plugins fill:#fce7f3
     style Controller fill:#d1fae5
     style Service fill:#e0e7ff
+    style Repository fill:#fef9c3
     style Data fill:#f3f4f6
 ```
 
