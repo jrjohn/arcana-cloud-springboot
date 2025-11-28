@@ -30,6 +30,15 @@ dependencies {
     // Optional Spring dependencies for convenience annotations
     compileOnly("org.springframework:spring-web:6.2.0")
     compileOnly("org.springframework:spring-context:6.2.0")
+
+    // Test dependencies
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.3")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+}
+
+tasks.test {
+    useJUnitPlatform()
 }
 
 publishing {
