@@ -39,6 +39,9 @@ public class GrpcAuthServiceClient implements AuthService {
     @Value("${service.grpc.url:localhost:9090}")
     private String serviceUrl;
 
+    @Value("${grpc.client.shutdown-timeout-seconds:5}")
+    private long shutdownTimeoutSeconds;
+
     private ManagedChannel channel;
     private AuthServiceGrpc.AuthServiceBlockingStub stub;
 
@@ -55,7 +58,7 @@ public class GrpcAuthServiceClient implements AuthService {
     public void shutdown() {
         if (channel != null && !channel.isShutdown()) {
             try {
-                channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+                channel.shutdown().awaitTermination(shutdownTimeoutSeconds, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 channel.shutdownNow();

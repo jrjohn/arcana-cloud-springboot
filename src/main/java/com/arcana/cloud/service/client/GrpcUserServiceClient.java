@@ -45,6 +45,9 @@ public class GrpcUserServiceClient implements UserService {
     @Value("${service.grpc.url:localhost:9090}")
     private String serviceUrl;
 
+    @Value("${grpc.client.shutdown-timeout-seconds:5}")
+    private long shutdownTimeoutSeconds;
+
     private ManagedChannel channel;
     private UserServiceGrpc.UserServiceBlockingStub stub;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -62,7 +65,7 @@ public class GrpcUserServiceClient implements UserService {
     public void shutdown() {
         if (channel != null && !channel.isShutdown()) {
             try {
-                channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);
+                channel.shutdown().awaitTermination(shutdownTimeoutSeconds, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 channel.shutdownNow();

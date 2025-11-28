@@ -31,6 +31,15 @@ public class RedisConfig {
     @Value("${spring.data.redis.password:}")
     private String redisPassword;
 
+    @Value("${spring.cache.redis.default-ttl-minutes:10}")
+    private long defaultTtlMinutes;
+
+    @Value("${spring.cache.redis.users-ttl-minutes:5}")
+    private long usersTtlMinutes;
+
+    @Value("${spring.cache.redis.tokens-ttl-minutes:60}")
+    private long tokensTtlMinutes;
+
     @Bean
     public LettuceConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
@@ -59,7 +68,7 @@ public class RedisConfig {
     public CacheManager cacheManager(RedisConnectionFactory connectionFactory,
                                      JsonMapper jsonMapper) {
         RedisCacheConfiguration cacheConfig = RedisCacheConfiguration.defaultCacheConfig()
-            .entryTtl(Duration.ofMinutes(10))
+            .entryTtl(Duration.ofMinutes(defaultTtlMinutes))
             .serializeKeysWith(
                 RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer())
             )
@@ -72,9 +81,9 @@ public class RedisConfig {
         return RedisCacheManager.builder(connectionFactory)
             .cacheDefaults(cacheConfig)
             .withCacheConfiguration("users",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(5)))
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(usersTtlMinutes)))
             .withCacheConfiguration("tokens",
-                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1)))
+                RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(tokensTtlMinutes)))
             .build();
     }
 }

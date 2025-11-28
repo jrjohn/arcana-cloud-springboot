@@ -74,6 +74,9 @@ public class GrpcConfig {
     @Value("${grpc.client.max-inbound-message-size:16777216}")
     private int maxInboundMessageSize;
 
+    @Value("${grpc.client.shutdown-timeout-seconds:5}")
+    private long shutdownTimeoutSeconds;
+
     private ManagedChannel serviceChannel;
     private ManagedChannel repositoryChannel;
 
@@ -212,7 +215,7 @@ public class GrpcConfig {
         if (channel != null && !channel.isShutdown()) {
             try {
                 channel.shutdown();
-                if (!channel.awaitTermination(5, TimeUnit.SECONDS)) {
+                if (!channel.awaitTermination(shutdownTimeoutSeconds, TimeUnit.SECONDS)) {
                     log.warn("gRPC {} channel did not terminate gracefully, forcing shutdown", name);
                     channel.shutdownNow();
                 }
