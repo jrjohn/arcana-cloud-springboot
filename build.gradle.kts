@@ -36,9 +36,12 @@ val protobufVersion = versionCatalog.findVersion("protobuf").get().toString()
 val checkstyleVersion = versionCatalog.findVersion("checkstyle").get().toString()
 val springGrpcVersion = versionCatalog.findVersion("spring-grpc").get().toString()
 
+val springCloudVersion = versionCatalog.findVersion("spring-cloud").get().toString()
+
 dependencyManagement {
     imports {
         mavenBom("org.springframework.grpc:spring-grpc-dependencies:$springGrpcVersion")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
 }
 
@@ -76,6 +79,9 @@ dependencies {
 
     // Resilience4j Circuit Breaker
     implementation(libs.resilience4j.circuitbreaker)
+
+    // Spring Cloud Config (optional - enable with spring.cloud.config.enabled=true)
+    implementation(libs.spring.cloud.starter.config)
 
     // Annotation processing for Jakarta and javax (for gRPC generated code)
     implementation(libs.jakarta.annotation.api)

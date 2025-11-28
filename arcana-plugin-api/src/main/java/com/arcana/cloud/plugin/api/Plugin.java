@@ -1,6 +1,8 @@
 package com.arcana.cloud.plugin.api;
 
 import com.arcana.cloud.plugin.lifecycle.PluginState;
+import com.arcana.cloud.plugin.version.ApiVersion;
+import com.arcana.cloud.plugin.version.Since;
 
 /**
  * Core interface for Arcana Cloud plugins.
@@ -35,6 +37,8 @@ import com.arcana.cloud.plugin.lifecycle.PluginState;
  * @see PluginContext
  * @see PluginDescriptor
  */
+@Since("1.0.0")
+@ApiVersion(version = "1.0.0", stability = ApiVersion.Stability.STABLE)
 public interface Plugin {
 
     /**

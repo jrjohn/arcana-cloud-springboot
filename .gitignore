@@ -45,3 +45,4 @@ src/main/java/com/arcana/cloud/grpc/
 tmp/
 temp/
 *.tmp
+/plugins/.cache
