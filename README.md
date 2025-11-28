@@ -1,6 +1,6 @@
 # Arcana Cloud Spring Boot - Enterprise Java Microservices Platform
 
-[![Architecture Grade](https://img.shields.io/badge/Architecture_Grade-⭐⭐⭐⭐⭐_A+-gold.svg?style=for-the-badge)](#architecture-evaluation)
+[![Architecture Rating](https://img.shields.io/badge/Architecture%20Rating-⭐⭐⭐⭐⭐%209.2%2F10-gold.svg)](#architecture-evaluation)
 [![Java](https://img.shields.io/badge/Java-25-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![gRPC](https://img.shields.io/badge/gRPC-1.60-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
