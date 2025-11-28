@@ -3,6 +3,7 @@ package com.arcana.cloud.service.client;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.exception.ResourceNotFoundException;
+import com.arcana.cloud.exception.ServiceUnavailableException;
 import com.arcana.cloud.grpc.CreateUserRequest;
 import com.arcana.cloud.grpc.GetUserByEmailRequest;
 import com.arcana.cloud.grpc.GetUserByUsernameRequest;
@@ -16,11 +17,15 @@ import com.arcana.cloud.grpc.ExistsByUsernameRequest;
 import com.arcana.cloud.grpc.ExistsByEmailRequest;
 import com.arcana.cloud.grpc.DeleteUserRequest;
 import com.arcana.cloud.service.interfaces.UserService;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.grpc.ManagedChannel;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.data.domain.Page;
@@ -34,6 +39,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 @Service
 @ConditionalOnExpression(
@@ -52,6 +58,9 @@ public class GrpcUserServiceClient implements UserService {
     private UserServiceGrpc.UserServiceBlockingStub stub;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
+    @Autowired(required = false)
+    private CircuitBreaker userServiceCircuitBreaker;
+
     @PostConstruct
     public void init() {
         log.info("Initializing gRPC client for service URL: {}", serviceUrl);
@@ -59,6 +68,10 @@ public class GrpcUserServiceClient implements UserService {
             .usePlaintext()
             .build();
         this.stub = UserServiceGrpc.newBlockingStub(channel);
+
+        if (userServiceCircuitBreaker != null) {
+            log.info("Circuit Breaker enabled for User Service");
+        }
     }
 
     @PreDestroy
@@ -75,7 +88,7 @@ public class GrpcUserServiceClient implements UserService {
 
     @Override
     public User createUser(User user) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             CreateUserRequest request = CreateUserRequest.newBuilder()
                 .setUsername(user.getUsername())
                 .setEmail(user.getEmail())
@@ -86,53 +99,45 @@ public class GrpcUserServiceClient implements UserService {
 
             UserResponse response = stub.createUser(request);
             return fromGrpcResponse(response);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error creating user", e);
-            throw new RuntimeException("Failed to create user: " + e.getStatus().getDescription());
-        }
+        }, "createUser");
     }
 
     @Override
     public User getUserById(Long id) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             GetUserRequest request = GetUserRequest.newBuilder()
                 .setUserId(id)
                 .build();
 
             UserResponse response = stub.getUser(request);
             return fromGrpcResponse(response);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error getting user", e);
+        }, "getUserById", () -> {
             throw new ResourceNotFoundException("User", "id", id);
-        }
+        });
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             GetUserByUsernameRequest request = GetUserByUsernameRequest.newBuilder()
                 .setUsername(username)
                 .build();
 
             UserResponse response = stub.getUserByUsername(request);
             return Optional.of(fromGrpcResponse(response));
-        } catch (StatusRuntimeException e) {
-            return Optional.empty();
-        }
+        }, "findByUsername", Optional::empty);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             GetUserByEmailRequest request = GetUserByEmailRequest.newBuilder()
                 .setEmail(email)
                 .build();
 
             UserResponse response = stub.getUserByEmail(request);
             return Optional.of(fromGrpcResponse(response));
-        } catch (StatusRuntimeException e) {
-            return Optional.empty();
-        }
+        }, "findByEmail", Optional::empty);
     }
 
     @Override
@@ -146,7 +151,7 @@ public class GrpcUserServiceClient implements UserService {
 
     @Override
     public Page<User> getUsers(int page, int size) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             ListUsersRequest request = ListUsersRequest.newBuilder()
                 .setPage(page)
                 .setSize(size)
@@ -158,15 +163,12 @@ public class GrpcUserServiceClient implements UserService {
                 .toList();
 
             return new PageImpl<>(users, PageRequest.of(page, size), response.getPageInfo().getTotalElements());
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error listing users", e);
-            throw new RuntimeException("Failed to list users: " + e.getStatus().getDescription());
-        }
+        }, "getUsers");
     }
 
     @Override
     public User updateUser(Long id, User user) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             UpdateUserRequest.Builder builder = UpdateUserRequest.newBuilder()
                 .setUserId(id);
 
@@ -194,52 +196,41 @@ public class GrpcUserServiceClient implements UserService {
 
             UserResponse response = stub.updateUser(builder.build());
             return fromGrpcResponse(response);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error updating user", e);
-            throw new RuntimeException("Failed to update user: " + e.getStatus().getDescription());
-        }
+        }, "updateUser");
     }
 
     @Override
     public void deleteUser(Long id) {
-        try {
+        executeWithCircuitBreaker(() -> {
             DeleteUserRequest request = DeleteUserRequest.newBuilder()
                 .setUserId(id)
                 .build();
 
             stub.deleteUser(request);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error deleting user", e);
-            throw new RuntimeException("Failed to delete user: " + e.getStatus().getDescription());
-        }
+            return null;
+        }, "deleteUser");
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             ExistsByUsernameRequest request = ExistsByUsernameRequest.newBuilder()
                 .setUsername(username)
                 .build();
 
             return stub.existsByUsername(request).getExists();
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error checking username existence", e);
-            return false;
-        }
+        }, "existsByUsername", () -> false);
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             ExistsByEmailRequest request = ExistsByEmailRequest.newBuilder()
                 .setEmail(email)
                 .build();
 
             return stub.existsByEmail(request).getExists();
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error checking email existence", e);
-            return false;
-        }
+        }, "existsByEmail", () -> false);
     }
 
     private User fromGrpcResponse(UserResponse response) {
@@ -257,5 +248,63 @@ public class GrpcUserServiceClient implements UserService {
             .updatedAt(response.getUpdatedAt().isEmpty()
                 ? null : LocalDateTime.parse(response.getUpdatedAt(), FORMATTER))
             .build();
+    }
+
+    /**
+     * Executes a gRPC call with circuit breaker protection.
+     * Throws ServiceUnavailableException if circuit is open.
+     */
+    private <T> T executeWithCircuitBreaker(Supplier<T> supplier, String operation) {
+        return executeWithCircuitBreaker(supplier, operation, () -> {
+            throw new ServiceUnavailableException("User service is unavailable");
+        });
+    }
+
+    /**
+     * Executes a gRPC call with circuit breaker protection and fallback.
+     */
+    private <T> T executeWithCircuitBreaker(Supplier<T> supplier, String operation, Supplier<T> fallback) {
+        try {
+            if (userServiceCircuitBreaker != null) {
+                return userServiceCircuitBreaker.executeSupplier(() -> executeGrpcCall(supplier, operation));
+            } else {
+                return executeGrpcCall(supplier, operation);
+            }
+        } catch (CallNotPermittedException e) {
+            log.warn("Circuit breaker OPEN for User Service, operation: {}", operation);
+            return fallback.get();
+        }
+    }
+
+    /**
+     * Executes a gRPC call with proper error handling and categorization.
+     */
+    private <T> T executeGrpcCall(Supplier<T> supplier, String operation) {
+        try {
+            return supplier.get();
+        } catch (StatusRuntimeException e) {
+            Status.Code code = e.getStatus().getCode();
+
+            // Categorize error by status code for better debugging
+            switch (code) {
+                case NOT_FOUND:
+                    log.debug("Resource not found in {}: {}", operation, e.getStatus().getDescription());
+                    throw new ResourceNotFoundException("Resource", operation, e.getStatus().getDescription());
+                case UNAVAILABLE:
+                case DEADLINE_EXCEEDED:
+                    log.error("Service unavailable in {}: {} ({})", operation, e.getStatus().getDescription(), code);
+                    throw new ServiceUnavailableException("User service unavailable: " + e.getStatus().getDescription());
+                case PERMISSION_DENIED:
+                case UNAUTHENTICATED:
+                    log.error("Permission denied in {}: {}", operation, e.getStatus().getDescription());
+                    throw new RuntimeException("Permission denied: " + e.getStatus().getDescription());
+                case INVALID_ARGUMENT:
+                    log.error("Invalid argument in {}: {}", operation, e.getStatus().getDescription());
+                    throw new IllegalArgumentException("Invalid argument: " + e.getStatus().getDescription());
+                default:
+                    log.error("gRPC error in {}: {} ({})", operation, e.getStatus().getDescription(), code);
+                    throw new RuntimeException("Service error: " + e.getStatus().getDescription());
+            }
+        }
     }
 }

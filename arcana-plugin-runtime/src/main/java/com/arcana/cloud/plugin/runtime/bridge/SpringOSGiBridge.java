@@ -1,5 +1,7 @@
 package com.arcana.cloud.plugin.runtime.bridge;
 
+import com.arcana.cloud.plugin.runtime.security.PluginAuditService;
+import com.arcana.cloud.plugin.runtime.security.PluginSecurityConfig;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 import org.osgi.framework.ServiceRegistration;
@@ -35,6 +37,8 @@ public class SpringOSGiBridge implements InitializingBean, DisposableBean {
     private final BundleContext bundleContext;
     private final Map<String, ServiceRegistration<?>> exportedServices;
     private final Map<Class<?>, ServiceTracker<?, ?>> serviceTrackers;
+    private PluginSecurityConfig securityConfig;
+    private PluginAuditService auditService;
 
     /**
      * Creates a new Spring-OSGi bridge.
@@ -47,6 +51,20 @@ public class SpringOSGiBridge implements InitializingBean, DisposableBean {
         this.bundleContext = bundleContext;
         this.exportedServices = new ConcurrentHashMap<>();
         this.serviceTrackers = new ConcurrentHashMap<>();
+
+        // Try to get security config and audit service from context
+        try {
+            this.securityConfig = applicationContext.getBean(PluginSecurityConfig.class);
+        } catch (Exception e) {
+            log.debug("PluginSecurityConfig not available, security checks disabled");
+            this.securityConfig = null;
+        }
+        try {
+            this.auditService = applicationContext.getBean(PluginAuditService.class);
+        } catch (Exception e) {
+            log.debug("PluginAuditService not available, audit logging disabled");
+            this.auditService = null;
+        }
     }
 
     @Override
@@ -175,6 +193,19 @@ public class SpringOSGiBridge implements InitializingBean, DisposableBean {
             return;
         }
 
+        // Security check: validate bean type is whitelisted
+        if (securityConfig != null && securityConfig.isEnabled()) {
+            for (String interfaceName : interfaces) {
+                if (!securityConfig.isBeanTypeAllowed(interfaceName)) {
+                    log.warn("Bean type '{}' is not whitelisted for plugin access, skipping export", interfaceName);
+                    if (auditService != null) {
+                        auditService.logBeanAccess("system", interfaceName, false);
+                    }
+                    return;
+                }
+            }
+        }
+
         Dictionary<String, Object> properties = new Hashtable<>();
         properties.put("service.name", name);
         properties.put("service.origin", "spring");
@@ -184,6 +215,13 @@ public class SpringOSGiBridge implements InitializingBean, DisposableBean {
 
         exportedServices.put(name, registration);
         log.info("Exported Spring bean '{}' to OSGi as {}", name, Arrays.toString(interfaces));
+
+        // Audit successful export
+        if (auditService != null) {
+            for (String interfaceName : interfaces) {
+                auditService.logBeanAccess("system", interfaceName, true);
+            }
+        }
     }
 
     /**

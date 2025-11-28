@@ -74,6 +74,9 @@ dependencies {
     // Metrics
     implementation(libs.micrometer.registry.prometheus)
 
+    // Resilience4j Circuit Breaker
+    implementation(libs.resilience4j.circuitbreaker)
+
     // Annotation processing for Jakarta and javax (for gRPC generated code)
     implementation(libs.jakarta.annotation.api)
     implementation(libs.javax.annotation.api)

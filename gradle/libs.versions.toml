@@ -27,6 +27,9 @@ testcontainers = "1.20.4"
 # Code Quality
 checkstyle = "10.21.1"
 
+# Resilience
+resilience4j = "2.2.0"
+
 [libraries]
 # Spring Boot Starters
 spring-boot-starter-web = { module = "org.springframework.boot:spring-boot-starter-web" }
@@ -73,6 +76,10 @@ javax-annotation-api = { module = "javax.annotation:javax.annotation-api", versi
 
 # Metrics
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus" }
+
+# Resilience4j
+resilience4j-circuitbreaker = { module = "io.github.resilience4j:resilience4j-circuitbreaker", version.ref = "resilience4j" }
+resilience4j-spring-boot3 = { module = "io.github.resilience4j:resilience4j-spring-boot3", version.ref = "resilience4j" }
 
 # Testing
 spring-security-test = { module = "org.springframework.security:spring-security-test" }

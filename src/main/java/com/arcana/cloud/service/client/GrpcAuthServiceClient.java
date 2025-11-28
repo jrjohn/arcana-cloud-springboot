@@ -6,26 +6,32 @@ import com.arcana.cloud.dto.request.RegisterRequest;
 import com.arcana.cloud.dto.response.AuthResponse;
 import com.arcana.cloud.dto.response.UserResponse;
 import com.arcana.cloud.entity.UserRole;
+import com.arcana.cloud.exception.ServiceUnavailableException;
 import com.arcana.cloud.exception.UnauthorizedException;
 import com.arcana.cloud.grpc.AuthServiceGrpc;
 import com.arcana.cloud.grpc.LogoutAllRequest;
 import com.arcana.cloud.grpc.LogoutRequest;
 import com.arcana.cloud.grpc.UserInfo;
 import com.arcana.cloud.service.interfaces.AuthService;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
- * gRPC client for AuthService.
+ * gRPC client for AuthService with Circuit Breaker protection.
  * Active only in controller layer of layered deployment.
  * Calls AuthGrpcService on the service layer via gRPC.
  */
@@ -45,6 +51,9 @@ public class GrpcAuthServiceClient implements AuthService {
     private ManagedChannel channel;
     private AuthServiceGrpc.AuthServiceBlockingStub stub;
 
+    @Autowired(required = false)
+    private CircuitBreaker authServiceCircuitBreaker;
+
     @PostConstruct
     public void init() {
         log.info("Initializing gRPC Auth client for service URL: {}", serviceUrl);
@@ -52,6 +61,10 @@ public class GrpcAuthServiceClient implements AuthService {
             .usePlaintext()
             .build();
         this.stub = AuthServiceGrpc.newBlockingStub(channel);
+
+        if (authServiceCircuitBreaker != null) {
+            log.info("Circuit Breaker enabled for Auth Service");
+        }
     }
 
     @PreDestroy
@@ -68,7 +81,7 @@ public class GrpcAuthServiceClient implements AuthService {
 
     @Override
     public AuthResponse register(RegisterRequest request) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             com.arcana.cloud.grpc.RegisterRequest grpcRequest = com.arcana.cloud.grpc.RegisterRequest.newBuilder()
                 .setUsername(request.getUsername())
                 .setEmail(request.getEmail())
@@ -80,15 +93,12 @@ public class GrpcAuthServiceClient implements AuthService {
 
             com.arcana.cloud.grpc.AuthResponse response = stub.register(grpcRequest);
             return fromGrpcResponse(response);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error during registration", e);
-            throw new RuntimeException("Registration failed: " + e.getStatus().getDescription());
-        }
+        }, "register");
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             com.arcana.cloud.grpc.LoginRequest grpcRequest = com.arcana.cloud.grpc.LoginRequest.newBuilder()
                 .setUsernameOrEmail(request.getUsernameOrEmail())
                 .setPassword(request.getPassword())
@@ -96,53 +106,43 @@ public class GrpcAuthServiceClient implements AuthService {
 
             com.arcana.cloud.grpc.AuthResponse response = stub.login(grpcRequest);
             return fromGrpcResponse(response);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error during login", e);
-            throw new UnauthorizedException("Login failed: " + e.getStatus().getDescription());
-        }
+        }, "login");
     }
 
     @Override
     public AuthResponse refreshToken(RefreshTokenRequest request) {
-        try {
+        return executeWithCircuitBreaker(() -> {
             com.arcana.cloud.grpc.RefreshTokenRequest grpcRequest = com.arcana.cloud.grpc.RefreshTokenRequest.newBuilder()
                 .setRefreshToken(request.getRefreshToken())
                 .build();
 
             com.arcana.cloud.grpc.AuthResponse response = stub.refreshToken(grpcRequest);
             return fromGrpcResponse(response);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error during token refresh", e);
-            throw new UnauthorizedException("Token refresh failed: " + e.getStatus().getDescription());
-        }
+        }, "refreshToken");
     }
 
     @Override
     public void logout(String accessToken) {
-        try {
+        executeWithCircuitBreaker(() -> {
             LogoutRequest grpcRequest = LogoutRequest.newBuilder()
                 .setAccessToken(accessToken)
                 .build();
 
             stub.logout(grpcRequest);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error during logout", e);
-            throw new RuntimeException("Logout failed: " + e.getStatus().getDescription());
-        }
+            return null;
+        }, "logout");
     }
 
     @Override
     public void logoutAll(Long userId) {
-        try {
+        executeWithCircuitBreaker(() -> {
             LogoutAllRequest grpcRequest = LogoutAllRequest.newBuilder()
                 .setUserId(userId)
                 .build();
 
             stub.logoutAll(grpcRequest);
-        } catch (StatusRuntimeException e) {
-            log.error("gRPC error during logout all", e);
-            throw new RuntimeException("Logout all failed: " + e.getStatus().getDescription());
-        }
+            return null;
+        }, "logoutAll");
     }
 
     private AuthResponse fromGrpcResponse(com.arcana.cloud.grpc.AuthResponse response) {
@@ -168,5 +168,53 @@ public class GrpcAuthServiceClient implements AuthService {
             .expiresIn(response.getExpiresIn())
             .user(userResponse)
             .build();
+    }
+
+    /**
+     * Executes a gRPC call with circuit breaker protection.
+     */
+    private <T> T executeWithCircuitBreaker(Supplier<T> supplier, String operation) {
+        try {
+            if (authServiceCircuitBreaker != null) {
+                return authServiceCircuitBreaker.executeSupplier(() -> executeGrpcCall(supplier, operation));
+            } else {
+                return executeGrpcCall(supplier, operation);
+            }
+        } catch (CallNotPermittedException e) {
+            log.warn("Circuit breaker OPEN for Auth Service, operation: {}", operation);
+            throw new ServiceUnavailableException("Auth service is unavailable");
+        }
+    }
+
+    /**
+     * Executes a gRPC call with proper error handling and categorization.
+     */
+    private <T> T executeGrpcCall(Supplier<T> supplier, String operation) {
+        try {
+            return supplier.get();
+        } catch (StatusRuntimeException e) {
+            Status.Code code = e.getStatus().getCode();
+
+            // Categorize error by status code for better debugging
+            switch (code) {
+                case UNAUTHENTICATED:
+                case PERMISSION_DENIED:
+                    log.debug("Authentication failed in {}: {}", operation, e.getStatus().getDescription());
+                    throw new UnauthorizedException(e.getStatus().getDescription());
+                case UNAVAILABLE:
+                case DEADLINE_EXCEEDED:
+                    log.error("Service unavailable in {}: {} ({})", operation, e.getStatus().getDescription(), code);
+                    throw new ServiceUnavailableException("Auth service unavailable: " + e.getStatus().getDescription());
+                case INVALID_ARGUMENT:
+                    log.error("Invalid argument in {}: {}", operation, e.getStatus().getDescription());
+                    throw new IllegalArgumentException("Invalid argument: " + e.getStatus().getDescription());
+                case ALREADY_EXISTS:
+                    log.debug("Resource already exists in {}: {}", operation, e.getStatus().getDescription());
+                    throw new RuntimeException("Resource already exists: " + e.getStatus().getDescription());
+                default:
+                    log.error("gRPC error in {}: {} ({})", operation, e.getStatus().getDescription(), code);
+                    throw new RuntimeException("Service error: " + e.getStatus().getDescription());
+            }
+        }
     }
 }
