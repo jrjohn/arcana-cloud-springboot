@@ -392,7 +392,7 @@ class PluginLayeredGrpcModeTest {
             String[] instances = {"instance-1", "instance-2", "instance-3"};
             int[] callCounts = new int[3];
 
-            when(pluginGrpcService.listPlugins(any())).thenAnswer(invocation -> {
+            when(pluginGrpcService.listPlugins(any())).thenAnswer(_ -> {
                 int instance = callCounts[0]++ % 3;
                 callCounts[instance]++;
                 return new PluginListResponse(List.of(), true, "From " + instances[instance]);

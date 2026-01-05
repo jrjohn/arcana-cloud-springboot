@@ -28,6 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("UserDaoMybatisImpl Integration Tests with MySQL")
 class UserDaoMybatisIntegrationTest {
 
+    @SuppressWarnings("resource")
     @Container
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
             .withDatabaseName("arcana_cloud_test")

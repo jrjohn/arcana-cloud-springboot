@@ -3,7 +3,6 @@ package com.arcana.cloud.plugin.runtime.distributed;
 import com.arcana.cloud.plugin.lifecycle.PluginState;
 import com.arcana.cloud.plugin.runtime.PluginManager;
 import com.arcana.cloud.plugin.runtime.distributed.DistributedPluginRegistry.PluginEvent;
-import com.arcana.cloud.plugin.runtime.distributed.DistributedPluginRegistry.PluginEventType;
 import com.arcana.cloud.plugin.runtime.distributed.DistributedPluginRegistry.PluginRegistryEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

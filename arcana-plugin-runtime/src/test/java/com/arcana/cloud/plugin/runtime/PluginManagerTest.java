@@ -19,7 +19,6 @@ import org.springframework.context.ApplicationContext;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
@@ -228,7 +227,7 @@ class PluginManagerTest {
         @DisplayName("Should remove readiness listener")
         void shouldRemoveReadinessListener() {
             // Given
-            Consumer<Boolean> listener = ready -> {};
+            Consumer<Boolean> listener = _ -> {};
             pluginManager.addReadinessListener(listener);
 
             // When

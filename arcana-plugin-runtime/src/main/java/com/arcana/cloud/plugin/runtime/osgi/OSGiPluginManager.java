@@ -1,7 +1,5 @@
 package com.arcana.cloud.plugin.runtime.osgi;
 
-import com.arcana.cloud.plugin.api.Plugin;
-import com.arcana.cloud.plugin.api.PluginDescriptor;
 import com.arcana.cloud.plugin.lifecycle.PluginState;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;

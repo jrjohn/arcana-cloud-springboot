@@ -30,6 +30,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisplayName("OAuthTokenDaoJpaImpl Integration Tests with MySQL")
 class OAuthTokenDaoJpaIntegrationTest {
 
+    @SuppressWarnings("resource")
     @Container
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
             .withDatabaseName("arcana_cloud_test")

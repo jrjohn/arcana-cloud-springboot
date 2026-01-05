@@ -27,6 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @ActiveProfiles("test-jpa")
 class UserRepositoryTest {
 
+    @SuppressWarnings("resource")
     @Container
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
             .withDatabaseName("arcana_cloud_test")

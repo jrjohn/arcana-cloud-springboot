@@ -1,7 +1,6 @@
 package com.arcana.cloud.integration;
 
 import com.arcana.cloud.dto.request.LoginRequest;
-import com.arcana.cloud.dto.request.RefreshTokenRequest;
 import com.arcana.cloud.dto.request.RegisterRequest;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -68,8 +67,8 @@ class AuthWorkflowTest {
 
         // Store tokens for subsequent tests
         JsonNode response = jsonMapper.readTree(result.getResponse().getContentAsString());
-        accessToken = response.get("data").get("accessToken").asText();
-        refreshToken = response.get("data").get("refreshToken").asText();
+        accessToken = response.get("data").get("accessToken").stringValue();
+        refreshToken = response.get("data").get("refreshToken").stringValue();
         userId = response.get("data").get("user").get("id").asLong();
 
         assertNotNull(accessToken);
@@ -100,7 +99,7 @@ class AuthWorkflowTest {
 
                 if (result.getResponse().getStatus() == 201) {
                     JsonNode response = jsonMapper.readTree(result.getResponse().getContentAsString());
-                    accessToken = response.get("data").get("accessToken").asText();
+                    accessToken = response.get("data").get("accessToken").stringValue();
                     userId = response.get("data").get("user").get("id").asLong();
                 }
             } catch (Exception e) {
@@ -121,7 +120,7 @@ class AuthWorkflowTest {
                     .andReturn();
 
                 JsonNode response = jsonMapper.readTree(loginResult.getResponse().getContentAsString());
-                accessToken = response.get("data").get("accessToken").asText();
+                accessToken = response.get("data").get("accessToken").stringValue();
                 userId = response.get("data").get("user").get("id").asLong();
             }
         }
@@ -152,7 +151,7 @@ class AuthWorkflowTest {
 
         // We don't update the refresh token here so Order 5 can use the original one
         JsonNode response = jsonMapper.readTree(result.getResponse().getContentAsString());
-        accessToken = response.get("data").get("accessToken").asText();
+        accessToken = response.get("data").get("accessToken").stringValue();
         // Note: keep using original refreshToken from registration for Order 5
     }
 
@@ -192,8 +191,8 @@ class AuthWorkflowTest {
             .andReturn();
 
         JsonNode loginResponse = jsonMapper.readTree(loginResult.getResponse().getContentAsString());
-        String freshAccessToken = loginResponse.get("data").get("accessToken").asText();
-        String freshRefreshToken = loginResponse.get("data").get("refreshToken").asText();
+        String freshAccessToken = loginResponse.get("data").get("accessToken").stringValue();
+        String freshRefreshToken = loginResponse.get("data").get("refreshToken").stringValue();
 
         // Update tokens for subsequent tests
         accessToken = freshAccessToken;
@@ -220,7 +219,7 @@ class AuthWorkflowTest {
                 .andReturn();
 
             JsonNode response = jsonMapper.readTree(loginResult.getResponse().getContentAsString());
-            accessToken = response.get("data").get("accessToken").asText();
+            accessToken = response.get("data").get("accessToken").stringValue();
             userId = response.get("data").get("user").get("id").asLong();
         }
 

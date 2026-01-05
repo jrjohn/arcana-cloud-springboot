@@ -41,8 +41,8 @@ public class ExtensionRegistry {
     public <T> void registerExtension(String pluginKey, Class<T> extensionType, T extension) {
         ExtensionEntry<T> entry = new ExtensionEntry<>(pluginKey, extensionType, extension);
 
-        extensionsByType.computeIfAbsent(extensionType, k -> new ArrayList<>()).add(entry);
-        extensionsByPlugin.computeIfAbsent(pluginKey, k -> new ArrayList<>()).add(entry);
+        extensionsByType.computeIfAbsent(extensionType, _ -> new ArrayList<>()).add(entry);
+        extensionsByPlugin.computeIfAbsent(pluginKey, _ -> new ArrayList<>()).add(entry);
 
         log.debug("Registered extension {} from plugin {}", extensionType.getSimpleName(), pluginKey);
     }
@@ -169,7 +169,7 @@ public class ExtensionRegistry {
                     Object events = ref.getProperty("events");
                     if (listener != null && events instanceof Class<?>[] eventTypes) {
                         for (Class<?> eventType : eventTypes) {
-                            listeners.computeIfAbsent(eventType, k -> new ArrayList<>()).add(listener);
+                            listeners.computeIfAbsent(eventType, _ -> new ArrayList<>()).add(listener);
                         }
                     }
                 }

@@ -50,7 +50,6 @@ class DistributedPluginRegistryTest {
     private DistributedPluginRegistry registry;
     private static final String INSTANCE_ID = "test-instance-1";
 
-    @SuppressWarnings("unchecked")
     @BeforeEach
     void setUp() {
         when(redisTemplate.<String, PluginRegistryEntry>opsForHash()).thenReturn(hashOps);

@@ -11,7 +11,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 

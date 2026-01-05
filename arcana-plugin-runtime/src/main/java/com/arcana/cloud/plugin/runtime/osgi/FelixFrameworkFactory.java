@@ -1,6 +1,5 @@
 package com.arcana.cloud.plugin.runtime.osgi;
 
-import org.apache.felix.framework.Felix;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.launch.Framework;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.ServiceLoader;
 
 /**
  * Factory for creating and configuring the Apache Felix OSGi framework.

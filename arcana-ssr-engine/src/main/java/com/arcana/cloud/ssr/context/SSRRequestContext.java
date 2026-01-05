@@ -3,7 +3,6 @@ package com.arcana.cloud.ssr.context;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * HTTP request context for SSR rendering.

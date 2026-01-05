@@ -17,7 +17,6 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -340,10 +339,9 @@ class PluginControllerTest {
                 "fake jar content".getBytes()
             );
 
-            MvcResult installResult = mockMvc.perform(multipart("/api/v1/plugins/install")
+            mockMvc.perform(multipart("/api/v1/plugins/install")
                     .file(pluginFile))
-                .andExpect(status().isCreated())
-                .andReturn();
+                .andExpect(status().isCreated());
 
             // 2. Enable plugin
             mockMvc.perform(post("/api/v1/plugins/lifecycle-plugin/enable"))

@@ -273,7 +273,6 @@ public class SpringOSGiBridge implements InitializingBean, DisposableBean {
      * @param <T> the service type
      * @return the service tracker
      */
-    @SuppressWarnings("unchecked")
     public <T> ServiceTracker<T, T> trackService(Class<T> serviceClass,
                                                    ServiceTrackerCustomizer<T, T> listener) {
         ServiceTracker<T, T> tracker = new ServiceTracker<>(

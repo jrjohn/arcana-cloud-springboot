@@ -60,7 +60,7 @@ public class GraalJSRuntime implements AutoCloseable {
         return Context.newBuilder("js")
             .engine(engine)
             .allowHostAccess(HostAccess.ALL)
-            .allowHostClassLookup(className -> true)
+            .allowHostClassLookup(_ -> true)
             .allowExperimentalOptions(true)
             .option("js.ecmascript-version", "2022")
             .option("js.console", "true")

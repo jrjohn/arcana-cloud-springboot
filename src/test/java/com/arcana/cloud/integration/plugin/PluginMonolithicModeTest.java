@@ -92,7 +92,7 @@ class PluginMonolithicModeTest {
 
             // Then
             JsonNode response = jsonMapper.readTree(result.getResponse().getContentAsString());
-            installedPluginKey = response.get("data").get("key").asText();
+            installedPluginKey = response.get("data").get("key").stringValue();
             assertNotNull(installedPluginKey);
             assertEquals("monolithic-test-plugin", installedPluginKey);
         }
@@ -314,7 +314,7 @@ class PluginMonolithicModeTest {
                 .andReturn();
 
             JsonNode response = jsonMapper.readTree(installResult.getResponse().getContentAsString());
-            workflowPluginKey = response.get("data").get("key").asText();
+            workflowPluginKey = response.get("data").get("key").stringValue();
 
             // Step 2: Verify installed state
             mockMvc.perform(get("/api/v1/plugins/" + workflowPluginKey))

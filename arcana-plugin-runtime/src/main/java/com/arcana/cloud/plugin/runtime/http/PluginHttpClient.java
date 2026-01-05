@@ -50,7 +50,7 @@ public class PluginHttpClient {
      *
      * @return list of plugin information
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public List<PluginInfo> listPlugins() {
         String url = serviceLayerUrl + "/api/v1/plugins";
         try {
@@ -79,7 +79,7 @@ public class PluginHttpClient {
      * @param pluginKey the plugin key
      * @return plugin information, or empty if not found
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Optional<PluginInfo> getPlugin(String pluginKey) {
         String url = serviceLayerUrl + "/api/v1/plugins/" + pluginKey;
         try {
@@ -106,6 +106,7 @@ public class PluginHttpClient {
      * @param pluginKey the plugin key
      * @return true if successful
      */
+    @SuppressWarnings("rawtypes")
     public boolean enablePlugin(String pluginKey) {
         String url = serviceLayerUrl + "/api/v1/plugins/" + pluginKey + "/enable";
         try {
@@ -125,6 +126,7 @@ public class PluginHttpClient {
      * @param pluginKey the plugin key
      * @return true if successful
      */
+    @SuppressWarnings("rawtypes")
     public boolean disablePlugin(String pluginKey) {
         String url = serviceLayerUrl + "/api/v1/plugins/" + pluginKey + "/disable";
         try {
@@ -143,7 +145,7 @@ public class PluginHttpClient {
      *
      * @return true if plugins are initialized
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public boolean isServiceLayerReady() {
         String url = serviceLayerUrl + "/api/v1/plugins/health/ready";
         try {
@@ -162,7 +164,7 @@ public class PluginHttpClient {
      *
      * @return health status map
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public Map<String, Object> getServiceLayerHealth() {
         String url = serviceLayerUrl + "/api/v1/plugins/health";
         try {

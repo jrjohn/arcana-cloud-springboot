@@ -113,7 +113,7 @@ public class CircuitBreakerConfig {
                 log.warn("User Service Circuit Breaker state changed: {} -> {}",
                     event.getStateTransition().getFromState(),
                     event.getStateTransition().getToState()))
-            .onCallNotPermitted(event ->
+            .onCallNotPermitted(_ ->
                 log.warn("User Service call rejected by Circuit Breaker (circuit OPEN)"))
             .onError(event ->
                 log.debug("User Service call failed: {}", event.getThrowable().getMessage()))
@@ -136,7 +136,7 @@ public class CircuitBreakerConfig {
                 log.warn("Auth Service Circuit Breaker state changed: {} -> {}",
                     event.getStateTransition().getFromState(),
                     event.getStateTransition().getToState()))
-            .onCallNotPermitted(event ->
+            .onCallNotPermitted(_ ->
                 log.warn("Auth Service call rejected by Circuit Breaker (circuit OPEN)"))
             .onError(event ->
                 log.debug("Auth Service call failed: {}", event.getThrowable().getMessage()))

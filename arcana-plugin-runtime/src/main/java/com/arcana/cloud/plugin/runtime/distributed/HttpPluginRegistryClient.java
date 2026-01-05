@@ -102,6 +102,7 @@ public class HttpPluginRegistryClient {
         for (String peerUrl : peerUrls) {
             try {
                 String url = peerUrl + "/api/v1/plugins/registry/entries";
+                @SuppressWarnings("rawtypes")
                 ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class);
 
                 if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
@@ -192,7 +193,6 @@ public class HttpPluginRegistryClient {
         }
     }
 
-    @SuppressWarnings("unchecked")
     private PluginRegistryEntry mapToEntry(Map<String, Object> data) {
         return new PluginRegistryEntry(
             (String) data.get("pluginKey"),

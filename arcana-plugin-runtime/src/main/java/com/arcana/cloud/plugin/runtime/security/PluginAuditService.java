@@ -324,7 +324,7 @@ public class PluginAuditService {
         auditEntries.add(entry);
 
         // Add to per-plugin index
-        entriesByPlugin.computeIfAbsent(entry.pluginKey(), k -> new CopyOnWriteArrayList<>())
+        entriesByPlugin.computeIfAbsent(entry.pluginKey(), _ -> new CopyOnWriteArrayList<>())
             .add(entry);
     }
 

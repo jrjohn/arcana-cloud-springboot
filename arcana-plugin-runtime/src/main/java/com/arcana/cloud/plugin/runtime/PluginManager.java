@@ -2,7 +2,6 @@ package com.arcana.cloud.plugin.runtime;
 
 import com.arcana.cloud.plugin.api.Plugin;
 import com.arcana.cloud.plugin.api.PluginAccessor;
-import com.arcana.cloud.plugin.api.PluginDescriptor;
 import com.arcana.cloud.plugin.lifecycle.PluginLifecycleListener;
 import com.arcana.cloud.plugin.lifecycle.PluginState;
 import com.arcana.cloud.plugin.runtime.bridge.SpringOSGiBridge;
@@ -85,7 +84,7 @@ public class PluginManager implements PluginAccessor {
                 config.getPluginsDirectory(),
                 config.getPlatformVersion()
             );
-            Framework framework = frameworkFactory.createAndStart();
+            frameworkFactory.createAndStart();
             BundleContext bundleContext = frameworkFactory.getSystemBundleContext();
 
             // Initialize OSGi plugin manager
@@ -424,6 +423,7 @@ public class PluginManager implements PluginAccessor {
     /**
      * Internal wrapper for plugin instances.
      */
+    @SuppressWarnings("unused")
     private static class PluginWrapper {
         private final Plugin plugin;
         private PluginState state;

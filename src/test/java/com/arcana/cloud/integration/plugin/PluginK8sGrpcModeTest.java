@@ -64,7 +64,6 @@ class PluginK8sGrpcModeTest {
     private DistributedPluginRegistry registry;
     private static final String POD_INSTANCE_ID = "arcana-service-pod-0";
 
-    @SuppressWarnings("unchecked")
     @BeforeEach
     void setUp() {
         when(redisTemplate.<String, PluginRegistryEntry>opsForHash()).thenReturn(hashOps);
@@ -111,7 +110,6 @@ class PluginK8sGrpcModeTest {
             registry.initialize();
 
             // Then - should have loaded the plugins
-            Map<String, PluginRegistryEntry> allPlugins = registry.getAllPlugins();
             // Note: getAllPlugins returns from Redis, so mock it
             when(hashOps.entries(eq("arcana:plugins"))).thenReturn(existingPlugins);
             assertEquals(2, registry.getAllPlugins().size());
@@ -355,7 +353,7 @@ class PluginK8sGrpcModeTest {
         void shouldIgnoreEventsFromSamePod() {
             // Given
             AtomicBoolean eventReceived = new AtomicBoolean(false);
-            registry.addEventListener(e -> eventReceived.set(true));
+            registry.addEventListener(_ -> eventReceived.set(true));
 
             PluginEvent event = new PluginEvent(
                 PluginEventType.INSTALLED,
@@ -544,7 +542,7 @@ class PluginK8sGrpcModeTest {
         void shouldHandleConcurrentEventProcessing() throws Exception {
             // Given
             AtomicReference<Integer> processedCount = new AtomicReference<>(0);
-            registry.addEventListener(event -> {
+            registry.addEventListener(_ -> {
                 synchronized (processedCount) {
                     processedCount.set(processedCount.get() + 1);
                 }

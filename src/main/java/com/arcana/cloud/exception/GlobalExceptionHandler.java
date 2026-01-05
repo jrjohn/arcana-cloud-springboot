@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
                 error -> error.getDefaultMessage() != null
                     ? error.getDefaultMessage()
                     : "Validation error",
-                (existing, replacement) -> existing
+                (existing, _) -> existing
             ));
 
         return ResponseEntity

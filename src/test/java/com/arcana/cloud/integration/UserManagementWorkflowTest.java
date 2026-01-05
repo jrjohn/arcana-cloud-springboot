@@ -245,7 +245,7 @@ class UserManagementWorkflowTest {
             .andReturn();
 
         JsonNode response = jsonMapper.readTree(result.getResponse().getContentAsString());
-        userToken = response.get("data").get("accessToken").asText();
+        userToken = response.get("data").get("accessToken").stringValue();
         Long userId = response.get("data").get("user").get("id").asLong();
         assertNotNull(userToken);
 
@@ -277,7 +277,7 @@ class UserManagementWorkflowTest {
             .andReturn();
 
         JsonNode response = jsonMapper.readTree(result.getResponse().getContentAsString());
-        userToken = response.get("data").get("accessToken").asText();
+        userToken = response.get("data").get("accessToken").stringValue();
         Long userId = response.get("data").get("user").get("id").asLong();
 
         // User can update their own profile

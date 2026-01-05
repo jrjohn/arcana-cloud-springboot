@@ -84,7 +84,7 @@ class PluginProxyControllerTest {
             )).thenReturn(mockResponse);
 
             // When
-            ResponseEntity<String> result = proxyController.proxyGet("test.plugin", request);
+            proxyController.proxyGet("test.plugin", request);
 
             // Then
             verify(restTemplate).exchange(
