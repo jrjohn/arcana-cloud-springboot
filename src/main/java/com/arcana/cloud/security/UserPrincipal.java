@@ -19,6 +19,8 @@ import java.util.Collections;
 @AllArgsConstructor
 public class UserPrincipal implements UserDetails {
 
+    private static final long serialVersionUID = 1L;
+
     private Long id;
     private String username;
     private String email;

@@ -179,6 +179,7 @@ class ExtensionRegistryTest {
     @DisplayName("Extension Unregistration Tests")
     class ExtensionUnregistrationTests {
 
+        @SuppressWarnings("unchecked")
         @Test
         @DisplayName("Should unregister all extensions from plugin")
         void shouldUnregisterExtensionsFromPlugin() throws InvalidSyntaxException {

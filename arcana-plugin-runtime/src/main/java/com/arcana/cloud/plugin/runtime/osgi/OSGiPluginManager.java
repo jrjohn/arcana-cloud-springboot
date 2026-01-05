@@ -6,7 +6,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.BundleListener;
 import org.osgi.framework.BundleEvent;
-import org.osgi.framework.ServiceReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,6 +26,7 @@ public class OSGiPluginManager implements BundleListener {
     private static final Logger log = LoggerFactory.getLogger(OSGiPluginManager.class);
 
     private static final String ARCANA_PLUGIN_KEY = "Arcana-Plugin-Key";
+    @SuppressWarnings("unused")
     private static final String ARCANA_PLUGIN_NAME = "Arcana-Plugin-Name";
 
     private final BundleContext bundleContext;

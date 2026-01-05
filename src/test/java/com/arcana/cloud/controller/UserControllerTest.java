@@ -55,6 +55,7 @@ class UserControllerTest {
     @MockitoBean
     private UserRepository userRepository;
 
+    @SuppressWarnings("unused")
     @Autowired
     private UserMapper userMapper;
 

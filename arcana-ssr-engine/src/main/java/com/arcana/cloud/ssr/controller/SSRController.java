@@ -23,6 +23,7 @@ import java.util.Map;
 @RequestMapping("/api/v1/ssr")
 public class SSRController {
 
+    @SuppressWarnings("unused")
     private static final Logger log = LoggerFactory.getLogger(SSRController.class);
 
     private final SSREngine ssrEngine;

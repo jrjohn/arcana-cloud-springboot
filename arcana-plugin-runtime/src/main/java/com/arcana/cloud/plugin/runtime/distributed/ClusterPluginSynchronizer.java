@@ -31,6 +31,7 @@ public class ClusterPluginSynchronizer {
     private final PluginManager pluginManager;
     private final DistributedPluginRegistry distributedRegistry;
     private final PluginBinaryStore binaryStore;
+    @SuppressWarnings("unused")
     private final String instanceId;
 
     private volatile boolean enabled = true;

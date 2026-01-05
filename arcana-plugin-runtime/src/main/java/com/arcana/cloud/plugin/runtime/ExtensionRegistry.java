@@ -1,6 +1,5 @@
 package com.arcana.cloud.plugin.runtime;
 
-import com.arcana.cloud.plugin.extension.*;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceReference;

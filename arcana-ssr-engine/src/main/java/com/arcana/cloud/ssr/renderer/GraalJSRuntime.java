@@ -28,6 +28,7 @@ public class GraalJSRuntime implements AutoCloseable {
 
     private final Engine engine;
     private final BlockingQueue<Context> contextPool;
+    @SuppressWarnings("unused")
     private final int poolSize;
     private final long timeout;
     private final AtomicBoolean closed = new AtomicBoolean(false);

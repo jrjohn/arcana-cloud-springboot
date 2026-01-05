@@ -7,8 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.listener.ChannelTopic;
-import org.springframework.data.redis.listener.RedisMessageListenerContainer;
-import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -35,6 +33,7 @@ public class DistributedPluginRegistry {
     private static final Logger log = LoggerFactory.getLogger(DistributedPluginRegistry.class);
 
     private static final String PLUGINS_HASH_KEY = "arcana:plugins";
+    @SuppressWarnings("unused")
     private static final String PLUGIN_STATES_HASH_KEY = "arcana:plugin:states";
     private static final String PLUGIN_INSTANCES_KEY = "arcana:plugin:instances";
     private static final String PLUGIN_EVENTS_CHANNEL = "arcana:plugin:events";
@@ -49,6 +48,7 @@ public class DistributedPluginRegistry {
     private final Map<String, PluginRegistryEntry> localCache;
 
     private volatile boolean isLeader = false;
+    @SuppressWarnings("unused")
     private volatile boolean running = false;
 
     public DistributedPluginRegistry(RedisTemplate<String, Object> redisTemplate, String instanceId) {

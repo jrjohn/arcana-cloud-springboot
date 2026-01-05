@@ -264,7 +264,7 @@ public class AuditRepository {
      */
     public long countTotal() {
         if (useDatabase) {
-            return countFromDatabase(null, null);
+            return countFromDatabase(null, (Object[]) null);
         } else {
             return memoryStore.size();
         }
