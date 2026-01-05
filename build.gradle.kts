@@ -77,6 +77,7 @@ dependencies {
     // Utilities
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     implementation(libs.mapstruct)
     annotationProcessor(libs.mapstruct.processor)
     annotationProcessor(libs.lombok.mapstruct.binding)
@@ -171,15 +172,43 @@ sourceSets {
 
 eclipse {
     classpath {
+        // Ensure generated source folders are included
         file {
             whenMerged {
                 val cp = this as org.gradle.plugins.ide.eclipse.model.Classpath
-                cp.entries.forEach { entry ->
-                    if (entry is org.gradle.plugins.ide.eclipse.model.SourceFolder) {
-                        entry.entryAttributes["optional"] = "true"
-                    }
+                // Remove any entries with non-existent paths
+                cp.entries.removeAll { entry ->
+                    entry is org.gradle.plugins.ide.eclipse.model.SourceFolder &&
+                    !file(entry.path).exists()
                 }
+                // Fix JRE container to use default (Eclipse will use workspace JRE)
+                cp.entries.filterIsInstance<org.gradle.plugins.ide.eclipse.model.Container>()
+                    .filter { it.path.contains("JRE_CONTAINER") }
+                    .forEach { container ->
+                        container.path = "org.eclipse.jdt.launching.JRE_CONTAINER"
+                    }
+            }
+        }
+    }
+    jdt {
+        sourceCompatibility = JavaVersion.VERSION_24
+        targetCompatibility = JavaVersion.VERSION_24
+    }
+}
+
+// Set encoding for all projects
+allprojects {
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+
+    // Configure Eclipse encoding
+    plugins.withType<EclipsePlugin> {
+        eclipse {
+            project {
+                natures("org.eclipse.jdt.core.javanature")
             }
         }
     }
 }
+

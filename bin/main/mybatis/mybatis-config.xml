@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+    <settings>
+        <!-- Enable camelCase to underscore mapping -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+
+        <!-- Enable lazy loading -->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <setting name="aggressiveLazyLoading" value="false"/>
+
+        <!-- Enable cache -->
+        <setting name="cacheEnabled" value="true"/>
+
+        <!-- Use generated keys -->
+        <setting name="useGeneratedKeys" value="true"/>
+
+        <!-- Default executor type -->
+        <setting name="defaultExecutorType" value="REUSE"/>
+
+        <!-- Timeout settings -->
+        <setting name="defaultStatementTimeout" value="30"/>
+
+        <!-- Log implementation -->
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
+    <typeAliases>
+        <package name="com.arcana.cloud.entity"/>
+    </typeAliases>
+
+</configuration>

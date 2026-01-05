@@ -91,17 +91,17 @@ eclipse {
         file {
             whenMerged {
                 val cp = this as org.gradle.plugins.ide.eclipse.model.Classpath
-                // Fix JRE container to use JavaSE-17
+                // Fix JRE container to use default (Eclipse will use workspace JRE)
                 cp.entries.filterIsInstance<org.gradle.plugins.ide.eclipse.model.Container>()
                     .filter { it.path.contains("JRE_CONTAINER") }
                     .forEach { container ->
-                        container.path = "org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"
+                        container.path = "org.eclipse.jdt.launching.JRE_CONTAINER"
                     }
             }
         }
     }
     jdt {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 }

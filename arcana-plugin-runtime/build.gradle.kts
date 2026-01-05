@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    eclipse
     alias(libs.plugins.spring.boot) apply false
     alias(libs.plugins.spring.dependency.management)
 }
@@ -81,4 +82,12 @@ tasks.withType<Test> {
     systemProperty("junit.jupiter.execution.timeout.default", "60s")
     // Ensure Gradle test executor exits cleanly
     jvmArgs("-XX:+HeapDumpOnOutOfMemoryError")
+}
+
+// Eclipse configuration - use Java 24 since Eclipse JDT doesn't support Java 25 yet
+eclipse {
+    jdt {
+        sourceCompatibility = JavaVersion.VERSION_24
+        targetCompatibility = JavaVersion.VERSION_24
+    }
 }

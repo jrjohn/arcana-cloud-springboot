@@ -1,6 +1,7 @@
 plugins {
     `java-library`
     `maven-publish`
+    eclipse
 }
 
 group = "com.arcana.cloud"
@@ -39,6 +40,31 @@ dependencies {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.javadoc {
+    options {
+        (this as StandardJavadocDocletOptions).addStringOption("Xdoclint:none", "-quiet")
+    }
+    isFailOnError = false
+}
+
+// Create a resolvable configuration for Eclipse that includes compileOnly dependencies
+val eclipseCompileOnly by configurations.creating {
+    extendsFrom(configurations.compileOnly.get())
+    isCanBeResolved = true
+    isCanBeConsumed = false
+}
+
+// Eclipse configuration - make compileOnly dependencies visible and use Java 24
+eclipse {
+    classpath {
+        plusConfigurations.add(eclipseCompileOnly)
+    }
+    jdt {
+        sourceCompatibility = JavaVersion.VERSION_24
+        targetCompatibility = JavaVersion.VERSION_24
+    }
 }
 
 publishing {

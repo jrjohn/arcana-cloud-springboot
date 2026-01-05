@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    eclipse
     alias(libs.plugins.spring.boot) apply false
     alias(libs.plugins.spring.dependency.management)
 }
@@ -52,4 +53,24 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// Eclipse configuration - filter out POM-only artifacts and use Java 24
+eclipse {
+    classpath {
+        file {
+            whenMerged {
+                val cp = this as org.gradle.plugins.ide.eclipse.model.Classpath
+                // Remove entries that are POM files (not JARs)
+                cp.entries.removeAll { entry ->
+                    entry is org.gradle.plugins.ide.eclipse.model.Library &&
+                    (entry.path.endsWith(".pom") || entry.path.contains("js-community"))
+                }
+            }
+        }
+    }
+    jdt {
+        sourceCompatibility = JavaVersion.VERSION_24
+        targetCompatibility = JavaVersion.VERSION_24
+    }
 }

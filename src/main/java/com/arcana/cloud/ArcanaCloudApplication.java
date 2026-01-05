@@ -8,10 +8,17 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 @SpringBootApplication
 @EnableCaching
 @EnableJpaAuditing
-@SuppressWarnings("checkstyle:HideUtilityClassConstructor")
 public class ArcanaCloudApplication {
 
+    /**
+     * Main entry point for the Arcana Cloud application.
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
         SpringApplication.run(ArcanaCloudApplication.class, args);
+    }
+
+    // Private constructor to satisfy checkstyle
+    private ArcanaCloudApplication() {
     }
 }
