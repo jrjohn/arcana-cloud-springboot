@@ -1,0 +1,7 @@
+FROM eclipse-temurin:25-jre-alpine
+WORKDIR /app
+COPY build/libs/arcana-cloud-java-1.0.0-SNAPSHOT.jar app.jar
+ENV JAVA_OPTS="-Xmx512m -Xms256m -XX:+UseG1GC"
+ENV SPRING_MAIN_ALLOW_BEAN_DEFINITION_OVERRIDING=true
+EXPOSE 8080 9090
+ENTRYPOINT ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]

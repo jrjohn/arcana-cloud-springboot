@@ -1,7 +1,8 @@
-package com.arcana.cloud.repository;
+package com.arcana.cloud.dao.impl.jpa.repository;
 
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -12,8 +13,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Internal JPA repository for OAuthToken entity.
+ * Used by OAuthTokenDaoJpaImpl when JPA mode is enabled.
+ */
 @Repository
-public interface OAuthTokenRepository extends JpaRepository<OAuthToken, Long> {
+@ConditionalOnProperty(name = "database.orm", havingValue = "jpa")
+public interface OAuthTokenJpaRepository extends JpaRepository<OAuthToken, Long> {
 
     Optional<OAuthToken> findByAccessToken(String accessToken);
 

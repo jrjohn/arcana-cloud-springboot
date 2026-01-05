@@ -4,7 +4,7 @@ import com.arcana.cloud.dto.request.UserCreateRequest;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.mapper.UserMapper;
-import com.arcana.cloud.repository.UserRepository;
+import com.arcana.cloud.repository.interfaces.UserRepository;
 import com.arcana.cloud.security.JwtTokenProvider;
 import com.arcana.cloud.security.UserPrincipal;
 import com.arcana.cloud.service.interfaces.UserService;

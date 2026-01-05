@@ -4,7 +4,7 @@ import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.exception.ResourceNotFoundException;
 import com.arcana.cloud.exception.ValidationException;
-import com.arcana.cloud.repository.UserRepository;
+import com.arcana.cloud.repository.interfaces.UserRepository;
 import com.arcana.cloud.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

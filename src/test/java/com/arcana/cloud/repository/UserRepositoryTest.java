@@ -2,13 +2,19 @@ package com.arcana.cloud.repository;
 
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
+import com.arcana.cloud.repository.interfaces.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,13 +22,27 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest
-@ActiveProfiles("test")
-@org.springframework.context.annotation.Import(com.arcana.cloud.config.TestCacheConfig.class)
+@Testcontainers
+@SpringBootTest
+@ActiveProfiles("test-jpa")
 class UserRepositoryTest {
 
-    @Autowired
-    private TestEntityManager entityManager;
+    @Container
+    static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
+            .withDatabaseName("arcana_cloud_test")
+            .withUsername("test")
+            .withPassword("test");
+
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", mysql::getJdbcUrl);
+        registry.add("spring.datasource.username", mysql::getUsername);
+        registry.add("spring.datasource.password", mysql::getPassword);
+        registry.add("database.type", () -> "mysql");
+        registry.add("database.orm", () -> "jpa");
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
+        registry.add("spring.flyway.enabled", () -> "false");
+    }
 
     @Autowired
     private UserRepository userRepository;
@@ -31,6 +51,9 @@ class UserRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        userRepository.deleteAll();
+
+        LocalDateTime now = LocalDateTime.now();
         testUser = User.builder()
             .username("testuser")
             .email("test@example.com")
@@ -40,10 +63,11 @@ class UserRepositoryTest {
             .role(UserRole.USER)
             .isActive(true)
             .isVerified(false)
+            .createdAt(now)
+            .updatedAt(now)
             .build();
 
-        entityManager.persist(testUser);
-        entityManager.flush();
+        testUser = userRepository.save(testUser);
     }
 
     @Test
@@ -122,16 +146,18 @@ class UserRepositoryTest {
 
     @Test
     void testFindActiveUsersByRole() {
+        LocalDateTime now = LocalDateTime.now();
         User adminUser = User.builder()
             .username("admin")
             .email("admin@example.com")
             .password("encoded_password")
             .role(UserRole.ADMIN)
             .isActive(true)
+            .createdAt(now)
+            .updatedAt(now)
             .build();
 
-        entityManager.persist(adminUser);
-        entityManager.flush();
+        userRepository.save(adminUser);
 
         List<User> activeAdmins = userRepository.findActiveUsersByRole(UserRole.ADMIN);
 
@@ -141,16 +167,18 @@ class UserRepositoryTest {
 
     @Test
     void testFindAllActiveUsers() {
+        LocalDateTime now = LocalDateTime.now();
         User inactiveUser = User.builder()
             .username("inactive")
             .email("inactive@example.com")
             .password("encoded_password")
             .role(UserRole.USER)
             .isActive(false)
+            .createdAt(now)
+            .updatedAt(now)
             .build();
 
-        entityManager.persist(inactiveUser);
-        entityManager.flush();
+        userRepository.save(inactiveUser);
 
         List<User> activeUsers = userRepository.findAllActiveUsers();
 

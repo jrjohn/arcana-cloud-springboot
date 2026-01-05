@@ -62,7 +62,14 @@ dependencies {
 
     // Database
     runtimeOnly(libs.mysql.connector.j)
+    runtimeOnly(libs.postgresql)
     implementation(libs.bundles.flyway)
+
+    // MyBatis (default ORM)
+    implementation(libs.mybatis.spring.boot.starter)
+
+    // MongoDB (optional)
+    implementation(libs.spring.boot.starter.data.mongodb)
 
     // API Documentation
     implementation(libs.springdoc.openapi.starter.webmvc.ui)
@@ -91,7 +98,9 @@ dependencies {
     testImplementation(libs.spring.boot.starter.test)
     testImplementation(libs.spring.security.test)
     testImplementation(libs.spring.boot.data.jpa.test)
+    testImplementation(libs.spring.boot.test.autoconfigure)
     testImplementation(libs.spring.boot.webmvc.test)
+    testImplementation(libs.mybatis.spring.boot.starter.test)
     testImplementation(libs.bundles.testcontainers)
     testRuntimeOnly(libs.h2)
     testRuntimeOnly(libs.junit.platform.launcher)

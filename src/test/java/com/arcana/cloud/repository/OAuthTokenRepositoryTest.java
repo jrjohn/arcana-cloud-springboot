@@ -3,12 +3,18 @@ package com.arcana.cloud.repository;
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
+import com.arcana.cloud.repository.interfaces.OAuthTokenRepository;
+import com.arcana.cloud.repository.interfaces.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jpa.test.autoconfigure.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.MySQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,16 +24,33 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DataJpaTest
-@ActiveProfiles("test")
-@org.springframework.context.annotation.Import(com.arcana.cloud.config.TestCacheConfig.class)
+@Testcontainers
+@SpringBootTest
+@ActiveProfiles("test-jpa")
 class OAuthTokenRepositoryTest {
 
-    @Autowired
-    private TestEntityManager entityManager;
+    @Container
+    static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
+            .withDatabaseName("arcana_cloud_test")
+            .withUsername("test")
+            .withPassword("test");
+
+    @DynamicPropertySource
+    static void configureProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.datasource.url", mysql::getJdbcUrl);
+        registry.add("spring.datasource.username", mysql::getUsername);
+        registry.add("spring.datasource.password", mysql::getPassword);
+        registry.add("database.type", () -> "mysql");
+        registry.add("database.orm", () -> "jpa");
+        registry.add("spring.jpa.hibernate.ddl-auto", () -> "create-drop");
+        registry.add("spring.flyway.enabled", () -> "false");
+    }
 
     @Autowired
     private OAuthTokenRepository tokenRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private User testUser;
     private OAuthToken testToken;
@@ -35,6 +58,9 @@ class OAuthTokenRepositoryTest {
 
     @BeforeEach
     void setUp() {
+        tokenRepository.deleteAll();
+        userRepository.deleteAll();
+
         now = LocalDateTime.now();
 
         testUser = User.builder()
@@ -46,9 +72,11 @@ class OAuthTokenRepositoryTest {
             .role(UserRole.USER)
             .isActive(true)
             .isVerified(false)
+            .createdAt(now)
+            .updatedAt(now)
             .build();
 
-        entityManager.persist(testUser);
+        testUser = userRepository.save(testUser);
 
         testToken = OAuthToken.builder()
             .user(testUser)
@@ -58,10 +86,10 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(false)
+            .createdAt(now)
             .build();
 
-        entityManager.persist(testToken);
-        entityManager.flush();
+        testToken = tokenRepository.save(testToken);
     }
 
     @Test
@@ -105,8 +133,9 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(false)
+            .createdAt(now)
             .build();
-        entityManager.persist(activeToken);
+        tokenRepository.save(activeToken);
 
         // Add a revoked token
         OAuthToken revokedToken = OAuthToken.builder()
@@ -116,9 +145,9 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(true)
+            .createdAt(now)
             .build();
-        entityManager.persist(revokedToken);
-        entityManager.flush();
+        tokenRepository.save(revokedToken);
 
         List<OAuthToken> activeTokens = tokenRepository.findByUserAndIsRevokedFalse(testUser);
 
@@ -136,12 +165,11 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(false)
+            .createdAt(now)
             .build();
-        entityManager.persist(anotherToken);
-        entityManager.flush();
+        tokenRepository.save(anotherToken);
 
         tokenRepository.revokeAllTokensByUser(testUser);
-        entityManager.clear();
 
         List<OAuthToken> activeTokens = tokenRepository.findByUserAndIsRevokedFalse(testUser);
         assertEquals(0, activeTokens.size());
@@ -152,7 +180,6 @@ class OAuthTokenRepositoryTest {
         assertFalse(testToken.getIsRevoked());
 
         tokenRepository.revokeByAccessToken("access_token_123");
-        entityManager.clear();
 
         Optional<OAuthToken> found = tokenRepository.findByAccessToken("access_token_123");
         assertTrue(found.isPresent());
@@ -169,8 +196,9 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.minusHours(1))  // Expired
             .refreshExpiresAt(now.minusDays(1))
             .isRevoked(false)
+            .createdAt(now.minusDays(2))
             .build();
-        entityManager.persist(expiredToken);
+        tokenRepository.save(expiredToken);
 
         // Add a revoked token
         OAuthToken revokedToken = OAuthToken.builder()
@@ -180,15 +208,14 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(true)
+            .createdAt(now)
             .build();
-        entityManager.persist(revokedToken);
-        entityManager.flush();
+        tokenRepository.save(revokedToken);
 
         long countBefore = tokenRepository.count();
         assertEquals(3, countBefore);
 
         tokenRepository.deleteExpiredOrRevokedTokens(now);
-        entityManager.clear();
 
         long countAfter = tokenRepository.count();
         assertEquals(1, countAfter);
@@ -204,8 +231,9 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(false)
+            .createdAt(now)
             .build();
-        entityManager.persist(validToken);
+        tokenRepository.save(validToken);
 
         // Add an expired token
         OAuthToken expiredToken = OAuthToken.builder()
@@ -215,8 +243,9 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.minusHours(1))
             .refreshExpiresAt(now.minusDays(1))
             .isRevoked(false)
+            .createdAt(now.minusDays(2))
             .build();
-        entityManager.persist(expiredToken);
+        tokenRepository.save(expiredToken);
 
         // Add a revoked token
         OAuthToken revokedToken = OAuthToken.builder()
@@ -226,9 +255,9 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(true)
+            .createdAt(now)
             .build();
-        entityManager.persist(revokedToken);
-        entityManager.flush();
+        tokenRepository.save(revokedToken);
 
         List<OAuthToken> validTokens = tokenRepository.findValidTokensByUser(testUser, now);
 
@@ -246,8 +275,10 @@ class OAuthTokenRepositoryTest {
             .password("encoded_password")
             .role(UserRole.USER)
             .isActive(true)
+            .createdAt(now)
+            .updatedAt(now)
             .build();
-        entityManager.persist(anotherUser);
+        anotherUser = userRepository.save(anotherUser);
 
         OAuthToken anotherUserToken = OAuthToken.builder()
             .user(anotherUser)
@@ -256,9 +287,9 @@ class OAuthTokenRepositoryTest {
             .expiresAt(now.plusHours(1))
             .refreshExpiresAt(now.plusDays(30))
             .isRevoked(false)
+            .createdAt(now)
             .build();
-        entityManager.persist(anotherUserToken);
-        entityManager.flush();
+        tokenRepository.save(anotherUserToken);
 
         List<OAuthToken> testUserTokens = tokenRepository.findByUserAndIsRevokedFalse(testUser);
         List<OAuthToken> anotherUserTokens = tokenRepository.findByUserAndIsRevokedFalse(anotherUser);
@@ -279,11 +310,10 @@ class OAuthTokenRepositoryTest {
             .refreshExpiresAt(now.plusDays(60))
             .clientIp("192.168.1.1")
             .userAgent("TestBrowser/1.0")
+            .createdAt(now)
             .build();
 
-        OAuthToken savedToken = tokenRepository.save(newToken);
-        entityManager.flush();
-        entityManager.clear();
+        tokenRepository.save(newToken);
 
         Optional<OAuthToken> retrieved = tokenRepository.findByAccessToken("new_access_token");
         assertTrue(retrieved.isPresent());

@@ -1,7 +1,7 @@
 package com.arcana.cloud.security;
 
 import com.arcana.cloud.entity.User;
-import com.arcana.cloud.repository.UserRepository;
+import com.arcana.cloud.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

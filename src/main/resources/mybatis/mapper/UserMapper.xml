@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.arcana.cloud.dao.impl.mybatis.mapper.UserMapper">
+
+    <!-- Result Map -->
+    <resultMap id="UserResultMap" type="com.arcana.cloud.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <result property="firstName" column="first_name"/>
+        <result property="lastName" column="last_name"/>
+        <result property="role" column="role" typeHandler="org.apache.ibatis.type.EnumTypeHandler"/>
+        <result property="isActive" column="is_active"/>
+        <result property="isVerified" column="is_verified"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+    <!-- Insert -->
+    <insert id="insert" parameterType="com.arcana.cloud.entity.User" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at)
+        VALUES (#{username}, #{email}, #{password}, #{firstName}, #{lastName}, #{role}, #{isActive}, #{isVerified},
+                COALESCE(#{createdAt}, NOW()), COALESCE(#{updatedAt}, NOW()))
+    </insert>
+
+    <!-- Update -->
+    <update id="update" parameterType="com.arcana.cloud.entity.User">
+        UPDATE users
+        SET username = #{username},
+            email = #{email},
+            password = #{password},
+            first_name = #{firstName},
+            last_name = #{lastName},
+            role = #{role},
+            is_active = #{isActive},
+            is_verified = #{isVerified},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <!-- Find by ID -->
+    <select id="findById" resultMap="UserResultMap">
+        SELECT * FROM users WHERE id = #{id}
+    </select>
+
+    <!-- Find by Username -->
+    <select id="findByUsername" resultMap="UserResultMap">
+        SELECT * FROM users WHERE username = #{username}
+    </select>
+
+    <!-- Find by Email -->
+    <select id="findByEmail" resultMap="UserResultMap">
+        SELECT * FROM users WHERE email = #{email}
+    </select>
+
+    <!-- Find by Username or Email -->
+    <select id="findByUsernameOrEmail" resultMap="UserResultMap">
+        SELECT * FROM users WHERE username = #{username} OR email = #{email} LIMIT 1
+    </select>
+
+    <!-- Exists by ID -->
+    <select id="existsById" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM users WHERE id = #{id}
+    </select>
+
+    <!-- Exists by Username -->
+    <select id="existsByUsername" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM users WHERE username = #{username}
+    </select>
+
+    <!-- Exists by Email -->
+    <select id="existsByEmail" resultType="boolean">
+        SELECT COUNT(*) > 0 FROM users WHERE email = #{email}
+    </select>
+
+    <!-- Find All -->
+    <select id="findAll" resultMap="UserResultMap">
+        SELECT * FROM users ORDER BY created_at DESC
+    </select>
+
+    <!-- Find All with Pagination -->
+    <select id="findAllWithPagination" resultMap="UserResultMap">
+        SELECT * FROM users ORDER BY created_at DESC LIMIT #{limit} OFFSET #{offset}
+    </select>
+
+    <!-- Count -->
+    <select id="count" resultType="long">
+        SELECT COUNT(*) FROM users
+    </select>
+
+    <!-- Find Active Users by Role -->
+    <select id="findActiveUsersByRole" resultMap="UserResultMap">
+        SELECT * FROM users WHERE role = #{role} AND is_active = true ORDER BY created_at DESC
+    </select>
+
+    <!-- Find All Active Users -->
+    <select id="findAllActiveUsers" resultMap="UserResultMap">
+        SELECT * FROM users WHERE is_active = true ORDER BY created_at DESC
+    </select>
+
+    <!-- Find Unverified Users -->
+    <select id="findUnverifiedUsers" resultMap="UserResultMap">
+        SELECT * FROM users WHERE is_verified = false AND is_active = true ORDER BY created_at DESC
+    </select>
+
+    <!-- Delete by ID -->
+    <delete id="deleteById">
+        DELETE FROM users WHERE id = #{id}
+    </delete>
+
+    <!-- Delete All -->
+    <delete id="deleteAll">
+        DELETE FROM users
+    </delete>
+
+</mapper>

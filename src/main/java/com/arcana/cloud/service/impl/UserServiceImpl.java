@@ -3,7 +3,7 @@ package com.arcana.cloud.service.impl;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.exception.ResourceNotFoundException;
 import com.arcana.cloud.exception.ValidationException;
-import com.arcana.cloud.repository.UserRepository;
+import com.arcana.cloud.repository.interfaces.UserRepository;
 import com.arcana.cloud.service.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
