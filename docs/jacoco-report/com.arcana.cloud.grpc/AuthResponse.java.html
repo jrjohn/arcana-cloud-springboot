@@ -14,23 +14,23 @@ public final class AuthResponse extends
     AuthResponseOrBuilder {
 private static final long serialVersionUID = 0L;
   static {
-<span class="nc" id="L17">    com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(</span>
+<span class="fc" id="L17">    com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(</span>
       com.google.protobuf.RuntimeVersion.RuntimeDomain.PUBLIC,
       /* major= */ 4,
       /* minor= */ 29,
       /* patch= */ 2,
       /* suffix= */ &quot;&quot;,
-<span class="nc" id="L23">      AuthResponse.class.getName());</span>
+<span class="fc" id="L23">      AuthResponse.class.getName());</span>
   }
   // Use AuthResponse.newBuilder() to construct.
   private AuthResponse(com.google.protobuf.GeneratedMessage.Builder&lt;?&gt; builder) {
 <span class="nc" id="L27">    super(builder);</span>
 <span class="nc" id="L28">  }</span>
-<span class="nc" id="L29">  private AuthResponse() {</span>
-<span class="nc" id="L30">    accessToken_ = &quot;&quot;;</span>
-<span class="nc" id="L31">    refreshToken_ = &quot;&quot;;</span>
-<span class="nc" id="L32">    tokenType_ = &quot;&quot;;</span>
-<span class="nc" id="L33">  }</span>
+<span class="fc" id="L29">  private AuthResponse() {</span>
+<span class="fc" id="L30">    accessToken_ = &quot;&quot;;</span>
+<span class="fc" id="L31">    refreshToken_ = &quot;&quot;;</span>
+<span class="fc" id="L32">    tokenType_ = &quot;&quot;;</span>
+<span class="fc" id="L33">  }</span>
 
   public static final com.google.protobuf.Descriptors.Descriptor
       getDescriptor() {
@@ -47,7 +47,7 @@ private static final long serialVersionUID = 0L;
 
   private int bitField0_;
   public static final int ACCESS_TOKEN_FIELD_NUMBER = 1;
-<span class="nc" id="L50">  @SuppressWarnings(&quot;serial&quot;)</span>
+<span class="pc" id="L50">  @SuppressWarnings(&quot;serial&quot;)</span>
   private volatile java.lang.Object accessToken_ = &quot;&quot;;
   /**
    * &lt;code&gt;string access_token = 1;&lt;/code&gt;
@@ -86,7 +86,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int REFRESH_TOKEN_FIELD_NUMBER = 2;
-<span class="nc" id="L89">  @SuppressWarnings(&quot;serial&quot;)</span>
+<span class="pc" id="L89">  @SuppressWarnings(&quot;serial&quot;)</span>
   private volatile java.lang.Object refreshToken_ = &quot;&quot;;
   /**
    * &lt;code&gt;string refresh_token = 2;&lt;/code&gt;
@@ -125,7 +125,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int TOKEN_TYPE_FIELD_NUMBER = 3;
-<span class="nc" id="L128">  @SuppressWarnings(&quot;serial&quot;)</span>
+<span class="pc" id="L128">  @SuppressWarnings(&quot;serial&quot;)</span>
   private volatile java.lang.Object tokenType_ = &quot;&quot;;
   /**
    * &lt;code&gt;string token_type = 3;&lt;/code&gt;
@@ -164,7 +164,7 @@ private static final long serialVersionUID = 0L;
   }
 
   public static final int EXPIRES_IN_FIELD_NUMBER = 4;
-<span class="nc" id="L167">  private long expiresIn_ = 0L;</span>
+<span class="pc" id="L167">  private long expiresIn_ = 0L;</span>
   /**
    * &lt;code&gt;int64 expires_in = 4;&lt;/code&gt;
    * @return The expiresIn.
@@ -200,7 +200,7 @@ private static final long serialVersionUID = 0L;
 <span class="nc bnc" id="L200" title="All 2 branches missed.">    return user_ == null ? com.arcana.cloud.grpc.UserInfo.getDefaultInstance() : user_;</span>
   }
 
-<span class="nc" id="L203">  private byte memoizedIsInitialized = -1;</span>
+<span class="pc" id="L203">  private byte memoizedIsInitialized = -1;</span>
   @java.lang.Override
   public final boolean isInitialized() {
 <span class="nc" id="L206">    byte isInitialized = memoizedIsInitialized;</span>
@@ -986,15 +986,15 @@ private static final long serialVersionUID = 0L;
   // @@protoc_insertion_point(class_scope:arcana.cloud.AuthResponse)
   private static final com.arcana.cloud.grpc.AuthResponse DEFAULT_INSTANCE;
   static {
-<span class="nc" id="L989">    DEFAULT_INSTANCE = new com.arcana.cloud.grpc.AuthResponse();</span>
+<span class="fc" id="L989">    DEFAULT_INSTANCE = new com.arcana.cloud.grpc.AuthResponse();</span>
   }
 
   public static com.arcana.cloud.grpc.AuthResponse getDefaultInstance() {
-<span class="nc" id="L993">    return DEFAULT_INSTANCE;</span>
+<span class="fc" id="L993">    return DEFAULT_INSTANCE;</span>
   }
 
   private static final com.google.protobuf.Parser&lt;AuthResponse&gt;
-<span class="nc" id="L997">      PARSER = new com.google.protobuf.AbstractParser&lt;AuthResponse&gt;() {</span>
+<span class="fc" id="L997">      PARSER = new com.google.protobuf.AbstractParser&lt;AuthResponse&gt;() {</span>
     @java.lang.Override
     public AuthResponse parsePartialFrom(
         com.google.protobuf.CodedInputStream input,
@@ -1021,7 +1021,7 @@ private static final long serialVersionUID = 0L;
 
   @java.lang.Override
   public com.google.protobuf.Parser&lt;AuthResponse&gt; getParserForType() {
-<span class="nc" id="L1024">    return PARSER;</span>
+<span class="fc" id="L1024">    return PARSER;</span>
   }
 
   @java.lang.Override

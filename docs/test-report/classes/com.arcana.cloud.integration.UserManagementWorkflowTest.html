@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">1.858s</div>
+<div class="counter">1.879s</div>
 <p>duration</p>
 </div>
 </td>
@@ -82,47 +82,47 @@
 </thead>
 <tr>
 <td class="success">testAdminCanCreateUser()</td>
-<td class="success">0.637s</td>
+<td class="success">0.662s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testAdminCanDeleteUser()</td>
-<td class="success">0.148s</td>
+<td class="success">0.138s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testAdminCanGetUserById()</td>
-<td class="success">0.131s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testAdminCanListUsers()</td>
-<td class="success">0.066s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testAdminCanUpdateUser()</td>
-<td class="success">0.127s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testPaginationWorks()</td>
-<td class="success">0.407s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testUnauthorizedAccess()</td>
-<td class="success">0.066s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testUserCanGetOwnProfile()</td>
 <td class="success">0.129s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
+<td class="success">testAdminCanListUsers()</td>
+<td class="success">0.069s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testAdminCanUpdateUser()</td>
+<td class="success">0.132s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testPaginationWorks()</td>
+<td class="success">0.396s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testUnauthorizedAccess()</td>
+<td class="success">0.064s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testUserCanGetOwnProfile()</td>
+<td class="success">0.141s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
 <td class="success">testUserCanUpdateOwnProfile()</td>
-<td class="success">0.147s</td>
+<td class="success">0.148s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -130,8 +130,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre id="class-stdout">15:16:25.309 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.arcana.cloud.integration.UserManagementWorkflowTest]: UserManagementWorkflowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-15:16:25.387 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.integration.UserManagementWorkflowTest
+<pre id="class-stdout">20:25:20.103 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.arcana.cloud.integration.UserManagementWorkflowTest]: UserManagementWorkflowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:25:20.194 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.integration.UserManagementWorkflowTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -140,27 +140,29 @@
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
 
- :: Spring Boot ::                (v4.0.0)
+ :: Spring Boot ::                (v4.0.1)
 
-2025-11-28 15:16:25 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Starting UserManagementWorkflowTest using Java 25.0.1 with PID 34637 (started by jrjohn in /Users/jrjohn/Documents/projects/arcana-cloud-springboot)
-2025-11-28 15:16:25 [Test worker] DEBUG c.a.c.i.UserManagementWorkflowTest - Running with Spring Boot v4.0.0, Spring v7.0.1
-2025-11-28 15:16:25 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - The following 1 profile is active: &quot;test&quot;
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 60 ms. Found 2 JPA repository interfaces.
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.OAuthTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-11-28 15:16:26 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 18 ms. Found 0 Redis repository interfaces.
-2025-11-28 15:16:26 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-28 15:16:26 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 7.1.8.Final
-2025-11-28 15:16:27 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-28 15:16:27 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-11-28 15:16:27 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-11-28 15:16:27 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-11-28 15:16:27 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-11-28 15:16:27 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2026-01-05 20:25:20 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Starting UserManagementWorkflowTest using Java 25.0.1 with PID 84121 (started by jrjohn in /Users/jrjohn/Documents/projects/arcana-cloud-springboot)
+2026-01-05 20:25:20 [Test worker] DEBUG c.a.c.i.UserManagementWorkflowTest - Running with Spring Boot v4.0.1, Spring v7.0.2
+2026-01-05 20:25:20 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - The following 1 profile is active: &quot;test&quot;
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 22 ms. Found 0 JPA repository interfaces.
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 0 MongoDB repository interfaces.
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-01-05 20:25:21 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 8 ms. Found 0 Redis repository interfaces.
+2026-01-05 20:25:22 [Test worker] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=a2727d86-8b3e-37dc-9a1b-d12e09847649
+2026-01-05 20:25:22 [Test worker] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-05 20:25:22 [Test worker] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-05 20:25:22 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-05 20:25:22 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-05 20:25:23 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-05 20:25:23 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-05 20:25:23 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-05 20:25:23 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [jdbc:h2:mem:testdb]
 	Database driver: H2 JDBC Driver
 	Database dialect: H2Dialect
@@ -169,10 +171,10 @@
 	Autocommit mode: undefined/unknown
 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
 	JDBC fetch size: 100
-	Pool: DatasourceConnectionProviderImpl
+	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-11-28 15:16:27 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-05 20:25:23 [Test worker] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists oauth_tokens cascade 
 Hibernate: 
@@ -212,31 +214,32 @@ Hibernate:
        add constraint FKo3ygyue8ry6098fk4tatyskce 
        foreign key (user_id) 
        references users
-2025-11-28 15:16:27 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-28 15:16:27 [Test worker] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.service.grpc.GrpcHealthService - gRPC Health Service initialized
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Initializing Arcana Cloud Plugin System
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Platform version: 1.0.0
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Starting Apache Felix OSGi framework...
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Apache Felix OSGi framework started successfully
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Framework version: 1.9
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Cache directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/.cache
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Initializing Spring-OSGi bridge
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'dataSource' to OSGi as [javax.sql.DataSource]
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'passwordEncoder' to OSGi as [org.springframework.security.crypto.password.PasswordEncoder]
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Scanning for plugins in: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: monolithic-test-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: monolithic-test-plugin-1.0.0.jar
+2026-01-05 20:25:23 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-05 20:25:23 [Test worker] INFO  c.a.c.service.grpc.GrpcHealthService - gRPC Health Service initialized
+2026-01-05 20:25:23 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Initializing Arcana Cloud Plugin System
+2026-01-05 20:25:23 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-05 20:25:23 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Platform version: 1.0.0
+2026-01-05 20:25:23 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Starting Apache Felix OSGi framework...
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Apache Felix OSGi framework started successfully
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Framework version: 1.9
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Cache directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/.cache
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Initializing Spring-OSGi bridge
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'dataSource' to OSGi as [javax.sql.DataSource]
+2026-01-05 20:25:24 [Test worker] DEBUG c.a.c.p.r.s.PluginAuditService - [BEAN_ACCESS] plugin=system bean=javax.sql.DataSource status=ALLOWED
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'passwordEncoder' to OSGi as [org.springframework.security.crypto.password.PasswordEncoder]
+2026-01-05 20:25:24 [Test worker] DEBUG c.a.c.p.r.s.PluginAuditService - [BEAN_ACCESS] plugin=system bean=org.springframework.security.crypto.password.PasswordEncoder status=ALLOWED
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Scanning for plugins in: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-05 20:25:24 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: monolithic-test-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: monolithic-test-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -253,18 +256,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -273,7 +276,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -383,16 +386,16 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: lifecycle-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: lifecycle-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: lifecycle-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: lifecycle-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -409,18 +412,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -429,7 +432,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -539,16 +542,16 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: test-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: test-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: test-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: test-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -565,18 +568,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -585,7 +588,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -695,16 +698,16 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: workflow-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: workflow-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: workflow-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: workflow-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -721,18 +724,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -741,7 +744,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -851,620 +854,411 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:16:28 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: arcana-audit-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/arcana-audit-plugin-1.0.0.jar
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Plugin installed: com.arcana.plugin.audit (bundle id: 5)
-2025-11-28 15:16:28 [FelixDispatchQueue] DEBUG c.a.c.plugin.runtime.PluginManager - Plugin com.arcana.plugin.audit state changed to INSTALLED
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Installed 1 plugins
-2025-11-28 15:16:28 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Plugin system initialized successfully. 1 plugins installed
-2025-11-28 15:16:28 [Test worker] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-11-28 15:16:28 [Test worker] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-2025-11-28 15:16:28 [Test worker] WARN  i.n.r.d.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
-2025-11-28 15:16:29 [Test worker] DEBUG c.a.c.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2025-11-28 15:16:29 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-2025-11-28 15:16:29 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-2025-11-28 15:16:29 [Test worker] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
-2025-11-28 15:16:29 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 12 ms
-2025-11-28 15:16:29 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Started UserManagementWorkflowTest in 3.742 seconds (process running for 4.55)
-2025-11-28 15:16:29 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2025-11-28 15:16:29 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:29 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: createduser1764314189668
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:29 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 2
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:29 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: selfupdateuser1764314189951
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 4
-Hibernate: 
-    insert 
-    into
-        oauth_tokens
-        (access_token, client_ip, created_at, expires_at, is_revoked, refresh_expires_at, refresh_token, token_type, user_id, user_agent, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 4
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 4
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: deleteuser1764314190099
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 6
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Deleting user with id: 6
-Hibernate: 
-    select
-        count(*) 
-    from
-        users u1_0 
-    where
-        u1_0.id=?
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User deleted successfully with id: 6
-2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 6
-2025-11-28 15:16:30 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Resource not found: User not found with id: '6'
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141902460
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 8
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141903131
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 9
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141903802
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 10
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141904433
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 11
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17643141905064
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 12
-2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 3
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    order by
-        u1_0.created_at desc 
-    offset
-        ? rows 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        count(u1_0.id) 
-    from
-        users u1_0
-2025-11-28 15:16:30 [Test worker] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+2026-01-05 20:25:24 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: arcana-audit-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/arcana-audit-plugin-1.0.0.jar
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Plugin installed: com.arcana.plugin.audit (bundle id: 5)
+2026-01-05 20:25:24 [FelixDispatchQueue] DEBUG c.a.c.plugin.runtime.PluginManager - Plugin com.arcana.plugin.audit state changed to INSTALLED
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Installed 1 plugins
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Plugin system initialized successfully. 1 plugins installed
+2026-01-05 20:25:24 [Test worker] INFO  c.a.c.p.r.s.PluginSignatureVerifier - Loaded 0 trusted certificates for plugin verification
+2026-01-05 20:25:24 [Test worker] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-05 20:25:24 [Test worker] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-05 20:25:24 [Test worker] INFO  org.mongodb.driver.client - MongoClient with metadata {&quot;driver&quot;: {&quot;name&quot;: &quot;mongo-java-driver|spring-boot|sync&quot;, &quot;version&quot;: &quot;5.6.2&quot;}, &quot;os&quot;: {&quot;type&quot;: &quot;Darwin&quot;, &quot;name&quot;: &quot;Mac OS X&quot;, &quot;architecture&quot;: &quot;aarch64&quot;, &quot;version&quot;: &quot;26.2&quot;}, &quot;platform&quot;: &quot;Java/Homebrew/25.0.1&quot;} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, transportSettings=null, commandListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsCommandListener@155a6af5], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@6962efd0, com.mongodb.Jep395RecordCodecProvider@7cf8cfdc, com.mongodb.KotlinCodecProvider@479e884a, EnumCodecProvider{}]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsConnectionPoolListener@5c0ded2f], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverMonitoringMode=AUTO, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=UNSPECIFIED, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null, timeoutMS=null}
+2026-01-05 20:25:24 [cluster-ClusterId{value='695badb46fd96181fbbfed95', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server localhost:27017
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.lambda$open$0(SocketStream.java:85)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:85)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:233)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.setupNewConnectionAndGetInitialDescription(DefaultServerMonitor.java:282)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.lookupServerDescription(DefaultServerMonitor.java:253)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.run(DefaultServerMonitor.java:203)
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:76)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:104)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:79)
+	... 4 common frames omitted
+2026-01-05 20:25:24 [Test worker] WARN  i.n.r.d.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-01-05 20:25:25 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-01-05 20:25:25 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-01-05 20:25:25 [Test worker] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2026-01-05 20:25:25 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 17 ms
+2026-01-05 20:25:25 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Started UserManagementWorkflowTest in 4.818 seconds (process running for 5.886)
+2026-01-05 20:25:25 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-01-05 20:25:25 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$V9DlMta4EtPZQz7PZxqBoe7AB8g8/mJnkM4O8/yC64lEFnrKy/1YW(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 1
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 1
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 1(Long)
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:25 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: createduser1767615925871
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: createduser1767615925871(String)
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: createduser1767615925871@example.com(String)
+2026-01-05 20:25:25 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: createduser1767615925871
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: createduser1767615925871
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: createduser1767615925871(String), createduser1767615925871@example.com(String), $2a$10$hkk54SmD17qk82Cv/6qhb.4Y8CtECecIF/8t3F22nflqjTJt4QtIW(String), Created(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 2
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$yG11QEbUUzVs9ui6aOoFMuYu63oq8scegqGqchDdQv71EllQZ7JK.(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: selfupdateuser1767615926164
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: selfupdateuser1767615926164(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: selfupdateuser1767615926164@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: selfupdateuser1767615926164
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: selfupdateuser1767615926164
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: selfupdateuser1767615926164(String), selfupdateuser1767615926164@example.com(String), $2a$10$hnhRje1iIv6LwI1qBkuINOYZPEO5vpcUQ2LSS0x9.Me.LYPspW2em(String), SelfUpdate(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 4
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.i.OAuthTokenRepositoryImpl - Repository: Saving OAuth token
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.OAuthTokenDaoMybatisImpl - MyBatis DAO: Saving OAuth token
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt;  Preparing: INSERT INTO oauth_tokens (user_id, access_token, refresh_token, token_type, expires_at, refresh_expires_at, is_revoked, created_at, client_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), ?, ?)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt; Parameters: 4(Long), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI0IiwidXNlcm5hbWUiOiJzZWxmdXBkYXRldXNlcjE3Njc2MTU5MjYxNjQiLCJlbWFpbCI6InNlbGZ1cGRhdGV1c2VyMTc2NzYxNTkyNjE2NEBleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzY3NjE1OTI2LCJleHAiOjE3Njc2MTk1MjZ9.cdWMm4ApRbu_u6CXJq8mQoOSYtv0xqQtD_TRbmQKk_a2InKyDzBCcQNn910NEpPk(String), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI0IiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3Njc2MTU5MjYsImV4cCI6MTc2NzcwMjMyNn0.2Nnr7HN7tYj_N_gLS_8ZF2Rqmq6aJxfNDowXUWTX8Szj7mIIsnkZSkFGsT6bR4Yk(String), Bearer(String), 2026-01-05T21:25:26.230023(LocalDateTime), 2026-01-06T20:25:26.230023(LocalDateTime), false(Boolean), null, null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 4
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 4
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 4(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 4
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 4
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 4
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: selfupdateuser1767615926164
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: selfupdateuser1767615926164
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt;  Preparing: UPDATE users SET username = ?, email = ?, password = ?, first_name = ?, last_name = ?, role = ?, is_active = ?, is_verified = ?, updated_at = NOW() WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt; Parameters: selfupdateuser1767615926164(String), selfupdateuser1767615926164@example.com(String), $2a$10$hnhRje1iIv6LwI1qBkuINOYZPEO5vpcUQ2LSS0x9.Me.LYPspW2em(String), UpdatedFirst(String), UpdatedLast(String), USER(String), true(Boolean), false(Boolean), 4(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 4
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$bGyIgGvmXyBm6R4Xnuft8.lddNel2zclvUygHUrSUCpfKB2RgETkC(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 5
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 5
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 5(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: deleteuser1767615926311
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: deleteuser1767615926311(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: deleteuser1767615926311@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: deleteuser1767615926311
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: deleteuser1767615926311
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: deleteuser1767615926311(String), deleteuser1767615926311@example.com(String), $2a$10$smHJUjqf0IeCo9Fv2u82l.u1FHpkkO54hneY8sAbfY.Z5Ux9uQ3Py(String), Delete(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 6
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 5
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 5
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 5(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Deleting user with id: 6
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.existsById - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.existsById - ==&gt; Parameters: 6(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.existsById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.r.impl.UserRepositoryImpl - Repository: Deleting user by id: 6
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Deleting user by id: 6
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.deleteById - ==&gt;  Preparing: DELETE FROM users WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.deleteById - ==&gt; Parameters: 6(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.deleteById - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User deleted successfully with id: 6
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 5
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 5
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 5(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 6
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 6
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 6
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 6(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 0
+2026-01-05 20:25:26 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Resource not found: User not found with id: '6'
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$x27t0giXPKneEfoFPIc5IeSFtvWrIIHKigoIr6ceHl.sj8SSLo7vi(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676159264500
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676159264500(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676159264500@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676159264500
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676159264500
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676159264500(String), paginationuser17676159264500@example.com(String), $2a$10$3.ODbPP3Pgdk/l5jNEAEGOMiDJIASXK86oEnVWCawHy/Ee9037Fmq(String), Pagination(String), User0(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 8
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676159265181
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676159265181(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676159265181@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676159265181
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676159265181
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676159265181(String), paginationuser17676159265181@example.com(String), $2a$10$0ZNAdwt5HORcQP3ImGKAdOqdS4Kerk1aewAbDJUoBTb3/AvlH35IW(String), Pagination(String), User1(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 9
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676159265832
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676159265832(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676159265832@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676159265832
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676159265832
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676159265832(String), paginationuser17676159265832@example.com(String), $2a$10$S8Y5cDFr2YRDOZZ0ErDmP.omrUFBgeeAjWVMwA.4uu7ecwFM4PihC(String), Pagination(String), User2(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 10
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676159266453
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676159266453(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676159266453@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676159266453
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676159266453
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676159266453(String), paginationuser17676159266453@example.com(String), $2a$10$xmwoTgen31I.cQyhIstVLeKlsBjA3uD4wzdGc6i/iDFinoJL3oKzC(String), Pagination(String), User3(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 11
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676159267084
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676159267084(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676159267084@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676159267084
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676159267084
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676159267084(String), paginationuser17676159267084@example.com(String), $2a$10$DI/Dabi4G3pJE7L0HA9RiOFz0aJZxMxh.6HFBCMZo9fqJTmsn6SD6(String), Pagination(String), User4(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 12
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 3
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding all users with pagination
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding all users with pagination
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt;  Preparing: SELECT COUNT(*) FROM users
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt; Parameters: 
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt;  Preparing: SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt; Parameters: 3(Integer), 0(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - &lt;==      Total: 3
+2026-01-05 20:25:26 [Test worker] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
 	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
 	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
 
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 10
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    order by
-        u1_0.created_at desc 
-    offset
-        ? rows 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: updateuser1764314190720
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 15
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 15
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 15
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: getbyiduser1764314190849
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 17
-2025-11-28 15:16:30 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 17
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:30 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: profileuser1764314190979
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.username=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    select
-        u1_0.id 
-    from
-        users u1_0 
-    where
-        u1_0.email=? 
-    fetch
-        first ? rows only
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:31 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 19
-Hibernate: 
-    insert 
-    into
-        oauth_tokens
-        (access_token, client_ip, created_at, expires_at, is_revoked, refresh_expires_at, refresh_token, token_type, user_id, user_agent, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
-2025-11-28 15:16:31 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 19
-Hibernate: 
-    select
-        u1_0.id,
-        u1_0.created_at,
-        u1_0.email,
-        u1_0.first_name,
-        u1_0.is_active,
-        u1_0.is_verified,
-        u1_0.last_name,
-        u1_0.password,
-        u1_0.role,
-        u1_0.updated_at,
-        u1_0.username 
-    from
-        users u1_0 
-    where
-        u1_0.username=?
-Hibernate: 
-    insert 
-    into
-        users
-        (created_at, email, first_name, is_active, is_verified, last_name, password, role, updated_at, username, id) 
-    values
-        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, default)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$cyyUMY3f1LuRZO0kaXcN0uubvJiuVZp.Gp7D/rljOH5xJBqiiGA8.(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 13
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 13
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 13(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 10
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding all users with pagination
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding all users with pagination
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt;  Preparing: SELECT COUNT(*) FROM users
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt; Parameters: 
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt;  Preparing: SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt; Parameters: 10(Integer), 0(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$qYkZTcfpYy/wsFsZhGi/5enVstbtZHp5e7p3CmvHpJBvhkjIAe6ru(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 14
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 14
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 14(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: updateuser1767615926917
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: updateuser1767615926917(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: updateuser1767615926917@example.com(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: updateuser1767615926917
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: updateuser1767615926917
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: updateuser1767615926917(String), updateuser1767615926917@example.com(String), $2a$10$53yjfYNiDigyNGutqSAsb.1iyGhyzP3ZASxJc0j.2V6BXmSaidVwC(String), Update(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 15
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 14
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 14
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 14(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 15
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 15
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 15
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 15(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: updateuser1767615926917
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: updateuser1767615926917
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt;  Preparing: UPDATE users SET username = ?, email = ?, password = ?, first_name = ?, last_name = ?, role = ?, is_active = ?, is_verified = ?, updated_at = NOW() WHERE id = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt; Parameters: updateuser1767615926917(String), updateuser1767615926917@example.com(String), $2a$10$53yjfYNiDigyNGutqSAsb.1iyGhyzP3ZASxJc0j.2V6BXmSaidVwC(String), Updated(String), Name(String), USER(String), true(Boolean), false(Boolean), 15(Long)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - &lt;==    Updates: 1
+2026-01-05 20:25:26 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 15
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:26 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$E1sBjdKsv6K01rNKdUUY2e7ItrOINuViZ.r1LkoJo0LFIUQrpPxd.(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 16
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 16
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 16(Long)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: getbyiduser1767615927048
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: getbyiduser1767615927048(String)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: getbyiduser1767615927048@example.com(String)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: getbyiduser1767615927048
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: getbyiduser1767615927048
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: getbyiduser1767615927048(String), getbyiduser1767615927048@example.com(String), $2a$10$MlaJ/U3LGNRJthzZsxF5eux8huQUOAGOWm4NUdmPXPWO3zx0Wa2ky(String), GetById(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:27 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 17
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 16
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 16
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 16(Long)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 17
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 17
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 17
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 17(Long)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$B43w4yav1WRqyGiaOHoFd.xO0203UBB2VgWx.3/3/E2QA2GU1mtuK(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:27 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: profileuser1767615927183
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: profileuser1767615927183(String)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: profileuser1767615927183@example.com(String)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: profileuser1767615927183
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: profileuser1767615927183
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: profileuser1767615927183(String), profileuser1767615927183@example.com(String), $2a$10$7hridLfxgsMQuLIMTQ0TiuZvidRLWQjBGx9L4YMNA3aeO5gvsXjku(String), Profile(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-05 20:25:27 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 19
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.i.OAuthTokenRepositoryImpl - Repository: Saving OAuth token
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.OAuthTokenDaoMybatisImpl - MyBatis DAO: Saving OAuth token
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt;  Preparing: INSERT INTO oauth_tokens (user_id, access_token, refresh_token, token_type, expires_at, refresh_expires_at, is_revoked, created_at, client_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), ?, ?)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt; Parameters: 19(Long), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxOSIsInVzZXJuYW1lIjoicHJvZmlsZXVzZXIxNzY3NjE1OTI3MTgzIiwiZW1haWwiOiJwcm9maWxldXNlcjE3Njc2MTU5MjcxODNAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NzYxNTkyNywiZXhwIjoxNzY3NjE5NTI3fQ.V6y1FlUUQWxW0XYGVHIuyvNumvXLV5zrsyA51x3WCx2t8arcGLY7H2840aIqAfce(String), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxOSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY3NjE1OTI3LCJleHAiOjE3Njc3MDIzMjd9.HiQAoqUSYCQWyHvSkZwsbTamUGbc6ib8eTmoB9cXRmjz_g366fBIWepx16UVJuD6(String), Bearer(String), 2026-01-05T21:25:27.250886(LocalDateTime), 2026-01-06T20:25:27.250886(LocalDateTime), false(Boolean), null, null, null
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - &lt;==    Updates: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 19
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 19
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 19(Long)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 19
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 19
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 19
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$HmizjoXW6Zl3Bfhnd13R4eQOIWJcBdiYTt4BREXPLr31oL60pvpvO(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-05 20:25:27 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
 </pre>
 <button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="class-stdout">Copy</button>
 </span>
@@ -1489,7 +1283,7 @@ WARNING: Dynamic loading of agents will be disallowed by default in a future rel
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2025年11月28日 下午3:17:32</p>
+<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2026年1月5日 下午8:26:57</p>
 </div>
 </div>
 </body>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OAuthTokenRepositoryImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.repository.impl</a> &gt; <span class="el_source">OAuthTokenRepositoryImpl.java</span></div><h1>OAuthTokenRepositoryImpl.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.repository.impl;
+
+import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.entity.OAuthToken;
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.repository.interfaces.OAuthTokenRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * Repository implementation for OAuthToken entity.
+ * Delegates all operations to the OAuthTokenDao interface.
+ * The actual DAO implementation (MyBatis, JPA, or MongoDB) is selected by configuration.
+ */
+@Repository
+@RequiredArgsConstructor
+<span class="fc" id="L24">@Slf4j</span>
+public class OAuthTokenRepositoryImpl implements OAuthTokenRepository {
+
+    private final OAuthTokenDao tokenDao;
+
+    @Override
+    public OAuthToken save(OAuthToken token) {
+<span class="fc" id="L31">        log.debug(&quot;Repository: Saving OAuth token&quot;);</span>
+<span class="fc" id="L32">        return tokenDao.save(token);</span>
+    }
+
+    @Override
+    public List&lt;OAuthToken&gt; saveAll(Iterable&lt;OAuthToken&gt; tokens) {
+<span class="fc" id="L37">        return tokenDao.saveAll(tokens);</span>
+    }
+
+    @Override
+    public Optional&lt;OAuthToken&gt; findById(Long id) {
+<span class="fc" id="L42">        log.debug(&quot;Repository: Finding token by id: {}&quot;, id);</span>
+<span class="fc" id="L43">        return tokenDao.findById(id);</span>
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+<span class="fc" id="L48">        return tokenDao.existsById(id);</span>
+    }
+
+    @Override
+    public List&lt;OAuthToken&gt; findAll() {
+<span class="fc" id="L53">        log.debug(&quot;Repository: Finding all tokens&quot;);</span>
+<span class="fc" id="L54">        return tokenDao.findAll();</span>
+    }
+
+    @Override
+    public Page&lt;OAuthToken&gt; findAll(Pageable pageable) {
+<span class="fc" id="L59">        log.debug(&quot;Repository: Finding all tokens with pagination&quot;);</span>
+<span class="fc" id="L60">        return tokenDao.findAll(pageable);</span>
+    }
+
+    @Override
+    public long count() {
+<span class="fc" id="L65">        return tokenDao.count();</span>
+    }
+
+    @Override
+    public void deleteById(Long id) {
+<span class="fc" id="L70">        log.info(&quot;Repository: Deleting token by id: {}&quot;, id);</span>
+<span class="fc" id="L71">        tokenDao.deleteById(id);</span>
+<span class="fc" id="L72">    }</span>
+
+    @Override
+    public void delete(OAuthToken token) {
+<span class="fc" id="L76">        tokenDao.delete(token);</span>
+<span class="fc" id="L77">    }</span>
+
+    @Override
+    public void deleteAll() {
+<span class="fc" id="L81">        log.warn(&quot;Repository: Deleting all tokens&quot;);</span>
+<span class="fc" id="L82">        tokenDao.deleteAll();</span>
+<span class="fc" id="L83">    }</span>
+
+    @Override
+    public Optional&lt;OAuthToken&gt; findByAccessToken(String accessToken) {
+<span class="fc" id="L87">        log.debug(&quot;Repository: Finding token by access token&quot;);</span>
+<span class="fc" id="L88">        return tokenDao.findByAccessToken(accessToken);</span>
+    }
+
+    @Override
+    public Optional&lt;OAuthToken&gt; findByRefreshToken(String refreshToken) {
+<span class="fc" id="L93">        log.debug(&quot;Repository: Finding token by refresh token&quot;);</span>
+<span class="fc" id="L94">        return tokenDao.findByRefreshToken(refreshToken);</span>
+    }
+
+    @Override
+    public List&lt;OAuthToken&gt; findByUserAndIsRevokedFalse(User user) {
+<span class="fc" id="L99">        log.debug(&quot;Repository: Finding non-revoked tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L100">        return tokenDao.findByUserAndIsRevokedFalse(user);</span>
+    }
+
+    @Override
+    public void revokeAllTokensByUser(User user) {
+<span class="fc" id="L105">        log.info(&quot;Repository: Revoking all tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L106">        tokenDao.revokeAllTokensByUser(user);</span>
+<span class="fc" id="L107">    }</span>
+
+    @Override
+    public void revokeByAccessToken(String accessToken) {
+<span class="fc" id="L111">        log.info(&quot;Repository: Revoking token by access token&quot;);</span>
+<span class="fc" id="L112">        tokenDao.revokeByAccessToken(accessToken);</span>
+<span class="fc" id="L113">    }</span>
+
+    @Override
+    public void deleteExpiredOrRevokedTokens(LocalDateTime now) {
+<span class="fc" id="L117">        log.info(&quot;Repository: Deleting expired or revoked tokens&quot;);</span>
+<span class="fc" id="L118">        tokenDao.deleteExpiredOrRevokedTokens(now);</span>
+<span class="fc" id="L119">    }</span>
+
+    @Override
+    public List&lt;OAuthToken&gt; findValidTokensByUser(User user, LocalDateTime now) {
+<span class="fc" id="L123">        log.debug(&quot;Repository: Finding valid tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L124">        return tokenDao.findValidTokensByUser(user, now);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

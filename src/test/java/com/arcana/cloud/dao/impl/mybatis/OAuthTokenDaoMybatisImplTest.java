@@ -34,7 +34,6 @@ class OAuthTokenDaoMybatisImplTest {
     @Mock
     private OAuthTokenMapper tokenMapper;
 
-    @InjectMocks
     private OAuthTokenDaoMybatisImpl tokenDao;
 
     private OAuthToken testToken;
@@ -43,6 +42,7 @@ class OAuthTokenDaoMybatisImplTest {
 
     @BeforeEach
     void setUp() {
+        tokenDao = new OAuthTokenDaoMybatisImpl(tokenMapper);
         now = LocalDateTime.now();
         testUser = User.builder()
                 .id(1L)
@@ -198,14 +198,14 @@ class OAuthTokenDaoMybatisImplTest {
         @DisplayName("Should find all tokens with pagination")
         void findAll_WithPagination_ShouldReturnPage() {
             Pageable pageable = PageRequest.of(0, 10);
-            when(tokenMapper.count()).thenReturn(2L);
-            when(tokenMapper.findAllWithPagination(0L, 10))
-                    .thenReturn(Collections.singletonList(testToken));
+            doReturn(15L).when(tokenMapper).count();
+            doReturn(Collections.singletonList(testToken)).when(tokenMapper).findAllWithPagination(anyLong(), anyInt());
 
             Page<OAuthToken> result = tokenDao.findAll(pageable);
 
             assertThat(result.getContent()).hasSize(1);
-            assertThat(result.getTotalElements()).isEqualTo(2);
+            assertThat(result.getTotalElements()).isEqualTo(15);
+            verify(tokenMapper).count();
         }
     }
 

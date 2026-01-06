@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDocument.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.document</a> &gt; <span class="el_source">UserDocument.java</span></div><h1>UserDocument.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.document;
+
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.entity.UserRole;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.time.LocalDateTime;
+
+/**
+ * MongoDB document representation of User entity.
+ */
+@Document(collection = &quot;users&quot;)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserDocument {
+
+    @Id
+    private String id;
+
+    @Field(&quot;legacy_id&quot;)
+    @Indexed(unique = true, sparse = true)
+    private Long legacyId;
+
+    @Indexed(unique = true)
+    private String username;
+
+    @Indexed(unique = true)
+    private String email;
+
+    private String password;
+
+    @Field(&quot;first_name&quot;)
+    private String firstName;
+
+    @Field(&quot;last_name&quot;)
+    private String lastName;
+
+    @Indexed
+    private UserRole role;
+
+    @Field(&quot;is_active&quot;)
+    @Indexed
+    private Boolean isActive;
+
+    @Field(&quot;is_verified&quot;)
+    private Boolean isVerified;
+
+    @Field(&quot;created_at&quot;)
+    private LocalDateTime createdAt;
+
+    @Field(&quot;updated_at&quot;)
+    private LocalDateTime updatedAt;
+
+    /**
+     * Convert to JPA entity for service layer compatibility.
+     */
+    public User toEntity() {
+<span class="fc" id="L67">        return User.builder()</span>
+<span class="fc" id="L68">                .id(legacyId)</span>
+<span class="fc" id="L69">                .username(username)</span>
+<span class="fc" id="L70">                .email(email)</span>
+<span class="fc" id="L71">                .password(password)</span>
+<span class="fc" id="L72">                .firstName(firstName)</span>
+<span class="fc" id="L73">                .lastName(lastName)</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">                .role(role != null ? role : UserRole.USER)</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">                .isActive(isActive != null ? isActive : true)</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">                .isVerified(isVerified != null ? isVerified : false)</span>
+<span class="fc" id="L77">                .createdAt(createdAt)</span>
+<span class="fc" id="L78">                .updatedAt(updatedAt)</span>
+<span class="fc" id="L79">                .build();</span>
+    }
+
+    /**
+     * Create from JPA entity.
+     */
+    public static UserDocument fromEntity(User user) {
+<span class="fc" id="L86">        return UserDocument.builder()</span>
+<span class="fc" id="L87">                .legacyId(user.getId())</span>
+<span class="fc" id="L88">                .username(user.getUsername())</span>
+<span class="fc" id="L89">                .email(user.getEmail())</span>
+<span class="fc" id="L90">                .password(user.getPassword())</span>
+<span class="fc" id="L91">                .firstName(user.getFirstName())</span>
+<span class="fc" id="L92">                .lastName(user.getLastName())</span>
+<span class="fc" id="L93">                .role(user.getRole())</span>
+<span class="fc" id="L94">                .isActive(user.getIsActive())</span>
+<span class="fc" id="L95">                .isVerified(user.getIsVerified())</span>
+<span class="fc" id="L96">                .createdAt(user.getCreatedAt())</span>
+<span class="fc" id="L97">                .updatedAt(user.getUpdatedAt())</span>
+<span class="fc" id="L98">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -103,6 +103,7 @@ dependencies {
     testImplementation(libs.spring.boot.webmvc.test)
     testImplementation(libs.mybatis.spring.boot.starter.test)
     testImplementation(libs.bundles.testcontainers)
+    testImplementation("org.springframework.boot:spring-boot-testcontainers")
     testRuntimeOnly(libs.h2)
     testRuntimeOnly(libs.junit.platform.launcher)
 

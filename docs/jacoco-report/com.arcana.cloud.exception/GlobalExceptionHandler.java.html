@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
 <span class="pc bpc" id="L60" title="1 of 2 branches missed.">                error -&gt; error.getDefaultMessage() != null</span>
 <span class="fc" id="L61">                    ? error.getDefaultMessage()</span>
 <span class="nc" id="L62">                    : &quot;Validation error&quot;,</span>
-<span class="nc" id="L63">                (existing, replacement) -&gt; existing</span>
+<span class="nc" id="L63">                (existing, _) -&gt; existing</span>
             ));
 
 <span class="fc" id="L66">        return ResponseEntity</span>

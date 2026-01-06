@@ -6,26 +6,32 @@ import com.arcana.cloud.dto.request.RegisterRequest;
 import com.arcana.cloud.dto.response.AuthResponse;
 import com.arcana.cloud.dto.response.UserResponse;
 import com.arcana.cloud.entity.UserRole;
+import com.arcana.cloud.exception.ServiceUnavailableException;
 import com.arcana.cloud.exception.UnauthorizedException;
 import com.arcana.cloud.grpc.AuthServiceGrpc;
 import com.arcana.cloud.grpc.LogoutAllRequest;
 import com.arcana.cloud.grpc.LogoutRequest;
 import com.arcana.cloud.grpc.UserInfo;
 import com.arcana.cloud.service.interfaces.AuthService;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 /**
- * gRPC client for AuthService.
+ * gRPC client for AuthService with Circuit Breaker protection.
  * Active only in controller layer of layered deployment.
  * Calls AuthGrpcService on the service layer via gRPC.
  */
@@ -33,138 +39,183 @@ import java.util.concurrent.TimeUnit;
 @ConditionalOnExpression(
     &quot;'${communication.protocol:grpc}' == 'grpc' and '${deployment.layer:}' == 'controller'&quot;
 )
-<span class="nc" id="L36">@Slf4j</span>
-<span class="nc" id="L37">public class GrpcAuthServiceClient implements AuthService {</span>
+<span class="nc" id="L42">@Slf4j</span>
+<span class="nc" id="L43">public class GrpcAuthServiceClient implements AuthService {</span>
 
     @Value(&quot;${service.grpc.url:localhost:9090}&quot;)
     private String serviceUrl;
 
+    @Value(&quot;${grpc.client.shutdown-timeout-seconds:5}&quot;)
+    private long shutdownTimeoutSeconds;
+
     private ManagedChannel channel;
     private AuthServiceGrpc.AuthServiceBlockingStub stub;
 
+    @Autowired(required = false)
+    private CircuitBreaker authServiceCircuitBreaker;
+
     @PostConstruct
     public void init() {
-<span class="nc" id="L47">        log.info(&quot;Initializing gRPC Auth client for service URL: {}&quot;, serviceUrl);</span>
-<span class="nc" id="L48">        this.channel = ManagedChannelBuilder.forTarget(serviceUrl)</span>
-<span class="nc" id="L49">            .usePlaintext()</span>
-<span class="nc" id="L50">            .build();</span>
-<span class="nc" id="L51">        this.stub = AuthServiceGrpc.newBlockingStub(channel);</span>
-<span class="nc" id="L52">    }</span>
+<span class="nc" id="L59">        log.info(&quot;Initializing gRPC Auth client for service URL: {}&quot;, serviceUrl);</span>
+<span class="nc" id="L60">        this.channel = ManagedChannelBuilder.forTarget(serviceUrl)</span>
+<span class="nc" id="L61">            .usePlaintext()</span>
+<span class="nc" id="L62">            .build();</span>
+<span class="nc" id="L63">        this.stub = AuthServiceGrpc.newBlockingStub(channel);</span>
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (authServiceCircuitBreaker != null) {</span>
+<span class="nc" id="L66">            log.info(&quot;Circuit Breaker enabled for Auth Service&quot;);</span>
+        }
+<span class="nc" id="L68">    }</span>
 
     @PreDestroy
     public void shutdown() {
-<span class="nc bnc" id="L56" title="All 4 branches missed.">        if (channel != null &amp;&amp; !channel.isShutdown()) {</span>
+<span class="nc bnc" id="L72" title="All 4 branches missed.">        if (channel != null &amp;&amp; !channel.isShutdown()) {</span>
             try {
-<span class="nc" id="L58">                channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);</span>
-<span class="nc" id="L59">            } catch (InterruptedException e) {</span>
-<span class="nc" id="L60">                Thread.currentThread().interrupt();</span>
-<span class="nc" id="L61">                channel.shutdownNow();</span>
-<span class="nc" id="L62">            }</span>
+<span class="nc" id="L74">                channel.shutdown().awaitTermination(shutdownTimeoutSeconds, TimeUnit.SECONDS);</span>
+<span class="nc" id="L75">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L76">                Thread.currentThread().interrupt();</span>
+<span class="nc" id="L77">                channel.shutdownNow();</span>
+<span class="nc" id="L78">            }</span>
         }
-<span class="nc" id="L64">    }</span>
+<span class="nc" id="L80">    }</span>
 
     @Override
     public AuthResponse register(RegisterRequest request) {
-        try {
-<span class="nc" id="L69">            com.arcana.cloud.grpc.RegisterRequest grpcRequest = com.arcana.cloud.grpc.RegisterRequest.newBuilder()</span>
-<span class="nc" id="L70">                .setUsername(request.getUsername())</span>
-<span class="nc" id="L71">                .setEmail(request.getEmail())</span>
-<span class="nc" id="L72">                .setPassword(request.getPassword())</span>
-<span class="nc" id="L73">                .setConfirmPassword(request.getConfirmPassword())</span>
-<span class="nc bnc" id="L74" title="All 2 branches missed.">                .setFirstName(request.getFirstName() != null ? request.getFirstName() : &quot;&quot;)</span>
-<span class="nc bnc" id="L75" title="All 2 branches missed.">                .setLastName(request.getLastName() != null ? request.getLastName() : &quot;&quot;)</span>
-<span class="nc" id="L76">                .build();</span>
+<span class="nc" id="L84">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L85">            com.arcana.cloud.grpc.RegisterRequest grpcRequest = com.arcana.cloud.grpc.RegisterRequest.newBuilder()</span>
+<span class="nc" id="L86">                .setUsername(request.getUsername())</span>
+<span class="nc" id="L87">                .setEmail(request.getEmail())</span>
+<span class="nc" id="L88">                .setPassword(request.getPassword())</span>
+<span class="nc" id="L89">                .setConfirmPassword(request.getConfirmPassword())</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">                .setFirstName(request.getFirstName() != null ? request.getFirstName() : &quot;&quot;)</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">                .setLastName(request.getLastName() != null ? request.getLastName() : &quot;&quot;)</span>
+<span class="nc" id="L92">                .build();</span>
 
-<span class="nc" id="L78">            com.arcana.cloud.grpc.AuthResponse response = stub.register(grpcRequest);</span>
-<span class="nc" id="L79">            return fromGrpcResponse(response);</span>
-<span class="nc" id="L80">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L81">            log.error(&quot;gRPC error during registration&quot;, e);</span>
-<span class="nc" id="L82">            throw new RuntimeException(&quot;Registration failed: &quot; + e.getStatus().getDescription());</span>
-        }
+<span class="nc" id="L94">            com.arcana.cloud.grpc.AuthResponse response = stub.register(grpcRequest);</span>
+<span class="nc" id="L95">            return fromGrpcResponse(response);</span>
+        }, &quot;register&quot;);
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        try {
-<span class="nc" id="L89">            com.arcana.cloud.grpc.LoginRequest grpcRequest = com.arcana.cloud.grpc.LoginRequest.newBuilder()</span>
-<span class="nc" id="L90">                .setUsernameOrEmail(request.getUsernameOrEmail())</span>
-<span class="nc" id="L91">                .setPassword(request.getPassword())</span>
-<span class="nc" id="L92">                .build();</span>
+<span class="nc" id="L101">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L102">            com.arcana.cloud.grpc.LoginRequest grpcRequest = com.arcana.cloud.grpc.LoginRequest.newBuilder()</span>
+<span class="nc" id="L103">                .setUsernameOrEmail(request.getUsernameOrEmail())</span>
+<span class="nc" id="L104">                .setPassword(request.getPassword())</span>
+<span class="nc" id="L105">                .build();</span>
 
-<span class="nc" id="L94">            com.arcana.cloud.grpc.AuthResponse response = stub.login(grpcRequest);</span>
-<span class="nc" id="L95">            return fromGrpcResponse(response);</span>
-<span class="nc" id="L96">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L97">            log.error(&quot;gRPC error during login&quot;, e);</span>
-<span class="nc" id="L98">            throw new UnauthorizedException(&quot;Login failed: &quot; + e.getStatus().getDescription());</span>
-        }
+<span class="nc" id="L107">            com.arcana.cloud.grpc.AuthResponse response = stub.login(grpcRequest);</span>
+<span class="nc" id="L108">            return fromGrpcResponse(response);</span>
+        }, &quot;login&quot;);
     }
 
     @Override
     public AuthResponse refreshToken(RefreshTokenRequest request) {
-        try {
-<span class="nc" id="L105">            com.arcana.cloud.grpc.RefreshTokenRequest grpcRequest = com.arcana.cloud.grpc.RefreshTokenRequest.newBuilder()</span>
-<span class="nc" id="L106">                .setRefreshToken(request.getRefreshToken())</span>
-<span class="nc" id="L107">                .build();</span>
+<span class="nc" id="L114">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L115">            com.arcana.cloud.grpc.RefreshTokenRequest grpcRequest = com.arcana.cloud.grpc.RefreshTokenRequest.newBuilder()</span>
+<span class="nc" id="L116">                .setRefreshToken(request.getRefreshToken())</span>
+<span class="nc" id="L117">                .build();</span>
 
-<span class="nc" id="L109">            com.arcana.cloud.grpc.AuthResponse response = stub.refreshToken(grpcRequest);</span>
-<span class="nc" id="L110">            return fromGrpcResponse(response);</span>
-<span class="nc" id="L111">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L112">            log.error(&quot;gRPC error during token refresh&quot;, e);</span>
-<span class="nc" id="L113">            throw new UnauthorizedException(&quot;Token refresh failed: &quot; + e.getStatus().getDescription());</span>
-        }
+<span class="nc" id="L119">            com.arcana.cloud.grpc.AuthResponse response = stub.refreshToken(grpcRequest);</span>
+<span class="nc" id="L120">            return fromGrpcResponse(response);</span>
+        }, &quot;refreshToken&quot;);
     }
 
     @Override
     public void logout(String accessToken) {
-        try {
-<span class="nc" id="L120">            LogoutRequest grpcRequest = LogoutRequest.newBuilder()</span>
-<span class="nc" id="L121">                .setAccessToken(accessToken)</span>
-<span class="nc" id="L122">                .build();</span>
+<span class="nc" id="L126">        executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L127">            LogoutRequest grpcRequest = LogoutRequest.newBuilder()</span>
+<span class="nc" id="L128">                .setAccessToken(accessToken)</span>
+<span class="nc" id="L129">                .build();</span>
 
-<span class="nc" id="L124">            stub.logout(grpcRequest);</span>
-<span class="nc" id="L125">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L126">            log.error(&quot;gRPC error during logout&quot;, e);</span>
-<span class="nc" id="L127">            throw new RuntimeException(&quot;Logout failed: &quot; + e.getStatus().getDescription());</span>
-<span class="nc" id="L128">        }</span>
-<span class="nc" id="L129">    }</span>
+<span class="nc" id="L131">            stub.logout(grpcRequest);</span>
+<span class="nc" id="L132">            return null;</span>
+        }, &quot;logout&quot;);
+<span class="nc" id="L134">    }</span>
 
     @Override
     public void logoutAll(Long userId) {
-        try {
-<span class="nc" id="L134">            LogoutAllRequest grpcRequest = LogoutAllRequest.newBuilder()</span>
-<span class="nc" id="L135">                .setUserId(userId)</span>
-<span class="nc" id="L136">                .build();</span>
+<span class="nc" id="L138">        executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L139">            LogoutAllRequest grpcRequest = LogoutAllRequest.newBuilder()</span>
+<span class="nc" id="L140">                .setUserId(userId)</span>
+<span class="nc" id="L141">                .build();</span>
 
-<span class="nc" id="L138">            stub.logoutAll(grpcRequest);</span>
-<span class="nc" id="L139">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L140">            log.error(&quot;gRPC error during logout all&quot;, e);</span>
-<span class="nc" id="L141">            throw new RuntimeException(&quot;Logout all failed: &quot; + e.getStatus().getDescription());</span>
-<span class="nc" id="L142">        }</span>
-<span class="nc" id="L143">    }</span>
+<span class="nc" id="L143">            stub.logoutAll(grpcRequest);</span>
+<span class="nc" id="L144">            return null;</span>
+        }, &quot;logoutAll&quot;);
+<span class="nc" id="L146">    }</span>
 
     private AuthResponse fromGrpcResponse(com.arcana.cloud.grpc.AuthResponse response) {
-<span class="nc" id="L146">        UserResponse userResponse = null;</span>
-<span class="nc bnc" id="L147" title="All 2 branches missed.">        if (response.hasUser()) {</span>
-<span class="nc" id="L148">            UserInfo userInfo = response.getUser();</span>
-<span class="nc" id="L149">            userResponse = UserResponse.builder()</span>
-<span class="nc" id="L150">                .id(userInfo.getId())</span>
-<span class="nc" id="L151">                .username(userInfo.getUsername())</span>
-<span class="nc" id="L152">                .email(userInfo.getEmail())</span>
-<span class="nc bnc" id="L153" title="All 2 branches missed.">                .firstName(userInfo.getFirstName().isEmpty() ? null : userInfo.getFirstName())</span>
-<span class="nc bnc" id="L154" title="All 2 branches missed.">                .lastName(userInfo.getLastName().isEmpty() ? null : userInfo.getLastName())</span>
-<span class="nc" id="L155">                .role(UserRole.valueOf(userInfo.getRole()))</span>
-<span class="nc" id="L156">                .isActive(userInfo.getIsActive())</span>
-<span class="nc" id="L157">                .isVerified(userInfo.getIsVerified())</span>
-<span class="nc" id="L158">                .build();</span>
+<span class="nc" id="L149">        UserResponse userResponse = null;</span>
+<span class="nc bnc" id="L150" title="All 2 branches missed.">        if (response.hasUser()) {</span>
+<span class="nc" id="L151">            UserInfo userInfo = response.getUser();</span>
+<span class="nc" id="L152">            userResponse = UserResponse.builder()</span>
+<span class="nc" id="L153">                .id(userInfo.getId())</span>
+<span class="nc" id="L154">                .username(userInfo.getUsername())</span>
+<span class="nc" id="L155">                .email(userInfo.getEmail())</span>
+<span class="nc bnc" id="L156" title="All 2 branches missed.">                .firstName(userInfo.getFirstName().isEmpty() ? null : userInfo.getFirstName())</span>
+<span class="nc bnc" id="L157" title="All 2 branches missed.">                .lastName(userInfo.getLastName().isEmpty() ? null : userInfo.getLastName())</span>
+<span class="nc" id="L158">                .role(UserRole.valueOf(userInfo.getRole()))</span>
+<span class="nc" id="L159">                .isActive(userInfo.getIsActive())</span>
+<span class="nc" id="L160">                .isVerified(userInfo.getIsVerified())</span>
+<span class="nc" id="L161">                .build();</span>
         }
 
-<span class="nc" id="L161">        return AuthResponse.builder()</span>
-<span class="nc" id="L162">            .accessToken(response.getAccessToken())</span>
-<span class="nc" id="L163">            .refreshToken(response.getRefreshToken())</span>
-<span class="nc" id="L164">            .tokenType(response.getTokenType())</span>
-<span class="nc" id="L165">            .expiresIn(response.getExpiresIn())</span>
-<span class="nc" id="L166">            .user(userResponse)</span>
-<span class="nc" id="L167">            .build();</span>
+<span class="nc" id="L164">        return AuthResponse.builder()</span>
+<span class="nc" id="L165">            .accessToken(response.getAccessToken())</span>
+<span class="nc" id="L166">            .refreshToken(response.getRefreshToken())</span>
+<span class="nc" id="L167">            .tokenType(response.getTokenType())</span>
+<span class="nc" id="L168">            .expiresIn(response.getExpiresIn())</span>
+<span class="nc" id="L169">            .user(userResponse)</span>
+<span class="nc" id="L170">            .build();</span>
+    }
+
+    /**
+     * Executes a gRPC call with circuit breaker protection.
+     */
+    private &lt;T&gt; T executeWithCircuitBreaker(Supplier&lt;T&gt; supplier, String operation) {
+        try {
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            if (authServiceCircuitBreaker != null) {</span>
+<span class="nc" id="L179">                return authServiceCircuitBreaker.executeSupplier(() -&gt; executeGrpcCall(supplier, operation));</span>
+            } else {
+<span class="nc" id="L181">                return executeGrpcCall(supplier, operation);</span>
+            }
+<span class="nc" id="L183">        } catch (CallNotPermittedException e) {</span>
+<span class="nc" id="L184">            log.warn(&quot;Circuit breaker OPEN for Auth Service, operation: {}&quot;, operation);</span>
+<span class="nc" id="L185">            throw new ServiceUnavailableException(&quot;Auth service is unavailable&quot;);</span>
+        }
+    }
+
+    /**
+     * Executes a gRPC call with proper error handling and categorization.
+     */
+    private &lt;T&gt; T executeGrpcCall(Supplier&lt;T&gt; supplier, String operation) {
+        try {
+<span class="nc" id="L194">            return supplier.get();</span>
+<span class="nc" id="L195">        } catch (StatusRuntimeException e) {</span>
+<span class="nc" id="L196">            Status.Code code = e.getStatus().getCode();</span>
+
+            // Categorize error by status code for better debugging
+<span class="nc bnc" id="L199" title="All 5 branches missed.">            switch (code) {</span>
+                case UNAUTHENTICATED:
+                case PERMISSION_DENIED:
+<span class="nc" id="L202">                    log.debug(&quot;Authentication failed in {}: {}&quot;, operation, e.getStatus().getDescription());</span>
+<span class="nc" id="L203">                    throw new UnauthorizedException(e.getStatus().getDescription());</span>
+                case UNAVAILABLE:
+                case DEADLINE_EXCEEDED:
+<span class="nc" id="L206">                    log.error(&quot;Service unavailable in {}: {} ({})&quot;, operation, e.getStatus().getDescription(), code);</span>
+<span class="nc" id="L207">                    throw new ServiceUnavailableException(&quot;Auth service unavailable: &quot; + e.getStatus().getDescription());</span>
+                case INVALID_ARGUMENT:
+<span class="nc" id="L209">                    log.error(&quot;Invalid argument in {}: {}&quot;, operation, e.getStatus().getDescription());</span>
+<span class="nc" id="L210">                    throw new IllegalArgumentException(&quot;Invalid argument: &quot; + e.getStatus().getDescription());</span>
+                case ALREADY_EXISTS:
+<span class="nc" id="L212">                    log.debug(&quot;Resource already exists in {}: {}&quot;, operation, e.getStatus().getDescription());</span>
+<span class="nc" id="L213">                    throw new RuntimeException(&quot;Resource already exists: &quot; + e.getStatus().getDescription());</span>
+                default:
+<span class="nc" id="L215">                    log.error(&quot;gRPC error in {}: {} ({})&quot;, operation, e.getStatus().getDescription(), code);</span>
+<span class="nc" id="L216">                    throw new RuntimeException(&quot;Service error: &quot; + e.getStatus().getDescription());</span>
+            }
+        }
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

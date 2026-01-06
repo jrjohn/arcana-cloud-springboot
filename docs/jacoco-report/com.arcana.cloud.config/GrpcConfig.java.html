@@ -74,33 +74,36 @@ import java.util.concurrent.TimeUnit;
     @Value(&quot;${grpc.client.max-inbound-message-size:16777216}&quot;)
     private int maxInboundMessageSize;
 
+    @Value(&quot;${grpc.client.shutdown-timeout-seconds:5}&quot;)
+    private long shutdownTimeoutSeconds;
+
     private ManagedChannel serviceChannel;
     private ManagedChannel repositoryChannel;
 
     @Bean
     @ConditionalOnProperty(name = &quot;deployment.layer&quot;, havingValue = &quot;controller&quot;)
     public ManagedChannel serviceChannel() {
-<span class="nc" id="L83">        log.info(&quot;Creating gRPC service channel to {} (TLS: {})&quot;, serviceGrpcUrl, tlsEnabled);</span>
-<span class="nc" id="L84">        this.serviceChannel = createChannel(serviceGrpcUrl);</span>
-<span class="nc" id="L85">        return this.serviceChannel;</span>
+<span class="nc" id="L86">        log.info(&quot;Creating gRPC service channel to {} (TLS: {})&quot;, serviceGrpcUrl, tlsEnabled);</span>
+<span class="nc" id="L87">        this.serviceChannel = createChannel(serviceGrpcUrl);</span>
+<span class="nc" id="L88">        return this.serviceChannel;</span>
     }
 
     @Bean
     @ConditionalOnProperty(name = &quot;deployment.layer&quot;, havingValue = &quot;service&quot;)
     public ManagedChannel repositoryChannel() {
-<span class="nc" id="L91">        log.info(&quot;Creating gRPC repository channel to {} (TLS: {})&quot;, repositoryGrpcUrl, tlsEnabled);</span>
-<span class="nc" id="L92">        this.repositoryChannel = createChannel(repositoryGrpcUrl);</span>
-<span class="nc" id="L93">        return this.repositoryChannel;</span>
+<span class="nc" id="L94">        log.info(&quot;Creating gRPC repository channel to {} (TLS: {})&quot;, repositoryGrpcUrl, tlsEnabled);</span>
+<span class="nc" id="L95">        this.repositoryChannel = createChannel(repositoryGrpcUrl);</span>
+<span class="nc" id="L96">        return this.repositoryChannel;</span>
     }
 
     /**
      * Creates a managed gRPC channel with configured resilience and security settings.
      */
     private ManagedChannel createChannel(String target) {
-<span class="nc bnc" id="L100" title="All 2 branches missed.">        if (tlsEnabled) {</span>
-<span class="nc" id="L101">            return createSecureChannel(target);</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">        if (tlsEnabled) {</span>
+<span class="nc" id="L104">            return createSecureChannel(target);</span>
         } else {
-<span class="nc" id="L103">            return createPlaintextChannel(target);</span>
+<span class="nc" id="L106">            return createPlaintextChannel(target);</span>
         }
     }
 
@@ -108,18 +111,18 @@ import java.util.concurrent.TimeUnit;
      * Creates a plaintext channel (for development/testing).
      */
     private ManagedChannel createPlaintextChannel(String target) {
-<span class="nc" id="L111">        return ManagedChannelBuilder.forTarget(target)</span>
-<span class="nc" id="L112">            .usePlaintext()</span>
-<span class="nc" id="L113">            .keepAliveTime(keepAliveTimeSeconds, TimeUnit.SECONDS)</span>
-<span class="nc" id="L114">            .keepAliveTimeout(keepAliveTimeoutSeconds, TimeUnit.SECONDS)</span>
-<span class="nc" id="L115">            .keepAliveWithoutCalls(true)</span>
-<span class="nc" id="L116">            .maxInboundMessageSize(maxInboundMessageSize)</span>
+<span class="nc" id="L114">        return ManagedChannelBuilder.forTarget(target)</span>
+<span class="nc" id="L115">            .usePlaintext()</span>
+<span class="nc" id="L116">            .keepAliveTime(keepAliveTimeSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L117">            .keepAliveTimeout(keepAliveTimeoutSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L118">            .keepAliveWithoutCalls(true)</span>
+<span class="nc" id="L119">            .maxInboundMessageSize(maxInboundMessageSize)</span>
             // Enable retry
-<span class="nc" id="L118">            .enableRetry()</span>
-<span class="nc" id="L119">            .maxRetryAttempts(maxRetryAttempts)</span>
+<span class="nc" id="L121">            .enableRetry()</span>
+<span class="nc" id="L122">            .maxRetryAttempts(maxRetryAttempts)</span>
             // Default service config with retry policy
-<span class="nc" id="L121">            .defaultServiceConfig(getDefaultServiceConfig())</span>
-<span class="nc" id="L122">            .build();</span>
+<span class="nc" id="L124">            .defaultServiceConfig(getDefaultServiceConfig())</span>
+<span class="nc" id="L125">            .build();</span>
     }
 
     /**
@@ -127,22 +130,22 @@ import java.util.concurrent.TimeUnit;
      */
     private ManagedChannel createSecureChannel(String target) {
         try {
-<span class="nc" id="L130">            SslContext sslContext = buildSslContext();</span>
+<span class="nc" id="L133">            SslContext sslContext = buildSslContext();</span>
 
-<span class="nc" id="L132">            return NettyChannelBuilder.forTarget(target)</span>
-<span class="nc" id="L133">                .sslContext(sslContext)</span>
-<span class="nc" id="L134">                .keepAliveTime(keepAliveTimeSeconds, TimeUnit.SECONDS)</span>
-<span class="nc" id="L135">                .keepAliveTimeout(keepAliveTimeoutSeconds, TimeUnit.SECONDS)</span>
-<span class="nc" id="L136">                .keepAliveWithoutCalls(true)</span>
-<span class="nc" id="L137">                .maxInboundMessageSize(maxInboundMessageSize)</span>
-<span class="nc" id="L138">                .enableRetry()</span>
-<span class="nc" id="L139">                .maxRetryAttempts(maxRetryAttempts)</span>
-<span class="nc" id="L140">                .defaultServiceConfig(getDefaultServiceConfig())</span>
-<span class="nc" id="L141">                .build();</span>
+<span class="nc" id="L135">            return NettyChannelBuilder.forTarget(target)</span>
+<span class="nc" id="L136">                .sslContext(sslContext)</span>
+<span class="nc" id="L137">                .keepAliveTime(keepAliveTimeSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L138">                .keepAliveTimeout(keepAliveTimeoutSeconds, TimeUnit.SECONDS)</span>
+<span class="nc" id="L139">                .keepAliveWithoutCalls(true)</span>
+<span class="nc" id="L140">                .maxInboundMessageSize(maxInboundMessageSize)</span>
+<span class="nc" id="L141">                .enableRetry()</span>
+<span class="nc" id="L142">                .maxRetryAttempts(maxRetryAttempts)</span>
+<span class="nc" id="L143">                .defaultServiceConfig(getDefaultServiceConfig())</span>
+<span class="nc" id="L144">                .build();</span>
 
-<span class="nc" id="L143">        } catch (SSLException e) {</span>
-<span class="nc" id="L144">            log.error(&quot;Failed to create secure gRPC channel, falling back to plaintext&quot;, e);</span>
-<span class="nc" id="L145">            return createPlaintextChannel(target);</span>
+<span class="nc" id="L146">        } catch (SSLException e) {</span>
+<span class="nc" id="L147">            log.error(&quot;Failed to create secure gRPC channel, falling back to plaintext&quot;, e);</span>
+<span class="nc" id="L148">            return createPlaintextChannel(target);</span>
         }
     }
 
@@ -150,29 +153,29 @@ import java.util.concurrent.TimeUnit;
      * Builds SSL context for TLS/mTLS.
      */
     private SslContext buildSslContext() throws SSLException {
-<span class="nc" id="L153">        SslContextBuilder builder = GrpcSslContexts.forClient();</span>
+<span class="nc" id="L156">        SslContextBuilder builder = GrpcSslContexts.forClient();</span>
 
         // Trust certificate (CA certificate for server verification)
-<span class="nc bnc" id="L156" title="All 4 branches missed.">        if (trustCertPath != null &amp;&amp; !trustCertPath.isEmpty()) {</span>
-<span class="nc" id="L157">            File trustCert = new File(trustCertPath);</span>
-<span class="nc bnc" id="L158" title="All 2 branches missed.">            if (trustCert.exists()) {</span>
-<span class="nc" id="L159">                builder.trustManager(trustCert);</span>
-<span class="nc" id="L160">                log.info(&quot;Loaded trust certificate from: {}&quot;, trustCertPath);</span>
+<span class="nc bnc" id="L159" title="All 4 branches missed.">        if (trustCertPath != null &amp;&amp; !trustCertPath.isEmpty()) {</span>
+<span class="nc" id="L160">            File trustCert = new File(trustCertPath);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            if (trustCert.exists()) {</span>
+<span class="nc" id="L162">                builder.trustManager(trustCert);</span>
+<span class="nc" id="L163">                log.info(&quot;Loaded trust certificate from: {}&quot;, trustCertPath);</span>
             }
         }
 
         // Client certificate and key (for mTLS)
-<span class="nc bnc" id="L165" title="All 6 branches missed.">        if (clientCertPath != null &amp;&amp; !clientCertPath.isEmpty()</span>
-<span class="nc bnc" id="L166" title="All 2 branches missed.">            &amp;&amp; clientKeyPath != null &amp;&amp; !clientKeyPath.isEmpty()) {</span>
-<span class="nc" id="L167">            File clientCert = new File(clientCertPath);</span>
-<span class="nc" id="L168">            File clientKey = new File(clientKeyPath);</span>
-<span class="nc bnc" id="L169" title="All 4 branches missed.">            if (clientCert.exists() &amp;&amp; clientKey.exists()) {</span>
-<span class="nc" id="L170">                builder.keyManager(clientCert, clientKey);</span>
-<span class="nc" id="L171">                log.info(&quot;Loaded client certificate for mTLS from: {}&quot;, clientCertPath);</span>
+<span class="nc bnc" id="L168" title="All 6 branches missed.">        if (clientCertPath != null &amp;&amp; !clientCertPath.isEmpty()</span>
+<span class="nc bnc" id="L169" title="All 2 branches missed.">            &amp;&amp; clientKeyPath != null &amp;&amp; !clientKeyPath.isEmpty()) {</span>
+<span class="nc" id="L170">            File clientCert = new File(clientCertPath);</span>
+<span class="nc" id="L171">            File clientKey = new File(clientKeyPath);</span>
+<span class="nc bnc" id="L172" title="All 4 branches missed.">            if (clientCert.exists() &amp;&amp; clientKey.exists()) {</span>
+<span class="nc" id="L173">                builder.keyManager(clientCert, clientKey);</span>
+<span class="nc" id="L174">                log.info(&quot;Loaded client certificate for mTLS from: {}&quot;, clientCertPath);</span>
             }
         }
 
-<span class="nc" id="L175">        return builder.build();</span>
+<span class="nc" id="L178">        return builder.build();</span>
     }
 
     /**
@@ -180,48 +183,48 @@ import java.util.concurrent.TimeUnit;
      */
     private java.util.Map&lt;String, Object&gt; getDefaultServiceConfig() {
         // Retry policy for idempotent methods
-<span class="nc" id="L183">        java.util.Map&lt;String, Object&gt; retryPolicy = new java.util.HashMap&lt;&gt;();</span>
-<span class="nc" id="L184">        retryPolicy.put(&quot;maxAttempts&quot;, (double) maxRetryAttempts);</span>
-<span class="nc" id="L185">        retryPolicy.put(&quot;initialBackoff&quot;, initialBackoffMs + &quot;ms&quot;);</span>
-<span class="nc" id="L186">        retryPolicy.put(&quot;maxBackoff&quot;, maxBackoffMs + &quot;ms&quot;);</span>
-<span class="nc" id="L187">        retryPolicy.put(&quot;backoffMultiplier&quot;, 2.0);</span>
-<span class="nc" id="L188">        retryPolicy.put(&quot;retryableStatusCodes&quot;, java.util.List.of(&quot;UNAVAILABLE&quot;, &quot;DEADLINE_EXCEEDED&quot;));</span>
+<span class="nc" id="L186">        java.util.Map&lt;String, Object&gt; retryPolicy = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L187">        retryPolicy.put(&quot;maxAttempts&quot;, (double) maxRetryAttempts);</span>
+<span class="nc" id="L188">        retryPolicy.put(&quot;initialBackoff&quot;, initialBackoffMs + &quot;ms&quot;);</span>
+<span class="nc" id="L189">        retryPolicy.put(&quot;maxBackoff&quot;, maxBackoffMs + &quot;ms&quot;);</span>
+<span class="nc" id="L190">        retryPolicy.put(&quot;backoffMultiplier&quot;, 2.0);</span>
+<span class="nc" id="L191">        retryPolicy.put(&quot;retryableStatusCodes&quot;, java.util.List.of(&quot;UNAVAILABLE&quot;, &quot;DEADLINE_EXCEEDED&quot;));</span>
 
-<span class="nc" id="L190">        java.util.Map&lt;String, Object&gt; methodConfig = new java.util.HashMap&lt;&gt;();</span>
-<span class="nc" id="L191">        methodConfig.put(&quot;name&quot;, java.util.List.of(java.util.Map.of()));</span>
-<span class="nc" id="L192">        methodConfig.put(&quot;retryPolicy&quot;, retryPolicy);</span>
-<span class="nc" id="L193">        methodConfig.put(&quot;timeout&quot;, deadlineMs + &quot;ms&quot;);</span>
+<span class="nc" id="L193">        java.util.Map&lt;String, Object&gt; methodConfig = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L194">        methodConfig.put(&quot;name&quot;, java.util.List.of(java.util.Map.of()));</span>
+<span class="nc" id="L195">        methodConfig.put(&quot;retryPolicy&quot;, retryPolicy);</span>
+<span class="nc" id="L196">        methodConfig.put(&quot;timeout&quot;, deadlineMs + &quot;ms&quot;);</span>
 
-<span class="nc" id="L195">        java.util.Map&lt;String, Object&gt; serviceConfig = new java.util.HashMap&lt;&gt;();</span>
-<span class="nc" id="L196">        serviceConfig.put(&quot;methodConfig&quot;, java.util.List.of(methodConfig));</span>
+<span class="nc" id="L198">        java.util.Map&lt;String, Object&gt; serviceConfig = new java.util.HashMap&lt;&gt;();</span>
+<span class="nc" id="L199">        serviceConfig.put(&quot;methodConfig&quot;, java.util.List.of(methodConfig));</span>
 
         // Load balancing policy for Kubernetes DNS
-<span class="nc" id="L199">        serviceConfig.put(&quot;loadBalancingPolicy&quot;, &quot;round_robin&quot;);</span>
+<span class="nc" id="L202">        serviceConfig.put(&quot;loadBalancingPolicy&quot;, &quot;round_robin&quot;);</span>
 
-<span class="nc" id="L201">        return serviceConfig;</span>
+<span class="nc" id="L204">        return serviceConfig;</span>
     }
 
     @PreDestroy
     public void shutdown() {
-<span class="nc" id="L206">        log.info(&quot;Shutting down gRPC channels&quot;);</span>
-<span class="nc" id="L207">        shutdownChannel(serviceChannel, &quot;service&quot;);</span>
-<span class="nc" id="L208">        shutdownChannel(repositoryChannel, &quot;repository&quot;);</span>
-<span class="nc" id="L209">    }</span>
+<span class="fc" id="L209">        log.info(&quot;Shutting down gRPC channels&quot;);</span>
+<span class="fc" id="L210">        shutdownChannel(serviceChannel, &quot;service&quot;);</span>
+<span class="fc" id="L211">        shutdownChannel(repositoryChannel, &quot;repository&quot;);</span>
+<span class="fc" id="L212">    }</span>
 
     private void shutdownChannel(ManagedChannel channel, String name) {
-<span class="nc bnc" id="L212" title="All 4 branches missed.">        if (channel != null &amp;&amp; !channel.isShutdown()) {</span>
+<span class="pc bpc" id="L215" title="3 of 4 branches missed.">        if (channel != null &amp;&amp; !channel.isShutdown()) {</span>
             try {
-<span class="nc" id="L214">                channel.shutdown();</span>
-<span class="nc bnc" id="L215" title="All 2 branches missed.">                if (!channel.awaitTermination(5, TimeUnit.SECONDS)) {</span>
-<span class="nc" id="L216">                    log.warn(&quot;gRPC {} channel did not terminate gracefully, forcing shutdown&quot;, name);</span>
-<span class="nc" id="L217">                    channel.shutdownNow();</span>
+<span class="nc" id="L217">                channel.shutdown();</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">                if (!channel.awaitTermination(shutdownTimeoutSeconds, TimeUnit.SECONDS)) {</span>
+<span class="nc" id="L219">                    log.warn(&quot;gRPC {} channel did not terminate gracefully, forcing shutdown&quot;, name);</span>
+<span class="nc" id="L220">                    channel.shutdownNow();</span>
                 }
-<span class="nc" id="L219">            } catch (InterruptedException e) {</span>
-<span class="nc" id="L220">                log.warn(&quot;Interrupted while shutting down gRPC {} channel&quot;, name);</span>
-<span class="nc" id="L221">                channel.shutdownNow();</span>
-<span class="nc" id="L222">                Thread.currentThread().interrupt();</span>
-<span class="nc" id="L223">            }</span>
+<span class="nc" id="L222">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L223">                log.warn(&quot;Interrupted while shutting down gRPC {} channel&quot;, name);</span>
+<span class="nc" id="L224">                channel.shutdownNow();</span>
+<span class="nc" id="L225">                Thread.currentThread().interrupt();</span>
+<span class="nc" id="L226">            }</span>
         }
-<span class="nc" id="L225">    }</span>
+<span class="fc" id="L228">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

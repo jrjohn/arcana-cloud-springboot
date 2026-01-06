@@ -8,6 +8,7 @@ import com.arcana.cloud.entity.UserRole;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -32,12 +33,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 class OAuthTokenDaoMongodbIntegrationTest {
 
     @Container
-    static MongoDBContainer mongodb = new MongoDBContainer("mongo:6.0");
+    @ServiceConnection
+    static MongoDBContainer mongodb = new MongoDBContainer("mongo:6.0")
+            .withStartupTimeout(java.time.Duration.ofMinutes(2));
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.data.mongodb.uri", mongodb::getReplicaSetUrl);
+        // MongoDB connection is auto-configured via @ServiceConnection
         registry.add("database.type", () -> "mongodb");
+        registry.add("database.orm", () -> "mongodb");
+        // Disable gRPC server
+        registry.add("spring.grpc.server.enabled", () -> "false");
+        registry.add("spring.grpc.server.port", () -> "-1");
+        registry.add("grpc.server.port", () -> "-1");
     }
 
     @Autowired
@@ -111,6 +119,7 @@ class OAuthTokenDaoMongodbIntegrationTest {
                     .refreshToken("refresh-token-012")
                     .tokenType("Bearer")
                     .expiresAt(now.plusHours(1))
+                    .refreshExpiresAt(now.plusDays(30))
                     .isRevoked(false)
                     .createdAt(now)
                     .build();
@@ -165,6 +174,7 @@ class OAuthTokenDaoMongodbIntegrationTest {
                     .refreshToken("revoked-refresh")
                     .tokenType("Bearer")
                     .expiresAt(now.plusHours(1))
+                    .refreshExpiresAt(now.plusDays(30))
                     .isRevoked(true)
                     .createdAt(now)
                     .build();
@@ -186,6 +196,7 @@ class OAuthTokenDaoMongodbIntegrationTest {
                         .refreshToken("refresh-token-" + i)
                         .tokenType("Bearer")
                         .expiresAt(now.plusHours(1))
+                        .refreshExpiresAt(now.plusDays(30))
                         .isRevoked(false)
                         .createdAt(now)
                         .build();
@@ -213,6 +224,7 @@ class OAuthTokenDaoMongodbIntegrationTest {
                     .refreshToken("refresh-token-012")
                     .tokenType("Bearer")
                     .expiresAt(now.plusHours(1))
+                    .refreshExpiresAt(now.plusDays(30))
                     .isRevoked(false)
                     .createdAt(now)
                     .build();

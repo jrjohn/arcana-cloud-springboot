@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OAuthTokenDaoMongodbImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.dao.impl.mongodb</a> &gt; <span class="el_source">OAuthTokenDaoMongodbImpl.java</span></div><h1>OAuthTokenDaoMongodbImpl.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.dao.impl.mongodb;
+
+import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.document.OAuthTokenDocument;
+import com.arcana.cloud.entity.OAuthToken;
+import com.arcana.cloud.entity.User;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
+/**
+ * MongoDB implementation of OAuthTokenDao.
+ * Active when database.type is 'mongodb'.
+ */
+@Repository
+@RequiredArgsConstructor
+<span class="fc" id="L33">@Slf4j</span>
+@ConditionalOnProperty(name = &quot;database.type&quot;, havingValue = &quot;mongodb&quot;)
+public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
+
+    private final MongoTemplate mongoTemplate;
+    private final UserDao userDao;
+
+    // Simple ID generator for legacy ID compatibility
+<span class="fc" id="L41">    private static final AtomicLong idGenerator = new AtomicLong(1000000);</span>
+
+    @Override
+    public OAuthToken save(OAuthToken entity) {
+<span class="fc" id="L45">        log.debug(&quot;MongoDB DAO: Saving OAuth token&quot;);</span>
+
+<span class="fc" id="L47">        OAuthTokenDocument document = OAuthTokenDocument.fromEntity(entity);</span>
+
+        // Handle new entities (no legacy ID)
+<span class="fc bfc" id="L50" title="All 2 branches covered.">        if (document.getLegacyId() == null) {</span>
+<span class="fc" id="L51">            document.setLegacyId(idGenerator.incrementAndGet());</span>
+<span class="fc" id="L52">            document.setCreatedAt(LocalDateTime.now());</span>
+        }
+
+        // Check if document exists by legacyId
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (entity.getId() != null) {</span>
+<span class="fc" id="L57">            Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(entity.getId()));</span>
+<span class="fc" id="L58">            OAuthTokenDocument existing = mongoTemplate.findOne(query, OAuthTokenDocument.class);</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">            if (existing != null) {</span>
+<span class="fc" id="L60">                document.setId(existing.getId());</span>
+            }
+        }
+
+<span class="fc" id="L64">        OAuthTokenDocument saved = mongoTemplate.save(document);</span>
+
+        // Resolve user for the returned entity
+<span class="fc" id="L67">        User user = null;</span>
+<span class="pc bpc" id="L68" title="1 of 2 branches missed.">        if (saved.getUserLegacyId() != null) {</span>
+<span class="fc" id="L69">            user = userDao.findById(saved.getUserLegacyId()).orElse(null);</span>
+        }
+
+<span class="pc bpc" id="L72" title="1 of 2 branches missed.">        OAuthToken result = saved.toEntity(user != null ? user : entity.getUser());</span>
+<span class="fc" id="L73">        result.setId(saved.getLegacyId());</span>
+<span class="fc" id="L74">        return result;</span>
+    }
+
+    @Override
+    public List&lt;OAuthToken&gt; saveAll(Iterable&lt;OAuthToken&gt; entities) {
+<span class="fc" id="L79">        List&lt;OAuthToken&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        for (OAuthToken token : entities) {</span>
+<span class="fc" id="L81">            result.add(save(token));</span>
+<span class="fc" id="L82">        }</span>
+<span class="fc" id="L83">        return result;</span>
+    }
+
+    @Override
+    public Optional&lt;OAuthToken&gt; findById(Long id) {
+<span class="fc" id="L88">        log.debug(&quot;MongoDB DAO: Finding token by ID: {}&quot;, id);</span>
+<span class="fc" id="L89">        Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(id));</span>
+<span class="fc" id="L90">        OAuthTokenDocument doc = mongoTemplate.findOne(query, OAuthTokenDocument.class);</span>
+<span class="fc" id="L91">        return convertToEntity(doc);</span>
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+<span class="fc" id="L96">        Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(id));</span>
+<span class="fc" id="L97">        return mongoTemplate.exists(query, OAuthTokenDocument.class);</span>
+    }
+
+    @Override
+    public List&lt;OAuthToken&gt; findAll() {
+<span class="fc" id="L102">        return mongoTemplate.findAll(OAuthTokenDocument.class).stream()</span>
+<span class="fc" id="L103">                .map(this::convertToEntityOrNull)</span>
+<span class="fc" id="L104">                .collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public Page&lt;OAuthToken&gt; findAll(Pageable pageable) {
+<span class="fc" id="L109">        Query query = new Query().with(pageable);</span>
+<span class="fc" id="L110">        long total = mongoTemplate.count(new Query(), OAuthTokenDocument.class);</span>
+<span class="fc" id="L111">        List&lt;OAuthToken&gt; tokens = mongoTemplate.find(query, OAuthTokenDocument.class).stream()</span>
+<span class="fc" id="L112">                .map(this::convertToEntityOrNull)</span>
+<span class="fc" id="L113">                .collect(Collectors.toList());</span>
+<span class="fc" id="L114">        return new PageImpl&lt;&gt;(tokens, pageable, total);</span>
+    }
+
+    @Override
+    public long count() {
+<span class="fc" id="L119">        return mongoTemplate.count(new Query(), OAuthTokenDocument.class);</span>
+    }
+
+    @Override
+    public void deleteById(Long id) {
+<span class="fc" id="L124">        log.info(&quot;MongoDB DAO: Deleting token by ID: {}&quot;, id);</span>
+<span class="fc" id="L125">        Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(id));</span>
+<span class="fc" id="L126">        mongoTemplate.remove(query, OAuthTokenDocument.class);</span>
+<span class="fc" id="L127">    }</span>
+
+    @Override
+    public void delete(OAuthToken entity) {
+<span class="fc bfc" id="L131" title="All 2 branches covered.">        if (entity.getId() != null) {</span>
+<span class="fc" id="L132">            deleteById(entity.getId());</span>
+        }
+<span class="fc" id="L134">    }</span>
+
+    @Override
+    public void deleteAll() {
+<span class="fc" id="L138">        mongoTemplate.remove(new Query(), OAuthTokenDocument.class);</span>
+<span class="fc" id="L139">    }</span>
+
+    @Override
+    public void deleteAll(Iterable&lt;OAuthToken&gt; entities) {
+<span class="fc" id="L143">        entities.forEach(this::delete);</span>
+<span class="fc" id="L144">    }</span>
+
+    @Override
+    public Optional&lt;OAuthToken&gt; findByAccessToken(String accessToken) {
+<span class="fc" id="L148">        log.debug(&quot;MongoDB DAO: Finding token by access token&quot;);</span>
+<span class="fc" id="L149">        Query query = new Query(Criteria.where(&quot;accessToken&quot;).is(accessToken));</span>
+<span class="fc" id="L150">        OAuthTokenDocument doc = mongoTemplate.findOne(query, OAuthTokenDocument.class);</span>
+<span class="fc" id="L151">        return convertToEntity(doc);</span>
+    }
+
+    @Override
+    public Optional&lt;OAuthToken&gt; findByRefreshToken(String refreshToken) {
+<span class="fc" id="L156">        log.debug(&quot;MongoDB DAO: Finding token by refresh token&quot;);</span>
+<span class="fc" id="L157">        Query query = new Query(Criteria.where(&quot;refreshToken&quot;).is(refreshToken));</span>
+<span class="fc" id="L158">        OAuthTokenDocument doc = mongoTemplate.findOne(query, OAuthTokenDocument.class);</span>
+<span class="fc" id="L159">        return convertToEntity(doc);</span>
+    }
+
+    @Override
+    public List&lt;OAuthToken&gt; findByUserAndIsRevokedFalse(User user) {
+<span class="fc" id="L164">        log.debug(&quot;MongoDB DAO: Finding non-revoked tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L165">        Query query = new Query(Criteria.where(&quot;userLegacyId&quot;).is(user.getId()).and(&quot;isRevoked&quot;).is(false));</span>
+<span class="fc" id="L166">        return mongoTemplate.find(query, OAuthTokenDocument.class).stream()</span>
+<span class="fc" id="L167">                .map(doc -&gt; {</span>
+<span class="fc" id="L168">                    OAuthToken token = doc.toEntity(user);</span>
+<span class="fc" id="L169">                    token.setId(doc.getLegacyId());</span>
+<span class="fc" id="L170">                    return token;</span>
+                })
+<span class="fc" id="L172">                .collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public void revokeAllTokensByUser(User user) {
+<span class="fc" id="L177">        log.info(&quot;MongoDB DAO: Revoking all tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L178">        Query query = new Query(Criteria.where(&quot;userLegacyId&quot;).is(user.getId()));</span>
+<span class="fc" id="L179">        Update update = new Update().set(&quot;isRevoked&quot;, true);</span>
+<span class="fc" id="L180">        mongoTemplate.updateMulti(query, update, OAuthTokenDocument.class);</span>
+<span class="fc" id="L181">    }</span>
+
+    @Override
+    public void revokeByAccessToken(String accessToken) {
+<span class="fc" id="L185">        log.info(&quot;MongoDB DAO: Revoking token by access token&quot;);</span>
+<span class="fc" id="L186">        Query query = new Query(Criteria.where(&quot;accessToken&quot;).is(accessToken));</span>
+<span class="fc" id="L187">        Update update = new Update().set(&quot;isRevoked&quot;, true);</span>
+<span class="fc" id="L188">        mongoTemplate.updateFirst(query, update, OAuthTokenDocument.class);</span>
+<span class="fc" id="L189">    }</span>
+
+    @Override
+    public void deleteExpiredOrRevokedTokens(LocalDateTime now) {
+<span class="fc" id="L193">        log.info(&quot;MongoDB DAO: Deleting expired or revoked tokens&quot;);</span>
+<span class="fc" id="L194">        Query query = new Query(new Criteria().orOperator(</span>
+<span class="fc" id="L195">                Criteria.where(&quot;expiresAt&quot;).lt(now),</span>
+<span class="fc" id="L196">                Criteria.where(&quot;isRevoked&quot;).is(true)</span>
+        ));
+<span class="fc" id="L198">        mongoTemplate.remove(query, OAuthTokenDocument.class);</span>
+<span class="fc" id="L199">    }</span>
+
+    @Override
+    public List&lt;OAuthToken&gt; findValidTokensByUser(User user, LocalDateTime now) {
+<span class="fc" id="L203">        log.debug(&quot;MongoDB DAO: Finding valid tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L204">        Query query = new Query(Criteria.where(&quot;userLegacyId&quot;).is(user.getId())</span>
+<span class="fc" id="L205">                .and(&quot;isRevoked&quot;).is(false)</span>
+<span class="fc" id="L206">                .and(&quot;expiresAt&quot;).gt(now));</span>
+<span class="fc" id="L207">        return mongoTemplate.find(query, OAuthTokenDocument.class).stream()</span>
+<span class="fc" id="L208">                .map(doc -&gt; {</span>
+<span class="fc" id="L209">                    OAuthToken token = doc.toEntity(user);</span>
+<span class="fc" id="L210">                    token.setId(doc.getLegacyId());</span>
+<span class="fc" id="L211">                    return token;</span>
+                })
+<span class="fc" id="L213">                .collect(Collectors.toList());</span>
+    }
+
+    private Optional&lt;OAuthToken&gt; convertToEntity(OAuthTokenDocument doc) {
+<span class="fc bfc" id="L217" title="All 2 branches covered.">        if (doc == null) {</span>
+<span class="fc" id="L218">            return Optional.empty();</span>
+        }
+<span class="fc" id="L220">        User user = null;</span>
+<span class="fc bfc" id="L221" title="All 2 branches covered.">        if (doc.getUserLegacyId() != null) {</span>
+<span class="fc" id="L222">            user = userDao.findById(doc.getUserLegacyId()).orElse(null);</span>
+        }
+<span class="fc" id="L224">        OAuthToken token = doc.toEntity(user);</span>
+<span class="fc" id="L225">        token.setId(doc.getLegacyId());</span>
+<span class="fc" id="L226">        return Optional.of(token);</span>
+    }
+
+    private OAuthToken convertToEntityOrNull(OAuthTokenDocument doc) {
+<span class="fc" id="L230">        return convertToEntity(doc).orElse(null);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

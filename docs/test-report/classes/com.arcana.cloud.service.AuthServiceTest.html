@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.900s</div>
+<div class="counter">0.797s</div>
 <p>duration</p>
 </div>
 </td>
@@ -82,7 +82,7 @@
 </thead>
 <tr>
 <td class="success">testLogin_AccountDisabled()</td>
-<td class="success">0.831s</td>
+<td class="success">0.751s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -92,22 +92,22 @@
 </tr>
 <tr>
 <td class="success">testLogin_InvalidPassword()</td>
-<td class="success">0.002s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testLogin_Success()</td>
-<td class="success">0.007s</td>
-<td class="success">passed</td>
-</tr>
-<tr>
-<td class="success">testLogin_UserNotFound()</td>
 <td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
+<td class="success">testLogin_Success()</td>
+<td class="success">0.003s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testLogin_UserNotFound()</td>
+<td class="success">0.002s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
 <td class="success">testLogoutAll_Success()</td>
-<td class="success">0.004s</td>
+<td class="success">0.005s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -127,42 +127,42 @@
 </tr>
 <tr>
 <td class="success">testRefreshToken_InvalidToken()</td>
-<td class="success">0.003s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRefreshToken_Success()</td>
-<td class="success">0.005s</td>
+<td class="success">0.004s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRefreshToken_TokenNotFound()</td>
-<td class="success">0.003s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRefreshToken_TokenRevoked()</td>
-<td class="success">0.003s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRefreshToken_UserNotFound()</td>
-<td class="success">0.004s</td>
+<td class="success">0.002s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRegister_AdminRole()</td>
-<td class="success">0.019s</td>
+<td class="success">0.011s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRegister_EmailExists()</td>
-<td class="success">0.004s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRegister_PasswordMismatch()</td>
-<td class="success">0.003s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -172,7 +172,7 @@
 </tr>
 <tr>
 <td class="success">testRegister_UsernameExists()</td>
-<td class="success">0.002s</td>
+<td class="success">0.001s</td>
 <td class="success">passed</td>
 </tr>
 </table>
@@ -180,30 +180,30 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre id="class-stdout">15:17:31.188 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
-15:17:31.210 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: adminwannabe
-15:17:31.213 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User registered successfully with id: 2
-15:17:31.226 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
-15:17:31.227 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User logged in successfully: testuser
-15:17:31.231 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
-15:17:31.232 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Token refreshed successfully for user: testuser
-15:17:31.234 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Logging out all sessions for user: 1
-15:17:31.239 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
-15:17:31.240 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
-15:17:31.243 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
-15:17:31.245 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
-15:17:31.249 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
-15:17:31.252 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
-15:17:31.256 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
-15:17:31.259 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Logging out all sessions for user: 999
-15:17:31.261 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
-15:17:31.262 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User registered successfully with id: 1
-15:17:31.264 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
-15:17:31.266 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: test@example.com
-15:17:31.266 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User logged in successfully: testuser
-15:17:31.268 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
-15:17:31.269 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Logging out user
-15:17:31.271 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
+<pre id="class-stdout">20:26:56.290 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
+20:26:56.311 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: adminwannabe
+20:26:56.311 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User registered successfully with id: 2
+20:26:56.318 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
+20:26:56.319 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User logged in successfully: testuser
+20:26:56.322 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
+20:26:56.323 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Token refreshed successfully for user: testuser
+20:26:56.325 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Logging out all sessions for user: 1
+20:26:56.331 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
+20:26:56.333 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
+20:26:56.336 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
+20:26:56.338 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
+20:26:56.340 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
+20:26:56.341 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
+20:26:56.343 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
+20:26:56.344 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Logging out all sessions for user: 999
+20:26:56.346 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
+20:26:56.346 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User registered successfully with id: 1
+20:26:56.349 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Refreshing token
+20:26:56.351 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: test@example.com
+20:26:56.351 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- User logged in successfully: testuser
+20:26:56.353 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Login attempt for user: testuser
+20:26:56.354 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Logging out user
+20:26:56.355 [Test worker] INFO com.arcana.cloud.service.impl.AuthServiceImpl -- Registering new user with username: newuser
 </pre>
 <button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="class-stdout">Copy</button>
 </span>
@@ -228,7 +228,7 @@ WARNING: Dynamic loading of agents will be disallowed by default in a future rel
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2025年11月28日 下午3:17:32</p>
+<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2026年1月5日 下午8:26:57</p>
 </div>
 </div>
 </body>

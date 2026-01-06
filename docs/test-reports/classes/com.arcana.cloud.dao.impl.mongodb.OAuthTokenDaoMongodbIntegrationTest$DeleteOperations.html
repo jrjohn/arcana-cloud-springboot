@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Delete Operations</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Delete Operations</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.arcana.cloud.dao.impl.mongodb.html">com.arcana.cloud.dao.impl.mongodb</a> &gt; OAuthTokenDaoMongodbIntegrationTest$DeleteOperations</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">2</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">2</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1m0.02s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox failures" id="successRate">
+<div class="percent">0%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a href="#">Failed tests</a>
+</li>
+<li>
+<a href="#">Tests</a>
+</li>
+<li>
+<a href="#">Standard output</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Failed tests</h2>
+<div class="test">
+<a name="deleteAll_ShouldDeleteAllTokens()"></a>
+<h3 class="failures">Should delete all tokens</h3>
+<span class="code">
+<pre id="test-message-deleteAll_ShouldDeleteAllTokens()">java.util.concurrent.TimeoutException: com.arcana.cloud.dao.impl.mongodb.OAuthTokenDaoMongodbIntegrationTest#setUp() timed out after 30 seconds
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	Suppressed: org.springframework.dao.DataAccessResourceFailureException: Timed out while waiting for a server that matches WritableServerSelector. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused}}]
+		at app//org.springframework.data.mongodb.core.MongoExceptionTranslator.doTranslateException(MongoExceptionTranslator.java:96)
+		at app//org.springframework.data.mongodb.core.MongoExceptionTranslator.translateExceptionIfPossible(MongoExceptionTranslator.java:72)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.potentiallyConvertRuntimeException(MongoTemplate.java:3175)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.execute(MongoTemplate.java:628)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.dropCollection(MongoTemplate.java:783)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.dropCollection(MongoTemplate.java:775)
+		at app//com.arcana.cloud.dao.impl.mongodb.OAuthTokenDaoMongodbIntegrationTest.setUp(OAuthTokenDaoMongodbIntegrationTest.java:62)
+	Caused by: com.mongodb.MongoTimeoutException: Timed out while waiting for a server that matches WritableServerSelector. Client view of cluster state is {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused}}]
+		at app//com.mongodb.internal.connection.BaseCluster.logAndThrowTimeoutException(BaseCluster.java:431)
+		at app//com.mongodb.internal.connection.BaseCluster.lambda$selectServer$0(BaseCluster.java:166)
+		at app//com.mongodb.internal.time.Timeout.lambda$onExistsAndExpired$16(Timeout.java:238)
+		at app//com.mongodb.internal.time.Timeout.lambda$run$10(Timeout.java:203)
+		at app//com.mongodb.internal.time.TimePoint.checkedCall(TimePoint.java:99)
+		at app//com.mongodb.internal.time.Timeout.call(Timeout.java:176)
+		at app//com.mongodb.internal.time.Timeout.run(Timeout.java:196)
+		at app//com.mongodb.internal.time.Timeout.onExistsAndExpired(Timeout.java:235)
+		at app//com.mongodb.internal.time.Timeout.onExpired(Timeout.java:228)
+		at app//com.mongodb.internal.connection.BaseCluster.selectServer(BaseCluster.java:165)
+		at app//com.mongodb.internal.connection.SingleServerCluster.selectServer(SingleServerCluster.java:47)
+		at app//com.mongodb.internal.binding.ClusterBinding.getWriteConnectionSource(ClusterBinding.java:100)
+		at app//com.mongodb.client.internal.ClientSessionBinding.getConnectionSource(ClientSessionBinding.java:108)
+		at app//com.mongodb.client.internal.ClientSessionBinding.getWriteConnectionSource(ClientSessionBinding.java:98)
+		at app//com.mongodb.internal.operation.SyncOperationHelper.withConnection(SyncOperationHelper.java:110)
+		at app//com.mongodb.internal.operation.DropCollectionOperation.execute(DropCollectionOperation.java:97)
+		at app//com.mongodb.internal.operation.DropCollectionOperation.execute(DropCollectionOperation.java:62)
+		at app//com.mongodb.client.internal.MongoClusterImpl$OperationExecutorImpl.execute(MongoClusterImpl.java:448)
+		at app//com.mongodb.client.internal.MongoCollectionImpl.executeDrop(MongoCollectionImpl.java:894)
+		at app//com.mongodb.client.internal.MongoCollectionImpl.drop(MongoCollectionImpl.java:825)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.lambda$dropCollection$0(MongoTemplate.java:784)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.execute(MongoTemplate.java:626)
+		... 3 more
+</pre>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="test-message-deleteAll_ShouldDeleteAllTokens()">Copy</button>
+</span>
+</div>
+<div class="test">
+<a name="deleteById_ShouldDeleteToken()"></a>
+<h3 class="failures">Should delete token by ID</h3>
+<span class="code">
+<pre id="test-message-deleteById_ShouldDeleteToken()">java.util.concurrent.TimeoutException: com.arcana.cloud.dao.impl.mongodb.OAuthTokenDaoMongodbIntegrationTest#setUp() timed out after 30 seconds
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	Suppressed: org.springframework.data.mongodb.UncategorizedMongoDbException: Interrupted while waiting for a server that matches WritableServerSelector
+		at app//org.springframework.data.mongodb.core.MongoExceptionTranslator.doTranslateException(MongoExceptionTranslator.java:150)
+		at app//org.springframework.data.mongodb.core.MongoExceptionTranslator.translateExceptionIfPossible(MongoExceptionTranslator.java:72)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.potentiallyConvertRuntimeException(MongoTemplate.java:3175)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.execute(MongoTemplate.java:628)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.dropCollection(MongoTemplate.java:783)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.dropCollection(MongoTemplate.java:775)
+		at app//com.arcana.cloud.dao.impl.mongodb.OAuthTokenDaoMongodbIntegrationTest.setUp(OAuthTokenDaoMongodbIntegrationTest.java:62)
+	Caused by: com.mongodb.MongoInterruptedException: Interrupted while waiting for a server that matches WritableServerSelector
+		at app//com.mongodb.internal.thread.InterruptionUtil.interruptAndCreateMongoInterruptedException(InterruptionUtil.java:41)
+		at app//com.mongodb.internal.time.Timeout.awaitOn(Timeout.java:155)
+		at app//com.mongodb.internal.connection.BaseCluster.selectServer(BaseCluster.java:178)
+		at app//com.mongodb.internal.connection.SingleServerCluster.selectServer(SingleServerCluster.java:47)
+		at app//com.mongodb.internal.binding.ClusterBinding.getWriteConnectionSource(ClusterBinding.java:100)
+		at app//com.mongodb.client.internal.ClientSessionBinding.getConnectionSource(ClientSessionBinding.java:108)
+		at app//com.mongodb.client.internal.ClientSessionBinding.getWriteConnectionSource(ClientSessionBinding.java:98)
+		at app//com.mongodb.internal.operation.SyncOperationHelper.withConnection(SyncOperationHelper.java:110)
+		at app//com.mongodb.internal.operation.DropCollectionOperation.execute(DropCollectionOperation.java:97)
+		at app//com.mongodb.internal.operation.DropCollectionOperation.execute(DropCollectionOperation.java:62)
+		at app//com.mongodb.client.internal.MongoClusterImpl$OperationExecutorImpl.execute(MongoClusterImpl.java:448)
+		at app//com.mongodb.client.internal.MongoCollectionImpl.executeDrop(MongoCollectionImpl.java:894)
+		at app//com.mongodb.client.internal.MongoCollectionImpl.drop(MongoCollectionImpl.java:825)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.lambda$dropCollection$0(MongoTemplate.java:784)
+		at app//org.springframework.data.mongodb.core.MongoTemplate.execute(MongoTemplate.java:626)
+		... 3 more
+	Caused by: java.lang.InterruptedException
+		at java.base/java.util.concurrent.locks.AbstractQueuedSynchronizer.tryAcquireSharedNanos(AbstractQueuedSynchronizer.java:1173)
+		at java.base/java.util.concurrent.CountDownLatch.await(CountDownLatch.java:276)
+		at com.mongodb.internal.time.Timeout.lambda$awaitOn$6(Timeout.java:152)
+		at com.mongodb.internal.time.Timeout.lambda$checkedRun$12(Timeout.java:219)
+		at com.mongodb.internal.time.TimePoint.checkedCall(TimePoint.java:101)
+		at com.mongodb.internal.time.Timeout.checkedRun(Timeout.java:215)
+		at com.mongodb.internal.time.Timeout.awaitOn(Timeout.java:150)
+		... 16 more
+</pre>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="test-message-deleteById_ShouldDeleteToken()">Copy</button>
+</span>
+</div>
+</div>
+<div class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Method name</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="failures">Should delete all tokens</td>
+<td class="failures">deleteAll_ShouldDeleteAllTokens()</td>
+<td class="failures">30.013s</td>
+<td class="failures">failed</td>
+</tr>
+<tr>
+<td class="failures">Should delete token by ID</td>
+<td class="failures">deleteById_ShouldDeleteToken()</td>
+<td class="failures">30.009s</td>
+<td class="failures">failed</td>
+</tr>
+</table>
+</div>
+<div class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre id="class-stdout">2026-01-06 10:28:47 [Test worker] INFO  o.s.t.c.s.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [com.arcana.cloud.dao.impl.mongodb.OAuthTokenDaoMongodbIntegrationTest$DeleteOperations]: DeleteOperations does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-01-06 10:28:48 [Test worker] INFO  o.s.b.t.c.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.dao.impl.mongodb.OAuthTokenDaoMongodbIntegrationTest$DeleteOperations
+2026-01-06 10:28:48 [Test worker] INFO  org.mongodb.driver.cluster - Waiting for server to become available for operation dropCollection with ID 489. Remaining time: 29999 ms. Selector: WritableServerSelector, topology description: {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused}}].
+2026-01-06 10:29:18 [Test worker] INFO  org.mongodb.driver.cluster - Waiting for server to become available for operation dropCollection with ID 549. Remaining time: 29999 ms. Selector: WritableServerSelector, topology description: {type=UNKNOWN, servers=[{address=localhost:27017, type=UNKNOWN, state=CONNECTING, exception={com.mongodb.MongoSocketOpenException: Exception opening socket}, caused by {java.net.ConnectException: Connection refused}}].
+</pre>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="class-stdout">Copy</button>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2026年1月6日 上午10:39:55</p>
+</div>
+</div>
+</body>
+</html>

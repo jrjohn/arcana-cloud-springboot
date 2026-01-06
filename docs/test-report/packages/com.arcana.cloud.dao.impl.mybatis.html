@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - Package com.arcana.cloud.dao.impl.mybatis</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>Package com.arcana.cloud.dao.impl.mybatis</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; com.arcana.cloud.dao.impl.mybatis</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">69</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">24</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.198s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox failures" id="successRate">
+<div class="percent">65%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a href="#">Failed tests</a>
+</li>
+<li>
+<a href="#">Classes</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Failed tests</h2>
+<ul class="linkList">
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$DeleteOperations.html">Delete Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$DeleteOperations.html#deleteAll_ShouldDeleteAllTokens()">Should delete all tokens</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$DeleteOperations.html">Delete Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$DeleteOperations.html#deleteById_ShouldDeleteToken()">Should delete token by ID</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html#findAll_WithPagination_ShouldReturnPage()">Should find all tokens with pagination</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html#findByAccessToken_ShouldReturnToken()">Should find token by access token</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html#findById_ExistingToken_ShouldReturnToken()">Should find token by ID</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html#findById_NonExisting_ShouldReturnEmpty()">Should return empty when token not found</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html#findByUserAndIsRevokedFalse_ShouldReturnTokens()">Should find non-revoked tokens by user</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$RevokeOperations.html">Revoke Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$RevokeOperations.html#revokeAllTokensByUser_ShouldRevokeAllUserTokens()">Should revoke all tokens by user</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$SaveOperations.html">Save Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$SaveOperations.html#saveAll_ShouldSaveAllTokens()">Should save all tokens</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$SaveOperations.html">Save Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$SaveOperations.html#save_NewToken_ShouldInsert()">Should insert new token</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$DeleteOperations.html">Delete Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$DeleteOperations.html#deleteAll_ShouldDeleteAllUsers()">Should delete all users</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$DeleteOperations.html">Delete Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$DeleteOperations.html#deleteById_ShouldDeleteUser()">Should delete user by ID</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$ExistsOperations.html">Exists Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$ExistsOperations.html#existsById_Existing_ShouldReturnTrue()">Should return true when user exists by ID</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$ExistsOperations.html">Exists Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$ExistsOperations.html#existsById_NonExisting_ShouldReturnFalse()">Should return false when user does not exist by ID</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html#findActiveUsersByRole_ShouldReturnUsers()">Should find active users by role</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html#findAll_ShouldReturnAllUsers()">Should find all users</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html#findAll_WithPagination_ShouldReturnPage()">Should find all users with pagination</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html#findByEmail_ShouldReturnUser()">Should find user by email</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html#findById_ExistingUser_ShouldReturnUser()">Should find user by ID</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html#findById_NonExisting_ShouldReturnEmpty()">Should return empty when user not found</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html#findByUsername_ShouldReturnUser()">Should find user by username</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$SaveOperations.html">Save Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$SaveOperations.html#saveAll_ShouldSaveAllUsers()">Should save all users</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$SaveOperations.html">Save Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$SaveOperations.html#save_ExistingUser_ShouldUpdate()">Should update existing user</a>
+</li>
+<li>
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$SaveOperations.html">Save Operations</a>.
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$SaveOperations.html#save_NewUser_ShouldInsert()">Should insert new user</a>
+</li>
+</ul>
+</div>
+<div class="tab">
+<h2>Classes</h2>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>Tests</th>
+<th>Failures</th>
+<th>Ignored</th>
+<th>Duration</th>
+<th>Success rate</th>
+</tr>
+</thead>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisImplTest$CountOperations.html">Count Operations</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisImplTest$DeleteOperations.html">Delete Operations</a>
+</td>
+<td>6</td>
+<td>0</td>
+<td>0</td>
+<td>0.006s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisImplTest$ExistsOperations.html">Exists Operations</a>
+</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0.002s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisImplTest$FindOperations.html">Find Operations</a>
+</td>
+<td>8</td>
+<td>0</td>
+<td>0</td>
+<td>0.015s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisImplTest$RevokeOperations.html">Revoke Operations</a>
+</td>
+<td>2</td>
+<td>0</td>
+<td>0</td>
+<td>0.002s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisImplTest$SaveOperations.html">Save Operations</a>
+</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.586s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest.html">OAuthTokenDaoMybatisImpl Integration Tests with MySQL</a>
+</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-</td>
+<td class="success">-</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$DeleteOperations.html">Delete Operations</a>
+</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0.002s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>
+</td>
+<td>5</td>
+<td>5</td>
+<td>0</td>
+<td>0s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$RevokeOperations.html">Revoke Operations</a>
+</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.OAuthTokenDaoMybatisIntegrationTest$SaveOperations.html">Save Operations</a>
+</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0.004s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisImplTest$CountOperations.html">Count Operations</a>
+</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisImplTest$DeleteOperations.html">Delete Operations</a>
+</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>0.518s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisImplTest$ExistsOperations.html">Exists Operations</a>
+</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>0.033s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisImplTest$FindOperations.html">Find Operations</a>
+</td>
+<td>10</td>
+<td>0</td>
+<td>0</td>
+<td>0.012s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisImplTest$SaveOperations.html">Save Operations</a>
+</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0.007s</td>
+<td class="success">100%</td>
+</tr>
+<tr>
+<td class="success">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest.html">UserDaoMybatisImpl Integration Tests with MySQL</a>
+</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>-</td>
+<td class="success">-</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$DeleteOperations.html">Delete Operations</a>
+</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$ExistsOperations.html">Exists Operations</a>
+</td>
+<td>2</td>
+<td>2</td>
+<td>0</td>
+<td>0.001s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$FindOperations.html">Find Operations</a>
+</td>
+<td>7</td>
+<td>7</td>
+<td>0</td>
+<td>0.006s</td>
+<td class="failures">0%</td>
+</tr>
+<tr>
+<td class="failures">
+<a href="../classes/com.arcana.cloud.dao.impl.mybatis.UserDaoMybatisIntegrationTest$SaveOperations.html">Save Operations</a>
+</td>
+<td>3</td>
+<td>3</td>
+<td>0</td>
+<td>0.002s</td>
+<td class="failures">0%</td>
+</tr>
+</table>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2026年1月5日 下午8:26:57</p>
+</div>
+</div>
+</body>
+</html>

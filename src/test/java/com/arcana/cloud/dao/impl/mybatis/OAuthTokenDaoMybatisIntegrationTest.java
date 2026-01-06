@@ -46,6 +46,10 @@ class OAuthTokenDaoMybatisIntegrationTest {
         registry.add("database.type", () -> "mysql");
         registry.add("database.orm", () -> "mybatis");
         registry.add("spring.flyway.enabled", () -> "false");
+        // Disable gRPC server
+        registry.add("spring.grpc.server.enabled", () -> "false");
+        registry.add("spring.grpc.server.port", () -> "-1");
+        registry.add("grpc.server.port", () -> "-1");
     }
 
     @Autowired
@@ -122,6 +126,7 @@ class OAuthTokenDaoMybatisIntegrationTest {
                     .refreshToken("refresh-token-012")
                     .tokenType("Bearer")
                     .expiresAt(now.plusHours(1))
+                    .refreshExpiresAt(now.plusDays(30))
                     .isRevoked(false)
                     .createdAt(now)
                     .build();
@@ -176,6 +181,7 @@ class OAuthTokenDaoMybatisIntegrationTest {
                     .refreshToken("revoked-refresh")
                     .tokenType("Bearer")
                     .expiresAt(now.plusHours(1))
+                    .refreshExpiresAt(now.plusDays(30))
                     .isRevoked(true)
                     .createdAt(now)
                     .build();
@@ -197,6 +203,7 @@ class OAuthTokenDaoMybatisIntegrationTest {
                         .refreshToken("refresh-token-" + i)
                         .tokenType("Bearer")
                         .expiresAt(now.plusHours(1))
+                        .refreshExpiresAt(now.plusDays(30))
                         .isRevoked(false)
                         .createdAt(now)
                         .build();
@@ -224,6 +231,7 @@ class OAuthTokenDaoMybatisIntegrationTest {
                     .refreshToken("refresh-token-012")
                     .tokenType("Bearer")
                     .expiresAt(now.plusHours(1))
+                    .refreshExpiresAt(now.plusDays(30))
                     .isRevoked(false)
                     .createdAt(now)
                     .build();

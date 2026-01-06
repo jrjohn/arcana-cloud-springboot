@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OAuthTokenDaoJpaImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.dao.impl.jpa</a> &gt; <span class="el_source">OAuthTokenDaoJpaImpl.java</span></div><h1>OAuthTokenDaoJpaImpl.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.dao.impl.jpa;
+
+import com.arcana.cloud.dao.impl.jpa.repository.OAuthTokenJpaRepository;
+import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.entity.OAuthToken;
+import com.arcana.cloud.entity.User;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * JPA implementation of OAuthTokenDao.
+ * Active when database.orm is 'jpa'.
+ * Works with MySQL and PostgreSQL databases.
+ */
+@Repository
+@RequiredArgsConstructor
+<span class="fc" id="L26">@Slf4j</span>
+@Transactional
+@ConditionalOnProperty(name = &quot;database.orm&quot;, havingValue = &quot;jpa&quot;)
+public class OAuthTokenDaoJpaImpl implements OAuthTokenDao {
+
+    private final OAuthTokenJpaRepository tokenJpaRepository;
+
+    @Override
+    public OAuthToken save(OAuthToken token) {
+<span class="fc" id="L35">        log.debug(&quot;JPA DAO: Saving OAuth token&quot;);</span>
+<span class="fc" id="L36">        return tokenJpaRepository.save(token);</span>
+    }
+
+    @Override
+    public List&lt;OAuthToken&gt; saveAll(Iterable&lt;OAuthToken&gt; entities) {
+<span class="fc" id="L41">        return tokenJpaRepository.saveAll(entities);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;OAuthToken&gt; findById(Long id) {
+<span class="fc" id="L47">        log.debug(&quot;JPA DAO: Finding token by id: {}&quot;, id);</span>
+<span class="fc" id="L48">        return tokenJpaRepository.findById(id);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsById(Long id) {
+<span class="fc" id="L54">        return tokenJpaRepository.existsById(id);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;OAuthToken&gt; findAll() {
+<span class="fc" id="L60">        log.debug(&quot;JPA DAO: Finding all tokens&quot;);</span>
+<span class="fc" id="L61">        return tokenJpaRepository.findAll();</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page&lt;OAuthToken&gt; findAll(Pageable pageable) {
+<span class="fc" id="L67">        log.debug(&quot;JPA DAO: Finding all tokens with pagination&quot;);</span>
+<span class="fc" id="L68">        return tokenJpaRepository.findAll(pageable);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long count() {
+<span class="fc" id="L74">        return tokenJpaRepository.count();</span>
+    }
+
+    @Override
+    public void deleteById(Long id) {
+<span class="fc" id="L79">        log.info(&quot;JPA DAO: Deleting token by id: {}&quot;, id);</span>
+<span class="fc" id="L80">        tokenJpaRepository.deleteById(id);</span>
+<span class="fc" id="L81">    }</span>
+
+    @Override
+    public void delete(OAuthToken entity) {
+<span class="fc" id="L85">        tokenJpaRepository.delete(entity);</span>
+<span class="fc" id="L86">    }</span>
+
+    @Override
+    public void deleteAll() {
+<span class="fc" id="L90">        log.warn(&quot;JPA DAO: Deleting all tokens&quot;);</span>
+<span class="fc" id="L91">        tokenJpaRepository.deleteAll();</span>
+<span class="fc" id="L92">    }</span>
+
+    @Override
+    public void deleteAll(Iterable&lt;OAuthToken&gt; entities) {
+<span class="fc" id="L96">        tokenJpaRepository.deleteAll(entities);</span>
+<span class="fc" id="L97">    }</span>
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;OAuthToken&gt; findByAccessToken(String accessToken) {
+<span class="fc" id="L102">        log.debug(&quot;JPA DAO: Finding token by access token&quot;);</span>
+<span class="fc" id="L103">        return tokenJpaRepository.findByAccessToken(accessToken);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;OAuthToken&gt; findByRefreshToken(String refreshToken) {
+<span class="fc" id="L109">        log.debug(&quot;JPA DAO: Finding token by refresh token&quot;);</span>
+<span class="fc" id="L110">        return tokenJpaRepository.findByRefreshToken(refreshToken);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;OAuthToken&gt; findByUserAndIsRevokedFalse(User user) {
+<span class="fc" id="L116">        log.debug(&quot;JPA DAO: Finding non-revoked tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L117">        return tokenJpaRepository.findByUserAndIsRevokedFalse(user);</span>
+    }
+
+    @Override
+    public void revokeAllTokensByUser(User user) {
+<span class="fc" id="L122">        log.info(&quot;JPA DAO: Revoking all tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L123">        tokenJpaRepository.revokeAllTokensByUser(user);</span>
+<span class="fc" id="L124">    }</span>
+
+    @Override
+    public void revokeByAccessToken(String accessToken) {
+<span class="fc" id="L128">        log.info(&quot;JPA DAO: Revoking token by access token&quot;);</span>
+<span class="fc" id="L129">        tokenJpaRepository.revokeByAccessToken(accessToken);</span>
+<span class="fc" id="L130">    }</span>
+
+    @Override
+    public void deleteExpiredOrRevokedTokens(LocalDateTime now) {
+<span class="fc" id="L134">        log.info(&quot;JPA DAO: Deleting expired or revoked tokens&quot;);</span>
+<span class="fc" id="L135">        tokenJpaRepository.deleteExpiredOrRevokedTokens(now);</span>
+<span class="fc" id="L136">    }</span>
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;OAuthToken&gt; findValidTokensByUser(User user, LocalDateTime now) {
+<span class="fc" id="L141">        log.debug(&quot;JPA DAO: Finding valid tokens for user: {}&quot;, user.getId());</span>
+<span class="fc" id="L142">        return tokenJpaRepository.findValidTokensByUser(user, now);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

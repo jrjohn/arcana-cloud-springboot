@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CircuitBreakerConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.config</a> &gt; <span class="el_source">CircuitBreakerConfig.java</span></div><h1>CircuitBreakerConfig.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.config;
+
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CircuitBreakerRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.time.Duration;
+
+/**
+ * Circuit Breaker configuration for gRPC service clients.
+ *
+ * &lt;p&gt;Prevents cascading failures when downstream services are unavailable.
+ * Uses the Resilience4j library with configurable thresholds.&lt;/p&gt;
+ *
+ * &lt;p&gt;Circuit states:&lt;/p&gt;
+ * &lt;ul&gt;
+ *   &lt;li&gt;CLOSED: Normal operation, requests pass through&lt;/li&gt;
+ *   &lt;li&gt;OPEN: Service unavailable, requests fail fast&lt;/li&gt;
+ *   &lt;li&gt;HALF_OPEN: Testing if service recovered&lt;/li&gt;
+ * &lt;/ul&gt;
+ */
+@Configuration
+@ConditionalOnExpression(
+    &quot;'${communication.protocol:grpc}' == 'grpc' and '${deployment.layer:}' == 'controller'&quot;
+)
+<span class="nc" id="L31">public class CircuitBreakerConfig {</span>
+
+<span class="nc" id="L33">    private static final Logger log = LoggerFactory.getLogger(CircuitBreakerConfig.class);</span>
+
+    // Circuit Breaker Settings
+    @Value(&quot;${circuit-breaker.failure-rate-threshold:50}&quot;)
+    private float failureRateThreshold;
+
+    @Value(&quot;${circuit-breaker.slow-call-rate-threshold:80}&quot;)
+    private float slowCallRateThreshold;
+
+    @Value(&quot;${circuit-breaker.slow-call-duration-threshold-ms:5000}&quot;)
+    private long slowCallDurationThresholdMs;
+
+    @Value(&quot;${circuit-breaker.wait-duration-in-open-state-ms:30000}&quot;)
+    private long waitDurationInOpenStateMs;
+
+    @Value(&quot;${circuit-breaker.permitted-calls-in-half-open-state:5}&quot;)
+    private int permittedCallsInHalfOpenState;
+
+    @Value(&quot;${circuit-breaker.sliding-window-size:10}&quot;)
+    private int slidingWindowSize;
+
+    @Value(&quot;${circuit-breaker.minimum-number-of-calls:5}&quot;)
+    private int minimumNumberOfCalls;
+
+    /**
+     * Creates the Circuit Breaker registry with default configuration.
+     */
+    @Bean
+    public CircuitBreakerRegistry circuitBreakerRegistry() {
+        io.github.resilience4j.circuitbreaker.CircuitBreakerConfig config =
+<span class="nc" id="L63">            io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.custom()</span>
+                // Percentage of failures to trip the circuit
+<span class="nc" id="L65">                .failureRateThreshold(failureRateThreshold)</span>
+                // Percentage of slow calls to trip the circuit
+<span class="nc" id="L67">                .slowCallRateThreshold(slowCallRateThreshold)</span>
+                // Duration threshold to consider a call slow
+<span class="nc" id="L69">                .slowCallDurationThreshold(Duration.ofMillis(slowCallDurationThresholdMs))</span>
+                // How long to wait before transitioning from OPEN to HALF_OPEN
+<span class="nc" id="L71">                .waitDurationInOpenState(Duration.ofMillis(waitDurationInOpenStateMs))</span>
+                // Number of calls permitted in HALF_OPEN state
+<span class="nc" id="L73">                .permittedNumberOfCallsInHalfOpenState(permittedCallsInHalfOpenState)</span>
+                // Sliding window size for calculating failure rate
+<span class="nc" id="L75">                .slidingWindowSize(slidingWindowSize)</span>
+                // Minimum calls before failure rate is calculated
+<span class="nc" id="L77">                .minimumNumberOfCalls(minimumNumberOfCalls)</span>
+                // Use count-based sliding window
+<span class="nc" id="L79">                .slidingWindowType(io.github.resilience4j.circuitbreaker.CircuitBreakerConfig.SlidingWindowType.COUNT_BASED)</span>
+                // Record these exceptions as failures
+<span class="nc" id="L81">                .recordExceptions(</span>
+                    io.grpc.StatusRuntimeException.class,
+                    java.util.concurrent.TimeoutException.class,
+                    java.io.IOException.class
+                )
+                // Ignore these exceptions (don't count as failures)
+<span class="nc" id="L87">                .ignoreExceptions(</span>
+                    com.arcana.cloud.exception.ResourceNotFoundException.class,
+                    com.arcana.cloud.exception.ValidationException.class
+                )
+                // Automatically transition from OPEN to HALF_OPEN
+<span class="nc" id="L92">                .automaticTransitionFromOpenToHalfOpenEnabled(true)</span>
+<span class="nc" id="L93">                .build();</span>
+
+<span class="nc" id="L95">        CircuitBreakerRegistry registry = CircuitBreakerRegistry.of(config);</span>
+
+<span class="nc" id="L97">        log.info(&quot;Circuit Breaker configured: failureRate={}%, slowCallRate={}%, waitDuration={}ms&quot;,</span>
+<span class="nc" id="L98">            failureRateThreshold, slowCallRateThreshold, waitDurationInOpenStateMs);</span>
+
+<span class="nc" id="L100">        return registry;</span>
+    }
+
+    /**
+     * Circuit breaker for the User Service.
+     */
+    @Bean
+    public CircuitBreaker userServiceCircuitBreaker(CircuitBreakerRegistry registry) {
+<span class="nc" id="L108">        CircuitBreaker circuitBreaker = registry.circuitBreaker(&quot;userService&quot;);</span>
+
+        // Add event listeners for monitoring
+<span class="nc" id="L111">        circuitBreaker.getEventPublisher()</span>
+<span class="nc" id="L112">            .onStateTransition(event -&gt;</span>
+<span class="nc" id="L113">                log.warn(&quot;User Service Circuit Breaker state changed: {} -&gt; {}&quot;,</span>
+<span class="nc" id="L114">                    event.getStateTransition().getFromState(),</span>
+<span class="nc" id="L115">                    event.getStateTransition().getToState()))</span>
+<span class="nc" id="L116">            .onCallNotPermitted(_ -&gt;</span>
+<span class="nc" id="L117">                log.warn(&quot;User Service call rejected by Circuit Breaker (circuit OPEN)&quot;))</span>
+<span class="nc" id="L118">            .onError(event -&gt;</span>
+<span class="nc" id="L119">                log.debug(&quot;User Service call failed: {}&quot;, event.getThrowable().getMessage()))</span>
+<span class="nc" id="L120">            .onSuccess(event -&gt;</span>
+<span class="nc" id="L121">                log.trace(&quot;User Service call succeeded in {}ms&quot;, event.getElapsedDuration().toMillis()));</span>
+
+<span class="nc" id="L123">        return circuitBreaker;</span>
+    }
+
+    /**
+     * Circuit breaker for the Auth Service.
+     */
+    @Bean
+    public CircuitBreaker authServiceCircuitBreaker(CircuitBreakerRegistry registry) {
+<span class="nc" id="L131">        CircuitBreaker circuitBreaker = registry.circuitBreaker(&quot;authService&quot;);</span>
+
+        // Add event listeners for monitoring
+<span class="nc" id="L134">        circuitBreaker.getEventPublisher()</span>
+<span class="nc" id="L135">            .onStateTransition(event -&gt;</span>
+<span class="nc" id="L136">                log.warn(&quot;Auth Service Circuit Breaker state changed: {} -&gt; {}&quot;,</span>
+<span class="nc" id="L137">                    event.getStateTransition().getFromState(),</span>
+<span class="nc" id="L138">                    event.getStateTransition().getToState()))</span>
+<span class="nc" id="L139">            .onCallNotPermitted(_ -&gt;</span>
+<span class="nc" id="L140">                log.warn(&quot;Auth Service call rejected by Circuit Breaker (circuit OPEN)&quot;))</span>
+<span class="nc" id="L141">            .onError(event -&gt;</span>
+<span class="nc" id="L142">                log.debug(&quot;Auth Service call failed: {}&quot;, event.getThrowable().getMessage()))</span>
+<span class="nc" id="L143">            .onSuccess(event -&gt;</span>
+<span class="nc" id="L144">                log.trace(&quot;Auth Service call succeeded in {}ms&quot;, event.getElapsedDuration().toMillis()));</span>
+
+<span class="nc" id="L146">        return circuitBreaker;</span>
+    }
+
+    /**
+     * Circuit breaker for the Repository Service (service layer to repository layer).
+     */
+    @Bean
+    @ConditionalOnExpression(&quot;'${deployment.layer:}' == 'service'&quot;)
+    public CircuitBreaker repositoryServiceCircuitBreaker(CircuitBreakerRegistry registry) {
+<span class="nc" id="L155">        CircuitBreaker circuitBreaker = registry.circuitBreaker(&quot;repositoryService&quot;);</span>
+
+<span class="nc" id="L157">        circuitBreaker.getEventPublisher()</span>
+<span class="nc" id="L158">            .onStateTransition(event -&gt;</span>
+<span class="nc" id="L159">                log.warn(&quot;Repository Service Circuit Breaker state changed: {} -&gt; {}&quot;,</span>
+<span class="nc" id="L160">                    event.getStateTransition().getFromState(),</span>
+<span class="nc" id="L161">                    event.getStateTransition().getToState()));</span>
+
+<span class="nc" id="L163">        return circuitBreaker;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

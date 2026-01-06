@@ -41,7 +41,7 @@
 </td>
 <td>
 <div class="infoBox" id="duration">
-<div class="counter">0.176s</div>
+<div class="counter">0.202s</div>
 <p>duration</p>
 </div>
 </td>
@@ -82,17 +82,17 @@
 </thead>
 <tr>
 <td class="success">testLogin_MissingFields()</td>
-<td class="success">0.009s</td>
+<td class="success">0.010s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testLogin_Success()</td>
-<td class="success">0.147s</td>
+<td class="success">0.174s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
 <td class="success">testRegister_Success()</td>
-<td class="success">0.009s</td>
+<td class="success">0.007s</td>
 <td class="success">passed</td>
 </tr>
 <tr>
@@ -105,8 +105,8 @@
 <div class="tab">
 <h2>Standard output</h2>
 <span class="code">
-<pre id="class-stdout">15:15:51.850 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.arcana.cloud.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
-15:15:51.962 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.controller.AuthControllerTest
+<pre id="class-stdout">20:23:04.390 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.arcana.cloud.controller.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+20:23:04.498 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.controller.AuthControllerTest
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -115,27 +115,29 @@
   '  |____| .__|_| |_|_| |_\__, | / / / /
  =========|_|==============|___/=/_/_/_/
 
- :: Spring Boot ::                (v4.0.0)
+ :: Spring Boot ::                (v4.0.1)
 
-2025-11-28 15:15:52 [Test worker] INFO  c.a.c.controller.AuthControllerTest - Starting AuthControllerTest using Java 25.0.1 with PID 34358 (started by jrjohn in /Users/jrjohn/Documents/projects/arcana-cloud-springboot)
-2025-11-28 15:15:52 [Test worker] DEBUG c.a.c.controller.AuthControllerTest - Running with Spring Boot v4.0.0, Spring v7.0.1
-2025-11-28 15:15:52 [Test worker] INFO  c.a.c.controller.AuthControllerTest - The following 1 profile is active: &quot;test&quot;
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 58 ms. Found 2 JPA repository interfaces.
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.OAuthTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.arcana.cloud.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
-2025-11-28 15:15:52 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 0 Redis repository interfaces.
-2025-11-28 15:15:53 [Test worker] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-11-28 15:15:53 [Test worker] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 7.1.8.Final
-2025-11-28 15:15:53 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-11-28 15:15:53 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-11-28 15:15:54 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
-2025-11-28 15:15:54 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-11-28 15:15:54 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-11-28 15:15:54 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2026-01-05 20:23:04 [Test worker] INFO  c.a.c.controller.AuthControllerTest - Starting AuthControllerTest using Java 25.0.1 with PID 83174 (started by jrjohn in /Users/jrjohn/Documents/projects/arcana-cloud-springboot)
+2026-01-05 20:23:04 [Test worker] DEBUG c.a.c.controller.AuthControllerTest - Running with Spring Boot v4.0.1, Spring v7.0.2
+2026-01-05 20:23:04 [Test worker] INFO  c.a.c.controller.AuthControllerTest - The following 1 profile is active: &quot;test&quot;
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 21 ms. Found 0 JPA repository interfaces.
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 6 ms. Found 0 MongoDB repository interfaces.
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-01-05 20:23:05 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7 ms. Found 0 Redis repository interfaces.
+2026-01-05 20:23:05 [Test worker] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=a2727d86-8b3e-37dc-9a1b-d12e09847649
+2026-01-05 20:23:06 [Test worker] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-05 20:23:06 [Test worker] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-05 20:23:06 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-05 20:23:06 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-05 20:23:06 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-05 20:23:06 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-05 20:23:06 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-05 20:23:06 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [jdbc:h2:mem:testdb]
 	Database driver: H2 JDBC Driver
 	Database dialect: H2Dialect
@@ -144,10 +146,10 @@
 	Autocommit mode: undefined/unknown
 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
 	JDBC fetch size: 100
-	Pool: DatasourceConnectionProviderImpl
+	Pool: DataSourceConnectionProvider
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-11-28 15:15:54 [Test worker] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-05 20:23:07 [Test worker] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists oauth_tokens cascade 
 Hibernate: 
@@ -187,31 +189,32 @@ Hibernate:
        add constraint FKo3ygyue8ry6098fk4tatyskce 
        foreign key (user_id) 
        references users
-2025-11-28 15:15:54 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-11-28 15:15:54 [Test worker] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-11-28 15:15:54 [Test worker] INFO  c.a.c.service.grpc.GrpcHealthService - gRPC Health Service initialized
-2025-11-28 15:15:54 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Initializing Arcana Cloud Plugin System
-2025-11-28 15:15:54 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 15:15:54 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Platform version: 1.0.0
-2025-11-28 15:15:54 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Starting Apache Felix OSGi framework...
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Apache Felix OSGi framework started successfully
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Framework version: 1.9
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Cache directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/.cache
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Initializing Spring-OSGi bridge
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'dataSource' to OSGi as [javax.sql.DataSource]
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'passwordEncoder' to OSGi as [org.springframework.security.crypto.password.PasswordEncoder]
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Scanning for plugins in: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
-2025-11-28 15:15:55 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: monolithic-test-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: monolithic-test-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.service.grpc.GrpcHealthService - gRPC Health Service initialized
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Initializing Arcana Cloud Plugin System
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Platform version: 1.0.0
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Starting Apache Felix OSGi framework...
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Apache Felix OSGi framework started successfully
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Framework version: 1.9
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Cache directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/.cache
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Initializing Spring-OSGi bridge
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'dataSource' to OSGi as [javax.sql.DataSource]
+2026-01-05 20:23:07 [Test worker] DEBUG c.a.c.p.r.s.PluginAuditService - [BEAN_ACCESS] plugin=system bean=javax.sql.DataSource status=ALLOWED
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'passwordEncoder' to OSGi as [org.springframework.security.crypto.password.PasswordEncoder]
+2026-01-05 20:23:07 [Test worker] DEBUG c.a.c.p.r.s.PluginAuditService - [BEAN_ACCESS] plugin=system bean=org.springframework.security.crypto.password.PasswordEncoder status=ALLOWED
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Scanning for plugins in: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-05 20:23:07 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: monolithic-test-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: monolithic-test-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -228,18 +231,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -248,7 +251,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -358,16 +361,16 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:15:55 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: lifecycle-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: lifecycle-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: lifecycle-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: lifecycle-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -384,18 +387,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -404,7 +407,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -514,16 +517,16 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:15:55 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: test-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: test-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: test-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: test-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -540,18 +543,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -560,7 +563,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -670,16 +673,16 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:15:55 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: workflow-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: workflow-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: workflow-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: workflow-plugin-1.0.0.jar
 org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
 	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
-	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:81)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
 	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
-	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:107)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
 	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
@@ -696,18 +699,18 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
 	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
-	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:983)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
-	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:765)
-	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:454)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
-	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:148)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
 	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
-	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1474)
-	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:573)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:148)
-	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:114)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
 	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
@@ -716,7 +719,7 @@ org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn
 	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
 	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
 	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
-	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:203)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
 	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
@@ -826,25 +829,47 @@ Caused by: java.util.zip.ZipException: zip END header not found
 	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
 	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
 	... 131 common frames omitted
-2025-11-28 15:15:55 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: arcana-audit-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/arcana-audit-plugin-1.0.0.jar
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Plugin installed: com.arcana.plugin.audit (bundle id: 5)
-2025-11-28 15:15:55 [FelixDispatchQueue] DEBUG c.a.c.plugin.runtime.PluginManager - Plugin com.arcana.plugin.audit state changed to INSTALLED
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Installed 1 plugins
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Plugin system initialized successfully. 1 plugins installed
-2025-11-28 15:15:55 [Test worker] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-11-28 15:15:55 [Test worker] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
-2025-11-28 15:15:55 [Test worker] WARN  i.n.r.d.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
-2025-11-28 15:15:55 [Test worker] DEBUG c.a.c.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
-2025-11-28 15:15:55 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
-2025-11-28 15:15:55 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
-2025-11-28 15:15:55 [Test worker] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
-2025-11-28 15:15:55 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 9 ms
-2025-11-28 15:15:55 [Test worker] INFO  c.a.c.controller.AuthControllerTest - Started AuthControllerTest in 3.874 seconds (process running for 4.681)
-2025-11-28 15:15:55 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
-2025-11-28 15:15:55 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
-2025-11-28 15:15:56 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Validation failed: Validation failed for argument [0] in public org.springframework.http.ResponseEntity&lt;com.arcana.cloud.dto.response.ApiResponse&lt;com.arcana.cloud.dto.response.AuthResponse&gt;&gt; com.arcana.cloud.controller.AuthController.login(com.arcana.cloud.dto.request.LoginRequest) with 2 errors: [Field error in object 'loginRequest' on field 'password': rejected value []; codes [NotBlank.loginRequest.password,NotBlank.password,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequest.password,password]; arguments []; default message [password]]; default message [Password is required]] [Field error in object 'loginRequest' on field 'usernameOrEmail': rejected value []; codes [NotBlank.loginRequest.usernameOrEmail,NotBlank.usernameOrEmail,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequest.usernameOrEmail,usernameOrEmail]; arguments []; default message [usernameOrEmail]]; default message [Username or email is required]] 
-2025-11-28 15:15:56 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Validation failed: Validation failed for argument [0] in public org.springframework.http.ResponseEntity&lt;com.arcana.cloud.dto.response.ApiResponse&lt;com.arcana.cloud.dto.response.AuthResponse&gt;&gt; com.arcana.cloud.controller.AuthController.register(com.arcana.cloud.dto.request.RegisterRequest) with 3 errors: [Field error in object 'registerRequest' on field 'username': rejected value [ab]; codes [Size.registerRequest.username,Size.username,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [registerRequest.username,username]; arguments []; default message [username],50,3]; default message [Username must be between 3 and 50 characters]] [Field error in object 'registerRequest' on field 'password': rejected value [short]; codes [Size.registerRequest.password,Size.password,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [registerRequest.password,password]; arguments []; default message [password],100,8]; default message [Password must be between 8 and 100 characters]] [Field error in object 'registerRequest' on field 'email': rejected value [invalid-email]; codes [Email.registerRequest.email,Email.email,Email.java.lang.String,Email]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [registerRequest.email,email]; arguments []; default message [email],[Ljakarta.validation.constraints.Pattern$Flag;@1f64a172,.*]; default message [Email must be valid]] 
+2026-01-05 20:23:07 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: arcana-audit-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/arcana-audit-plugin-1.0.0.jar
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Plugin installed: com.arcana.plugin.audit (bundle id: 5)
+2026-01-05 20:23:07 [FelixDispatchQueue] DEBUG c.a.c.plugin.runtime.PluginManager - Plugin com.arcana.plugin.audit state changed to INSTALLED
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Installed 1 plugins
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Plugin system initialized successfully. 1 plugins installed
+2026-01-05 20:23:07 [Test worker] INFO  c.a.c.p.r.s.PluginSignatureVerifier - Loaded 0 trusted certificates for plugin verification
+2026-01-05 20:23:07 [Test worker] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-05 20:23:07 [Test worker] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-05 20:23:08 [Test worker] INFO  org.mongodb.driver.client - MongoClient with metadata {&quot;driver&quot;: {&quot;name&quot;: &quot;mongo-java-driver|spring-boot|sync&quot;, &quot;version&quot;: &quot;5.6.2&quot;}, &quot;os&quot;: {&quot;type&quot;: &quot;Darwin&quot;, &quot;name&quot;: &quot;Mac OS X&quot;, &quot;architecture&quot;: &quot;aarch64&quot;, &quot;version&quot;: &quot;26.2&quot;}, &quot;platform&quot;: &quot;Java/Homebrew/25.0.1&quot;} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, transportSettings=null, commandListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsCommandListener@113463f0], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@1ea8af44, com.mongodb.Jep395RecordCodecProvider@3d99abf6, com.mongodb.KotlinCodecProvider@17edda9f, EnumCodecProvider{}]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsConnectionPoolListener@2039e6b4], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverMonitoringMode=AUTO, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=UNSPECIFIED, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null, timeoutMS=null}
+2026-01-05 20:23:08 [cluster-ClusterId{value='695bad2c5dd3241a26ddc468', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server localhost:27017
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.lambda$open$0(SocketStream.java:85)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:85)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:233)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.setupNewConnectionAndGetInitialDescription(DefaultServerMonitor.java:282)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.lookupServerDescription(DefaultServerMonitor.java:253)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.run(DefaultServerMonitor.java:203)
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:76)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:104)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:79)
+	... 4 common frames omitted
+2026-01-05 20:23:08 [Test worker] WARN  i.n.r.d.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+2026-01-05 20:23:08 [Test worker] DEBUG c.a.c.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-01-05 20:23:08 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-01-05 20:23:08 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-01-05 20:23:08 [Test worker] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2026-01-05 20:23:08 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 10 ms
+2026-01-05 20:23:08 [Test worker] INFO  c.a.c.controller.AuthControllerTest - Started AuthControllerTest in 4.087 seconds (process running for 4.944)
+2026-01-05 20:23:08 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-01-05 20:23:08 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-01-05 20:23:08 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Validation failed: Validation failed for argument [0] in public org.springframework.http.ResponseEntity&lt;com.arcana.cloud.dto.response.ApiResponse&lt;com.arcana.cloud.dto.response.AuthResponse&gt;&gt; com.arcana.cloud.controller.AuthController.login(com.arcana.cloud.dto.request.LoginRequest) with 2 errors: [Field error in object 'loginRequest' on field 'password': rejected value []; codes [NotBlank.loginRequest.password,NotBlank.password,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequest.password,password]; arguments []; default message [password]]; default message [Password is required]] [Field error in object 'loginRequest' on field 'usernameOrEmail': rejected value []; codes [NotBlank.loginRequest.usernameOrEmail,NotBlank.usernameOrEmail,NotBlank.java.lang.String,NotBlank]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [loginRequest.usernameOrEmail,usernameOrEmail]; arguments []; default message [usernameOrEmail]]; default message [Username or email is required]] 
+2026-01-05 20:23:08 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Validation failed: Validation failed for argument [0] in public org.springframework.http.ResponseEntity&lt;com.arcana.cloud.dto.response.ApiResponse&lt;com.arcana.cloud.dto.response.AuthResponse&gt;&gt; com.arcana.cloud.controller.AuthController.register(com.arcana.cloud.dto.request.RegisterRequest) with 3 errors: [Field error in object 'registerRequest' on field 'password': rejected value [short]; codes [Size.registerRequest.password,Size.password,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [registerRequest.password,password]; arguments []; default message [password],100,8]; default message [Password must be between 8 and 100 characters]] [Field error in object 'registerRequest' on field 'username': rejected value [ab]; codes [Size.registerRequest.username,Size.username,Size.java.lang.String,Size]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [registerRequest.username,username]; arguments []; default message [username],50,3]; default message [Username must be between 3 and 50 characters]] [Field error in object 'registerRequest' on field 'email': rejected value [invalid-email]; codes [Email.registerRequest.email,Email.email,Email.java.lang.String,Email]; arguments [org.springframework.context.support.DefaultMessageSourceResolvable: codes [registerRequest.email,email]; arguments []; default message [email],[Ljakarta.validation.constraints.Pattern$Flag;@28348873,.*]; default message [Email must be valid]] 
 </pre>
 <button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="class-stdout">Copy</button>
 </span>
@@ -869,7 +894,7 @@ WARNING: Dynamic loading of agents will be disallowed by default in a future rel
 <input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
 </label>
 </div>Generated by 
-<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2025年11月28日 下午3:17:32</p>
+<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2026年1月5日 下午8:26:57</p>
 </div>
 </div>
 </body>

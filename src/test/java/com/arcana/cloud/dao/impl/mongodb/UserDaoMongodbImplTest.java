@@ -35,7 +35,6 @@ class UserDaoMongodbImplTest {
     @Mock
     private MongoTemplate mongoTemplate;
 
-    @InjectMocks
     private UserDaoMongodbImpl userDao;
 
     private User testUser;
@@ -44,6 +43,7 @@ class UserDaoMongodbImplTest {
 
     @BeforeEach
     void setUp() {
+        userDao = new UserDaoMongodbImpl(mongoTemplate);
         now = LocalDateTime.now();
         testUser = User.builder()
                 .id(1L)
@@ -243,14 +243,13 @@ class UserDaoMongodbImplTest {
         @DisplayName("Should find all users with pagination")
         void findAll_WithPagination_ShouldReturnPage() {
             Pageable pageable = PageRequest.of(0, 10);
-            when(mongoTemplate.count(any(Query.class), eq(UserDocument.class))).thenReturn(2L);
-            when(mongoTemplate.find(any(Query.class), eq(UserDocument.class)))
-                    .thenReturn(Collections.singletonList(testDocument));
+            doReturn(15L).when(mongoTemplate).count(any(Query.class), eq(UserDocument.class));
+            doReturn(Collections.singletonList(testDocument)).when(mongoTemplate).find(any(Query.class), eq(UserDocument.class));
 
             Page<User> result = userDao.findAll(pageable);
 
             assertThat(result.getContent()).hasSize(1);
-            assertThat(result.getTotalElements()).isEqualTo(2);
+            assertThat(result.getTotalElements()).isEqualTo(15);
         }
 
         @Test

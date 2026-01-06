@@ -40,7 +40,6 @@ class OAuthTokenDaoMongodbImplTest {
     @Mock
     private UserDao userDao;
 
-    @InjectMocks
     private OAuthTokenDaoMongodbImpl tokenDao;
 
     private OAuthToken testToken;
@@ -50,6 +49,7 @@ class OAuthTokenDaoMongodbImplTest {
 
     @BeforeEach
     void setUp() {
+        tokenDao = new OAuthTokenDaoMongodbImpl(mongoTemplate, userDao);
         now = LocalDateTime.now();
         testUser = User.builder()
                 .id(1L)
@@ -262,15 +262,14 @@ class OAuthTokenDaoMongodbImplTest {
         @DisplayName("Should find all tokens with pagination")
         void findAll_WithPagination_ShouldReturnPage() {
             Pageable pageable = PageRequest.of(0, 10);
-            when(mongoTemplate.count(any(Query.class), eq(OAuthTokenDocument.class))).thenReturn(2L);
-            when(mongoTemplate.find(any(Query.class), eq(OAuthTokenDocument.class)))
-                    .thenReturn(Collections.singletonList(testDocument));
-            when(userDao.findById(any())).thenReturn(Optional.of(testUser));
+            doReturn(15L).when(mongoTemplate).count(any(Query.class), eq(OAuthTokenDocument.class));
+            doReturn(Collections.singletonList(testDocument)).when(mongoTemplate).find(any(Query.class), eq(OAuthTokenDocument.class));
+            doReturn(Optional.of(testUser)).when(userDao).findById(any());
 
             Page<OAuthToken> result = tokenDao.findAll(pageable);
 
             assertThat(result.getContent()).hasSize(1);
-            assertThat(result.getTotalElements()).isEqualTo(2);
+            assertThat(result.getTotalElements()).isEqualTo(15);
         }
     }
 

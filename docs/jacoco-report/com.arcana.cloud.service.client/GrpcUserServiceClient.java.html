@@ -3,6 +3,7 @@
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.exception.ResourceNotFoundException;
+import com.arcana.cloud.exception.ServiceUnavailableException;
 import com.arcana.cloud.grpc.CreateUserRequest;
 import com.arcana.cloud.grpc.GetUserByEmailRequest;
 import com.arcana.cloud.grpc.GetUserByUsernameRequest;
@@ -16,11 +17,15 @@ import com.arcana.cloud.grpc.ExistsByUsernameRequest;
 import com.arcana.cloud.grpc.ExistsByEmailRequest;
 import com.arcana.cloud.grpc.DeleteUserRequest;
 import com.arcana.cloud.service.interfaces.UserService;
+import io.github.resilience4j.circuitbreaker.CircuitBreaker;
+import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.grpc.ManagedChannel;
+import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.data.domain.Page;
@@ -34,226 +39,273 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 
 @Service
 @ConditionalOnExpression(
     &quot;'${communication.protocol:grpc}' == 'grpc' and '${deployment.layer:}' == 'controller'&quot;
 )
-<span class="nc" id="L42">@Slf4j</span>
-<span class="nc" id="L43">public class GrpcUserServiceClient implements UserService {</span>
+<span class="nc" id="L48">@Slf4j</span>
+<span class="nc" id="L49">public class GrpcUserServiceClient implements UserService {</span>
 
     @Value(&quot;${service.grpc.url:localhost:9090}&quot;)
     private String serviceUrl;
 
+    @Value(&quot;${grpc.client.shutdown-timeout-seconds:5}&quot;)
+    private long shutdownTimeoutSeconds;
+
     private ManagedChannel channel;
     private UserServiceGrpc.UserServiceBlockingStub stub;
-<span class="nc" id="L50">    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;</span>
+<span class="nc" id="L59">    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;</span>
+
+    @Autowired(required = false)
+    private CircuitBreaker userServiceCircuitBreaker;
 
     @PostConstruct
     public void init() {
-<span class="nc" id="L54">        log.info(&quot;Initializing gRPC client for service URL: {}&quot;, serviceUrl);</span>
-<span class="nc" id="L55">        this.channel = ManagedChannelBuilder.forTarget(serviceUrl)</span>
-<span class="nc" id="L56">            .usePlaintext()</span>
-<span class="nc" id="L57">            .build();</span>
-<span class="nc" id="L58">        this.stub = UserServiceGrpc.newBlockingStub(channel);</span>
-<span class="nc" id="L59">    }</span>
+<span class="nc" id="L66">        log.info(&quot;Initializing gRPC client for service URL: {}&quot;, serviceUrl);</span>
+<span class="nc" id="L67">        this.channel = ManagedChannelBuilder.forTarget(serviceUrl)</span>
+<span class="nc" id="L68">            .usePlaintext()</span>
+<span class="nc" id="L69">            .build();</span>
+<span class="nc" id="L70">        this.stub = UserServiceGrpc.newBlockingStub(channel);</span>
+
+<span class="nc bnc" id="L72" title="All 2 branches missed.">        if (userServiceCircuitBreaker != null) {</span>
+<span class="nc" id="L73">            log.info(&quot;Circuit Breaker enabled for User Service&quot;);</span>
+        }
+<span class="nc" id="L75">    }</span>
 
     @PreDestroy
     public void shutdown() {
-<span class="nc bnc" id="L63" title="All 4 branches missed.">        if (channel != null &amp;&amp; !channel.isShutdown()) {</span>
+<span class="nc bnc" id="L79" title="All 4 branches missed.">        if (channel != null &amp;&amp; !channel.isShutdown()) {</span>
             try {
-<span class="nc" id="L65">                channel.shutdown().awaitTermination(5, TimeUnit.SECONDS);</span>
-<span class="nc" id="L66">            } catch (InterruptedException e) {</span>
-<span class="nc" id="L67">                Thread.currentThread().interrupt();</span>
-<span class="nc" id="L68">                channel.shutdownNow();</span>
-<span class="nc" id="L69">            }</span>
+<span class="nc" id="L81">                channel.shutdown().awaitTermination(shutdownTimeoutSeconds, TimeUnit.SECONDS);</span>
+<span class="nc" id="L82">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L83">                Thread.currentThread().interrupt();</span>
+<span class="nc" id="L84">                channel.shutdownNow();</span>
+<span class="nc" id="L85">            }</span>
         }
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L87">    }</span>
 
     @Override
     public User createUser(User user) {
-        try {
-<span class="nc" id="L76">            CreateUserRequest request = CreateUserRequest.newBuilder()</span>
-<span class="nc" id="L77">                .setUsername(user.getUsername())</span>
-<span class="nc" id="L78">                .setEmail(user.getEmail())</span>
-<span class="nc" id="L79">                .setPassword(user.getPassword())</span>
-<span class="nc bnc" id="L80" title="All 2 branches missed.">                .setFirstName(user.getFirstName() != null ? user.getFirstName() : &quot;&quot;)</span>
-<span class="nc bnc" id="L81" title="All 2 branches missed.">                .setLastName(user.getLastName() != null ? user.getLastName() : &quot;&quot;)</span>
-<span class="nc" id="L82">                .build();</span>
+<span class="nc" id="L91">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L92">            CreateUserRequest request = CreateUserRequest.newBuilder()</span>
+<span class="nc" id="L93">                .setUsername(user.getUsername())</span>
+<span class="nc" id="L94">                .setEmail(user.getEmail())</span>
+<span class="nc" id="L95">                .setPassword(user.getPassword())</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">                .setFirstName(user.getFirstName() != null ? user.getFirstName() : &quot;&quot;)</span>
+<span class="nc bnc" id="L97" title="All 2 branches missed.">                .setLastName(user.getLastName() != null ? user.getLastName() : &quot;&quot;)</span>
+<span class="nc" id="L98">                .build();</span>
 
-<span class="nc" id="L84">            UserResponse response = stub.createUser(request);</span>
-<span class="nc" id="L85">            return fromGrpcResponse(response);</span>
-<span class="nc" id="L86">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L87">            log.error(&quot;gRPC error creating user&quot;, e);</span>
-<span class="nc" id="L88">            throw new RuntimeException(&quot;Failed to create user: &quot; + e.getStatus().getDescription());</span>
-        }
+<span class="nc" id="L100">            UserResponse response = stub.createUser(request);</span>
+<span class="nc" id="L101">            return fromGrpcResponse(response);</span>
+        }, &quot;createUser&quot;);
     }
 
     @Override
     public User getUserById(Long id) {
-        try {
-<span class="nc" id="L95">            GetUserRequest request = GetUserRequest.newBuilder()</span>
-<span class="nc" id="L96">                .setUserId(id)</span>
-<span class="nc" id="L97">                .build();</span>
+<span class="nc" id="L107">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L108">            GetUserRequest request = GetUserRequest.newBuilder()</span>
+<span class="nc" id="L109">                .setUserId(id)</span>
+<span class="nc" id="L110">                .build();</span>
 
-<span class="nc" id="L99">            UserResponse response = stub.getUser(request);</span>
-<span class="nc" id="L100">            return fromGrpcResponse(response);</span>
-<span class="nc" id="L101">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L102">            log.error(&quot;gRPC error getting user&quot;, e);</span>
-<span class="nc" id="L103">            throw new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id);</span>
-        }
+<span class="nc" id="L112">            UserResponse response = stub.getUser(request);</span>
+<span class="nc" id="L113">            return fromGrpcResponse(response);</span>
+        }, &quot;getUserById&quot;, () -&gt; {
+<span class="nc" id="L115">            throw new ResourceNotFoundException(&quot;User&quot;, &quot;id&quot;, id);</span>
+        });
     }
 
     @Override
     public Optional&lt;User&gt; findByUsername(String username) {
-        try {
-<span class="nc" id="L110">            GetUserByUsernameRequest request = GetUserByUsernameRequest.newBuilder()</span>
-<span class="nc" id="L111">                .setUsername(username)</span>
-<span class="nc" id="L112">                .build();</span>
+<span class="nc" id="L121">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L122">            GetUserByUsernameRequest request = GetUserByUsernameRequest.newBuilder()</span>
+<span class="nc" id="L123">                .setUsername(username)</span>
+<span class="nc" id="L124">                .build();</span>
 
-<span class="nc" id="L114">            UserResponse response = stub.getUserByUsername(request);</span>
-<span class="nc" id="L115">            return Optional.of(fromGrpcResponse(response));</span>
-<span class="nc" id="L116">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L117">            return Optional.empty();</span>
-        }
+<span class="nc" id="L126">            UserResponse response = stub.getUserByUsername(request);</span>
+<span class="nc" id="L127">            return Optional.of(fromGrpcResponse(response));</span>
+        }, &quot;findByUsername&quot;, Optional::empty);
     }
 
     @Override
     public Optional&lt;User&gt; findByEmail(String email) {
-        try {
-<span class="nc" id="L124">            GetUserByEmailRequest request = GetUserByEmailRequest.newBuilder()</span>
-<span class="nc" id="L125">                .setEmail(email)</span>
-<span class="nc" id="L126">                .build();</span>
+<span class="nc" id="L133">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L134">            GetUserByEmailRequest request = GetUserByEmailRequest.newBuilder()</span>
+<span class="nc" id="L135">                .setEmail(email)</span>
+<span class="nc" id="L136">                .build();</span>
 
-<span class="nc" id="L128">            UserResponse response = stub.getUserByEmail(request);</span>
-<span class="nc" id="L129">            return Optional.of(fromGrpcResponse(response));</span>
-<span class="nc" id="L130">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L131">            return Optional.empty();</span>
-        }
+<span class="nc" id="L138">            UserResponse response = stub.getUserByEmail(request);</span>
+<span class="nc" id="L139">            return Optional.of(fromGrpcResponse(response));</span>
+        }, &quot;findByEmail&quot;, Optional::empty);
     }
 
     @Override
     public Optional&lt;User&gt; findByUsernameOrEmail(String usernameOrEmail) {
-<span class="nc" id="L137">        Optional&lt;User&gt; byUsername = findByUsername(usernameOrEmail);</span>
-<span class="nc bnc" id="L138" title="All 2 branches missed.">        if (byUsername.isPresent()) {</span>
-<span class="nc" id="L139">            return byUsername;</span>
+<span class="nc" id="L145">        Optional&lt;User&gt; byUsername = findByUsername(usernameOrEmail);</span>
+<span class="nc bnc" id="L146" title="All 2 branches missed.">        if (byUsername.isPresent()) {</span>
+<span class="nc" id="L147">            return byUsername;</span>
         }
-<span class="nc" id="L141">        return findByEmail(usernameOrEmail);</span>
+<span class="nc" id="L149">        return findByEmail(usernameOrEmail);</span>
     }
 
     @Override
     public Page&lt;User&gt; getUsers(int page, int size) {
-        try {
-<span class="nc" id="L147">            ListUsersRequest request = ListUsersRequest.newBuilder()</span>
-<span class="nc" id="L148">                .setPage(page)</span>
-<span class="nc" id="L149">                .setSize(size)</span>
-<span class="nc" id="L150">                .build();</span>
+<span class="nc" id="L154">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L155">            ListUsersRequest request = ListUsersRequest.newBuilder()</span>
+<span class="nc" id="L156">                .setPage(page)</span>
+<span class="nc" id="L157">                .setSize(size)</span>
+<span class="nc" id="L158">                .build();</span>
 
-<span class="nc" id="L152">            ListUsersResponse response = stub.listUsers(request);</span>
-<span class="nc" id="L153">            List&lt;User&gt; users = response.getUsersList().stream()</span>
-<span class="nc" id="L154">                .map(this::fromGrpcResponse)</span>
-<span class="nc" id="L155">                .toList();</span>
+<span class="nc" id="L160">            ListUsersResponse response = stub.listUsers(request);</span>
+<span class="nc" id="L161">            List&lt;User&gt; users = response.getUsersList().stream()</span>
+<span class="nc" id="L162">                .map(this::fromGrpcResponse)</span>
+<span class="nc" id="L163">                .toList();</span>
 
-<span class="nc" id="L157">            return new PageImpl&lt;&gt;(users, PageRequest.of(page, size), response.getPageInfo().getTotalElements());</span>
-<span class="nc" id="L158">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L159">            log.error(&quot;gRPC error listing users&quot;, e);</span>
-<span class="nc" id="L160">            throw new RuntimeException(&quot;Failed to list users: &quot; + e.getStatus().getDescription());</span>
-        }
+<span class="nc" id="L165">            return new PageImpl&lt;&gt;(users, PageRequest.of(page, size), response.getPageInfo().getTotalElements());</span>
+        }, &quot;getUsers&quot;);
     }
 
     @Override
     public User updateUser(Long id, User user) {
-        try {
-<span class="nc" id="L167">            UpdateUserRequest.Builder builder = UpdateUserRequest.newBuilder()</span>
-<span class="nc" id="L168">                .setUserId(id);</span>
+<span class="nc" id="L171">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L172">            UpdateUserRequest.Builder builder = UpdateUserRequest.newBuilder()</span>
+<span class="nc" id="L173">                .setUserId(id);</span>
 
-<span class="nc bnc" id="L170" title="All 2 branches missed.">            if (user.getUsername() != null) {</span>
-<span class="nc" id="L171">                builder.setUsername(user.getUsername());</span>
+<span class="nc bnc" id="L175" title="All 2 branches missed.">            if (user.getUsername() != null) {</span>
+<span class="nc" id="L176">                builder.setUsername(user.getUsername());</span>
             }
-<span class="nc bnc" id="L173" title="All 2 branches missed.">            if (user.getEmail() != null) {</span>
-<span class="nc" id="L174">                builder.setEmail(user.getEmail());</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            if (user.getEmail() != null) {</span>
+<span class="nc" id="L179">                builder.setEmail(user.getEmail());</span>
             }
-<span class="nc bnc" id="L176" title="All 2 branches missed.">            if (user.getPassword() != null) {</span>
-<span class="nc" id="L177">                builder.setPassword(user.getPassword());</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">            if (user.getPassword() != null) {</span>
+<span class="nc" id="L182">                builder.setPassword(user.getPassword());</span>
             }
-<span class="nc bnc" id="L179" title="All 2 branches missed.">            if (user.getFirstName() != null) {</span>
-<span class="nc" id="L180">                builder.setFirstName(user.getFirstName());</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            if (user.getFirstName() != null) {</span>
+<span class="nc" id="L185">                builder.setFirstName(user.getFirstName());</span>
             }
-<span class="nc bnc" id="L182" title="All 2 branches missed.">            if (user.getLastName() != null) {</span>
-<span class="nc" id="L183">                builder.setLastName(user.getLastName());</span>
+<span class="nc bnc" id="L187" title="All 2 branches missed.">            if (user.getLastName() != null) {</span>
+<span class="nc" id="L188">                builder.setLastName(user.getLastName());</span>
             }
-<span class="nc bnc" id="L185" title="All 2 branches missed.">            if (user.getIsActive() != null) {</span>
-<span class="nc" id="L186">                builder.setIsActive(user.getIsActive());</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">            if (user.getIsActive() != null) {</span>
+<span class="nc" id="L191">                builder.setIsActive(user.getIsActive());</span>
             }
-<span class="nc bnc" id="L188" title="All 2 branches missed.">            if (user.getIsVerified() != null) {</span>
-<span class="nc" id="L189">                builder.setIsVerified(user.getIsVerified());</span>
+<span class="nc bnc" id="L193" title="All 2 branches missed.">            if (user.getIsVerified() != null) {</span>
+<span class="nc" id="L194">                builder.setIsVerified(user.getIsVerified());</span>
             }
 
-<span class="nc" id="L192">            UserResponse response = stub.updateUser(builder.build());</span>
-<span class="nc" id="L193">            return fromGrpcResponse(response);</span>
-<span class="nc" id="L194">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L195">            log.error(&quot;gRPC error updating user&quot;, e);</span>
-<span class="nc" id="L196">            throw new RuntimeException(&quot;Failed to update user: &quot; + e.getStatus().getDescription());</span>
-        }
+<span class="nc" id="L197">            UserResponse response = stub.updateUser(builder.build());</span>
+<span class="nc" id="L198">            return fromGrpcResponse(response);</span>
+        }, &quot;updateUser&quot;);
     }
 
     @Override
     public void deleteUser(Long id) {
-        try {
-<span class="nc" id="L203">            DeleteUserRequest request = DeleteUserRequest.newBuilder()</span>
-<span class="nc" id="L204">                .setUserId(id)</span>
-<span class="nc" id="L205">                .build();</span>
+<span class="nc" id="L204">        executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L205">            DeleteUserRequest request = DeleteUserRequest.newBuilder()</span>
+<span class="nc" id="L206">                .setUserId(id)</span>
+<span class="nc" id="L207">                .build();</span>
 
-<span class="nc" id="L207">            stub.deleteUser(request);</span>
-<span class="nc" id="L208">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L209">            log.error(&quot;gRPC error deleting user&quot;, e);</span>
-<span class="nc" id="L210">            throw new RuntimeException(&quot;Failed to delete user: &quot; + e.getStatus().getDescription());</span>
-<span class="nc" id="L211">        }</span>
+<span class="nc" id="L209">            stub.deleteUser(request);</span>
+<span class="nc" id="L210">            return null;</span>
+        }, &quot;deleteUser&quot;);
 <span class="nc" id="L212">    }</span>
 
     @Override
     public boolean existsByUsername(String username) {
-        try {
+<span class="nc" id="L216">        return executeWithCircuitBreaker(() -&gt; {</span>
 <span class="nc" id="L217">            ExistsByUsernameRequest request = ExistsByUsernameRequest.newBuilder()</span>
 <span class="nc" id="L218">                .setUsername(username)</span>
 <span class="nc" id="L219">                .build();</span>
 
 <span class="nc" id="L221">            return stub.existsByUsername(request).getExists();</span>
-<span class="nc" id="L222">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L223">            log.error(&quot;gRPC error checking username existence&quot;, e);</span>
-<span class="nc" id="L224">            return false;</span>
-        }
+<span class="nc" id="L222">        }, &quot;existsByUsername&quot;, () -&gt; false);</span>
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        try {
-<span class="nc" id="L231">            ExistsByEmailRequest request = ExistsByEmailRequest.newBuilder()</span>
-<span class="nc" id="L232">                .setEmail(email)</span>
-<span class="nc" id="L233">                .build();</span>
+<span class="nc" id="L227">        return executeWithCircuitBreaker(() -&gt; {</span>
+<span class="nc" id="L228">            ExistsByEmailRequest request = ExistsByEmailRequest.newBuilder()</span>
+<span class="nc" id="L229">                .setEmail(email)</span>
+<span class="nc" id="L230">                .build();</span>
 
-<span class="nc" id="L235">            return stub.existsByEmail(request).getExists();</span>
-<span class="nc" id="L236">        } catch (StatusRuntimeException e) {</span>
-<span class="nc" id="L237">            log.error(&quot;gRPC error checking email existence&quot;, e);</span>
-<span class="nc" id="L238">            return false;</span>
-        }
+<span class="nc" id="L232">            return stub.existsByEmail(request).getExists();</span>
+<span class="nc" id="L233">        }, &quot;existsByEmail&quot;, () -&gt; false);</span>
     }
 
     private User fromGrpcResponse(UserResponse response) {
-<span class="nc" id="L243">        return User.builder()</span>
-<span class="nc" id="L244">            .id(response.getId())</span>
-<span class="nc" id="L245">            .username(response.getUsername())</span>
-<span class="nc" id="L246">            .email(response.getEmail())</span>
-<span class="nc bnc" id="L247" title="All 2 branches missed.">            .firstName(response.getFirstName().isEmpty() ? null : response.getFirstName())</span>
-<span class="nc bnc" id="L248" title="All 2 branches missed.">            .lastName(response.getLastName().isEmpty() ? null : response.getLastName())</span>
-<span class="nc" id="L249">            .role(UserRole.valueOf(response.getRole()))</span>
-<span class="nc" id="L250">            .isActive(response.getIsActive())</span>
-<span class="nc" id="L251">            .isVerified(response.getIsVerified())</span>
-<span class="nc bnc" id="L252" title="All 2 branches missed.">            .createdAt(response.getCreatedAt().isEmpty()</span>
-<span class="nc" id="L253">                ? null : LocalDateTime.parse(response.getCreatedAt(), FORMATTER))</span>
-<span class="nc bnc" id="L254" title="All 2 branches missed.">            .updatedAt(response.getUpdatedAt().isEmpty()</span>
-<span class="nc" id="L255">                ? null : LocalDateTime.parse(response.getUpdatedAt(), FORMATTER))</span>
-<span class="nc" id="L256">            .build();</span>
+<span class="nc" id="L237">        return User.builder()</span>
+<span class="nc" id="L238">            .id(response.getId())</span>
+<span class="nc" id="L239">            .username(response.getUsername())</span>
+<span class="nc" id="L240">            .email(response.getEmail())</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            .firstName(response.getFirstName().isEmpty() ? null : response.getFirstName())</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">            .lastName(response.getLastName().isEmpty() ? null : response.getLastName())</span>
+<span class="nc" id="L243">            .role(UserRole.valueOf(response.getRole()))</span>
+<span class="nc" id="L244">            .isActive(response.getIsActive())</span>
+<span class="nc" id="L245">            .isVerified(response.getIsVerified())</span>
+<span class="nc bnc" id="L246" title="All 2 branches missed.">            .createdAt(response.getCreatedAt().isEmpty()</span>
+<span class="nc" id="L247">                ? null : LocalDateTime.parse(response.getCreatedAt(), FORMATTER))</span>
+<span class="nc bnc" id="L248" title="All 2 branches missed.">            .updatedAt(response.getUpdatedAt().isEmpty()</span>
+<span class="nc" id="L249">                ? null : LocalDateTime.parse(response.getUpdatedAt(), FORMATTER))</span>
+<span class="nc" id="L250">            .build();</span>
+    }
+
+    /**
+     * Executes a gRPC call with circuit breaker protection.
+     * Throws ServiceUnavailableException if circuit is open.
+     */
+    private &lt;T&gt; T executeWithCircuitBreaker(Supplier&lt;T&gt; supplier, String operation) {
+<span class="nc" id="L258">        return executeWithCircuitBreaker(supplier, operation, () -&gt; {</span>
+<span class="nc" id="L259">            throw new ServiceUnavailableException(&quot;User service is unavailable&quot;);</span>
+        });
+    }
+
+    /**
+     * Executes a gRPC call with circuit breaker protection and fallback.
+     */
+    private &lt;T&gt; T executeWithCircuitBreaker(Supplier&lt;T&gt; supplier, String operation, Supplier&lt;T&gt; fallback) {
+        try {
+<span class="nc bnc" id="L268" title="All 2 branches missed.">            if (userServiceCircuitBreaker != null) {</span>
+<span class="nc" id="L269">                return userServiceCircuitBreaker.executeSupplier(() -&gt; executeGrpcCall(supplier, operation));</span>
+            } else {
+<span class="nc" id="L271">                return executeGrpcCall(supplier, operation);</span>
+            }
+<span class="nc" id="L273">        } catch (CallNotPermittedException e) {</span>
+<span class="nc" id="L274">            log.warn(&quot;Circuit breaker OPEN for User Service, operation: {}&quot;, operation);</span>
+<span class="nc" id="L275">            return fallback.get();</span>
+        }
+    }
+
+    /**
+     * Executes a gRPC call with proper error handling and categorization.
+     */
+    private &lt;T&gt; T executeGrpcCall(Supplier&lt;T&gt; supplier, String operation) {
+        try {
+<span class="nc" id="L284">            return supplier.get();</span>
+<span class="nc" id="L285">        } catch (StatusRuntimeException e) {</span>
+<span class="nc" id="L286">            Status.Code code = e.getStatus().getCode();</span>
+
+            // Categorize error by status code for better debugging
+<span class="nc bnc" id="L289" title="All 5 branches missed.">            switch (code) {</span>
+                case NOT_FOUND:
+<span class="nc" id="L291">                    log.debug(&quot;Resource not found in {}: {}&quot;, operation, e.getStatus().getDescription());</span>
+<span class="nc" id="L292">                    throw new ResourceNotFoundException(&quot;Resource&quot;, operation, e.getStatus().getDescription());</span>
+                case UNAVAILABLE:
+                case DEADLINE_EXCEEDED:
+<span class="nc" id="L295">                    log.error(&quot;Service unavailable in {}: {} ({})&quot;, operation, e.getStatus().getDescription(), code);</span>
+<span class="nc" id="L296">                    throw new ServiceUnavailableException(&quot;User service unavailable: &quot; + e.getStatus().getDescription());</span>
+                case PERMISSION_DENIED:
+                case UNAUTHENTICATED:
+<span class="nc" id="L299">                    log.error(&quot;Permission denied in {}: {}&quot;, operation, e.getStatus().getDescription());</span>
+<span class="nc" id="L300">                    throw new RuntimeException(&quot;Permission denied: &quot; + e.getStatus().getDescription());</span>
+                case INVALID_ARGUMENT:
+<span class="nc" id="L302">                    log.error(&quot;Invalid argument in {}: {}&quot;, operation, e.getStatus().getDescription());</span>
+<span class="nc" id="L303">                    throw new IllegalArgumentException(&quot;Invalid argument: &quot; + e.getStatus().getDescription());</span>
+                default:
+<span class="nc" id="L305">                    log.error(&quot;gRPC error in {}: {} ({})&quot;, operation, e.getStatus().getDescription(), code);</span>
+<span class="nc" id="L306">                    throw new RuntimeException(&quot;Service error: &quot; + e.getStatus().getDescription());</span>
+            }
+        }
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

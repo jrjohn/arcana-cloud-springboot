@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JpaConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.config</a> &gt; <span class="el_source">JpaConfig.java</span></div><h1>JpaConfig.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.config;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+/**
+ * JPA configuration.
+ * Active when database.orm is 'jpa'.
+ * Works with MySQL and PostgreSQL databases.
+ */
 @Configuration
-@EnableJpaRepositories(basePackages = &quot;com.arcana.cloud.repository&quot;)
+@EnableJpaRepositories(basePackages = {
+    &quot;com.arcana.cloud.dao.impl.jpa.repository&quot;
+})
 @EnableTransactionManagement
-<span class="fc" id="L10">public class JpaConfig {</span>
+@ConditionalOnProperty(name = &quot;database.orm&quot;, havingValue = &quot;jpa&quot;)
+<span class="fc" id="L19">public class JpaConfig {</span>
+    // JPA auto-configuration handles most setup via application properties
+    // Repository scanning is enabled via @EnableJpaRepositories annotation
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

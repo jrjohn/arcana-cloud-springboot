@@ -338,6 +338,23 @@ sequenceDiagram
 - Node.js 20+ (for web apps)
 - MySQL 8.0+ / Redis 7.0+
 
+### IDE Setup (Eclipse)
+
+For Eclipse IDE users, install the following:
+
+1. **Eclipse IDE for Enterprise Java and Web Developers** (2025-12 or later)
+   - Download: https://www.eclipse.org/downloads/packages/
+
+2. **Lombok Plugin** - Required for annotation processing
+   - Install via Eclipse Marketplace or add update site:
+   - Update Site: `https://projectlombok.org/p2`
+   - Go to: Help → Install New Software → Add → paste URL
+
+3. **Spring Tools 4 (aka Spring Tool Suite)** - Spring Boot development support
+   - Version: 5.0.1.RELEASE or later
+   - Install via Eclipse Marketplace: Help → Eclipse Marketplace → Search "Spring Tools"
+   - Or add update site: `https://cdn.spring.io/spring-tools/release/TOOLS/sts4/update/latest`
+
 ### 1. Clone and Setup
 
 ```bash

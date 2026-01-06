@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDaoJpaImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.dao.impl.jpa</a> &gt; <span class="el_source">UserDaoJpaImpl.java</span></div><h1>UserDaoJpaImpl.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.dao.impl.jpa;
+
+import com.arcana.cloud.dao.impl.jpa.repository.UserJpaRepository;
+import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.entity.UserRole;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * JPA implementation of UserDao.
+ * Active when database.orm is 'jpa'.
+ * Works with MySQL and PostgreSQL databases.
+ */
+@Repository
+@RequiredArgsConstructor
+<span class="fc" id="L25">@Slf4j</span>
+@Transactional
+@ConditionalOnProperty(name = &quot;database.orm&quot;, havingValue = &quot;jpa&quot;)
+public class UserDaoJpaImpl implements UserDao {
+
+    private final UserJpaRepository userJpaRepository;
+
+    @Override
+    public User save(User user) {
+<span class="fc" id="L34">        log.debug(&quot;JPA DAO: Saving user: {}&quot;, user.getUsername());</span>
+<span class="fc" id="L35">        return userJpaRepository.save(user);</span>
+    }
+
+    @Override
+    public List&lt;User&gt; saveAll(Iterable&lt;User&gt; entities) {
+<span class="fc" id="L40">        return userJpaRepository.saveAll(entities);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; findById(Long id) {
+<span class="fc" id="L46">        log.debug(&quot;JPA DAO: Finding user by id: {}&quot;, id);</span>
+<span class="fc" id="L47">        return userJpaRepository.findById(id);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsById(Long id) {
+<span class="fc" id="L53">        return userJpaRepository.existsById(id);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;User&gt; findAll() {
+<span class="fc" id="L59">        log.debug(&quot;JPA DAO: Finding all users&quot;);</span>
+<span class="fc" id="L60">        return userJpaRepository.findAll();</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page&lt;User&gt; findAll(Pageable pageable) {
+<span class="fc" id="L66">        log.debug(&quot;JPA DAO: Finding all users with pagination&quot;);</span>
+<span class="fc" id="L67">        return userJpaRepository.findAll(pageable);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public long count() {
+<span class="fc" id="L73">        return userJpaRepository.count();</span>
+    }
+
+    @Override
+    public void deleteById(Long id) {
+<span class="fc" id="L78">        log.info(&quot;JPA DAO: Deleting user by id: {}&quot;, id);</span>
+<span class="fc" id="L79">        userJpaRepository.deleteById(id);</span>
+<span class="fc" id="L80">    }</span>
+
+    @Override
+    public void delete(User entity) {
+<span class="fc" id="L84">        userJpaRepository.delete(entity);</span>
+<span class="fc" id="L85">    }</span>
+
+    @Override
+    public void deleteAll() {
+<span class="fc" id="L89">        log.warn(&quot;JPA DAO: Deleting all users&quot;);</span>
+<span class="fc" id="L90">        userJpaRepository.deleteAll();</span>
+<span class="fc" id="L91">    }</span>
+
+    @Override
+    public void deleteAll(Iterable&lt;User&gt; entities) {
+<span class="fc" id="L95">        userJpaRepository.deleteAll(entities);</span>
+<span class="fc" id="L96">    }</span>
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; findByUsername(String username) {
+<span class="fc" id="L101">        log.debug(&quot;JPA DAO: Finding user by username: {}&quot;, username);</span>
+<span class="fc" id="L102">        return userJpaRepository.findByUsername(username);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; findByEmail(String email) {
+<span class="fc" id="L108">        log.debug(&quot;JPA DAO: Finding user by email: {}&quot;, email);</span>
+<span class="fc" id="L109">        return userJpaRepository.findByEmail(email);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional&lt;User&gt; findByUsernameOrEmail(String username, String email) {
+<span class="fc" id="L115">        log.debug(&quot;JPA DAO: Finding user by username or email: {}/{}&quot;, username, email);</span>
+<span class="fc" id="L116">        return userJpaRepository.findByUsernameOrEmail(username, email);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByUsername(String username) {
+<span class="fc" id="L122">        return userJpaRepository.existsByUsername(username);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean existsByEmail(String email) {
+<span class="fc" id="L128">        return userJpaRepository.existsByEmail(email);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;User&gt; findActiveUsersByRole(UserRole role) {
+<span class="fc" id="L134">        log.debug(&quot;JPA DAO: Finding active users by role: {}&quot;, role);</span>
+<span class="fc" id="L135">        return userJpaRepository.findActiveUsersByRole(role);</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;User&gt; findAllActiveUsers() {
+<span class="fc" id="L141">        log.debug(&quot;JPA DAO: Finding all active users&quot;);</span>
+<span class="fc" id="L142">        return userJpaRepository.findAllActiveUsers();</span>
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;User&gt; findUnverifiedUsers() {
+<span class="fc" id="L148">        log.debug(&quot;JPA DAO: Finding unverified users&quot;);</span>
+<span class="fc" id="L149">        return userJpaRepository.findUnverifiedUsers();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

@@ -44,6 +44,10 @@ class UserDaoMybatisIntegrationTest {
         registry.add("database.type", () -> "mysql");
         registry.add("database.orm", () -> "mybatis");
         registry.add("spring.flyway.enabled", () -> "false");
+        // Disable gRPC server
+        registry.add("spring.grpc.server.enabled", () -> "false");
+        registry.add("spring.grpc.server.port", () -> "-1");
+        registry.add("grpc.server.port", () -> "-1");
     }
 
     @Autowired

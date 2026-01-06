@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>OAuthTokenDocument.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.document</a> &gt; <span class="el_source">OAuthTokenDocument.java</span></div><h1>OAuthTokenDocument.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.document;
+
+import com.arcana.cloud.entity.OAuthToken;
+import com.arcana.cloud.entity.User;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import java.time.LocalDateTime;
+
+/**
+ * MongoDB document representation of OAuthToken entity.
+ */
+@Document(collection = &quot;oauth_tokens&quot;)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class OAuthTokenDocument {
+
+    @Id
+    private String id;
+
+    @Field(&quot;legacy_id&quot;)
+    @Indexed(unique = true, sparse = true)
+    private Long legacyId;
+
+    @Field(&quot;user_id&quot;)
+    @Indexed
+    private String userId;
+
+    @Field(&quot;user_legacy_id&quot;)
+    @Indexed
+    private Long userLegacyId;
+
+    @Field(&quot;access_token&quot;)
+    @Indexed
+    private String accessToken;
+
+    @Field(&quot;refresh_token&quot;)
+    @Indexed
+    private String refreshToken;
+
+    @Field(&quot;token_type&quot;)
+    private String tokenType;
+
+    @Field(&quot;expires_at&quot;)
+    @Indexed
+    private LocalDateTime expiresAt;
+
+    @Field(&quot;refresh_expires_at&quot;)
+    private LocalDateTime refreshExpiresAt;
+
+    @Field(&quot;is_revoked&quot;)
+    @Indexed
+    private Boolean isRevoked;
+
+    @Field(&quot;created_at&quot;)
+    private LocalDateTime createdAt;
+
+    @Field(&quot;client_ip&quot;)
+    private String clientIp;
+
+    @Field(&quot;user_agent&quot;)
+    private String userAgent;
+
+    /**
+     * Convert to JPA entity.
+     * Note: User must be resolved separately.
+     */
+    public OAuthToken toEntity(User user) {
+<span class="fc" id="L77">        return OAuthToken.builder()</span>
+<span class="fc" id="L78">                .id(legacyId)</span>
+<span class="fc" id="L79">                .user(user)</span>
+<span class="fc" id="L80">                .accessToken(accessToken)</span>
+<span class="fc" id="L81">                .refreshToken(refreshToken)</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">                .tokenType(tokenType != null ? tokenType : &quot;Bearer&quot;)</span>
+<span class="fc" id="L83">                .expiresAt(expiresAt)</span>
+<span class="fc" id="L84">                .refreshExpiresAt(refreshExpiresAt)</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">                .isRevoked(isRevoked != null ? isRevoked : false)</span>
+<span class="fc" id="L86">                .createdAt(createdAt)</span>
+<span class="fc" id="L87">                .clientIp(clientIp)</span>
+<span class="fc" id="L88">                .userAgent(userAgent)</span>
+<span class="fc" id="L89">                .build();</span>
+    }
+
+    /**
+     * Create from JPA entity.
+     */
+    public static OAuthTokenDocument fromEntity(OAuthToken token) {
+<span class="fc" id="L96">        return OAuthTokenDocument.builder()</span>
+<span class="fc" id="L97">                .legacyId(token.getId())</span>
+<span class="fc bfc" id="L98" title="All 2 branches covered.">                .userLegacyId(token.getUser() != null ? token.getUser().getId() : null)</span>
+<span class="fc" id="L99">                .accessToken(token.getAccessToken())</span>
+<span class="fc" id="L100">                .refreshToken(token.getRefreshToken())</span>
+<span class="fc" id="L101">                .tokenType(token.getTokenType())</span>
+<span class="fc" id="L102">                .expiresAt(token.getExpiresAt())</span>
+<span class="fc" id="L103">                .refreshExpiresAt(token.getRefreshExpiresAt())</span>
+<span class="fc" id="L104">                .isRevoked(token.getIsRevoked())</span>
+<span class="fc" id="L105">                .createdAt(token.getCreatedAt())</span>
+<span class="fc" id="L106">                .clientIp(token.getClientIp())</span>
+<span class="fc" id="L107">                .userAgent(token.getUserAgent())</span>
+<span class="fc" id="L108">                .build();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

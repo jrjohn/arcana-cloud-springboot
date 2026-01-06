@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.Enumeration;
 
 /**
@@ -32,16 +31,16 @@ import java.util.Enumeration;
 @ConditionalOnExpression(&quot;'${deployment.layer:}' == 'controller'&quot;)
 public class PluginProxyController {
 
-<span class="fc" id="L35">    private static final Logger log = LoggerFactory.getLogger(PluginProxyController.class);</span>
+<span class="fc" id="L34">    private static final Logger log = LoggerFactory.getLogger(PluginProxyController.class);</span>
 
     private final RestTemplate restTemplate;
 
     @Value(&quot;${service.http.url:http://localhost:8081}&quot;)
     private String serviceLayerUrl;
 
-<span class="fc" id="L42">    public PluginProxyController(RestTemplate restTemplate) {</span>
-<span class="fc" id="L43">        this.restTemplate = restTemplate;</span>
-<span class="fc" id="L44">    }</span>
+<span class="fc" id="L41">    public PluginProxyController(RestTemplate restTemplate) {</span>
+<span class="fc" id="L42">        this.restTemplate = restTemplate;</span>
+<span class="fc" id="L43">    }</span>
 
     /**
      * Proxies GET requests to plugin endpoints.
@@ -51,7 +50,7 @@ public class PluginProxyController {
     public ResponseEntity&lt;String&gt; proxyGet(
             @PathVariable String pluginKey,
             HttpServletRequest request) {
-<span class="fc" id="L54">        return proxyRequest(pluginKey, request, HttpMethod.GET, null);</span>
+<span class="fc" id="L53">        return proxyRequest(pluginKey, request, HttpMethod.GET, null);</span>
     }
 
     /**
@@ -63,7 +62,7 @@ public class PluginProxyController {
             @PathVariable String pluginKey,
             @RequestBody(required = false) String body,
             HttpServletRequest request) {
-<span class="fc" id="L66">        return proxyRequest(pluginKey, request, HttpMethod.POST, body);</span>
+<span class="fc" id="L65">        return proxyRequest(pluginKey, request, HttpMethod.POST, body);</span>
     }
 
     /**
@@ -75,7 +74,7 @@ public class PluginProxyController {
             @PathVariable String pluginKey,
             @RequestBody(required = false) String body,
             HttpServletRequest request) {
-<span class="fc" id="L78">        return proxyRequest(pluginKey, request, HttpMethod.PUT, body);</span>
+<span class="fc" id="L77">        return proxyRequest(pluginKey, request, HttpMethod.PUT, body);</span>
     }
 
     /**
@@ -87,7 +86,7 @@ public class PluginProxyController {
             @PathVariable String pluginKey,
             @RequestBody(required = false) String body,
             HttpServletRequest request) {
-<span class="fc" id="L90">        return proxyRequest(pluginKey, request, HttpMethod.PATCH, body);</span>
+<span class="fc" id="L89">        return proxyRequest(pluginKey, request, HttpMethod.PATCH, body);</span>
     }
 
     /**
@@ -98,7 +97,7 @@ public class PluginProxyController {
     public ResponseEntity&lt;String&gt; proxyDelete(
             @PathVariable String pluginKey,
             HttpServletRequest request) {
-<span class="fc" id="L101">        return proxyRequest(pluginKey, request, HttpMethod.DELETE, null);</span>
+<span class="fc" id="L100">        return proxyRequest(pluginKey, request, HttpMethod.DELETE, null);</span>
     }
 
     /**
@@ -111,23 +110,23 @@ public class PluginProxyController {
             String body) {
 
         // Build the target URL
-<span class="fc" id="L114">        String requestUri = request.getRequestURI();</span>
-<span class="fc" id="L115">        String pluginPath = extractPluginPath(requestUri, pluginKey);</span>
-<span class="fc" id="L116">        String queryString = request.getQueryString();</span>
+<span class="fc" id="L113">        String requestUri = request.getRequestURI();</span>
+<span class="fc" id="L114">        String pluginPath = extractPluginPath(requestUri, pluginKey);</span>
+<span class="fc" id="L115">        String queryString = request.getQueryString();</span>
 
-<span class="fc" id="L118">        String targetUrl = buildTargetUrl(pluginKey, pluginPath, queryString);</span>
+<span class="fc" id="L117">        String targetUrl = buildTargetUrl(pluginKey, pluginPath, queryString);</span>
 
-<span class="fc" id="L120">        log.debug(&quot;Proxying {} {} to {}&quot;, method, requestUri, targetUrl);</span>
+<span class="fc" id="L119">        log.debug(&quot;Proxying {} {} to {}&quot;, method, requestUri, targetUrl);</span>
 
         try {
             // Copy headers
-<span class="fc" id="L124">            HttpHeaders headers = copyHeaders(request);</span>
+<span class="fc" id="L123">            HttpHeaders headers = copyHeaders(request);</span>
 
             // Create request entity
-<span class="fc" id="L127">            HttpEntity&lt;String&gt; requestEntity = new HttpEntity&lt;&gt;(body, headers);</span>
+<span class="fc" id="L126">            HttpEntity&lt;String&gt; requestEntity = new HttpEntity&lt;&gt;(body, headers);</span>
 
             // Execute request
-<span class="fc" id="L130">            ResponseEntity&lt;String&gt; response = restTemplate.exchange(</span>
+<span class="fc" id="L129">            ResponseEntity&lt;String&gt; response = restTemplate.exchange(</span>
                 targetUrl,
                 method,
                 requestEntity,
@@ -135,18 +134,18 @@ public class PluginProxyController {
             );
 
             // Return response with original status and headers
-<span class="fc" id="L138">            return ResponseEntity</span>
-<span class="fc" id="L139">                .status(response.getStatusCode())</span>
-<span class="fc" id="L140">                .headers(filterResponseHeaders(response.getHeaders()))</span>
-<span class="fc" id="L141">                .body(response.getBody());</span>
+<span class="fc" id="L137">            return ResponseEntity</span>
+<span class="fc" id="L138">                .status(response.getStatusCode())</span>
+<span class="fc" id="L139">                .headers(filterResponseHeaders(response.getHeaders()))</span>
+<span class="fc" id="L140">                .body(response.getBody());</span>
 
-<span class="fc" id="L143">        } catch (RestClientException e) {</span>
-<span class="fc" id="L144">            log.error(&quot;Failed to proxy request to plugin {}: {}&quot;, pluginKey, e.getMessage());</span>
-<span class="fc" id="L145">            return ResponseEntity</span>
-<span class="fc" id="L146">                .status(HttpStatus.BAD_GATEWAY)</span>
-<span class="fc" id="L147">                .contentType(MediaType.APPLICATION_JSON)</span>
-<span class="fc" id="L148">                .body(&quot;{\&quot;success\&quot;:false,\&quot;error\&quot;:\&quot;Failed to reach plugin service: &quot; +</span>
-<span class="fc" id="L149">                      e.getMessage().replace(&quot;\&quot;&quot;, &quot;'&quot;) + &quot;\&quot;}&quot;);</span>
+<span class="fc" id="L142">        } catch (RestClientException e) {</span>
+<span class="fc" id="L143">            log.error(&quot;Failed to proxy request to plugin {}: {}&quot;, pluginKey, e.getMessage());</span>
+<span class="fc" id="L144">            return ResponseEntity</span>
+<span class="fc" id="L145">                .status(HttpStatus.BAD_GATEWAY)</span>
+<span class="fc" id="L146">                .contentType(MediaType.APPLICATION_JSON)</span>
+<span class="fc" id="L147">                .body(&quot;{\&quot;success\&quot;:false,\&quot;error\&quot;:\&quot;Failed to reach plugin service: &quot; +</span>
+<span class="fc" id="L148">                      e.getMessage().replace(&quot;\&quot;&quot;, &quot;'&quot;) + &quot;\&quot;}&quot;);</span>
         }
     }
 
@@ -155,100 +154,100 @@ public class PluginProxyController {
      */
     private String extractPluginPath(String requestUri, String pluginKey) {
         // Remove /api/v1/proxy/plugins/{pluginKey} prefix
-<span class="fc" id="L158">        String prefix = &quot;/api/v1/proxy/plugins/&quot; + pluginKey;</span>
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (requestUri.startsWith(prefix)) {</span>
-<span class="fc" id="L160">            String path = requestUri.substring(prefix.length());</span>
-<span class="fc bfc" id="L161" title="All 2 branches covered.">            return path.isEmpty() ? &quot;&quot; : path;</span>
+<span class="fc" id="L157">        String prefix = &quot;/api/v1/proxy/plugins/&quot; + pluginKey;</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        if (requestUri.startsWith(prefix)) {</span>
+<span class="fc" id="L159">            String path = requestUri.substring(prefix.length());</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">            return path.isEmpty() ? &quot;&quot; : path;</span>
         }
-<span class="nc" id="L163">        return &quot;&quot;;</span>
+<span class="nc" id="L162">        return &quot;&quot;;</span>
     }
 
     /**
      * Builds the target URL for the service layer.
      */
     private String buildTargetUrl(String pluginKey, String pluginPath, String queryString) {
-<span class="fc" id="L170">        StringBuilder url = new StringBuilder(serviceLayerUrl);</span>
+<span class="fc" id="L169">        StringBuilder url = new StringBuilder(serviceLayerUrl);</span>
 
         // Remove trailing slash from base URL
-<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (url.charAt(url.length() - 1) == '/') {</span>
-<span class="nc" id="L174">            url.setLength(url.length() - 1);</span>
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">        if (url.charAt(url.length() - 1) == '/') {</span>
+<span class="nc" id="L173">            url.setLength(url.length() - 1);</span>
         }
 
         // Standard plugin endpoint pattern on service layer
-<span class="fc" id="L178">        url.append(&quot;/api/v1/plugins/&quot;).append(pluginKey);</span>
+<span class="fc" id="L177">        url.append(&quot;/api/v1/plugins/&quot;).append(pluginKey);</span>
 
         // Add plugin-specific path
-<span class="pc bpc" id="L181" title="1 of 4 branches missed.">        if (pluginPath != null &amp;&amp; !pluginPath.isEmpty()) {</span>
-<span class="pc bpc" id="L182" title="1 of 2 branches missed.">            if (!pluginPath.startsWith(&quot;/&quot;)) {</span>
-<span class="nc" id="L183">                url.append(&quot;/&quot;);</span>
+<span class="pc bpc" id="L180" title="1 of 4 branches missed.">        if (pluginPath != null &amp;&amp; !pluginPath.isEmpty()) {</span>
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">            if (!pluginPath.startsWith(&quot;/&quot;)) {</span>
+<span class="nc" id="L182">                url.append(&quot;/&quot;);</span>
             }
-<span class="fc" id="L185">            url.append(pluginPath);</span>
+<span class="fc" id="L184">            url.append(pluginPath);</span>
         }
 
         // Add query string
-<span class="pc bpc" id="L189" title="1 of 4 branches missed.">        if (queryString != null &amp;&amp; !queryString.isEmpty()) {</span>
-<span class="fc" id="L190">            url.append(&quot;?&quot;).append(queryString);</span>
+<span class="pc bpc" id="L188" title="1 of 4 branches missed.">        if (queryString != null &amp;&amp; !queryString.isEmpty()) {</span>
+<span class="fc" id="L189">            url.append(&quot;?&quot;).append(queryString);</span>
         }
 
-<span class="fc" id="L193">        return url.toString();</span>
+<span class="fc" id="L192">        return url.toString();</span>
     }
 
     /**
      * Copies relevant headers from the incoming request.
      */
     private HttpHeaders copyHeaders(HttpServletRequest request) {
-<span class="fc" id="L200">        HttpHeaders headers = new HttpHeaders();</span>
+<span class="fc" id="L199">        HttpHeaders headers = new HttpHeaders();</span>
 
-<span class="fc" id="L202">        Enumeration&lt;String&gt; headerNames = request.getHeaderNames();</span>
-<span class="fc bfc" id="L203" title="All 2 branches covered.">        while (headerNames.hasMoreElements()) {</span>
-<span class="fc" id="L204">            String headerName = headerNames.nextElement();</span>
+<span class="fc" id="L201">        Enumeration&lt;String&gt; headerNames = request.getHeaderNames();</span>
+<span class="fc bfc" id="L202" title="All 2 branches covered.">        while (headerNames.hasMoreElements()) {</span>
+<span class="fc" id="L203">            String headerName = headerNames.nextElement();</span>
 
             // Skip hop-by-hop headers
-<span class="fc bfc" id="L207" title="All 2 branches covered.">            if (isHopByHopHeader(headerName)) {</span>
-<span class="fc" id="L208">                continue;</span>
+<span class="fc bfc" id="L206" title="All 2 branches covered.">            if (isHopByHopHeader(headerName)) {</span>
+<span class="fc" id="L207">                continue;</span>
             }
 
-<span class="fc" id="L211">            Enumeration&lt;String&gt; headerValues = request.getHeaders(headerName);</span>
-<span class="fc bfc" id="L212" title="All 2 branches covered.">            while (headerValues.hasMoreElements()) {</span>
-<span class="fc" id="L213">                headers.add(headerName, headerValues.nextElement());</span>
+<span class="fc" id="L210">            Enumeration&lt;String&gt; headerValues = request.getHeaders(headerName);</span>
+<span class="fc bfc" id="L211" title="All 2 branches covered.">            while (headerValues.hasMoreElements()) {</span>
+<span class="fc" id="L212">                headers.add(headerName, headerValues.nextElement());</span>
             }
-<span class="fc" id="L215">        }</span>
+<span class="fc" id="L214">        }</span>
 
         // Add forwarding headers
-<span class="fc" id="L218">        headers.set(&quot;X-Forwarded-For&quot;, request.getRemoteAddr());</span>
-<span class="fc" id="L219">        headers.set(&quot;X-Forwarded-Proto&quot;, request.getScheme());</span>
-<span class="fc" id="L220">        headers.set(&quot;X-Forwarded-Host&quot;, request.getServerName());</span>
+<span class="fc" id="L217">        headers.set(&quot;X-Forwarded-For&quot;, request.getRemoteAddr());</span>
+<span class="fc" id="L218">        headers.set(&quot;X-Forwarded-Proto&quot;, request.getScheme());</span>
+<span class="fc" id="L219">        headers.set(&quot;X-Forwarded-Host&quot;, request.getServerName());</span>
 
-<span class="fc" id="L222">        return headers;</span>
+<span class="fc" id="L221">        return headers;</span>
     }
 
     /**
      * Filters response headers to remove hop-by-hop headers.
      */
     private HttpHeaders filterResponseHeaders(HttpHeaders headers) {
-<span class="fc" id="L229">        HttpHeaders filtered = new HttpHeaders();</span>
-<span class="fc" id="L230">        headers.forEach((name, values) -&gt; {</span>
-<span class="fc bfc" id="L231" title="All 2 branches covered.">            if (!isHopByHopHeader(name)) {</span>
-<span class="fc" id="L232">                filtered.addAll(name, values);</span>
+<span class="fc" id="L228">        HttpHeaders filtered = new HttpHeaders();</span>
+<span class="fc" id="L229">        headers.forEach((name, values) -&gt; {</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">            if (!isHopByHopHeader(name)) {</span>
+<span class="fc" id="L231">                filtered.addAll(name, values);</span>
             }
-<span class="fc" id="L234">        });</span>
-<span class="fc" id="L235">        return filtered;</span>
+<span class="fc" id="L233">        });</span>
+<span class="fc" id="L234">        return filtered;</span>
     }
 
     /**
      * Checks if a header is a hop-by-hop header that should not be forwarded.
      */
     private boolean isHopByHopHeader(String headerName) {
-<span class="fc" id="L242">        String lower = headerName.toLowerCase();</span>
-<span class="fc bfc" id="L243" title="All 2 branches covered.">        return lower.equals(&quot;connection&quot;) ||</span>
-<span class="pc bpc" id="L244" title="1 of 2 branches missed.">               lower.equals(&quot;keep-alive&quot;) ||</span>
-<span class="pc bpc" id="L245" title="1 of 2 branches missed.">               lower.equals(&quot;proxy-authenticate&quot;) ||</span>
-<span class="pc bpc" id="L246" title="1 of 2 branches missed.">               lower.equals(&quot;proxy-authorization&quot;) ||</span>
-<span class="pc bpc" id="L247" title="1 of 2 branches missed.">               lower.equals(&quot;te&quot;) ||</span>
-<span class="pc bpc" id="L248" title="1 of 2 branches missed.">               lower.equals(&quot;trailers&quot;) ||</span>
-<span class="fc bfc" id="L249" title="All 2 branches covered.">               lower.equals(&quot;transfer-encoding&quot;) ||</span>
-<span class="pc bpc" id="L250" title="1 of 2 branches missed.">               lower.equals(&quot;upgrade&quot;) ||</span>
-<span class="pc bpc" id="L251" title="1 of 2 branches missed.">               lower.equals(&quot;host&quot;);</span>
+<span class="fc" id="L241">        String lower = headerName.toLowerCase();</span>
+<span class="fc bfc" id="L242" title="All 2 branches covered.">        return lower.equals(&quot;connection&quot;) ||</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">               lower.equals(&quot;keep-alive&quot;) ||</span>
+<span class="pc bpc" id="L244" title="1 of 2 branches missed.">               lower.equals(&quot;proxy-authenticate&quot;) ||</span>
+<span class="pc bpc" id="L245" title="1 of 2 branches missed.">               lower.equals(&quot;proxy-authorization&quot;) ||</span>
+<span class="pc bpc" id="L246" title="1 of 2 branches missed.">               lower.equals(&quot;te&quot;) ||</span>
+<span class="pc bpc" id="L247" title="1 of 2 branches missed.">               lower.equals(&quot;trailers&quot;) ||</span>
+<span class="fc bfc" id="L248" title="All 2 branches covered.">               lower.equals(&quot;transfer-encoding&quot;) ||</span>
+<span class="pc bpc" id="L249" title="1 of 2 branches missed.">               lower.equals(&quot;upgrade&quot;) ||</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">               lower.equals(&quot;host&quot;);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

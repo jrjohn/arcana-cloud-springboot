@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserDaoMongodbImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">arcana-cloud-java</a> &gt; <a href="index.source.html" class="el_package">com.arcana.cloud.dao.impl.mongodb</a> &gt; <span class="el_source">UserDaoMongodbImpl.java</span></div><h1>UserDaoMongodbImpl.java</h1><pre class="source lang-java linenums">package com.arcana.cloud.dao.impl.mongodb;
+
+import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.document.UserDocument;
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.entity.UserRole;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.stereotype.Repository;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
+
+/**
+ * MongoDB implementation of UserDao.
+ * Active when database.type is 'mongodb'.
+ */
+@Repository
+@RequiredArgsConstructor
+<span class="fc" id="L31">@Slf4j</span>
+@ConditionalOnProperty(name = &quot;database.type&quot;, havingValue = &quot;mongodb&quot;)
+public class UserDaoMongodbImpl implements UserDao {
+
+    private final MongoTemplate mongoTemplate;
+
+    // Simple ID generator for legacy ID compatibility
+<span class="fc" id="L38">    private static final AtomicLong idGenerator = new AtomicLong(1000000);</span>
+
+    @Override
+    public User save(User entity) {
+<span class="fc" id="L42">        log.debug(&quot;MongoDB DAO: Saving user: {}&quot;, entity.getUsername());</span>
+
+<span class="fc" id="L44">        UserDocument document = UserDocument.fromEntity(entity);</span>
+
+        // Handle new entities (no legacy ID)
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        if (document.getLegacyId() == null) {</span>
+<span class="fc" id="L48">            document.setLegacyId(idGenerator.incrementAndGet());</span>
+<span class="fc" id="L49">            document.setCreatedAt(LocalDateTime.now());</span>
+        }
+<span class="fc" id="L51">        document.setUpdatedAt(LocalDateTime.now());</span>
+
+        // Check if document exists by legacyId
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (entity.getId() != null) {</span>
+<span class="fc" id="L55">            Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(entity.getId()));</span>
+<span class="fc" id="L56">            UserDocument existing = mongoTemplate.findOne(query, UserDocument.class);</span>
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">            if (existing != null) {</span>
+<span class="fc" id="L58">                document.setId(existing.getId());</span>
+            }
+        }
+
+<span class="fc" id="L62">        UserDocument saved = mongoTemplate.save(document);</span>
+<span class="fc" id="L63">        User result = saved.toEntity();</span>
+<span class="fc" id="L64">        result.setId(saved.getLegacyId());</span>
+<span class="fc" id="L65">        return result;</span>
+    }
+
+    @Override
+    public List&lt;User&gt; saveAll(Iterable&lt;User&gt; entities) {
+<span class="fc" id="L70">        List&lt;User&gt; result = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">        for (User user : entities) {</span>
+<span class="fc" id="L72">            result.add(save(user));</span>
+<span class="fc" id="L73">        }</span>
+<span class="fc" id="L74">        return result;</span>
+    }
+
+    @Override
+    public Optional&lt;User&gt; findById(Long id) {
+<span class="fc" id="L79">        log.debug(&quot;MongoDB DAO: Finding user by ID: {}&quot;, id);</span>
+<span class="fc" id="L80">        Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(id));</span>
+<span class="fc" id="L81">        UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (doc != null) {</span>
+<span class="fc" id="L83">            User user = doc.toEntity();</span>
+<span class="fc" id="L84">            user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L85">            return Optional.of(user);</span>
+        }
+<span class="fc" id="L87">        return Optional.empty();</span>
+    }
+
+    @Override
+    public boolean existsById(Long id) {
+<span class="fc" id="L92">        Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(id));</span>
+<span class="fc" id="L93">        return mongoTemplate.exists(query, UserDocument.class);</span>
+    }
+
+    @Override
+    public List&lt;User&gt; findAll() {
+<span class="fc" id="L98">        return mongoTemplate.findAll(UserDocument.class).stream()</span>
+<span class="fc" id="L99">                .map(doc -&gt; {</span>
+<span class="fc" id="L100">                    User user = doc.toEntity();</span>
+<span class="fc" id="L101">                    user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L102">                    return user;</span>
+                })
+<span class="fc" id="L104">                .collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public Page&lt;User&gt; findAll(Pageable pageable) {
+<span class="fc" id="L109">        Query query = new Query().with(pageable);</span>
+<span class="fc" id="L110">        long total = mongoTemplate.count(new Query(), UserDocument.class);</span>
+<span class="fc" id="L111">        List&lt;User&gt; users = mongoTemplate.find(query, UserDocument.class).stream()</span>
+<span class="fc" id="L112">                .map(doc -&gt; {</span>
+<span class="fc" id="L113">                    User user = doc.toEntity();</span>
+<span class="fc" id="L114">                    user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L115">                    return user;</span>
+                })
+<span class="fc" id="L117">                .collect(Collectors.toList());</span>
+<span class="fc" id="L118">        return new PageImpl&lt;&gt;(users, pageable, total);</span>
+    }
+
+    @Override
+    public long count() {
+<span class="fc" id="L123">        return mongoTemplate.count(new Query(), UserDocument.class);</span>
+    }
+
+    @Override
+    public void deleteById(Long id) {
+<span class="fc" id="L128">        log.info(&quot;MongoDB DAO: Deleting user by ID: {}&quot;, id);</span>
+<span class="fc" id="L129">        Query query = new Query(Criteria.where(&quot;legacyId&quot;).is(id));</span>
+<span class="fc" id="L130">        mongoTemplate.remove(query, UserDocument.class);</span>
+<span class="fc" id="L131">    }</span>
+
+    @Override
+    public void delete(User entity) {
+<span class="fc bfc" id="L135" title="All 2 branches covered.">        if (entity.getId() != null) {</span>
+<span class="fc" id="L136">            deleteById(entity.getId());</span>
+        }
+<span class="fc" id="L138">    }</span>
+
+    @Override
+    public void deleteAll() {
+<span class="fc" id="L142">        mongoTemplate.remove(new Query(), UserDocument.class);</span>
+<span class="fc" id="L143">    }</span>
+
+    @Override
+    public void deleteAll(Iterable&lt;User&gt; entities) {
+<span class="fc" id="L147">        entities.forEach(this::delete);</span>
+<span class="fc" id="L148">    }</span>
+
+    @Override
+    public Optional&lt;User&gt; findByUsername(String username) {
+<span class="fc" id="L152">        log.debug(&quot;MongoDB DAO: Finding user by username: {}&quot;, username);</span>
+<span class="fc" id="L153">        Query query = new Query(Criteria.where(&quot;username&quot;).is(username));</span>
+<span class="fc" id="L154">        UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);</span>
+<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (doc != null) {</span>
+<span class="fc" id="L156">            User user = doc.toEntity();</span>
+<span class="fc" id="L157">            user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L158">            return Optional.of(user);</span>
+        }
+<span class="fc" id="L160">        return Optional.empty();</span>
+    }
+
+    @Override
+    public Optional&lt;User&gt; findByEmail(String email) {
+<span class="fc" id="L165">        log.debug(&quot;MongoDB DAO: Finding user by email: {}&quot;, email);</span>
+<span class="fc" id="L166">        Query query = new Query(Criteria.where(&quot;email&quot;).is(email));</span>
+<span class="fc" id="L167">        UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">        if (doc != null) {</span>
+<span class="fc" id="L169">            User user = doc.toEntity();</span>
+<span class="fc" id="L170">            user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L171">            return Optional.of(user);</span>
+        }
+<span class="fc" id="L173">        return Optional.empty();</span>
+    }
+
+    @Override
+    public Optional&lt;User&gt; findByUsernameOrEmail(String username, String email) {
+<span class="fc" id="L178">        log.debug(&quot;MongoDB DAO: Finding user by username or email: {}/{}&quot;, username, email);</span>
+<span class="fc" id="L179">        Query query = new Query(new Criteria().orOperator(</span>
+<span class="fc" id="L180">                Criteria.where(&quot;username&quot;).is(username),</span>
+<span class="fc" id="L181">                Criteria.where(&quot;email&quot;).is(email)</span>
+        ));
+<span class="fc" id="L183">        UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);</span>
+<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (doc != null) {</span>
+<span class="fc" id="L185">            User user = doc.toEntity();</span>
+<span class="fc" id="L186">            user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L187">            return Optional.of(user);</span>
+        }
+<span class="fc" id="L189">        return Optional.empty();</span>
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+<span class="fc" id="L194">        Query query = new Query(Criteria.where(&quot;username&quot;).is(username));</span>
+<span class="fc" id="L195">        return mongoTemplate.exists(query, UserDocument.class);</span>
+    }
+
+    @Override
+    public boolean existsByEmail(String email) {
+<span class="fc" id="L200">        Query query = new Query(Criteria.where(&quot;email&quot;).is(email));</span>
+<span class="fc" id="L201">        return mongoTemplate.exists(query, UserDocument.class);</span>
+    }
+
+    @Override
+    public List&lt;User&gt; findActiveUsersByRole(UserRole role) {
+<span class="fc" id="L206">        log.debug(&quot;MongoDB DAO: Finding active users by role: {}&quot;, role);</span>
+<span class="fc" id="L207">        Query query = new Query(Criteria.where(&quot;role&quot;).is(role).and(&quot;isActive&quot;).is(true));</span>
+<span class="fc" id="L208">        return mongoTemplate.find(query, UserDocument.class).stream()</span>
+<span class="fc" id="L209">                .map(doc -&gt; {</span>
+<span class="fc" id="L210">                    User user = doc.toEntity();</span>
+<span class="fc" id="L211">                    user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L212">                    return user;</span>
+                })
+<span class="fc" id="L214">                .collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public List&lt;User&gt; findAllActiveUsers() {
+<span class="fc" id="L219">        log.debug(&quot;MongoDB DAO: Finding all active users&quot;);</span>
+<span class="fc" id="L220">        Query query = new Query(Criteria.where(&quot;isActive&quot;).is(true));</span>
+<span class="fc" id="L221">        return mongoTemplate.find(query, UserDocument.class).stream()</span>
+<span class="fc" id="L222">                .map(doc -&gt; {</span>
+<span class="fc" id="L223">                    User user = doc.toEntity();</span>
+<span class="fc" id="L224">                    user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L225">                    return user;</span>
+                })
+<span class="fc" id="L227">                .collect(Collectors.toList());</span>
+    }
+
+    @Override
+    public List&lt;User&gt; findUnverifiedUsers() {
+<span class="fc" id="L232">        log.debug(&quot;MongoDB DAO: Finding unverified users&quot;);</span>
+<span class="fc" id="L233">        Query query = new Query(Criteria.where(&quot;isVerified&quot;).is(false).and(&quot;isActive&quot;).is(true));</span>
+<span class="fc" id="L234">        return mongoTemplate.find(query, UserDocument.class).stream()</span>
+<span class="fc" id="L235">                .map(doc -&gt; {</span>
+<span class="fc" id="L236">                    User user = doc.toEntity();</span>
+<span class="fc" id="L237">                    user.setId(doc.getLegacyId());</span>
+<span class="fc" id="L238">                    return user;</span>
+                })
+<span class="fc" id="L240">                .collect(Collectors.toList());</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

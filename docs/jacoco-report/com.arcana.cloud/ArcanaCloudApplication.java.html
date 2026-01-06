@@ -2,17 +2,25 @@
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.grpc.server.autoconfigure.health.GrpcServerHealthAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-@SpringBootApplication
+@SpringBootApplication(exclude = GrpcServerHealthAutoConfiguration.class)
 @EnableCaching
 @EnableJpaAuditing
-@SuppressWarnings(&quot;checkstyle:HideUtilityClassConstructor&quot;)
-<span class="fc" id="L12">public class ArcanaCloudApplication {</span>
+public class ArcanaCloudApplication {
 
+    /**
+     * Main entry point for the Arcana Cloud application.
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
-<span class="nc" id="L15">        SpringApplication.run(ArcanaCloudApplication.class, args);</span>
-<span class="nc" id="L16">    }</span>
+<span class="nc" id="L19">        SpringApplication.run(ArcanaCloudApplication.class, args);</span>
+<span class="nc" id="L20">    }</span>
+
+    // Private constructor to satisfy checkstyle
+    private ArcanaCloudApplication() {
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

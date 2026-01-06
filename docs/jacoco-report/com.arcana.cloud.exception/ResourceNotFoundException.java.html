@@ -5,15 +5,17 @@ import lombok.Getter;
 @Getter
 public class ResourceNotFoundException extends RuntimeException {
 
+    private static final long serialVersionUID = 1L;
+
     private final String resourceName;
     private final String fieldName;
     private final Object fieldValue;
 
     public ResourceNotFoundException(String resourceName, String fieldName, Object fieldValue) {
-<span class="fc" id="L13">        super(String.format(&quot;%s not found with %s: '%s'&quot;, resourceName, fieldName, fieldValue));</span>
-<span class="fc" id="L14">        this.resourceName = resourceName;</span>
-<span class="fc" id="L15">        this.fieldName = fieldName;</span>
-<span class="fc" id="L16">        this.fieldValue = fieldValue;</span>
-<span class="fc" id="L17">    }</span>
+<span class="fc" id="L15">        super(String.format(&quot;%s not found with %s: '%s'&quot;, resourceName, fieldName, fieldValue));</span>
+<span class="fc" id="L16">        this.resourceName = resourceName;</span>
+<span class="fc" id="L17">        this.fieldName = fieldName;</span>
+<span class="fc" id="L18">        this.fieldValue = fieldValue;</span>
+<span class="fc" id="L19">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

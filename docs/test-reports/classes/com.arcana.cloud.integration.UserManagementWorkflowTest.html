@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - UserManagementWorkflowTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>UserManagementWorkflowTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.arcana.cloud.integration.html">com.arcana.cloud.integration</a> &gt; UserManagementWorkflowTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">9</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1.808s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a href="#">Tests</a>
+</li>
+<li>
+<a href="#">Standard output</a>
+</li>
+<li>
+<a href="#">Standard error</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">testAdminCanCreateUser()</td>
+<td class="success">0.608s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testAdminCanDeleteUser()</td>
+<td class="success">0.140s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testAdminCanGetUserById()</td>
+<td class="success">0.129s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testAdminCanListUsers()</td>
+<td class="success">0.067s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testAdminCanUpdateUser()</td>
+<td class="success">0.129s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testPaginationWorks()</td>
+<td class="success">0.397s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testUnauthorizedAccess()</td>
+<td class="success">0.063s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testUserCanGetOwnProfile()</td>
+<td class="success">0.127s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testUserCanUpdateOwnProfile()</td>
+<td class="success">0.148s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre id="class-stdout">10:37:48.354 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.arcana.cloud.integration.UserManagementWorkflowTest]: UserManagementWorkflowTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:37:48.461 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.arcana.cloud.ArcanaCloudApplication for test class com.arcana.cloud.integration.UserManagementWorkflowTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.1)
+
+2026-01-06 10:37:48 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Starting UserManagementWorkflowTest using Java 25.0.1 with PID 7726 (started by jrjohn in /Users/jrjohn/Documents/projects/arcana-cloud-springboot)
+2026-01-06 10:37:48 [Test worker] DEBUG c.a.c.i.UserManagementWorkflowTest - Running with Spring Boot v4.0.1, Spring v7.0.2
+2026-01-06 10:37:48 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - The following 1 profile is active: &quot;test&quot;
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 MongoDB repository interfaces.
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-01-06 10:37:49 [Test worker] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 5 ms. Found 0 Redis repository interfaces.
+2026-01-06 10:37:50 [Test worker] INFO  o.s.cloud.context.scope.GenericScope - BeanFactory id=a2727d86-8b3e-37dc-9a1b-d12e09847649
+2026-01-06 10:37:50 [Test worker] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-06 10:37:50 [Test worker] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-06 10:37:50 [Test worker] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-06 10:37:50 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-06 10:37:50 [Test worker] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=SA
+2026-01-06 10:37:50 [Test worker] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-06 10:37:50 [Test worker] WARN  org.hibernate.orm.deprecation - HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-06 10:37:50 [Test worker] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:h2:mem:testdb]
+	Database driver: H2 JDBC Driver
+	Database dialect: H2Dialect
+	Database version: 2.4.240
+	Default catalog/schema: TESTDB/PUBLIC
+	Autocommit mode: undefined/unknown
+	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+	JDBC fetch size: 100
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-06 10:37:51 [Test worker] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: 
+    drop table if exists oauth_tokens cascade 
+Hibernate: 
+    drop table if exists users cascade 
+Hibernate: 
+    create table oauth_tokens (
+        is_revoked boolean,
+        created_at timestamp(6),
+        expires_at timestamp(6) not null,
+        id bigint generated by default as identity,
+        refresh_expires_at timestamp(6) not null,
+        user_id bigint not null,
+        client_ip varchar(50),
+        token_type varchar(50),
+        access_token varchar(500) not null,
+        refresh_token varchar(500) not null,
+        user_agent varchar(255),
+        primary key (id)
+    )
+Hibernate: 
+    create table users (
+        is_active boolean,
+        is_verified boolean,
+        created_at timestamp(6),
+        id bigint generated by default as identity,
+        updated_at timestamp(6),
+        first_name varchar(50),
+        last_name varchar(50),
+        username varchar(50) not null unique,
+        email varchar(100) not null unique,
+        password varchar(255) not null,
+        role enum ('ADMIN','MODERATOR','USER') not null,
+        primary key (id)
+    )
+Hibernate: 
+    alter table if exists oauth_tokens 
+       add constraint FKo3ygyue8ry6098fk4tatyskce 
+       foreign key (user_id) 
+       references users
+2026-01-06 10:37:51 [Test worker] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.service.grpc.GrpcHealthService - gRPC Health Service initialized
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Initializing Arcana Cloud Plugin System
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager -   Platform version: 1.0.0
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Starting Apache Felix OSGi framework...
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory - Apache Felix OSGi framework started successfully
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Framework version: 1.9
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Cache directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/.cache
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.FelixFrameworkFactory -   Plugins directory: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Initializing Spring-OSGi bridge
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'dataSource' to OSGi as [javax.sql.DataSource]
+2026-01-06 10:37:51 [Test worker] DEBUG c.a.c.p.r.s.PluginAuditService - [BEAN_ACCESS] plugin=system bean=javax.sql.DataSource status=ALLOWED
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.bridge.SpringOSGiBridge - Exported Spring bean 'passwordEncoder' to OSGi as [org.springframework.security.crypto.password.PasswordEncoder]
+2026-01-06 10:37:51 [Test worker] DEBUG c.a.c.p.r.s.PluginAuditService - [BEAN_ACCESS] plugin=system bean=org.springframework.security.crypto.password.PasswordEncoder status=ALLOWED
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Scanning for plugins in: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins
+2026-01-06 10:37:51 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: monolithic-test-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: monolithic-test-plugin-1.0.0.jar
+org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/monolithic-test-plugin-1.0.0.jar
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
+	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:397)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:217)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:426)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
+	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:160)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:128)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:422)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$0(ClassBasedTestDescriptor.java:334)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:333)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$1(ClassBasedTestDescriptor.java:322)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$0(ClassBasedTestDescriptor.java:321)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:27)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:126)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:70)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$0(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:110)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:135)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:104)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:64)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:194)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.zip.ZipException: zip END header not found
+	at java.base/java.util.zip.ZipFile$Source.findEND(ZipFile.java:1693)
+	at java.base/java.util.zip.ZipFile$Source.initCEN(ZipFile.java:1701)
+	at java.base/java.util.zip.ZipFile$Source.&lt;init&gt;(ZipFile.java:1542)
+	at java.base/java.util.zip.ZipFile$Source.get(ZipFile.java:1506)
+	at java.base/java.util.zip.ZipFile$CleanableResource.&lt;init&gt;(ZipFile.java:704)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:204)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:150)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:164)
+	at org.apache.felix.framework.util.SecureAction.openZipFile(SecureAction.java:802)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:169)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:151)
+	at org.apache.felix.framework.util.WeakZipFileFactory.create(WeakZipFileFactory.java:78)
+	at org.apache.felix.framework.cache.JarRevision.&lt;init&gt;(JarRevision.java:83)
+	at org.apache.felix.framework.cache.BundleArchive.createRevisionFromLocation(BundleArchive.java:819)
+	at org.apache.felix.framework.cache.BundleArchive.reviseInternal(BundleArchive.java:491)
+	at org.apache.felix.framework.cache.BundleArchive.&lt;init&gt;(BundleArchive.java:155)
+	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
+	... 131 common frames omitted
+2026-01-06 10:37:51 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: lifecycle-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: lifecycle-plugin-1.0.0.jar
+org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/lifecycle-plugin-1.0.0.jar
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
+	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:397)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:217)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:426)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
+	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:160)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:128)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:422)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$0(ClassBasedTestDescriptor.java:334)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:333)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$1(ClassBasedTestDescriptor.java:322)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$0(ClassBasedTestDescriptor.java:321)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:27)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:126)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:70)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$0(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:110)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:135)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:104)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:64)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:194)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.zip.ZipException: zip END header not found
+	at java.base/java.util.zip.ZipFile$Source.findEND(ZipFile.java:1693)
+	at java.base/java.util.zip.ZipFile$Source.initCEN(ZipFile.java:1701)
+	at java.base/java.util.zip.ZipFile$Source.&lt;init&gt;(ZipFile.java:1542)
+	at java.base/java.util.zip.ZipFile$Source.get(ZipFile.java:1506)
+	at java.base/java.util.zip.ZipFile$CleanableResource.&lt;init&gt;(ZipFile.java:704)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:204)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:150)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:164)
+	at org.apache.felix.framework.util.SecureAction.openZipFile(SecureAction.java:802)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:169)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:151)
+	at org.apache.felix.framework.util.WeakZipFileFactory.create(WeakZipFileFactory.java:78)
+	at org.apache.felix.framework.cache.JarRevision.&lt;init&gt;(JarRevision.java:83)
+	at org.apache.felix.framework.cache.BundleArchive.createRevisionFromLocation(BundleArchive.java:819)
+	at org.apache.felix.framework.cache.BundleArchive.reviseInternal(BundleArchive.java:491)
+	at org.apache.felix.framework.cache.BundleArchive.&lt;init&gt;(BundleArchive.java:155)
+	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
+	... 131 common frames omitted
+2026-01-06 10:37:51 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: test-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: test-plugin-1.0.0.jar
+org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/test-plugin-1.0.0.jar
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
+	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:397)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:217)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:426)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
+	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:160)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:128)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:422)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$0(ClassBasedTestDescriptor.java:334)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:333)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$1(ClassBasedTestDescriptor.java:322)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$0(ClassBasedTestDescriptor.java:321)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:27)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:126)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:70)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$0(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:110)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:135)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:104)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:64)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:194)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.zip.ZipException: zip END header not found
+	at java.base/java.util.zip.ZipFile$Source.findEND(ZipFile.java:1693)
+	at java.base/java.util.zip.ZipFile$Source.initCEN(ZipFile.java:1701)
+	at java.base/java.util.zip.ZipFile$Source.&lt;init&gt;(ZipFile.java:1542)
+	at java.base/java.util.zip.ZipFile$Source.get(ZipFile.java:1506)
+	at java.base/java.util.zip.ZipFile$CleanableResource.&lt;init&gt;(ZipFile.java:704)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:204)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:150)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:164)
+	at org.apache.felix.framework.util.SecureAction.openZipFile(SecureAction.java:802)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:169)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:151)
+	at org.apache.felix.framework.util.WeakZipFileFactory.create(WeakZipFileFactory.java:78)
+	at org.apache.felix.framework.cache.JarRevision.&lt;init&gt;(JarRevision.java:83)
+	at org.apache.felix.framework.cache.BundleArchive.createRevisionFromLocation(BundleArchive.java:819)
+	at org.apache.felix.framework.cache.BundleArchive.reviseInternal(BundleArchive.java:491)
+	at org.apache.felix.framework.cache.BundleArchive.&lt;init&gt;(BundleArchive.java:155)
+	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
+	... 131 common frames omitted
+2026-01-06 10:37:51 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: workflow-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] ERROR c.a.c.p.r.scanner.PluginScanner - Failed to install plugin: workflow-plugin-1.0.0.jar
+org.osgi.framework.BundleException: Unable to cache bundle: file:///Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/workflow-plugin-1.0.0.jar
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3258)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:147)
+	at org.apache.felix.framework.BundleContextImpl.installBundle(BundleContextImpl.java:120)
+	at com.arcana.cloud.plugin.runtime.osgi.OSGiPluginManager.installPlugin(OSGiPluginManager.java:78)
+	at com.arcana.cloud.plugin.runtime.scanner.PluginScanner.scanAndInstall(PluginScanner.java:63)
+	at com.arcana.cloud.plugin.runtime.PluginManager.initialize(PluginManager.java:105)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMethod.invoke(InitDestroyAnnotationBeanPostProcessor.java:453)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:397)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:217)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:426)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1809)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:603)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:525)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:333)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:371)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:331)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:196)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.instantiateSingleton(DefaultListableBeanFactory.java:1218)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingleton(DefaultListableBeanFactory.java:1184)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:1121)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:993)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:620)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:756)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:445)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:321)
+	at org.springframework.boot.test.context.SpringBootContextLoader.lambda$loadContext$2(SpringBootContextLoader.java:156)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:58)
+	at org.springframework.util.function.ThrowingSupplier.get(ThrowingSupplier.java:46)
+	at org.springframework.boot.SpringApplication.withHook(SpringApplication.java:1465)
+	at org.springframework.boot.test.context.SpringBootContextLoader$ContextLoaderHook.run(SpringBootContextLoader.java:605)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:156)
+	at org.springframework.boot.test.context.SpringBootContextLoader.loadContext(SpringBootContextLoader.java:115)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:247)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.lambda$loadContext$0(DefaultCacheAwareContextLoaderDelegate.java:167)
+	at org.springframework.test.context.cache.DefaultContextCache.put(DefaultContextCache.java:172)
+	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:160)
+	at org.springframework.test.context.support.DefaultTestContext.getApplicationContext(DefaultTestContext.java:128)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:200)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:139)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:260)
+	at org.springframework.test.context.junit.jupiter.SpringExtension.postProcessTestInstance(SpringExtension.java:205)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$1(ClassBasedTestDescriptor.java:423)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.executeAndMaskThrowable(ClassBasedTestDescriptor.java:428)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$invokeTestInstancePostProcessors$0(ClassBasedTestDescriptor.java:422)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.accept(ForEachOps.java:186)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.stream.ReferencePipeline$2$1.accept(ReferencePipeline.java:197)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:214)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.forEachRemaining(ArrayList.java:1716)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:570)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:560)
+	at java.base/java.util.stream.ForEachOps$ForEachOp.evaluateSequential(ForEachOps.java:153)
+	at java.base/java.util.stream.ForEachOps$ForEachOp$OfRef.evaluateSequential(ForEachOps.java:176)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:265)
+	at java.base/java.util.stream.ReferencePipeline.forEach(ReferencePipeline.java:632)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.invokeTestInstancePostProcessors(ClassBasedTestDescriptor.java:422)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$instantiateAndPostProcessTestInstance$0(ClassBasedTestDescriptor.java:334)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.instantiateAndPostProcessTestInstance(ClassBasedTestDescriptor.java:333)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$1(ClassBasedTestDescriptor.java:322)
+	at java.base/java.util.Optional.orElseGet(Optional.java:364)
+	at org.junit.jupiter.engine.descriptor.ClassBasedTestDescriptor.lambda$testInstancesProvider$0(ClassBasedTestDescriptor.java:321)
+	at org.junit.jupiter.engine.execution.TestInstancesProvider.getTestInstances(TestInstancesProvider.java:27)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$prepare$0(TestMethodTestDescriptor.java:127)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:126)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.prepare(TestMethodTestDescriptor.java:70)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$prepare$0(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.prepare(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:110)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1604)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:42)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$2(NodeTestTask.java:180)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$1(NodeTestTask.java:166)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:138)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$0(NodeTestTask.java:164)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:74)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:163)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:116)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:36)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:52)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.executeEngine(EngineExecutionOrchestrator.java:246)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.failOrExecuteEngine(EngineExecutionOrchestrator.java:218)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:179)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:108)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:66)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:157)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:65)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:125)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:114)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:93)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.junit.platform.launcher.core.InterceptingLauncher.lambda$execute$0(InterceptingLauncher.java:41)
+	at org.junit.platform.launcher.core.ClasspathAlignmentCheckingLauncherInterceptor.intercept(ClasspathAlignmentCheckingLauncherInterceptor.java:25)
+	at org.junit.platform.launcher.core.InterceptingLauncher.execute(InterceptingLauncher.java:40)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:48)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.processAllTestClasses(JUnitPlatformTestClassProcessor.java:135)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor$CollectAllTestClassesExecutor.access$000(JUnitPlatformTestClassProcessor.java:110)
+	at org.gradle.api.internal.tasks.testing.junitplatform.JUnitPlatformTestClassProcessor.stop(JUnitPlatformTestClassProcessor.java:104)
+	at org.gradle.api.internal.tasks.testing.SuiteTestClassProcessor.stop(SuiteTestClassProcessor.java:64)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at org.gradle.internal.dispatch.MethodInvocation.invokeOn(MethodInvocation.java:77)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:28)
+	at org.gradle.internal.dispatch.ReflectionDispatch.dispatch(ReflectionDispatch.java:19)
+	at org.gradle.internal.dispatch.ContextClassLoaderDispatch.dispatch(ContextClassLoaderDispatch.java:33)
+	at org.gradle.internal.dispatch.ProxyDispatchAdapter$DispatchingInvocationHandler.invoke(ProxyDispatchAdapter.java:88)
+	at jdk.proxy2/jdk.proxy2.$Proxy6.stop(Unknown Source)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker$3.run(TestWorker.java:194)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.executeAndMaintainThreadName(TestWorker.java:126)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:103)
+	at org.gradle.api.internal.tasks.testing.worker.TestWorker.execute(TestWorker.java:63)
+	at org.gradle.process.internal.worker.child.ActionExecutionWorker.execute(ActionExecutionWorker.java:56)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:122)
+	at org.gradle.process.internal.worker.child.SystemApplicationClassLoaderWorker.call(SystemApplicationClassLoaderWorker.java:72)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.run(GradleWorkerMain.java:69)
+	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
+Caused by: java.util.zip.ZipException: zip END header not found
+	at java.base/java.util.zip.ZipFile$Source.findEND(ZipFile.java:1693)
+	at java.base/java.util.zip.ZipFile$Source.initCEN(ZipFile.java:1701)
+	at java.base/java.util.zip.ZipFile$Source.&lt;init&gt;(ZipFile.java:1542)
+	at java.base/java.util.zip.ZipFile$Source.get(ZipFile.java:1506)
+	at java.base/java.util.zip.ZipFile$CleanableResource.&lt;init&gt;(ZipFile.java:704)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:204)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:150)
+	at java.base/java.util.zip.ZipFile.&lt;init&gt;(ZipFile.java:164)
+	at org.apache.felix.framework.util.SecureAction.openZipFile(SecureAction.java:802)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:169)
+	at org.apache.felix.framework.util.WeakZipFileFactory$WeakZipFile.&lt;init&gt;(WeakZipFileFactory.java:151)
+	at org.apache.felix.framework.util.WeakZipFileFactory.create(WeakZipFileFactory.java:78)
+	at org.apache.felix.framework.cache.JarRevision.&lt;init&gt;(JarRevision.java:83)
+	at org.apache.felix.framework.cache.BundleArchive.createRevisionFromLocation(BundleArchive.java:819)
+	at org.apache.felix.framework.cache.BundleArchive.reviseInternal(BundleArchive.java:491)
+	at org.apache.felix.framework.cache.BundleArchive.&lt;init&gt;(BundleArchive.java:155)
+	at org.apache.felix.framework.cache.BundleCache.create(BundleCache.java:457)
+	at org.apache.felix.framework.Felix.installBundle(Felix.java:3254)
+	... 131 common frames omitted
+2026-01-06 10:37:51 [Test worker] DEBUG c.a.c.p.r.scanner.PluginScanner - Found plugin JAR: arcana-audit-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Installing plugin bundle: /Users/jrjohn/Documents/projects/arcana-cloud-springboot/plugins/arcana-audit-plugin-1.0.0.jar
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.osgi.OSGiPluginManager - Plugin installed: com.arcana.plugin.audit (bundle id: 5)
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.scanner.PluginScanner - Installed 1 plugins
+2026-01-06 10:37:51 [FelixDispatchQueue] DEBUG c.a.c.plugin.runtime.PluginManager - Plugin com.arcana.plugin.audit state changed to INSTALLED
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.plugin.runtime.PluginManager - Plugin system initialized successfully. 1 plugins installed
+2026-01-06 10:37:51 [Test worker] INFO  c.a.c.p.r.s.PluginSignatureVerifier - Loaded 0 trusted certificates for plugin verification
+2026-01-06 10:37:51 [Test worker] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-06 10:37:51 [Test worker] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-06 10:37:52 [Test worker] INFO  org.mongodb.driver.client - MongoClient with metadata {&quot;driver&quot;: {&quot;name&quot;: &quot;mongo-java-driver|spring-boot|sync&quot;, &quot;version&quot;: &quot;5.6.2&quot;}, &quot;os&quot;: {&quot;type&quot;: &quot;Darwin&quot;, &quot;name&quot;: &quot;Mac OS X&quot;, &quot;architecture&quot;: &quot;aarch64&quot;, &quot;version&quot;: &quot;26.2&quot;}, &quot;platform&quot;: &quot;Java/Homebrew/25.0.1&quot;} created with settings MongoClientSettings{readPreference=primary, writeConcern=WriteConcern{w=null, wTimeout=null ms, journal=null}, retryWrites=true, retryReads=true, readConcern=ReadConcern{level=null}, credential=null, transportSettings=null, commandListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsCommandListener@155a6af5], codecRegistry=ProvidersCodecRegistry{codecProviders=[ValueCodecProvider{}, BsonValueCodecProvider{}, DBRefCodecProvider{}, DBObjectCodecProvider{}, DocumentCodecProvider{}, CollectionCodecProvider{}, IterableCodecProvider{}, MapCodecProvider{}, GeoJsonCodecProvider{}, GridFSFileCodecProvider{}, Jsr310CodecProvider{}, JsonObjectCodecProvider{}, BsonCodecProvider{}, com.mongodb.client.model.mql.ExpressionCodecProvider@6962efd0, com.mongodb.Jep395RecordCodecProvider@7cf8cfdc, com.mongodb.KotlinCodecProvider@479e884a, EnumCodecProvider{}]}, loggerSettings=LoggerSettings{maxDocumentLength=1000}, clusterSettings={hosts=[localhost:27017], srvServiceName=mongodb, mode=SINGLE, requiredClusterType=UNKNOWN, requiredReplicaSetName='null', serverSelector='null', clusterListeners='[]', serverSelectionTimeout='30000 ms', localThreshold='15 ms'}, socketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=0, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, heartbeatSocketSettings=SocketSettings{connectTimeoutMS=10000, readTimeoutMS=10000, receiveBufferSize=0, proxySettings=ProxySettings{host=null, port=null, username=null, password=null}}, connectionPoolSettings=ConnectionPoolSettings{maxSize=100, minSize=0, maxWaitTimeMS=120000, maxConnectionLifeTimeMS=0, maxConnectionIdleTimeMS=0, maintenanceInitialDelayMS=0, maintenanceFrequencyMS=60000, connectionPoolListeners=[io.micrometer.core.instrument.binder.mongodb.MongoMetricsConnectionPoolListener@5c0ded2f], maxConnecting=2}, serverSettings=ServerSettings{heartbeatFrequencyMS=10000, minHeartbeatFrequencyMS=500, serverMonitoringMode=AUTO, serverListeners='[]', serverMonitorListeners='[]'}, sslSettings=SslSettings{enabled=false, invalidHostNameAllowed=false, context=null}, applicationName='null', compressorList=[], uuidRepresentation=UNSPECIFIED, serverApi=null, autoEncryptionSettings=null, dnsClient=null, inetAddressResolver=null, contextProvider=null, timeoutMS=null}
+2026-01-06 10:37:52 [cluster-ClusterId{value='695c7580f80c3826529c9ad1', description='null'}-localhost:27017] INFO  org.mongodb.driver.cluster - Exception in monitor thread while connecting to server localhost:27017
+com.mongodb.MongoSocketOpenException: Exception opening socket
+	at com.mongodb.internal.connection.SocketStream.lambda$open$0(SocketStream.java:85)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:85)
+	at com.mongodb.internal.connection.InternalStreamConnection.open(InternalStreamConnection.java:233)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.setupNewConnectionAndGetInitialDescription(DefaultServerMonitor.java:282)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.lookupServerDescription(DefaultServerMonitor.java:253)
+	at com.mongodb.internal.connection.DefaultServerMonitor$ServerMonitor.run(DefaultServerMonitor.java:203)
+Caused by: java.net.ConnectException: Connection refused
+	at java.base/sun.nio.ch.Net.pollConnect(Native Method)
+	at java.base/sun.nio.ch.Net.pollConnectNow(Net.java:639)
+	at java.base/sun.nio.ch.NioSocketImpl.timedFinishConnect(NioSocketImpl.java:550)
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:594)
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:284)
+	at java.base/java.net.Socket.connect(Socket.java:659)
+	at com.mongodb.internal.connection.SocketStreamHelper.initialize(SocketStreamHelper.java:76)
+	at com.mongodb.internal.connection.SocketStream.initializeSocket(SocketStream.java:104)
+	at com.mongodb.internal.connection.SocketStream.open(SocketStream.java:79)
+	... 4 common frames omitted
+2026-01-06 10:37:52 [Test worker] WARN  i.n.r.d.DnsServerAddressStreamProviders - Can not find io.netty.resolver.dns.macos.MacOSDnsServerAddressStreamProvider in the classpath, fallback to system defaults. This may result in incorrect DNS resolutions on MacOS. Check whether you have a dependency on 'io.netty:netty-resolver-dns-native-macos'
+2026-01-06 10:37:52 [Test worker] DEBUG c.a.c.s.JwtAuthenticationFilter - Filter 'jwtAuthenticationFilter' configured for use
+2026-01-06 10:37:52 [Test worker] INFO  o.s.b.t.m.w.SpringBootMockServletContext - Initializing Spring TestDispatcherServlet ''
+2026-01-06 10:37:52 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Initializing Servlet ''
+2026-01-06 10:37:52 [Test worker] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 4 endpoints beneath base path '/actuator'
+2026-01-06 10:37:52 [Test worker] INFO  o.s.t.w.s.TestDispatcherServlet - Completed initialization in 12 ms
+2026-01-06 10:37:52 [Test worker] INFO  c.a.c.i.UserManagementWorkflowTest - Started UserManagementWorkflowTest in 4.249 seconds (process running for 5.263)
+2026-01-06 10:37:53 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /v3/api-docs endpoint is enabled by default. To disable it in production, set the property 'springdoc.api-docs.enabled=false'
+2026-01-06 10:37:53 [Test worker] WARN  o.s.c.events.SpringDocAppInitializer - SpringDoc /swagger-ui.html endpoint is enabled by default. To disable it in production, set the property 'springdoc.swagger-ui.enabled=false'
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$YGdpbcCoA7yZFPLvAnPfuOKmJNT/9.E7PwkVX2kQz7.eqoogfOEDK(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 1(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: createduser1767667073405
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: createduser1767667073405(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: createduser1767667073405@example.com(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: createduser1767667073405
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: createduser1767667073405
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: createduser1767667073405(String), createduser1767667073405@example.com(String), $2a$10$Yf4nlV.5pQT244bpwPKgnO9lYKI37J8s0rBG.W20adMm23Ys7GLh6(String), Created(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 2
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$3ojGENehwO6aSVRWecyBJeANJAlHLnDsXk9HwDoWIW7LxEZ9wAQUy(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: selfupdateuser1767667073687
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: selfupdateuser1767667073687(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: selfupdateuser1767667073687@example.com(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: selfupdateuser1767667073687
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: selfupdateuser1767667073687
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: selfupdateuser1767667073687(String), selfupdateuser1767667073687@example.com(String), $2a$10$0876c6vf8CAnIl5TBHHHx.84xf.0GujguvWnFcSf3WZTuvg7EXDdG(String), SelfUpdate(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 4
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.i.OAuthTokenRepositoryImpl - Repository: Saving OAuth token
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.OAuthTokenDaoMybatisImpl - MyBatis DAO: Saving OAuth token
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt;  Preparing: INSERT INTO oauth_tokens (user_id, access_token, refresh_token, token_type, expires_at, refresh_expires_at, is_revoked, created_at, client_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), ?, ?)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt; Parameters: 4(Long), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI0IiwidXNlcm5hbWUiOiJzZWxmdXBkYXRldXNlcjE3Njc2NjcwNzM2ODciLCJlbWFpbCI6InNlbGZ1cGRhdGV1c2VyMTc2NzY2NzA3MzY4N0BleGFtcGxlLmNvbSIsInJvbGUiOiJVU0VSIiwiaWF0IjoxNzY3NjY3MDczLCJleHAiOjE3Njc2NzA2NzN9.IZGv5Oq1dqbc0-etigSb-ENQLkJX1cOqoORJwPKhjfOrPOIFRVgJUJ8h6u7GhmNV(String), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiI0IiwidHlwZSI6InJlZnJlc2giLCJpYXQiOjE3Njc2NjcwNzMsImV4cCI6MTc2Nzc1MzQ3M30.9n7tf_Si2m1L5pGQvfbG8CikmlOnoiQC3tDt7ZL7XLPlWx-p38g9svNnPuBY-R6D(String), Bearer(String), 2026-01-06T11:37:53.753652(LocalDateTime), 2026-01-07T10:37:53.753652(LocalDateTime), false(Boolean), null, null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 4
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 4
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 4(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 4
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 4
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 4
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: selfupdateuser1767667073687
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: selfupdateuser1767667073687
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt;  Preparing: UPDATE users SET username = ?, email = ?, password = ?, first_name = ?, last_name = ?, role = ?, is_active = ?, is_verified = ?, updated_at = NOW() WHERE id = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt; Parameters: selfupdateuser1767667073687(String), selfupdateuser1767667073687@example.com(String), $2a$10$0876c6vf8CAnIl5TBHHHx.84xf.0GujguvWnFcSf3WZTuvg7EXDdG(String), UpdatedFirst(String), UpdatedLast(String), USER(String), true(Boolean), false(Boolean), 4(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 4
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$sJJKpQqBnFs4rIlVh80wx.KCCcF//3X0yFh8fEG3EcGtcZvIfDX/S(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 5
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 5
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 5(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: deleteuser1767667073835
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: deleteuser1767667073835(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: deleteuser1767667073835@example.com(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: deleteuser1767667073835
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: deleteuser1767667073835
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: deleteuser1767667073835(String), deleteuser1767667073835@example.com(String), $2a$10$Pg27Grrn/9v2Lwd9N6E7eON1VgbPhDLTQXotzE4bdFA4rH8oZVKxa(String), Delete(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 6
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 5
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 5
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 5(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Deleting user with id: 6
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.existsById - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE id = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.existsById - ==&gt; Parameters: 6(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.existsById - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.r.impl.UserRepositoryImpl - Repository: Deleting user by id: 6
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Deleting user by id: 6
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.deleteById - ==&gt;  Preparing: DELETE FROM users WHERE id = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.deleteById - ==&gt; Parameters: 6(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.deleteById - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User deleted successfully with id: 6
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 5
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 5
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 5(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 6
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 6
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 6
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 6(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 0
+2026-01-06 10:37:53 [Test worker] WARN  c.a.c.e.GlobalExceptionHandler - Resource not found: User not found with id: '6'
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$xWX6M39maqYlypxndsF9Ju3WouByUHVvmkJW2uXXyulv1c9X1l5OG(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676670739740
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676670739740(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676670739740@example.com(String)
+2026-01-06 10:37:53 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676670739740
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676670739740
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676670739740(String), paginationuser17676670739740@example.com(String), $2a$10$j4um0ooqQ1VxZG5GwFPljejNZdIWGTK0HMcFo7bM4fcEht1CVJiSu(String), Pagination(String), User0(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 8
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676670740401
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676670740401(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676670740401@example.com(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676670740401
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676670740401
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676670740401(String), paginationuser17676670740401@example.com(String), $2a$10$.8be.HvWyGRNCuEcvIGOKelIdKoQyiC1Lt7oBZ5Ut7WbxNNbn3Ks.(String), Pagination(String), User1(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 9
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676670741042
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676670741042(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676670741042@example.com(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676670741042
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676670741042
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676670741042(String), paginationuser17676670741042@example.com(String), $2a$10$hao1uqatQLu.Z7lz.4Kfie4f71ZCqTB2CP3ExCYJ03CkUHGQBLlSy(String), Pagination(String), User2(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 10
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676670741673
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676670741673(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676670741673@example.com(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676670741673
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676670741673
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676670741673(String), paginationuser17676670741673@example.com(String), $2a$10$2V0.Quh5EUJq.OdDYvv2d..MaJWdV5J0aI02aHODIjkKm1RXSwEs2(String), Pagination(String), User3(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 11
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: paginationuser17676670742304
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: paginationuser17676670742304(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: paginationuser17676670742304@example.com(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: paginationuser17676670742304
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: paginationuser17676670742304
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: paginationuser17676670742304(String), paginationuser17676670742304@example.com(String), $2a$10$LAgSnV/FBFNVEOa92084jeEZBJuydkdGTwZ9Jj2jDnQI.q4/x/9oG(String), Pagination(String), User4(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 12
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 7
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 7(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 3
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding all users with pagination
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding all users with pagination
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt;  Preparing: SELECT COUNT(*) FROM users
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt; Parameters: 
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt;  Preparing: SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt; Parameters: 3(Integer), 0(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - &lt;==      Total: 3
+2026-01-06 10:37:54 [Test worker] WARN  o.s.d.w.c.SpringDataJackson3Configuration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$jzXwvNpGMLhDPrvsIgAteedRXvdpvXVXWHWB4za5aHQaE/0MbDRgm(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 13
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 13
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 13(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching users page: 0, size: 10
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding all users with pagination
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding all users with pagination
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt;  Preparing: SELECT COUNT(*) FROM users
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - ==&gt; Parameters: 
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.count - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt;  Preparing: SELECT * FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - ==&gt; Parameters: 10(Integer), 0(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findAllWithPagination - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$Gh78gWAoi9oHyUjB.OvC1.sfg6wY9zEX/B5g74W6Q9W1kbdYMdWRK(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 14
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 14
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 14(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: updateuser1767667074439
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: updateuser1767667074439(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: updateuser1767667074439@example.com(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: updateuser1767667074439
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: updateuser1767667074439
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: updateuser1767667074439(String), updateuser1767667074439@example.com(String), $2a$10$mYFX1Tq2OOSG8M58lMJicOPbvWtgm1hNoz9rh0Y326vgkj.elWe5.(String), Update(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 15
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 14
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 14
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 14(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Updating user with id: 15
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 15
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 15
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 15(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: updateuser1767667074439
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: updateuser1767667074439
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt;  Preparing: UPDATE users SET username = ?, email = ?, password = ?, first_name = ?, last_name = ?, role = ?, is_active = ?, is_verified = ?, updated_at = NOW() WHERE id = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - ==&gt; Parameters: updateuser1767667074439(String), updateuser1767667074439@example.com(String), $2a$10$mYFX1Tq2OOSG8M58lMJicOPbvWtgm1hNoz9rh0Y326vgkj.elWe5.(String), Updated(String), Name(String), USER(String), true(Boolean), false(Boolean), 15(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.update - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User updated successfully with id: 15
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$Iw9JsDE1dz7qd.PHvf/kSe1zlUeA3Szex7MNXwqe8h26Wi7TjKV7G(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 16
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 16
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 16(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - Creating new user with username: getbyiduser1767667074568
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: getbyiduser1767667074568(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: getbyiduser1767667074568@example.com(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: getbyiduser1767667074568
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: getbyiduser1767667074568
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: getbyiduser1767667074568(String), getbyiduser1767667074568@example.com(String), $2a$10$y.CktD0j5NgQqdb19WnRy.sEjGOE5q.CC/b6DNPSlp1kWmV3SAxeq(String), GetById(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.UserServiceImpl - User created successfully with id: 17
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 16
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 16
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 16(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 17
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 17
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 17
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 17(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$/r.3AjQVZ5UuprOh2soOOuW48UHcpUvrmH6pEdbDe1AMvj/vpZjcm(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - Registering new user with username: profileuser1767667074697
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - ==&gt; Parameters: profileuser1767667074697(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByUsername - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt;  Preparing: SELECT COUNT(*) &gt; 0 FROM users WHERE email = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - ==&gt; Parameters: profileuser1767667074697@example.com(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.existsByEmail - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: profileuser1767667074697
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: profileuser1767667074697
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: profileuser1767667074697(String), profileuser1767667074697@example.com(String), $2a$10$stETnLFJFkkVcdR.kB87A.y1k1x70ZXNHa1OQ.oEhFvV2eL/sV39G(String), Profile(String), User(String), USER(String), true(Boolean), false(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] INFO  c.a.c.service.impl.AuthServiceImpl - User registered successfully with id: 19
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.i.OAuthTokenRepositoryImpl - Repository: Saving OAuth token
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.OAuthTokenDaoMybatisImpl - MyBatis DAO: Saving OAuth token
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt;  Preparing: INSERT INTO oauth_tokens (user_id, access_token, refresh_token, token_type, expires_at, refresh_expires_at, is_revoked, created_at, client_ip, user_agent) VALUES (?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), ?, ?)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - ==&gt; Parameters: 19(Long), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxOSIsInVzZXJuYW1lIjoicHJvZmlsZXVzZXIxNzY3NjY3MDc0Njk3IiwiZW1haWwiOiJwcm9maWxldXNlcjE3Njc2NjcwNzQ2OTdAZXhhbXBsZS5jb20iLCJyb2xlIjoiVVNFUiIsImlhdCI6MTc2NzY2NzA3NCwiZXhwIjoxNzY3NjcwNjc0fQ.PRxqchLfHhiNy6vOegWV7qTB7vLpDFgMMde8ZDeArRTw3v-TcN6zsis45cjVwyt7(String), eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiIxOSIsInR5cGUiOiJyZWZyZXNoIiwiaWF0IjoxNzY3NjY3MDc0LCJleHAiOjE3Njc3NTM0NzR9.HDB1mZf40u-HfaR_Ls4a9KTUZTi07fj9YROAJiYqBTaKPSVuExZQeHIziP2KdS7L(String), Bearer(String), 2026-01-06T11:37:54.758464(LocalDateTime), 2026-01-07T10:37:54.758464(LocalDateTime), false(Boolean), null, null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.O.insert - &lt;==    Updates: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 19
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 19
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt;  Preparing: SELECT * FROM users WHERE id = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - ==&gt; Parameters: 19(Long)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.UserMapper.findById - &lt;==      Total: 1
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.service.impl.UserServiceImpl - Fetching user by id: 19
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by id: 19
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by id: 19
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Finding user by username: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt;  Preparing: SELECT * FROM users WHERE username = ?
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - ==&gt; Parameters: mgmtadmin(String)
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.m.U.findByUsername - &lt;==      Total: 0
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.r.impl.UserRepositoryImpl - Repository: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.mybatis.UserDaoMybatisImpl - MyBatis DAO: Saving user: mgmtadmin
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt;  Preparing: INSERT INTO users (username, email, password, first_name, last_name, role, is_active, is_verified, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, COALESCE(?, NOW()), COALESCE(?, NOW()))
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - ==&gt; Parameters: mgmtadmin(String), mgmtadmin@example.com(String), $2a$10$.ckByd6LkycSNIZv9RC7O.pRtY/VUhH1p42PBkk/MlSInzGwdXqza(String), Management(String), Admin(String), ADMIN(String), true(Boolean), true(Boolean), null, null
+2026-01-06 10:37:54 [Test worker] DEBUG c.a.c.d.i.m.mapper.UserMapper.insert - &lt;==    Updates: 1
+</pre>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="class-stdout">Copy</button>
+</span>
+</div>
+<div class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre id="class-stderr">Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+WARNING: A Java agent has been loaded dynamically (/Users/jrjohn/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.17.8/f09415827a71be7ed621c7bd02550678f28bc81c/byte-buddy-agent-1.17.8.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+</pre>
+<button class="clipboard-copy-btn" aria-label="Copy to clipboard" data-copy-element-id="class-stderr">Copy</button>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 9.2.1</a> at 2026年1月6日 上午10:39:55</p>
+</div>
+</div>
+</body>
+</html>
