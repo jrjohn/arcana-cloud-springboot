@@ -2,6 +2,7 @@ package com.arcana.cloud.config;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = {
     "com.arcana.cloud.dao.impl.jpa.repository"
 })
+@EnableJpaAuditing
 @EnableTransactionManagement
 @ConditionalOnProperty(name = "database.orm", havingValue = "jpa")
 public class JpaConfig {

@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * Works with MySQL and PostgreSQL databases.
  */
 @Configuration
-@MapperScan("com.arcana.cloud.dao.impl.mybatis.mapper")
+@MapperScan({"com.arcana.cloud.dao.impl.mybatis.mapper", "com.arcana.cloud.scheduler.mapper"})
 @EnableTransactionManagement
 @ConditionalOnProperty(name = "database.orm", havingValue = "mybatis", matchIfMissing = true)
 public class MyBatisConfig {

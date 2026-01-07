@@ -70,6 +70,7 @@ postgresql = { module = "org.postgresql:postgresql", version.ref = "postgresql" 
 flyway-core = { module = "org.flywaydb:flyway-core" }
 flyway-mysql = { module = "org.flywaydb:flyway-mysql" }
 flyway-database-postgresql = { module = "org.flywaydb:flyway-database-postgresql" }
+spring-boot-flyway = { module = "org.springframework.boot:spring-boot-flyway" }
 h2 = { module = "com.h2database:h2" }
 
 # MyBatis
@@ -143,7 +144,8 @@ jjwt-runtime = [
 flyway = [
     "flyway-core",
     "flyway-mysql",
-    "flyway-database-postgresql"
+    "flyway-database-postgresql",
+    "spring-boot-flyway"
 ]
 testcontainers = [
     "testcontainers",

@@ -71,6 +71,9 @@ dependencies {
     // MongoDB (optional)
     implementation(libs.spring.boot.starter.data.mongodb)
 
+    // Quartz Scheduler (distributed job scheduling)
+    implementation("org.springframework.boot:spring-boot-starter-quartz")
+
     // API Documentation
     implementation(libs.springdoc.openapi.starter.webmvc.ui)
 
@@ -143,8 +146,24 @@ tasks.withType<Test> {
     maxParallelForks = 1
     // Set timeouts to prevent infinite hangs
     systemProperty("junit.jupiter.execution.timeout.default", "30s")
-    // Ensure Gradle test executor exits cleanly
-    jvmArgs("-XX:+HeapDumpOnOutOfMemoryError")
+    // Ensure Gradle test executor exits cleanly + suppress Felix Unsafe warnings on Java 21+
+    jvmArgs(
+        "-XX:+HeapDumpOnOutOfMemoryError",
+        "--add-opens=java.base/java.lang=ALL-UNNAMED",
+        "--add-opens=java.base/java.lang.invoke=ALL-UNNAMED",
+        "--add-opens=java.base/java.lang.reflect=ALL-UNNAMED",
+        "--add-opens=java.base/java.io=ALL-UNNAMED",
+        "--add-opens=java.base/java.net=ALL-UNNAMED",
+        "--add-opens=java.base/java.nio=ALL-UNNAMED",
+        "--add-opens=java.base/java.util=ALL-UNNAMED",
+        "--add-opens=java.base/java.util.concurrent=ALL-UNNAMED",
+        "--add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED",
+        "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+        "--add-opens=java.base/sun.nio.cs=ALL-UNNAMED",
+        "--add-opens=java.base/sun.security.ssl=ALL-UNNAMED",
+        "--add-opens=java.base/sun.security.util=ALL-UNNAMED",
+        "--add-opens=java.base/sun.misc=ALL-UNNAMED"
+    )
 }
 
 tasks.jacocoTestReport {
