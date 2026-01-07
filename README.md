@@ -46,13 +46,17 @@ flowchart TB
         CB[Circuit Breaker]
     end
 
-    subgraph Repository["Repository Layer"]
+    subgraph Repository["Repository + DAO Layer"]
         UR[UserRepository]
         TR[TokenRepository]
+        UD[UserDao]
+        TD[TokenDao]
     end
 
     subgraph Data["Data Layer"]
         MYSQL[(MySQL 8.0)]
+        PGSQL[(PostgreSQL)]
+        MONGO[(MongoDB)]
         REDIS[(Redis 7.0)]
     end
 
@@ -81,8 +85,12 @@ flowchart TB
     CB --> TR
     JWT --> TR
 
-    UR --> MYSQL
-    TR --> REDIS
+    UR --> UD
+    TR --> TD
+    UD --> MYSQL
+    UD --> PGSQL
+    UD --> MONGO
+    TD --> REDIS
 
     style Client fill:#e0f2fe
     style Gateway fill:#fef3c7
@@ -104,18 +112,21 @@ flowchart TB
     end
 
     subgraph Repository["Repository Layer"]
-        UR[UserRepository<br/>Interface]
+        UR["UserRepository (Interface)"]
         URI[UserRepositoryImpl]
     end
 
-    subgraph DAO["DAO Layer - Interface"]
-        UD[UserDao<br/>Interface]
+    subgraph DAO["DAO Layer"]
+        UD["UserDao (Interface)"]
     end
 
-    subgraph Impl["DAO Implementations"]
-        JPA[UserDaoJpaImpl<br/>@ConditionalOnProperty<br/>database.orm=jpa]
-        MYB[UserDaoMybatisImpl<br/>@ConditionalOnProperty<br/>database.orm=mybatis]
-        MON[UserDaoMongodbImpl<br/>@ConditionalOnProperty<br/>database.type=mongodb]
+    subgraph Impl["DAO Implementations - Conditional Beans"]
+        JPA["UserDaoJpaImpl
+        orm=jpa"]
+        MYB["UserDaoMybatisImpl
+        orm=mybatis (default)"]
+        MON["UserDaoMongodbImpl
+        type=mongodb"]
     end
 
     subgraph DB["Databases"]
@@ -127,9 +138,9 @@ flowchart TB
     US --> UR
     UR --> URI
     URI --> UD
-    UD --> JPA
-    UD --> MYB
-    UD --> MON
+    UD -.->|jpa| JPA
+    UD -.->|mybatis| MYB
+    UD -.->|mongodb| MON
     JPA --> MYSQL
     JPA --> PG
     MYB --> MYSQL
@@ -239,10 +250,16 @@ sequenceDiagram
 mindmap
   root((Arcana Cloud))
     Architecture
-      Three-Layer Clean Architecture
+      Five-Layer Clean Architecture
       Dual Protocol Support gRPC/REST
       Five Deployment Modes
       Circuit Breaker Pattern
+    DAO Layer
+      Multi-ORM Support
+      JPA Hibernate
+      MyBatis SQL Mapper
+      MongoDB Documents
+      Runtime Switching
     Plugin System
       OSGi Apache Felix
       Hot Deployment
@@ -672,7 +689,23 @@ arcana-cloud-springboot/
 │   └── com/arcana/cloud/
 │       ├── controller/              # REST controllers
 │       ├── service/                 # Business logic
-│       ├── repository/              # Data access
+│       │   ├── impl/                # Service implementations
+│       │   ├── grpc/                # gRPC server implementations
+│       │   └── client/              # gRPC/HTTP clients
+│       ├── repository/              # Repository layer
+│       │   ├── interfaces/          # Repository interfaces
+│       │   └── impl/                # Repository implementations
+│       ├── dao/                     # Data Access Objects
+│       │   ├── interfaces/          # DAO interfaces
+│       │   └── impl/
+│       │       ├── jpa/             # JPA implementations
+│       │       ├── mybatis/         # MyBatis implementations
+│       │       └── mongodb/         # MongoDB implementations
+│       ├── entity/                  # JPA entities
+│       ├── document/                # MongoDB documents
+│       ├── dto/                     # Data Transfer Objects
+│       ├── mapper/                  # Object mappers
+│       ├── config/                  # Configuration classes
 │       └── security/                # Security components
 │
 ├── arcana-plugin-api/               # Plugin SDK
