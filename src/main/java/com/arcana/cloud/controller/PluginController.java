@@ -124,9 +124,9 @@ public class PluginController {
                 .body(ApiResponse.success(pluginInfo, "Plugin installed successfully"));
 
         } catch (IOException e) {
-            log.error("Failed to install plugin", e);
+            log.error("Failed to install plugin: {}", filename, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(ApiResponse.error("Failed to install plugin: " + e.getMessage()));
+                .body(ApiResponse.error("Failed to install plugin due to an internal error"));
         }
     }
 

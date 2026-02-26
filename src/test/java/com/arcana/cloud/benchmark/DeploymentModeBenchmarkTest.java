@@ -11,6 +11,9 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.DoubleStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
@@ -42,6 +45,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Deployment Mode Performance Benchmarks")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class DeploymentModeBenchmarkTest {
+
+    private static final Logger log = LoggerFactory.getLogger(DeploymentModeBenchmarkTest.class);
 
     // Simulation constants based on protocol characteristics
     private static final double GRPC_BASE_LATENCY_MS = 0.5;   // Binary protocol, HTTP/2 multiplexing
@@ -82,34 +87,34 @@ class DeploymentModeBenchmarkTest {
     static void setupBenchmark() {
         // Clear results for fresh run
         results.clear();
-        System.out.println("\n" + "=".repeat(100));
-        System.out.println("ARCANA CLOUD - DEPLOYMENT MODE PERFORMANCE BENCHMARKS");
-        System.out.println("=".repeat(100));
-        System.out.println("Configuration:");
-        System.out.println("  - Warmup iterations: " + WARMUP_ITERATIONS);
-        System.out.println("  - Benchmark iterations: " + BENCHMARK_ITERATIONS);
-        System.out.println("  - Concurrent users: " + CONCURRENT_USERS);
-        System.out.println("  - Payload size: " + PAYLOAD_SIZE_BYTES + " bytes");
-        System.out.println("=".repeat(100) + "\n");
+        log.info("\n" + "=".repeat(100));
+        log.info("ARCANA CLOUD - DEPLOYMENT MODE PERFORMANCE BENCHMARKS");
+        log.info("{}", "=".repeat(100));
+        log.info("Configuration:");
+        log.info("  - Warmup iterations: " + WARMUP_ITERATIONS);
+        log.info("  - Benchmark iterations: " + BENCHMARK_ITERATIONS);
+        log.info("  - Concurrent users: " + CONCURRENT_USERS);
+        log.info("  - Payload size: " + PAYLOAD_SIZE_BYTES + " bytes");
+        log.info("{}", "=".repeat(100) + "\n");
     }
 
     @AfterAll
     static void printBenchmarkReport() {
-        System.out.println("\n" + "=".repeat(100));
-        System.out.println("BENCHMARK RESULTS SUMMARY");
-        System.out.println("=".repeat(100));
-        System.out.println();
-        System.out.println("| Mode            | Avg (ms) | P95 (ms) | P99 (ms) | Throughput/s | Concurrent | Memory (MB) |");
-        System.out.println("|-----------------|----------|----------|----------|--------------|------------|-------------|");
-        results.values().forEach(r -> System.out.println(r.toTableRow()));
-        System.out.println();
+        log.info("\n" + "=".repeat(100));
+        log.info("BENCHMARK RESULTS SUMMARY");
+        log.info("{}", "=".repeat(100));
+        log.info("");
+        log.info("| Mode            | Avg (ms) | P95 (ms) | P99 (ms) | Throughput/s | Concurrent | Memory (MB) |");
+        log.info("|-----------------|----------|----------|----------|--------------|------------|-------------|");
+        results.values().forEach(r -> log.info("{}", r.toTableRow()));
+        log.info("");
 
         // Performance comparison analysis
         printPerformanceAnalysis();
 
-        System.out.println("=".repeat(100));
-        System.out.println("Note: These are simulated benchmarks. Production benchmarks may vary.");
-        System.out.println("=".repeat(100) + "\n");
+        log.info("{}", "=".repeat(100));
+        log.info("Note: These are simulated benchmarks. Production benchmarks may vary.");
+        log.info("{}", "=".repeat(100) + "\n");
     }
 
     private static void printPerformanceAnalysis() {
@@ -120,22 +125,22 @@ class DeploymentModeBenchmarkTest {
         BenchmarkResult layeredGrpc = results.get("Layered+gRPC");
         BenchmarkResult layeredHttp = results.get("Layered+HTTP");
 
-        System.out.println("PERFORMANCE ANALYSIS:");
-        System.out.println("-".repeat(50));
+        log.info("PERFORMANCE ANALYSIS:");
+        log.info("-".repeat(50));
 
         // gRPC vs HTTP comparison
         double grpcVsHttpLatency = ((k8sHttp.avgLatencyMs + layeredHttp.avgLatencyMs) / 2) /
                 ((k8sGrpc.avgLatencyMs + layeredGrpc.avgLatencyMs) / 2);
-        System.out.printf("  gRPC vs HTTP Latency: gRPC is %.1fx faster%n", grpcVsHttpLatency);
+        log.info(String.format("  gRPC vs HTTP Latency: gRPC is %.1fx faster%n", grpcVsHttpLatency);
 
         double grpcVsHttpThroughput = ((k8sGrpc.throughputOpsPerSec + layeredGrpc.throughputOpsPerSec) / 2) /
                 ((k8sHttp.throughputOpsPerSec + layeredHttp.throughputOpsPerSec) / 2);
-        System.out.printf("  gRPC vs HTTP Throughput: gRPC handles %.1fx more ops/sec%n", grpcVsHttpThroughput);
+        log.info(String.format("  gRPC vs HTTP Throughput: gRPC handles %.1fx more ops/sec%n", grpcVsHttpThroughput);
 
         // K8s vs Layered comparison
         double k8sVsLayeredLatency = ((k8sGrpc.avgLatencyMs + k8sHttp.avgLatencyMs) / 2) /
                 ((layeredGrpc.avgLatencyMs + layeredHttp.avgLatencyMs) / 2);
-        System.out.printf("  K8s vs Layered Latency: Layered is %.2fx faster (due to reduced hops)%n", k8sVsLayeredLatency);
+        log.info(String.format("  K8s vs Layered Latency: Layered is %.2fx faster (due to reduced hops)%n", k8sVsLayeredLatency);
 
         // Best mode identification
         BenchmarkResult bestLatency = results.values().stream()
@@ -145,24 +150,24 @@ class DeploymentModeBenchmarkTest {
                 .max(Comparator.comparingDouble(BenchmarkResult::throughputOpsPerSec))
                 .orElse(null);
 
-        System.out.println();
-        System.out.println("RECOMMENDATIONS:");
-        System.out.println("-".repeat(50));
+        log.info("");
+        log.info("RECOMMENDATIONS:");
+        log.info("-".repeat(50));
         if (bestLatency != null) {
-            System.out.printf("  Best for Low Latency: %s (%.2fms avg)%n",
+            log.info(String.format("  Best for Low Latency: %s (%.2fms avg)%n",
                     bestLatency.mode, bestLatency.avgLatencyMs);
         }
         if (bestThroughput != null) {
-            System.out.printf("  Best for High Throughput: %s (%.0f ops/sec)%n",
+            log.info(String.format("  Best for High Throughput: %s (%.0f ops/sec)%n",
                     bestThroughput.mode, bestThroughput.throughputOpsPerSec);
         }
-        System.out.println();
-        System.out.println("  Use Case Recommendations:");
-        System.out.println("    - K8s+gRPC: Best for microservices with high throughput requirements");
-        System.out.println("    - K8s+HTTP: Best for REST API compatibility and debugging ease");
-        System.out.println("    - Layered+gRPC: Best for lowest latency in controlled environments");
-        System.out.println("    - Layered+HTTP: Best for simple deployments with REST requirements");
-        System.out.println();
+        log.info("");
+        log.info("  Use Case Recommendations:");
+        log.info("    - K8s+gRPC: Best for microservices with high throughput requirements");
+        log.info("    - K8s+HTTP: Best for REST API compatibility and debugging ease");
+        log.info("    - Layered+gRPC: Best for lowest latency in controlled environments");
+        log.info("    - Layered+HTTP: Best for simple deployments with REST requirements");
+        log.info("");
     }
 
     @Nested
@@ -213,7 +218,7 @@ class DeploymentModeBenchmarkTest {
             int protobufSize = estimateProtobufPayloadSize(PAYLOAD_SIZE_BYTES);
 
             double efficiency = (double) jsonSize / protobufSize;
-            System.out.printf("  K8s+gRPC Protocol Efficiency: %.2fx smaller than JSON%n", efficiency);
+            log.info(String.format("  K8s+gRPC Protocol Efficiency: %.2fx smaller than JSON%n", efficiency);
 
             assertTrue(efficiency > 1.3, "Protobuf should be at least 30% smaller than JSON");
         }
@@ -264,7 +269,7 @@ class DeploymentModeBenchmarkTest {
             // HTTP/1.1 requires connection pooling
             int connectionsNeeded = estimateConnectionPoolSize(CONCURRENT_USERS, BASE_LATENCY);
 
-            System.out.printf("  K8s+HTTP Connection Pool Size: %d connections%n", connectionsNeeded);
+            log.info(String.format("  K8s+HTTP Connection Pool Size: %d connections%n", connectionsNeeded);
             assertTrue(connectionsNeeded >= 10, "Should need multiple connections for HTTP");
         }
     }
@@ -315,7 +320,7 @@ class DeploymentModeBenchmarkTest {
             int streamsPerConnection = 100;
             int connectionsNeeded = (int) Math.ceil((double) CONCURRENT_USERS / streamsPerConnection);
 
-            System.out.printf("  Layered+gRPC HTTP/2 Multiplexing: %d connections for %d concurrent requests%n",
+            log.info(String.format("  Layered+gRPC HTTP/2 Multiplexing: %d connections for %d concurrent requests%n",
                     connectionsNeeded, CONCURRENT_USERS);
             assertTrue(connectionsNeeded <= 1, "HTTP/2 should handle 50 concurrent on 1 connection");
         }
@@ -366,7 +371,7 @@ class DeploymentModeBenchmarkTest {
             // Measure JSON parsing overhead
             double jsonParseTime = estimateJsonParseTime(PAYLOAD_SIZE_BYTES);
 
-            System.out.printf("  Layered+HTTP JSON Parse Overhead: %.3fms per request%n", jsonParseTime);
+            log.info(String.format("  Layered+HTTP JSON Parse Overhead: %.3fms per request%n", jsonParseTime);
             assertTrue(jsonParseTime < 0.5, "JSON parsing should be under 0.5ms");
         }
     }
@@ -384,7 +389,7 @@ class DeploymentModeBenchmarkTest {
             double httpLatency = (HTTP_BASE_LATENCY_MS + K8S_OVERHEAD_MS + HTTP_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS) / 2;
 
             double improvement = httpLatency / grpcLatency;
-            System.out.printf("  gRPC is %.1fx faster than HTTP in average latency%n", improvement);
+            log.info(String.format("  gRPC is %.1fx faster than HTTP in average latency%n", improvement);
 
             assertTrue(improvement > 1.5, "gRPC should be at least 50% faster than HTTP");
         }
@@ -397,7 +402,7 @@ class DeploymentModeBenchmarkTest {
             double layeredOverhead = LAYERED_OVERHEAD_MS;
 
             double ratio = k8sOverhead / layeredOverhead;
-            System.out.printf("  K8s has %.1fx more overhead than Layered deployment%n", ratio);
+            log.info(String.format("  K8s has %.1fx more overhead than Layered deployment%n", ratio);
 
             assertTrue(ratio > 2.0, "K8s should have at least 2x overhead of Layered");
         }
@@ -412,11 +417,11 @@ class DeploymentModeBenchmarkTest {
             long layeredGrpcMemory = estimateMemoryUsage("Layered+gRPC", CONCURRENT_USERS);
             long layeredHttpMemory = estimateMemoryUsage("Layered+HTTP", CONCURRENT_USERS);
 
-            System.out.println("  Memory Usage Comparison:");
-            System.out.printf("    K8s+gRPC: %.2f MB%n", k8sGrpcMemory / (1024.0 * 1024.0));
-            System.out.printf("    K8s+HTTP: %.2f MB%n", k8sHttpMemory / (1024.0 * 1024.0));
-            System.out.printf("    Layered+gRPC: %.2f MB%n", layeredGrpcMemory / (1024.0 * 1024.0));
-            System.out.printf("    Layered+HTTP: %.2f MB%n", layeredHttpMemory / (1024.0 * 1024.0));
+            log.info("  Memory Usage Comparison:");
+            log.info(String.format("    K8s+gRPC: %.2f MB%n", k8sGrpcMemory / (1024.0 * 1024.0);
+            log.info(String.format("    K8s+HTTP: %.2f MB%n", k8sHttpMemory / (1024.0 * 1024.0);
+            log.info(String.format("    Layered+gRPC: %.2f MB%n", layeredGrpcMemory / (1024.0 * 1024.0);
+            log.info(String.format("    Layered+HTTP: %.2f MB%n", layeredHttpMemory / (1024.0 * 1024.0);
 
             // gRPC generally uses less memory due to efficient serialization
             assertTrue(k8sGrpcMemory < k8sHttpMemory, "gRPC should use less memory than HTTP");
@@ -432,11 +437,11 @@ class DeploymentModeBenchmarkTest {
             double layeredGrpcScaleFactor = calculateScalabilityFactor(GRPC_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS);
             double layeredHttpScaleFactor = calculateScalabilityFactor(HTTP_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS);
 
-            System.out.println("  Scalability Factors (higher is better):");
-            System.out.printf("    K8s+gRPC: %.2f%n", k8sGrpcScaleFactor);
-            System.out.printf("    K8s+HTTP: %.2f%n", k8sHttpScaleFactor);
-            System.out.printf("    Layered+gRPC: %.2f%n", layeredGrpcScaleFactor);
-            System.out.printf("    Layered+HTTP: %.2f%n", layeredHttpScaleFactor);
+            log.info("  Scalability Factors (higher is better):");
+            log.info(String.format("    K8s+gRPC: %.2f%n", k8sGrpcScaleFactor);
+            log.info(String.format("    K8s+HTTP: %.2f%n", k8sHttpScaleFactor);
+            log.info(String.format("    Layered+gRPC: %.2f%n", layeredGrpcScaleFactor);
+            log.info(String.format("    Layered+HTTP: %.2f%n", layeredHttpScaleFactor);
 
             // Note: Per-request scalability is lower for K8s due to overhead, but K8s excels at
             // horizontal scaling which isn't captured in this per-request metric.
@@ -456,7 +461,7 @@ class DeploymentModeBenchmarkTest {
         @Order(1)
         @DisplayName("Plugin Registration Latency by Mode")
         void benchmarkPluginRegistration() {
-            System.out.println("\n  Plugin Registration Latency:");
+            log.info("\n  Plugin Registration Latency:");
 
             // Plugin registration includes: validation + storage + event propagation
             double k8sGrpcLatency = simulatePluginOperation("register", GRPC_BASE_LATENCY_MS + K8S_OVERHEAD_MS);
@@ -464,10 +469,10 @@ class DeploymentModeBenchmarkTest {
             double layeredGrpcLatency = simulatePluginOperation("register", GRPC_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS);
             double layeredHttpLatency = simulatePluginOperation("register", HTTP_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS);
 
-            System.out.printf("    K8s+gRPC: %.2fms%n", k8sGrpcLatency);
-            System.out.printf("    K8s+HTTP: %.2fms%n", k8sHttpLatency);
-            System.out.printf("    Layered+gRPC: %.2fms%n", layeredGrpcLatency);
-            System.out.printf("    Layered+HTTP: %.2fms%n", layeredHttpLatency);
+            log.info(String.format("    K8s+gRPC: %.2fms%n", k8sGrpcLatency);
+            log.info(String.format("    K8s+HTTP: %.2fms%n", k8sHttpLatency);
+            log.info(String.format("    Layered+gRPC: %.2fms%n", layeredGrpcLatency);
+            log.info(String.format("    Layered+HTTP: %.2fms%n", layeredHttpLatency);
 
             assertTrue(layeredGrpcLatency < k8sHttpLatency, "Layered+gRPC should be faster than K8s+HTTP");
         }
@@ -476,7 +481,7 @@ class DeploymentModeBenchmarkTest {
         @Order(2)
         @DisplayName("Plugin State Synchronization by Mode")
         void benchmarkPluginStateSync() {
-            System.out.println("\n  Plugin State Sync Latency (across pods/layers):");
+            log.info("\n  Plugin State Sync Latency (across pods/layers):");
 
             // State sync is critical in distributed modes
             double k8sGrpcSync = simulateStateSync(GRPC_BASE_LATENCY_MS + K8S_OVERHEAD_MS, 3); // 3 pods
@@ -484,10 +489,10 @@ class DeploymentModeBenchmarkTest {
             double layeredGrpcSync = simulateStateSync(GRPC_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS, 2); // 2 layers
             double layeredHttpSync = simulateStateSync(HTTP_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS, 2);
 
-            System.out.printf("    K8s+gRPC (3 pods): %.2fms%n", k8sGrpcSync);
-            System.out.printf("    K8s+HTTP (3 pods): %.2fms%n", k8sHttpSync);
-            System.out.printf("    Layered+gRPC (2 layers): %.2fms%n", layeredGrpcSync);
-            System.out.printf("    Layered+HTTP (2 layers): %.2fms%n", layeredHttpSync);
+            log.info(String.format("    K8s+gRPC (3 pods): %.2fms%n", k8sGrpcSync);
+            log.info(String.format("    K8s+HTTP (3 pods): %.2fms%n", k8sHttpSync);
+            log.info(String.format("    Layered+gRPC (2 layers): %.2fms%n", layeredGrpcSync);
+            log.info(String.format("    Layered+HTTP (2 layers): %.2fms%n", layeredHttpSync);
 
             // K8s modes have higher sync latency due to Redis pub/sub
             assertTrue(layeredGrpcSync < k8sGrpcSync, "Layered should have faster sync than K8s");
@@ -497,17 +502,17 @@ class DeploymentModeBenchmarkTest {
         @Order(3)
         @DisplayName("Plugin Lifecycle Operations Throughput")
         void benchmarkPluginLifecycleOps() {
-            System.out.println("\n  Plugin Lifecycle Operations per Second:");
+            log.info("\n  Plugin Lifecycle Operations per Second:");
 
             double k8sGrpcOps = calculateLifecycleOps(GRPC_BASE_LATENCY_MS + K8S_OVERHEAD_MS);
             double k8sHttpOps = calculateLifecycleOps(HTTP_BASE_LATENCY_MS + K8S_OVERHEAD_MS);
             double layeredGrpcOps = calculateLifecycleOps(GRPC_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS);
             double layeredHttpOps = calculateLifecycleOps(HTTP_BASE_LATENCY_MS + LAYERED_OVERHEAD_MS);
 
-            System.out.printf("    K8s+gRPC: %.0f ops/sec%n", k8sGrpcOps);
-            System.out.printf("    K8s+HTTP: %.0f ops/sec%n", k8sHttpOps);
-            System.out.printf("    Layered+gRPC: %.0f ops/sec%n", layeredGrpcOps);
-            System.out.printf("    Layered+HTTP: %.0f ops/sec%n", layeredHttpOps);
+            log.info(String.format("    K8s+gRPC: %.0f ops/sec%n", k8sGrpcOps);
+            log.info(String.format("    K8s+HTTP: %.0f ops/sec%n", k8sHttpOps);
+            log.info(String.format("    Layered+gRPC: %.0f ops/sec%n", layeredGrpcOps);
+            log.info(String.format("    Layered+HTTP: %.0f ops/sec%n", layeredHttpOps);
 
             assertTrue(layeredGrpcOps > layeredHttpOps, "gRPC should handle more ops than HTTP");
         }
@@ -539,7 +544,7 @@ class DeploymentModeBenchmarkTest {
         double throughput = BENCHMARK_ITERATIONS / ((endTime - startTime) / 1_000_000_000.0);
         long memoryUsage = estimateMemoryUsage(mode, CONCURRENT_USERS);
 
-        System.out.printf("  %s: avg=%.2fms, P95=%.2fms, P99=%.2fms, throughput=%.0f ops/sec%n",
+        log.info(String.format("  %s: avg=%.2fms, P95=%.2fms, P99=%.2fms, throughput=%.0f ops/sec%n",
                 mode, avgLatency, p95Latency, p99Latency, throughput * 1000);
 
         return new BenchmarkResult(mode, avgLatency, p95Latency, p99Latency,

@@ -51,6 +51,10 @@ class ModeTestResults:
         return round((self.passed / self.total_tests) * 100, 1)
 
 
+API_AUTH_LOGIN = "/api/v1/auth/login"
+API_USERS = "/api/v1/users"
+
+
 class APITester:
     """API Testing class with comprehensive test coverage using curl."""
 
@@ -157,7 +161,8 @@ class APITester:
             refresh_token = data.get('data', {}).get('refreshToken', '')
             user_id = data.get('data', {}).get('user', {}).get('id')
             return access_token, refresh_token, user_id
-        except:
+        except Exception as e:
+            self.log('WARN', f"Failed to extract tokens: {e}")
             return '', '', None
 
     def extract_user_id(self, response_body: str) -> Optional[int]:
@@ -165,7 +170,8 @@ class APITester:
         try:
             data = json.loads(response_body)
             return data.get('data', {}).get('id')
-        except:
+        except Exception as e:
+            self.log('WARN', f"Failed to extract user ID: {e}")
             return None
 
     def run_all_tests(self):
@@ -195,6 +201,63 @@ class APITester:
         self.log('INFO', "Running Health Check Tests...")
         self.run_test("Health Check", "GET", "/actuator/health", expected_status=200)
 
+    def _perform_admin_login(self) -> TestResult:
+        """Try multiple admin accounts and return the login test result."""
+        admin_accounts = [
+            {"usernameOrEmail": "sysadmin", "password": "Admin123"},
+            {"usernameOrEmail": "testadmin", "password": "Admin123"},
+        ]
+        for admin_login in admin_accounts:
+            status_code, body, duration = self.curl_request(
+                'POST', f"{self.base_url}{API_AUTH_LOGIN}", admin_login
+            )
+            if status_code == 200:
+                self.admin_token, _, _ = self.extract_tokens(body)
+                return TestResult(
+                    name="Admin Login",
+                    method="POST",
+                    endpoint=API_AUTH_LOGIN,
+                    status="PASS",
+                    expected_status=200,
+                    actual_status=status_code,
+                    duration_ms=round(duration, 2),
+                    response_body=body[:500] if body else "",
+                )
+        return self.run_test("Admin Login", "POST", API_AUTH_LOGIN,
+                             data=admin_accounts[0], expected_status=200)
+
+    def _record_admin_login_result(self, result: TestResult):
+        """Log and record the admin login result in the test suite."""
+        self.log('PASS' if result.status == 'PASS' else 'FAIL',
+                 f"Admin Login ({result.duration_ms}ms) - Status: {result.actual_status}")
+        self.results.results.append(result)
+        self.results.total_tests += 1
+        if result.status == 'PASS':
+            self.results.passed += 1
+        else:
+            self.results.failed += 1
+
+    def _perform_refresh_token_test(self):
+        """Register a fresh user and test token refresh."""
+        fresh_rand = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
+        fresh_register = {
+            "username": f"refresh{fresh_rand}",
+            "email": f"refresh{fresh_rand}@example.com",
+            "password": "Password123",
+            "confirmPassword": "Password123",
+            "firstName": "Refresh",
+            "lastName": "Test",
+        }
+        status_code, body, _ = self.curl_request(
+            'POST', f"{self.base_url}/api/v1/auth/register", fresh_register
+        )
+        if status_code != 201:
+            return
+        _, fresh_refresh_token, _ = self.extract_tokens(body)
+        if fresh_refresh_token:
+            self.run_test("Refresh Token", "POST", "/api/v1/auth/refresh",
+                          data={"refreshToken": fresh_refresh_token}, expected_status=200)
+
     def test_authentication(self):
         """Test authentication endpoints."""
         self.log('INFO', "Running Authentication Tests...")
@@ -206,77 +269,30 @@ class APITester:
             "password": "Password123",
             "confirmPassword": "Password123",
             "firstName": "Test",
-            "lastName": "User"
+            "lastName": "User",
         }
         result = self.run_test("Register New User", "POST", "/api/v1/auth/register",
-                              data=register_data, expected_status=201)
-
+                               data=register_data, expected_status=201)
         if result.status == 'PASS':
-            self.user_token, self.user_refresh_token, self.test_user_id = self.extract_tokens(result.response_body)
+            self.user_token, self.user_refresh_token, self.test_user_id = \
+                self.extract_tokens(result.response_body)
 
         # Admin login - try multiple admin accounts
-        admin_accounts = [
-            {"usernameOrEmail": "sysadmin", "password": "Admin123"},
-            {"usernameOrEmail": "testadmin", "password": "Admin123"},
-        ]
-        admin_logged_in = False
-        for admin_login in admin_accounts:
-            status_code, body, duration = self.curl_request('POST', f"{self.base_url}/api/v1/auth/login", admin_login)
-            if status_code == 200:
-                self.admin_token, _, _ = self.extract_tokens(body)
-                admin_logged_in = True
-                result = TestResult(
-                    name="Admin Login",
-                    method="POST",
-                    endpoint="/api/v1/auth/login",
-                    status="PASS",
-                    expected_status=200,
-                    actual_status=status_code,
-                    duration_ms=round(duration, 2),
-                    response_body=body[:500] if body else ""
-                )
-                break
-
-        if not admin_logged_in:
-            result = self.run_test("Admin Login", "POST", "/api/v1/auth/login",
-                                  data=admin_accounts[0], expected_status=200)
-
-        self.log('PASS' if result.status == 'PASS' else 'FAIL',
-                 f"Admin Login ({result.duration_ms}ms) - Status: {result.actual_status}")
-        self.results.results.append(result)
-        self.results.total_tests += 1
-        if result.status == 'PASS':
-            self.results.passed += 1
-        else:
-            self.results.failed += 1
+        admin_result = self._perform_admin_login()
+        self._record_admin_login_result(admin_result)
 
         # User login
         user_login = {"usernameOrEmail": f"testuser{self.random_suffix}", "password": "Password123"}
-        self.run_test("User Login", "POST", "/api/v1/auth/login",
-                     data=user_login, expected_status=200)
+        self.run_test("User Login", "POST", API_AUTH_LOGIN,
+                      data=user_login, expected_status=200)
 
         # Invalid login
         invalid_login = {"usernameOrEmail": "invalid", "password": "wrongpassword"}
-        self.run_test("Invalid Login (should fail)", "POST", "/api/v1/auth/login",
-                     data=invalid_login, expected_status=401)
+        self.run_test("Invalid Login (should fail)", "POST", API_AUTH_LOGIN,
+                      data=invalid_login, expected_status=401)
 
         # Refresh token - use a fresh token from a new registration
-        fresh_rand = ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
-        fresh_register = {
-            "username": f"refresh{fresh_rand}",
-            "email": f"refresh{fresh_rand}@example.com",
-            "password": "Password123",
-            "confirmPassword": "Password123",
-            "firstName": "Refresh",
-            "lastName": "Test"
-        }
-        status_code, body, _ = self.curl_request('POST', f"{self.base_url}/api/v1/auth/register", fresh_register)
-        if status_code == 201:
-            _, fresh_refresh_token, _ = self.extract_tokens(body)
-            if fresh_refresh_token:
-                refresh_data = {"refreshToken": fresh_refresh_token}
-                self.run_test("Refresh Token", "POST", "/api/v1/auth/refresh",
-                             data=refresh_data, expected_status=200)
+        self._perform_refresh_token_test()
 
     def test_current_user(self):
         """Test current user endpoints."""
@@ -298,7 +314,7 @@ class APITester:
         headers = {"Authorization": f"Bearer {self.admin_token}"}
 
         # Get all users
-        self.run_test("Get All Users (Admin)", "GET", "/api/v1/users",
+        self.run_test("Get All Users (Admin)", "GET", API_USERS,
                      headers=headers, expected_status=200)
 
         # Get user by ID
@@ -315,7 +331,7 @@ class APITester:
             "lastName": "Created",
             "roles": ["USER"]
         }
-        result = self.run_test("Create User (Admin)", "POST", "/api/v1/users",
+        result = self.run_test("Create User (Admin)", "POST", API_USERS,
                               data=create_data, headers=headers, expected_status=201)
 
         if result.status == 'PASS':
@@ -332,7 +348,7 @@ class APITester:
                          headers=headers, expected_status=200)
 
         # Unauthorized access (403 Forbidden is also acceptable)
-        self.run_test("Get Users Without Auth (should fail)", "GET", "/api/v1/users",
+        self.run_test("Get Users Without Auth (should fail)", "GET", API_USERS,
                      expected_status=403)
 
     def test_logout(self):
