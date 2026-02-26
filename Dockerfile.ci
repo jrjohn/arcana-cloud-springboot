@@ -1,0 +1,32 @@
+# ============================================
+# Spring Boot Multi-Stage Dockerfile (CI)
+# Java 25 / Gradle 9.2
+# ============================================
+FROM eclipse-temurin:25-jdk AS builder
+WORKDIR /app
+
+# Install Gradle directly (wrapper jar missing from git)
+ARG GRADLE_VERSION=9.2.1
+RUN apt-get update && apt-get install -y --no-install-recommends curl unzip && rm -rf /var/lib/apt/lists/* \
+    && curl -fsSL https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -o /tmp/gradle.zip \
+    && unzip /tmp/gradle.zip -d /opt && rm /tmp/gradle.zip
+ENV PATH="/opt/gradle-${GRADLE_VERSION}/bin:${PATH}"
+
+COPY build.gradle.kts settings.gradle.kts gradle.properties ./
+COPY gradle gradle
+COPY arcana-plugin-api arcana-plugin-api
+COPY arcana-plugin-runtime arcana-plugin-runtime
+COPY arcana-ssr-engine arcana-ssr-engine
+COPY plugins plugins
+COPY src src
+COPY config config
+COPY arcana-web arcana-web
+COPY bin bin
+
+RUN gradle build -x test --no-daemon
+
+FROM eclipse-temurin:25-jre
+WORKDIR /app
+COPY --from=builder /app/build/libs/*-SNAPSHOT.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
