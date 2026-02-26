@@ -1,0 +1,10 @@
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile.ci
+      target: builder
+    working_dir: /app
+    volumes:
+      - ./build/reports:/output
+    command: sh -c "timeout 300 gradle :test --no-daemon -Dspring.profiles.active=test 2>&1 || true; gradle :jacocoTestReport --no-daemon 2>&1 || true; cp -r /app/build/reports/* /output/ 2>/dev/null || true"
