@@ -290,20 +290,18 @@ public class GrpcUserServiceClient implements UserService {
                 case NOT_FOUND:
                     log.debug("Resource not found in {}: {}", operation, e.getStatus().getDescription());
                     throw new ResourceNotFoundException("Resource", operation, e.getStatus().getDescription());
-                case UNAVAILABLE:
-                case DEADLINE_EXCEEDED:
+                case UNAVAILABLE, DEADLINE_EXCEEDED:
                     log.error("Service unavailable in {}: {} ({})", operation, e.getStatus().getDescription(), code);
                     throw new ServiceUnavailableException("User service unavailable: " + e.getStatus().getDescription());
-                case PERMISSION_DENIED:
-                case UNAUTHENTICATED:
+                case PERMISSION_DENIED, UNAUTHENTICATED:
                     log.error("Permission denied in {}: {}", operation, e.getStatus().getDescription());
-                    throw new RuntimeException("Permission denied: " + e.getStatus().getDescription());
+                    throw new UnauthorizedException("Permission denied: " + e.getStatus().getDescription());
                 case INVALID_ARGUMENT:
                     log.error("Invalid argument in {}: {}", operation, e.getStatus().getDescription());
                     throw new IllegalArgumentException("Invalid argument: " + e.getStatus().getDescription());
                 default:
                     log.error("gRPC error in {}: {} ({})", operation, e.getStatus().getDescription(), code);
-                    throw new RuntimeException("Service error: " + e.getStatus().getDescription());
+                    throw new ServiceUnavailableException("Service error: " + e.getStatus().getDescription());
             }
         }
     }

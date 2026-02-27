@@ -53,11 +53,11 @@ public class HttpAuthServiceClient implements AuthService {
             if (response.getBody() != null && response.getBody().isSuccess()) {
                 return response.getBody().getData();
             }
-            throw new RuntimeException("Failed to register user: "
+            throw new IllegalStateException("Failed to register user: "
                 + (response.getBody() != null ? response.getBody().getMessage() : "Unknown error"));
         } catch (RestClientException e) {
             log.error("HTTP error during registration", e);
-            throw new RuntimeException("Failed to register user: " + e.getMessage());
+            throw new IllegalStateException("Failed to register user: " + e.getMessage());
         }
     }
 

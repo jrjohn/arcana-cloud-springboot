@@ -197,12 +197,10 @@ public class GrpcAuthServiceClient implements AuthService {
 
             // Categorize error by status code for better debugging
             switch (code) {
-                case UNAUTHENTICATED:
-                case PERMISSION_DENIED:
+                case UNAUTHENTICATED, PERMISSION_DENIED:
                     log.debug("Authentication failed in {}: {}", operation, e.getStatus().getDescription());
                     throw new UnauthorizedException(e.getStatus().getDescription());
-                case UNAVAILABLE:
-                case DEADLINE_EXCEEDED:
+                case UNAVAILABLE, DEADLINE_EXCEEDED:
                     log.error("Service unavailable in {}: {} ({})", operation, e.getStatus().getDescription(), code);
                     throw new ServiceUnavailableException("Auth service unavailable: " + e.getStatus().getDescription());
                 case INVALID_ARGUMENT:
@@ -210,10 +208,10 @@ public class GrpcAuthServiceClient implements AuthService {
                     throw new IllegalArgumentException("Invalid argument: " + e.getStatus().getDescription());
                 case ALREADY_EXISTS:
                     log.debug("Resource already exists in {}: {}", operation, e.getStatus().getDescription());
-                    throw new RuntimeException("Resource already exists: " + e.getStatus().getDescription());
+                    throw new IllegalStateException("Resource already exists: " + e.getStatus().getDescription());
                 default:
                     log.error("gRPC error in {}: {} ({})", operation, e.getStatus().getDescription(), code);
-                    throw new RuntimeException("Service error: " + e.getStatus().getDescription());
+                    throw new ServiceUnavailableException("Service error: " + e.getStatus().getDescription());
             }
         }
     }

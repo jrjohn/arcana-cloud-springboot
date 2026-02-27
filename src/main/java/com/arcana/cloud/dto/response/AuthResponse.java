@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("java:S1068")
 public class AuthResponse {
 
     private String accessToken;

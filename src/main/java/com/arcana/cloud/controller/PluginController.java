@@ -33,7 +33,9 @@ import java.util.*;
 @RequestMapping("/api/v1/plugins")
 @Tag(name = "Plugins", description = "Plugin management APIs")
 @ConditionalOnExpression("'${deployment.layer:}' == '' or '${deployment.layer:}' == 'controller' or '${deployment.layer:}' == 'service'")
-public class PluginController {
+private static final String PLUGIN_NOT_FOUND_MSG = "Plugin not found: ";
+
+    public class PluginController {
 
     private static final Logger log = LoggerFactory.getLogger(PluginController.class);
 
@@ -72,7 +74,7 @@ public class PluginController {
         PluginInfo plugin = plugins.get(key);
         if (plugin == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ApiResponse.error("Plugin not found: " + key));
+                .body(ApiResponse.error(PLUGIN_NOT_FOUND_MSG + key));
         }
         return ResponseEntity.ok(ApiResponse.success(plugin, "Plugin retrieved successfully"));
     }
@@ -139,7 +141,7 @@ public class PluginController {
         PluginInfo plugin = plugins.get(key);
         if (plugin == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ApiResponse.error("Plugin not found: " + key));
+                .body(ApiResponse.error(PLUGIN_NOT_FOUND_MSG + key));
         }
 
         plugin.setState("ACTIVE");
@@ -156,7 +158,7 @@ public class PluginController {
         PluginInfo plugin = plugins.get(key);
         if (plugin == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ApiResponse.error("Plugin not found: " + key));
+                .body(ApiResponse.error(PLUGIN_NOT_FOUND_MSG + key));
         }
 
         plugin.setState("RESOLVED");
@@ -173,7 +175,7 @@ public class PluginController {
         PluginInfo plugin = plugins.remove(key);
         if (plugin == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                .body(ApiResponse.error("Plugin not found: " + key));
+                .body(ApiResponse.error(PLUGIN_NOT_FOUND_MSG + key));
         }
 
         log.info("Plugin uninstalled: {}", key);

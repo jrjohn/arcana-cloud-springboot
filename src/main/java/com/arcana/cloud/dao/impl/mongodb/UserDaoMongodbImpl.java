@@ -52,7 +52,7 @@ public class UserDaoMongodbImpl implements UserDao {
 
         // Check if document exists by legacyId
         if (entity.getId() != null) {
-            Query query = new Query(Criteria.where("legacyId").is(entity.getId()));
+            Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(entity.getId()));
             UserDocument existing = mongoTemplate.findOne(query, UserDocument.class);
             if (existing != null) {
                 document.setId(existing.getId());
@@ -77,7 +77,7 @@ public class UserDaoMongodbImpl implements UserDao {
     @Override
     public Optional<User> findById(Long id) {
         log.debug("MongoDB DAO: Finding user by ID: {}", id);
-        Query query = new Query(Criteria.where("legacyId").is(id));
+        Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(id));
         UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);
         if (doc != null) {
             User user = doc.toEntity();
@@ -89,7 +89,7 @@ public class UserDaoMongodbImpl implements UserDao {
 
     @Override
     public boolean existsById(Long id) {
-        Query query = new Query(Criteria.where("legacyId").is(id));
+        Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(id));
         return mongoTemplate.exists(query, UserDocument.class);
     }
 
@@ -126,7 +126,7 @@ public class UserDaoMongodbImpl implements UserDao {
     @Override
     public void deleteById(Long id) {
         log.info("MongoDB DAO: Deleting user by ID: {}", id);
-        Query query = new Query(Criteria.where("legacyId").is(id));
+        Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(id));
         mongoTemplate.remove(query, UserDocument.class);
     }
 
@@ -150,7 +150,7 @@ public class UserDaoMongodbImpl implements UserDao {
     @Override
     public Optional<User> findByUsername(String username) {
         log.debug("MongoDB DAO: Finding user by username: {}", username);
-        Query query = new Query(Criteria.where("username").is(username));
+        Query query = new Query(Criteria.where(FIELD_USERNAME).is(username));
         UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);
         if (doc != null) {
             User user = doc.toEntity();
@@ -163,7 +163,7 @@ public class UserDaoMongodbImpl implements UserDao {
     @Override
     public Optional<User> findByEmail(String email) {
         log.debug("MongoDB DAO: Finding user by email: {}", email);
-        Query query = new Query(Criteria.where("email").is(email));
+        Query query = new Query(Criteria.where(FIELD_EMAIL).is(email));
         UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);
         if (doc != null) {
             User user = doc.toEntity();
@@ -177,8 +177,8 @@ public class UserDaoMongodbImpl implements UserDao {
     public Optional<User> findByUsernameOrEmail(String username, String email) {
         log.debug("MongoDB DAO: Finding user by username or email: {}/{}", username, email);
         Query query = new Query(new Criteria().orOperator(
-                Criteria.where("username").is(username),
-                Criteria.where("email").is(email)
+                Criteria.where(FIELD_USERNAME).is(username),
+                Criteria.where(FIELD_EMAIL).is(email)
         ));
         UserDocument doc = mongoTemplate.findOne(query, UserDocument.class);
         if (doc != null) {
@@ -191,20 +191,20 @@ public class UserDaoMongodbImpl implements UserDao {
 
     @Override
     public boolean existsByUsername(String username) {
-        Query query = new Query(Criteria.where("username").is(username));
+        Query query = new Query(Criteria.where(FIELD_USERNAME).is(username));
         return mongoTemplate.exists(query, UserDocument.class);
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        Query query = new Query(Criteria.where("email").is(email));
+        Query query = new Query(Criteria.where(FIELD_EMAIL).is(email));
         return mongoTemplate.exists(query, UserDocument.class);
     }
 
     @Override
     public List<User> findActiveUsersByRole(UserRole role) {
         log.debug("MongoDB DAO: Finding active users by role: {}", role);
-        Query query = new Query(Criteria.where("role").is(role).and("isActive").is(true));
+        Query query = new Query(Criteria.where("role").is(role).and(FIELD_IS_ACTIVE).is(true));
         return mongoTemplate.find(query, UserDocument.class).stream()
                 .map(doc -> {
                     User user = doc.toEntity();
@@ -217,7 +217,7 @@ public class UserDaoMongodbImpl implements UserDao {
     @Override
     public List<User> findAllActiveUsers() {
         log.debug("MongoDB DAO: Finding all active users");
-        Query query = new Query(Criteria.where("isActive").is(true));
+        Query query = new Query(Criteria.where(FIELD_IS_ACTIVE).is(true));
         return mongoTemplate.find(query, UserDocument.class).stream()
                 .map(doc -> {
                     User user = doc.toEntity();
@@ -230,7 +230,7 @@ public class UserDaoMongodbImpl implements UserDao {
     @Override
     public List<User> findUnverifiedUsers() {
         log.debug("MongoDB DAO: Finding unverified users");
-        Query query = new Query(Criteria.where("isVerified").is(false).and("isActive").is(true));
+        Query query = new Query(Criteria.where("isVerified").is(false).and(FIELD_IS_ACTIVE).is(true));
         return mongoTemplate.find(query, UserDocument.class).stream()
                 .map(doc -> {
                     User user = doc.toEntity();

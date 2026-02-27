@@ -12,9 +12,9 @@ import java.util.Optional;
  * (MySQL, PostgreSQL, MongoDB) and ORM strategies (MyBatis, JPA).
  *
  * @param <T>  Entity type
- * @param <ID> Entity ID type
+ * @param <K> Entity K type
  */
-public interface BaseDao<T, ID> {
+public interface BaseDao<T, K> {
 
     /**
      * Save an entity (create or update).
@@ -33,20 +33,20 @@ public interface BaseDao<T, ID> {
     List<T> saveAll(Iterable<T> entities);
 
     /**
-     * Find entity by ID.
+     * Find entity by K.
      *
-     * @param id the entity ID
+     * @param id the entity K
      * @return an Optional containing the entity if found
      */
-    Optional<T> findById(ID id);
+    Optional<T> findById(K id);
 
     /**
-     * Check if entity exists by ID.
+     * Check if entity exists by K.
      *
-     * @param id the entity ID
+     * @param id the entity K
      * @return true if entity exists
      */
-    boolean existsById(ID id);
+    boolean existsById(K id);
 
     /**
      * Find all entities.
@@ -71,11 +71,11 @@ public interface BaseDao<T, ID> {
     long count();
 
     /**
-     * Delete entity by ID.
+     * Delete entity by K.
      *
-     * @param id the entity ID
+     * @param id the entity K
      */
-    void deleteById(ID id);
+    void deleteById(K id);
 
     /**
      * Delete entity.

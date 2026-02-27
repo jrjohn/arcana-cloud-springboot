@@ -14,6 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("java:S1068")
 public class PagedResponse<T> {
     private List<T> content;
     private int page;

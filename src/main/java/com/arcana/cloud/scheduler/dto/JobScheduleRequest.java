@@ -16,6 +16,7 @@ import java.util.Map;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("java:S1068")
 public class JobScheduleRequest {
 
     @NotBlank(message = "Job name is required")

@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("java:S1068")
 public class JobExecutionHistory {
 
     private Long id;

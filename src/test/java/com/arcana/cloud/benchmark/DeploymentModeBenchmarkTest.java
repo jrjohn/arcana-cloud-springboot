@@ -44,6 +44,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @MockitoSettings(strictness = Strictness.LENIENT)
 @DisplayName("Deployment Mode Performance Benchmarks")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@SuppressWarnings("java:S2925")
 class DeploymentModeBenchmarkTest {
 
     private static final Logger log = LoggerFactory.getLogger(DeploymentModeBenchmarkTest.class);

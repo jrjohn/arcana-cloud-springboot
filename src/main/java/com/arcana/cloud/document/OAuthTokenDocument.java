@@ -82,7 +82,7 @@ public class OAuthTokenDocument {
                 .tokenType(tokenType != null ? tokenType : "Bearer")
                 .expiresAt(expiresAt)
                 .refreshExpiresAt(refreshExpiresAt)
-                .isRevoked(isRevoked != null ? isRevoked : false)
+                .isRevoked(Boolean.TRUE.equals(isRevoked))
                 .createdAt(createdAt)
                 .clientIp(clientIp)
                 .userAgent(userAgent)

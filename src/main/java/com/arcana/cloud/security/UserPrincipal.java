@@ -17,6 +17,7 @@ import java.util.Collections;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@SuppressWarnings("java:S1068")
 public class UserPrincipal implements UserDetails {
 
     private static final long serialVersionUID = 1L;

@@ -144,20 +144,20 @@ public class JobHistoryServiceImpl implements JobHistoryService {
 
     private long toLong(Object value) {
         if (value == null) return 0L;
-        if (value instanceof Number) return ((Number) value).longValue();
+        if (value instanceof Number number) return number.longValue();
         return Long.parseLong(value.toString());
     }
 
     private Long toLongOrNull(Object value) {
         if (value == null) return null;
-        if (value instanceof Number) return ((Number) value).longValue();
+        if (value instanceof Number number) return number.longValue();
         return Long.parseLong(value.toString());
     }
 
     private Double toDouble(Object value) {
         if (value == null) return null;
-        if (value instanceof Number) return ((Number) value).doubleValue();
-        if (value instanceof BigDecimal) return ((BigDecimal) value).doubleValue();
+        if (value instanceof Number number) return number.doubleValue();
+        if (value instanceof BigDecimal bigDecimal) return bigDecimal.doubleValue();
         return Double.parseDouble(value.toString());
     }
 }

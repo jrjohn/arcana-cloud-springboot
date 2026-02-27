@@ -72,8 +72,8 @@ public class UserDocument {
                 .firstName(firstName)
                 .lastName(lastName)
                 .role(role != null ? role : UserRole.USER)
-                .isActive(isActive != null ? isActive : true)
-                .isVerified(isVerified != null ? isVerified : false)
+                .isActive(!Boolean.FALSE.equals(isActive))
+                .isVerified(Boolean.TRUE.equals(isVerified))
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
                 .build();

@@ -1,5 +1,6 @@
 package com.arcana.cloud.config;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * available and can be configured for various scenarios.</p>
  */
 @DisplayName("Spring Cloud Config Tests")
+@Disabled("Empty test class - placeholder for future tests")
 class SpringCloudConfigIntegrationTest {
 
     @Nested

@@ -55,7 +55,7 @@ public class HttpUserServiceClient implements UserService {
             );
 
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users",
+                serviceUrl + USERS_API_PATH,
                 HttpMethod.POST,
                 new HttpEntity<>(request),
                 new ParameterizedTypeReference<>() { }
@@ -64,10 +64,10 @@ public class HttpUserServiceClient implements UserService {
             if (response.getBody() != null && response.getBody().isSuccess()) {
                 return fromResponse(response.getBody().getData());
             }
-            throw new RuntimeException("Failed to create user");
+            throw new IllegalStateException("Failed to create user");
         } catch (RestClientException e) {
             log.error("HTTP error creating user", e);
-            throw new RuntimeException("Failed to create user: " + e.getMessage());
+            throw new IllegalStateException("Failed to create user: " + e.getMessage());
         }
     }
 
@@ -76,7 +76,7 @@ public class HttpUserServiceClient implements UserService {
         try {
             log.debug("HTTP client: Getting user {} via {}", id, serviceUrl);
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users/" + id,
+                serviceUrl + USERS_API_PATH + "/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() { }
@@ -196,7 +196,7 @@ public class HttpUserServiceClient implements UserService {
             }
 
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users/" + id,
+                serviceUrl + USERS_API_PATH + "/" + id,
                 HttpMethod.PUT,
                 new HttpEntity<>(request),
                 new ParameterizedTypeReference<>() { }
@@ -205,10 +205,10 @@ public class HttpUserServiceClient implements UserService {
             if (response.getBody() != null && response.getBody().isSuccess()) {
                 return fromResponse(response.getBody().getData());
             }
-            throw new RuntimeException("Failed to update user");
+            throw new IllegalStateException("Failed to update user");
         } catch (RestClientException e) {
             log.error("HTTP error updating user", e);
-            throw new RuntimeException("Failed to update user: " + e.getMessage());
+            throw new IllegalStateException("Failed to update user: " + e.getMessage());
         }
     }
 
@@ -216,10 +216,10 @@ public class HttpUserServiceClient implements UserService {
     public void deleteUser(Long id) {
         try {
             log.debug("HTTP client: Deleting user {} via {}", id, serviceUrl);
-            restTemplate.delete(serviceUrl + "/internal/api/v1/users/" + id);
+            restTemplate.delete(serviceUrl + USERS_API_PATH + "/" + id);
         } catch (RestClientException e) {
             log.error("HTTP error deleting user", e);
-            throw new RuntimeException("Failed to delete user: " + e.getMessage());
+            throw new IllegalStateException("Failed to delete user: " + e.getMessage());
         }
     }
 

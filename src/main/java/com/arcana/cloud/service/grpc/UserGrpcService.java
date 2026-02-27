@@ -37,7 +37,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 @ConditionalOnExpression("'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'")
+@SuppressWarnings("java:S1068")
 public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
+
+    private static final String USER_NOT_FOUND_MSG = "User not found";
+    private static final String INTERNAL_ERROR_MSG = "Internal error";
+
 
     private final UserService userService;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
@@ -52,7 +57,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
         } catch (Exception e) {
             log.error("gRPC: Error getting user", e);
             responseObserver.onError(Status.NOT_FOUND
-                .withDescription("User not found")
+                .withDescription(USER_NOT_FOUND_MSG)
                 .asRuntimeException());
         }
     }
@@ -67,13 +72,13 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                 responseObserver.onCompleted();
             } else {
                 responseObserver.onError(Status.NOT_FOUND
-                    .withDescription("User not found")
+                    .withDescription(USER_NOT_FOUND_MSG)
                     .asRuntimeException());
             }
         } catch (Exception e) {
             log.error("gRPC: Error getting user by username", e);
             responseObserver.onError(Status.INTERNAL
-                .withDescription("Internal error")
+                .withDescription(INTERNAL_ERROR_MSG)
                 .asRuntimeException());
         }
     }
@@ -88,13 +93,13 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
                 responseObserver.onCompleted();
             } else {
                 responseObserver.onError(Status.NOT_FOUND
-                    .withDescription("User not found")
+                    .withDescription(USER_NOT_FOUND_MSG)
                     .asRuntimeException());
             }
         } catch (Exception e) {
             log.error("gRPC: Error getting user by email", e);
             responseObserver.onError(Status.INTERNAL
-                .withDescription("Internal error")
+                .withDescription(INTERNAL_ERROR_MSG)
                 .asRuntimeException());
         }
     }
@@ -200,7 +205,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
         } catch (Exception e) {
             log.error("gRPC: Error checking username existence", e);
             responseObserver.onError(Status.INTERNAL
-                .withDescription("Internal error")
+                .withDescription(INTERNAL_ERROR_MSG)
                 .asRuntimeException());
         }
     }
@@ -214,7 +219,7 @@ public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
         } catch (Exception e) {
             log.error("gRPC: Error checking email existence", e);
             responseObserver.onError(Status.INTERNAL
-                .withDescription("Internal error")
+                .withDescription(INTERNAL_ERROR_MSG)
                 .asRuntimeException());
         }
     }

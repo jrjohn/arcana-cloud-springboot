@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@SuppressWarnings("java:S1068")
 public class ApiResponse<T> {
 
     private boolean success;

@@ -54,7 +54,7 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
 
         // Check if document exists by legacyId
         if (entity.getId() != null) {
-            Query query = new Query(Criteria.where("legacyId").is(entity.getId()));
+            Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(entity.getId()));
             OAuthTokenDocument existing = mongoTemplate.findOne(query, OAuthTokenDocument.class);
             if (existing != null) {
                 document.setId(existing.getId());
@@ -86,14 +86,14 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
     @Override
     public Optional<OAuthToken> findById(Long id) {
         log.debug("MongoDB DAO: Finding token by ID: {}", id);
-        Query query = new Query(Criteria.where("legacyId").is(id));
+        Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(id));
         OAuthTokenDocument doc = mongoTemplate.findOne(query, OAuthTokenDocument.class);
         return convertToEntity(doc);
     }
 
     @Override
     public boolean existsById(Long id) {
-        Query query = new Query(Criteria.where("legacyId").is(id));
+        Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(id));
         return mongoTemplate.exists(query, OAuthTokenDocument.class);
     }
 
@@ -122,7 +122,7 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
     @Override
     public void deleteById(Long id) {
         log.info("MongoDB DAO: Deleting token by ID: {}", id);
-        Query query = new Query(Criteria.where("legacyId").is(id));
+        Query query = new Query(Criteria.where(FIELD_LEGACY_ID).is(id));
         mongoTemplate.remove(query, OAuthTokenDocument.class);
     }
 
@@ -162,7 +162,7 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
     @Override
     public List<OAuthToken> findByUserAndIsRevokedFalse(User user) {
         log.debug("MongoDB DAO: Finding non-revoked tokens for user: {}", user.getId());
-        Query query = new Query(Criteria.where("userLegacyId").is(user.getId()).and("isRevoked").is(false));
+        Query query = new Query(Criteria.where(FIELD_USER_LEGACY_ID).is(user.getId()).and(FIELD_IS_REVOKED).is(false));
         return mongoTemplate.find(query, OAuthTokenDocument.class).stream()
                 .map(doc -> {
                     OAuthToken token = doc.toEntity(user);
@@ -175,8 +175,8 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
     @Override
     public void revokeAllTokensByUser(User user) {
         log.info("MongoDB DAO: Revoking all tokens for user: {}", user.getId());
-        Query query = new Query(Criteria.where("userLegacyId").is(user.getId()));
-        Update update = new Update().set("isRevoked", true);
+        Query query = new Query(Criteria.where(FIELD_USER_LEGACY_ID).is(user.getId()));
+        Update update = new Update().set(FIELD_IS_REVOKED, true);
         mongoTemplate.updateMulti(query, update, OAuthTokenDocument.class);
     }
 
@@ -184,7 +184,7 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
     public void revokeByAccessToken(String accessToken) {
         log.info("MongoDB DAO: Revoking token by access token");
         Query query = new Query(Criteria.where("accessToken").is(accessToken));
-        Update update = new Update().set("isRevoked", true);
+        Update update = new Update().set(FIELD_IS_REVOKED, true);
         mongoTemplate.updateFirst(query, update, OAuthTokenDocument.class);
     }
 
@@ -193,7 +193,7 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
         log.info("MongoDB DAO: Deleting expired or revoked tokens");
         Query query = new Query(new Criteria().orOperator(
                 Criteria.where("expiresAt").lt(now),
-                Criteria.where("isRevoked").is(true)
+                Criteria.where(FIELD_IS_REVOKED).is(true)
         ));
         mongoTemplate.remove(query, OAuthTokenDocument.class);
     }
@@ -201,8 +201,8 @@ public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
     @Override
     public List<OAuthToken> findValidTokensByUser(User user, LocalDateTime now) {
         log.debug("MongoDB DAO: Finding valid tokens for user: {}", user.getId());
-        Query query = new Query(Criteria.where("userLegacyId").is(user.getId())
-                .and("isRevoked").is(false)
+        Query query = new Query(Criteria.where(FIELD_USER_LEGACY_ID).is(user.getId())
+                .and(FIELD_IS_REVOKED).is(false)
                 .and("expiresAt").gt(now));
         return mongoTemplate.find(query, OAuthTokenDocument.class).stream()
                 .map(doc -> {

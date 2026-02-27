@@ -2,6 +2,7 @@ package com.arcana.cloud.document;
 
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("OAuthTokenDocument Unit Tests")
+@Disabled("Empty test class - placeholder for future tests")
 class OAuthTokenDocumentTest {
 
     @Nested

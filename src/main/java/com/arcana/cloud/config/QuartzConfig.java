@@ -31,6 +31,9 @@ import java.util.Properties;
 @ConditionalOnProperty(name = "quartz.enabled", havingValue = "true", matchIfMissing = false)
 public class QuartzConfig {
 
+    private static final String QUARTZ_JDBC_DELEGATE = "org.quartz.impl.jdbcjobstore.StdJDBCDelegate";
+
+
     @Value("${deployment.mode:monolithic}")
     private String deploymentMode;
 
@@ -136,7 +139,7 @@ public class QuartzConfig {
 
         // Job store configuration - table prefix and driver delegate
         // Note: Don't set org.quartz.jobStore.class - Spring's SchedulerFactoryBean handles this
-        properties.setProperty("org.quartz.jobStore.driverDelegateClass", getDriverDelegateClass());
+        properties.setProperty("org.quartz.jobStore.driverDelegateClass", QUARTZ_JDBC_DELEGATE);
         properties.setProperty("org.quartz.jobStore.useProperties", "false");
         properties.setProperty("org.quartz.jobStore.tablePrefix", "QRTZ_");
         properties.setProperty("org.quartz.jobStore.misfireThreshold", String.valueOf(misfireThreshold));
@@ -214,10 +217,7 @@ public class QuartzConfig {
     /**
      * Gets the appropriate JDBC driver delegate class based on database type.
      */
-    private String getDriverDelegateClass() {
-        // Default to standard JDBC delegate, can be overridden via properties
-        return "org.quartz.impl.jdbcjobstore.StdJDBCDelegate";
-    }
+
 
     /**
      * Custom SpringBeanJobFactory that enables autowiring in Quartz jobs.
