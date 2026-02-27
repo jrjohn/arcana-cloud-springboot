@@ -50,12 +50,14 @@ db.oauth_tokens.createIndex({ expires_at: 1 });
 db.oauth_tokens.createIndex({ is_revoked: 1 });
 db.oauth_tokens.createIndex({ legacy_id: 1 }, { unique: true, sparse: true });
 
-// Insert default admin user (password: Admin@123)
-db.users.insertOne({
+// Insert default admin user (configure via ADMIN_PASSWORD_HASH env var)
+const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+if (!adminPasswordHash) { print('WARNING: ADMIN_PASSWORD_HASH not set, skipping admin user creation'); }
+else db.users.insertOne({
     legacy_id: NumberLong(1),
     username: 'admin',
     email: 'admin@arcana-cloud.com',
-    password: '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZRGdjGj/n3NPOSNCiPb8K2pQX6I/6',
+    password: adminPasswordHash,
     first_name: 'System',
     last_name: 'Administrator',
     role: 'ADMIN',
