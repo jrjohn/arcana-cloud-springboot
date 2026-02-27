@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("OAuthTokenDocument Unit Tests")
+@SuppressWarnings("java:S2187")
 class OAuthTokenDocumentTest {
 
     @Nested

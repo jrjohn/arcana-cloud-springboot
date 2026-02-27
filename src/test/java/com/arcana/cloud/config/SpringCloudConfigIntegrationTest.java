@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * available and can be configured for various scenarios.</p>
  */
 @DisplayName("Spring Cloud Config Tests")
+@SuppressWarnings("java:S2187")
 class SpringCloudConfigIntegrationTest {
 
     @Nested
