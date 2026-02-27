@@ -2,7 +2,6 @@ package com.arcana.cloud.document;
 
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import java.time.LocalDateTime;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("UserDocument Unit Tests")
-@Disabled("Empty test class - placeholder for future tests")
 class UserDocumentTest {
 
     @Nested

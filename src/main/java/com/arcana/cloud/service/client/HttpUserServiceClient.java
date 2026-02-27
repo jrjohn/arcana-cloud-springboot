@@ -33,10 +33,11 @@ import java.util.Optional;
 @Slf4j
 public class HttpUserServiceClient implements UserService {
 
-    private static final String USERS_API_PATH = "/internal/api/v1/users";
-
     @Value("${service.http.url:http://localhost:8081}")
     private String serviceUrl;
+
+    @Value("${service.users.api.path:/internal/api/v1/users}")
+    private String usersApiPath;
 
     private final RestTemplate restTemplate;
 
@@ -57,7 +58,7 @@ public class HttpUserServiceClient implements UserService {
             );
 
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + USERS_API_PATH,
+                serviceUrl + usersApiPath,
                 HttpMethod.POST,
                 new HttpEntity<>(request),
                 new ParameterizedTypeReference<>() { }
@@ -78,7 +79,7 @@ public class HttpUserServiceClient implements UserService {
         try {
             log.debug("HTTP client: Getting user {} via {}", id, serviceUrl);
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + USERS_API_PATH + "/" + id,
+                serviceUrl + usersApiPath + "/" + id,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() { }
@@ -99,7 +100,7 @@ public class HttpUserServiceClient implements UserService {
         try {
             log.debug("HTTP client: Finding user by username {} via {}", username, serviceUrl);
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users/username/" + username,
+                serviceUrl + usersApiPath + "/username/" + username,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() { }
@@ -120,7 +121,7 @@ public class HttpUserServiceClient implements UserService {
         try {
             log.debug("HTTP client: Finding user by email {} via {}", email, serviceUrl);
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users/email/" + email,
+                serviceUrl + usersApiPath + "/email/" + email,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() { }
@@ -150,7 +151,7 @@ public class HttpUserServiceClient implements UserService {
         try {
             log.debug("HTTP client: Listing users page {} size {} via {}", page, size, serviceUrl);
             ResponseEntity<ApiResponse<PagedResponse<UserResponse>>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users?page=" + page + "&size=" + size,
+                serviceUrl + usersApiPath + "?page=" + page + "&size=" + size,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() { }
@@ -198,7 +199,7 @@ public class HttpUserServiceClient implements UserService {
             }
 
             ResponseEntity<ApiResponse<UserResponse>> response = restTemplate.exchange(
-                serviceUrl + USERS_API_PATH + "/" + id,
+                serviceUrl + usersApiPath + "/" + id,
                 HttpMethod.PUT,
                 new HttpEntity<>(request),
                 new ParameterizedTypeReference<>() { }
@@ -218,7 +219,7 @@ public class HttpUserServiceClient implements UserService {
     public void deleteUser(Long id) {
         try {
             log.debug("HTTP client: Deleting user {} via {}", id, serviceUrl);
-            restTemplate.delete(serviceUrl + USERS_API_PATH + "/" + id);
+            restTemplate.delete(serviceUrl + usersApiPath + "/" + id);
         } catch (RestClientException e) {
             log.error("HTTP error deleting user", e);
             throw new IllegalStateException("Failed to delete user: " + e.getMessage());
@@ -229,7 +230,7 @@ public class HttpUserServiceClient implements UserService {
     public boolean existsByUsername(String username) {
         try {
             ResponseEntity<ApiResponse<ExistsResponse>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users/exists/username/" + username,
+                serviceUrl + usersApiPath + "/exists/username/" + username,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() { }
@@ -247,7 +248,7 @@ public class HttpUserServiceClient implements UserService {
     public boolean existsByEmail(String email) {
         try {
             ResponseEntity<ApiResponse<ExistsResponse>> response = restTemplate.exchange(
-                serviceUrl + "/internal/api/v1/users/exists/email/" + email,
+                serviceUrl + usersApiPath + "/exists/email/" + email,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<>() { }
