@@ -34,6 +34,10 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(name = "database.type", havingValue = "mongodb")
 public class OAuthTokenDaoMongodbImpl implements OAuthTokenDao {
 
+    private static final String FIELD_LEGACY_ID = "legacyId";
+    private static final String FIELD_IS_REVOKED = "isRevoked";
+    private static final String FIELD_USER_LEGACY_ID = "userLegacyId";
+
     private final MongoTemplate mongoTemplate;
     private final UserDao userDao;
 

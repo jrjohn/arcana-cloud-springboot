@@ -32,6 +32,11 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty(name = "database.type", havingValue = "mongodb")
 public class UserDaoMongodbImpl implements UserDao {
 
+    private static final String FIELD_LEGACY_ID = "legacyId";
+    private static final String FIELD_USERNAME = "username";
+    private static final String FIELD_EMAIL = "email";
+    private static final String FIELD_IS_ACTIVE = "isActive";
+
     private final MongoTemplate mongoTemplate;
 
     // Simple ID generator for legacy ID compatibility

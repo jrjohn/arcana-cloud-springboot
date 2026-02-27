@@ -33,9 +33,9 @@ import java.util.*;
 @RequestMapping("/api/v1/plugins")
 @Tag(name = "Plugins", description = "Plugin management APIs")
 @ConditionalOnExpression("'${deployment.layer:}' == '' or '${deployment.layer:}' == 'controller' or '${deployment.layer:}' == 'service'")
-private static final String PLUGIN_NOT_FOUND_MSG = "Plugin not found: ";
+public class PluginController {
 
-    public class PluginController {
+    private static final String PLUGIN_NOT_FOUND_MSG = "Plugin not found: ";
 
     private static final Logger log = LoggerFactory.getLogger(PluginController.class);
 

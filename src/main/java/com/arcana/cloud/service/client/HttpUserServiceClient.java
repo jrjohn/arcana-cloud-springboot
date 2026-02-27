@@ -33,6 +33,8 @@ import java.util.Optional;
 @Slf4j
 public class HttpUserServiceClient implements UserService {
 
+    private static final String USERS_API_PATH = "/internal/api/v1/users";
+
     @Value("${service.http.url:http://localhost:8081}")
     private String serviceUrl;
 
