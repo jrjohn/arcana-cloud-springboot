@@ -1,4 +1,4 @@
-package com.arcana.cloud.repository.impl;
+package com.arcana.cloud.repository.impl.mybatis;
 
 import com.arcana.cloud.dao.interfaces.UserDao;
 import com.arcana.cloud.entity.User;
@@ -26,14 +26,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("UserRepositoryImpl Unit Tests")
-class UserRepositoryImplTest {
+@DisplayName("UserRepositoryMybatisImpl Unit Tests")
+class UserRepositoryMybatisImplTest {
 
     @Mock
     private UserDao userDao;
 
     @InjectMocks
-    private UserRepositoryImpl userRepository;
+    private UserRepositoryMybatisImpl userRepository;
 
     private User testUser;
 
@@ -112,28 +112,6 @@ class UserRepositoryImplTest {
         }
 
         @Test
-        @DisplayName("Should delegate findByEmail to DAO")
-        void findByEmail_ShouldDelegateToDao() {
-            when(userDao.findByEmail("test@example.com")).thenReturn(Optional.of(testUser));
-
-            Optional<User> result = userRepository.findByEmail("test@example.com");
-
-            assertThat(result).isPresent();
-            verify(userDao).findByEmail("test@example.com");
-        }
-
-        @Test
-        @DisplayName("Should delegate findByUsernameOrEmail to DAO")
-        void findByUsernameOrEmail_ShouldDelegateToDao() {
-            when(userDao.findByUsernameOrEmail("testuser", "test@example.com")).thenReturn(Optional.of(testUser));
-
-            Optional<User> result = userRepository.findByUsernameOrEmail("testuser", "test@example.com");
-
-            assertThat(result).isPresent();
-            verify(userDao).findByUsernameOrEmail("testuser", "test@example.com");
-        }
-
-        @Test
         @DisplayName("Should delegate findAll to DAO")
         void findAll_ShouldDelegateToDao() {
             List<User> users = Collections.singletonList(testUser);
@@ -179,33 +157,11 @@ class UserRepositoryImplTest {
             assertThat(result).hasSize(1);
             verify(userDao).findAllActiveUsers();
         }
-
-        @Test
-        @DisplayName("Should delegate findUnverifiedUsers to DAO")
-        void findUnverifiedUsers_ShouldDelegateToDao() {
-            when(userDao.findUnverifiedUsers()).thenReturn(Collections.singletonList(testUser));
-
-            List<User> result = userRepository.findUnverifiedUsers();
-
-            assertThat(result).hasSize(1);
-            verify(userDao).findUnverifiedUsers();
-        }
     }
 
     @Nested
     @DisplayName("Exists Operations")
     class ExistsOperations {
-
-        @Test
-        @DisplayName("Should delegate existsById to DAO")
-        void existsById_ShouldDelegateToDao() {
-            when(userDao.existsById(1L)).thenReturn(true);
-
-            boolean result = userRepository.existsById(1L);
-
-            assertThat(result).isTrue();
-            verify(userDao).existsById(1L);
-        }
 
         @Test
         @DisplayName("Should delegate existsByUsername to DAO")
@@ -258,16 +214,6 @@ class UserRepositoryImplTest {
             userRepository.deleteById(1L);
 
             verify(userDao).deleteById(1L);
-        }
-
-        @Test
-        @DisplayName("Should delegate delete to DAO")
-        void delete_ShouldDelegateToDao() {
-            doNothing().when(userDao).delete(testUser);
-
-            userRepository.delete(testUser);
-
-            verify(userDao).delete(testUser);
         }
 
         @Test

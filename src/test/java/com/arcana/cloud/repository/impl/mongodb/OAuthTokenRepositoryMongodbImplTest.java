@@ -1,0 +1,185 @@
+package com.arcana.cloud.repository.impl.mongodb;
+
+import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.entity.OAuthToken;
+import com.arcana.cloud.entity.User;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("OAuthTokenRepositoryMongodbImpl Unit Tests")
+class OAuthTokenRepositoryMongodbImplTest {
+
+    @Mock
+    private OAuthTokenDao tokenDao;
+
+    @InjectMocks
+    private OAuthTokenRepositoryMongodbImpl tokenRepository;
+
+    private OAuthToken testToken;
+    private User testUser;
+    private LocalDateTime now;
+
+    @BeforeEach
+    void setUp() {
+        now = LocalDateTime.now();
+        testUser = User.builder()
+                .id(1L)
+                .username("testuser")
+                .email("test@example.com")
+                .build();
+
+        testToken = OAuthToken.builder()
+                .id(1L)
+                .user(testUser)
+                .accessToken("access-token-123")
+                .refreshToken("refresh-token-456")
+                .tokenType("Bearer")
+                .expiresAt(now.plusHours(1))
+                .refreshExpiresAt(now.plusDays(30))
+                .isRevoked(false)
+                .createdAt(now)
+                .build();
+    }
+
+    @Nested
+    @DisplayName("Save Operations")
+    class SaveOperations {
+
+        @Test
+        @DisplayName("Should delegate save to DAO")
+        void save_ShouldDelegateToDao() {
+            when(tokenDao.save(testToken)).thenReturn(testToken);
+
+            OAuthToken result = tokenRepository.save(testToken);
+
+            assertThat(result).isEqualTo(testToken);
+            verify(tokenDao).save(testToken);
+        }
+    }
+
+    @Nested
+    @DisplayName("Find Operations")
+    class FindOperations {
+
+        @Test
+        @DisplayName("Should delegate findById to DAO")
+        void findById_ShouldDelegateToDao() {
+            when(tokenDao.findById(1L)).thenReturn(Optional.of(testToken));
+
+            Optional<OAuthToken> result = tokenRepository.findById(1L);
+
+            assertThat(result).isPresent();
+            verify(tokenDao).findById(1L);
+        }
+
+        @Test
+        @DisplayName("Should delegate findByAccessToken to DAO")
+        void findByAccessToken_ShouldDelegateToDao() {
+            when(tokenDao.findByAccessToken("access-token-123")).thenReturn(Optional.of(testToken));
+
+            Optional<OAuthToken> result = tokenRepository.findByAccessToken("access-token-123");
+
+            assertThat(result).isPresent();
+            verify(tokenDao).findByAccessToken("access-token-123");
+        }
+
+        @Test
+        @DisplayName("Should delegate findByUserAndIsRevokedFalse to DAO")
+        void findByUserAndIsRevokedFalse_ShouldDelegateToDao() {
+            when(tokenDao.findByUserAndIsRevokedFalse(testUser)).thenReturn(Collections.singletonList(testToken));
+
+            List<OAuthToken> result = tokenRepository.findByUserAndIsRevokedFalse(testUser);
+
+            assertThat(result).hasSize(1);
+            verify(tokenDao).findByUserAndIsRevokedFalse(testUser);
+        }
+
+        @Test
+        @DisplayName("Should delegate findValidTokensByUser to DAO")
+        void findValidTokensByUser_ShouldDelegateToDao() {
+            when(tokenDao.findValidTokensByUser(testUser, now)).thenReturn(Collections.singletonList(testToken));
+
+            List<OAuthToken> result = tokenRepository.findValidTokensByUser(testUser, now);
+
+            assertThat(result).hasSize(1);
+            verify(tokenDao).findValidTokensByUser(testUser, now);
+        }
+
+        @Test
+        @DisplayName("Should delegate findAll to DAO")
+        void findAll_ShouldDelegateToDao() {
+            List<OAuthToken> tokens = Collections.singletonList(testToken);
+            when(tokenDao.findAll()).thenReturn(tokens);
+
+            List<OAuthToken> result = tokenRepository.findAll();
+
+            assertThat(result).hasSize(1);
+            verify(tokenDao).findAll();
+        }
+    }
+
+    @Nested
+    @DisplayName("Revoke Operations")
+    class RevokeOperations {
+
+        @Test
+        @DisplayName("Should delegate revokeAllTokensByUser to DAO")
+        void revokeAllTokensByUser_ShouldDelegateToDao() {
+            doNothing().when(tokenDao).revokeAllTokensByUser(testUser);
+
+            tokenRepository.revokeAllTokensByUser(testUser);
+
+            verify(tokenDao).revokeAllTokensByUser(testUser);
+        }
+
+        @Test
+        @DisplayName("Should delegate revokeByAccessToken to DAO")
+        void revokeByAccessToken_ShouldDelegateToDao() {
+            doNothing().when(tokenDao).revokeByAccessToken("access-token-123");
+
+            tokenRepository.revokeByAccessToken("access-token-123");
+
+            verify(tokenDao).revokeByAccessToken("access-token-123");
+        }
+    }
+
+    @Nested
+    @DisplayName("Delete Operations")
+    class DeleteOperations {
+
+        @Test
+        @DisplayName("Should delegate deleteExpiredOrRevokedTokens to DAO")
+        void deleteExpiredOrRevokedTokens_ShouldDelegateToDao() {
+            doNothing().when(tokenDao).deleteExpiredOrRevokedTokens(now);
+
+            tokenRepository.deleteExpiredOrRevokedTokens(now);
+
+            verify(tokenDao).deleteExpiredOrRevokedTokens(now);
+        }
+
+        @Test
+        @DisplayName("Should delegate deleteAll to DAO")
+        void deleteAll_ShouldDelegateToDao() {
+            doNothing().when(tokenDao).deleteAll();
+
+            tokenRepository.deleteAll();
+
+            verify(tokenDao).deleteAll();
+        }
+    }
+}

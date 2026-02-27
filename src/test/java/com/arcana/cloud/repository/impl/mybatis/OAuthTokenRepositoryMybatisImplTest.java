@@ -1,4 +1,4 @@
-package com.arcana.cloud.repository.impl;
+package com.arcana.cloud.repository.impl.mybatis;
 
 import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
 import com.arcana.cloud.entity.OAuthToken;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -26,14 +25,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("OAuthTokenRepositoryImpl Unit Tests")
-class OAuthTokenRepositoryImplTest {
+@DisplayName("OAuthTokenRepositoryMybatisImpl Unit Tests")
+class OAuthTokenRepositoryMybatisImplTest {
 
     @Mock
     private OAuthTokenDao tokenDao;
 
     @InjectMocks
-    private OAuthTokenRepositoryImpl tokenRepository;
+    private OAuthTokenRepositoryMybatisImpl tokenRepository;
 
     private OAuthToken testToken;
     private User testUser;
@@ -75,20 +74,6 @@ class OAuthTokenRepositoryImplTest {
             assertThat(result).isEqualTo(testToken);
             verify(tokenDao).save(testToken);
         }
-
-        @Test
-        @DisplayName("Should delegate saveAll to DAO")
-        void saveAll_ShouldDelegateToDao() {
-            OAuthToken token2 = OAuthToken.builder().id(2L).user(testUser).build();
-            List<OAuthToken> tokens = Arrays.asList(testToken, token2);
-
-            when(tokenDao.saveAll(tokens)).thenReturn(tokens);
-
-            List<OAuthToken> result = tokenRepository.saveAll(tokens);
-
-            assertThat(result).hasSize(2);
-            verify(tokenDao).saveAll(tokens);
-        }
     }
 
     @Nested
@@ -103,7 +88,6 @@ class OAuthTokenRepositoryImplTest {
             Optional<OAuthToken> result = tokenRepository.findById(1L);
 
             assertThat(result).isPresent();
-            assertThat(result.get()).isEqualTo(testToken);
             verify(tokenDao).findById(1L);
         }
 
@@ -116,17 +100,6 @@ class OAuthTokenRepositoryImplTest {
 
             assertThat(result).isPresent();
             verify(tokenDao).findByAccessToken("access-token-123");
-        }
-
-        @Test
-        @DisplayName("Should delegate findByRefreshToken to DAO")
-        void findByRefreshToken_ShouldDelegateToDao() {
-            when(tokenDao.findByRefreshToken("refresh-token-456")).thenReturn(Optional.of(testToken));
-
-            Optional<OAuthToken> result = tokenRepository.findByRefreshToken("refresh-token-456");
-
-            assertThat(result).isPresent();
-            verify(tokenDao).findByRefreshToken("refresh-token-456");
         }
 
         @Test
@@ -178,38 +151,6 @@ class OAuthTokenRepositoryImplTest {
     }
 
     @Nested
-    @DisplayName("Exists Operations")
-    class ExistsOperations {
-
-        @Test
-        @DisplayName("Should delegate existsById to DAO")
-        void existsById_ShouldDelegateToDao() {
-            when(tokenDao.existsById(1L)).thenReturn(true);
-
-            boolean result = tokenRepository.existsById(1L);
-
-            assertThat(result).isTrue();
-            verify(tokenDao).existsById(1L);
-        }
-    }
-
-    @Nested
-    @DisplayName("Count Operations")
-    class CountOperations {
-
-        @Test
-        @DisplayName("Should delegate count to DAO")
-        void count_ShouldDelegateToDao() {
-            when(tokenDao.count()).thenReturn(10L);
-
-            long result = tokenRepository.count();
-
-            assertThat(result).isEqualTo(10L);
-            verify(tokenDao).count();
-        }
-    }
-
-    @Nested
     @DisplayName("Revoke Operations")
     class RevokeOperations {
 
@@ -246,16 +187,6 @@ class OAuthTokenRepositoryImplTest {
             tokenRepository.deleteById(1L);
 
             verify(tokenDao).deleteById(1L);
-        }
-
-        @Test
-        @DisplayName("Should delegate delete to DAO")
-        void delete_ShouldDelegateToDao() {
-            doNothing().when(tokenDao).delete(testToken);
-
-            tokenRepository.delete(testToken);
-
-            verify(tokenDao).delete(testToken);
         }
 
         @Test

@@ -1,0 +1,192 @@
+package com.arcana.cloud.repository.impl.mongodb;
+
+import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.entity.User;
+import com.arcana.cloud.entity.UserRole;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+@DisplayName("UserRepositoryMongodbImpl Unit Tests")
+class UserRepositoryMongodbImplTest {
+
+    @Mock
+    private UserDao userDao;
+
+    @InjectMocks
+    private UserRepositoryMongodbImpl userRepository;
+
+    private User testUser;
+
+    @BeforeEach
+    void setUp() {
+        testUser = User.builder()
+                .id(1L)
+                .username("testuser")
+                .email("test@example.com")
+                .password("password123")
+                .firstName("Test")
+                .lastName("User")
+                .role(UserRole.USER)
+                .isActive(true)
+                .isVerified(false)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
+
+    @Nested
+    @DisplayName("Save Operations")
+    class SaveOperations {
+
+        @Test
+        @DisplayName("Should delegate save to DAO")
+        void save_ShouldDelegateToDao() {
+            when(userDao.save(testUser)).thenReturn(testUser);
+
+            User result = userRepository.save(testUser);
+
+            assertThat(result).isEqualTo(testUser);
+            verify(userDao).save(testUser);
+        }
+    }
+
+    @Nested
+    @DisplayName("Find Operations")
+    class FindOperations {
+
+        @Test
+        @DisplayName("Should delegate findById to DAO")
+        void findById_ShouldDelegateToDao() {
+            when(userDao.findById(1L)).thenReturn(Optional.of(testUser));
+
+            Optional<User> result = userRepository.findById(1L);
+
+            assertThat(result).isPresent();
+            assertThat(result.get()).isEqualTo(testUser);
+            verify(userDao).findById(1L);
+        }
+
+        @Test
+        @DisplayName("Should delegate findByUsername to DAO")
+        void findByUsername_ShouldDelegateToDao() {
+            when(userDao.findByUsername("testuser")).thenReturn(Optional.of(testUser));
+
+            Optional<User> result = userRepository.findByUsername("testuser");
+
+            assertThat(result).isPresent();
+            verify(userDao).findByUsername("testuser");
+        }
+
+        @Test
+        @DisplayName("Should delegate findAll to DAO")
+        void findAll_ShouldDelegateToDao() {
+            List<User> users = Collections.singletonList(testUser);
+            when(userDao.findAll()).thenReturn(users);
+
+            List<User> result = userRepository.findAll();
+
+            assertThat(result).hasSize(1);
+            verify(userDao).findAll();
+        }
+
+        @Test
+        @DisplayName("Should delegate findAll with pagination to DAO")
+        void findAllWithPagination_ShouldDelegateToDao() {
+            Pageable pageable = PageRequest.of(0, 10);
+            Page<User> page = new PageImpl<>(Collections.singletonList(testUser), pageable, 1);
+            when(userDao.findAll(pageable)).thenReturn(page);
+
+            Page<User> result = userRepository.findAll(pageable);
+
+            assertThat(result.getContent()).hasSize(1);
+            verify(userDao).findAll(pageable);
+        }
+
+        @Test
+        @DisplayName("Should delegate findAllActiveUsers to DAO")
+        void findAllActiveUsers_ShouldDelegateToDao() {
+            when(userDao.findAllActiveUsers()).thenReturn(Collections.singletonList(testUser));
+
+            List<User> result = userRepository.findAllActiveUsers();
+
+            assertThat(result).hasSize(1);
+            verify(userDao).findAllActiveUsers();
+        }
+    }
+
+    @Nested
+    @DisplayName("Exists Operations")
+    class ExistsOperations {
+
+        @Test
+        @DisplayName("Should delegate existsByUsername to DAO")
+        void existsByUsername_ShouldDelegateToDao() {
+            when(userDao.existsByUsername("testuser")).thenReturn(true);
+
+            boolean result = userRepository.existsByUsername("testuser");
+
+            assertThat(result).isTrue();
+            verify(userDao).existsByUsername("testuser");
+        }
+    }
+
+    @Nested
+    @DisplayName("Count Operations")
+    class CountOperations {
+
+        @Test
+        @DisplayName("Should delegate count to DAO")
+        void count_ShouldDelegateToDao() {
+            when(userDao.count()).thenReturn(3L);
+
+            long result = userRepository.count();
+
+            assertThat(result).isEqualTo(3L);
+            verify(userDao).count();
+        }
+    }
+
+    @Nested
+    @DisplayName("Delete Operations")
+    class DeleteOperations {
+
+        @Test
+        @DisplayName("Should delegate deleteById to DAO")
+        void deleteById_ShouldDelegateToDao() {
+            doNothing().when(userDao).deleteById(1L);
+
+            userRepository.deleteById(1L);
+
+            verify(userDao).deleteById(1L);
+        }
+
+        @Test
+        @DisplayName("Should delegate deleteAll to DAO")
+        void deleteAll_ShouldDelegateToDao() {
+            doNothing().when(userDao).deleteAll();
+
+            userRepository.deleteAll();
+
+            verify(userDao).deleteAll();
+        }
+    }
+}

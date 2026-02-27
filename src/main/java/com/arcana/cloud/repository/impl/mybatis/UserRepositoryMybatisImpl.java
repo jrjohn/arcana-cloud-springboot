@@ -1,4 +1,4 @@
-package com.arcana.cloud.repository.impl;
+package com.arcana.cloud.repository.impl.mybatis;
 
 import com.arcana.cloud.dao.interfaces.UserDao;
 import com.arcana.cloud.entity.User;
@@ -6,6 +6,7 @@ import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.repository.interfaces.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -14,20 +15,21 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Repository implementation for User entity.
- * Delegates all operations to the UserDao interface.
- * The actual DAO implementation (MyBatis, JPA, or MongoDB) is selected by configuration.
+ * MyBatis-backed Repository implementation for User entity.
+ * Active when database.orm is 'mybatis' (default).
+ * Delegates all operations to the UserDao interface (resolved to UserDaoMybatisImpl).
  */
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-public class UserRepositoryImpl implements UserRepository {
+@ConditionalOnProperty(name = "database.orm", havingValue = "mybatis", matchIfMissing = true)
+public class UserRepositoryMybatisImpl implements UserRepository {
 
     private final UserDao userDao;
 
     @Override
     public User save(User user) {
-        log.debug("Repository: Saving user: {}", user.getUsername());
+        log.debug("MyBatis Repository: Saving user: {}", user.getUsername());
         return userDao.save(user);
     }
 
@@ -38,7 +40,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> findById(Long id) {
-        log.debug("Repository: Finding user by id: {}", id);
+        log.debug("MyBatis Repository: Finding user by id: {}", id);
         return userDao.findById(id);
     }
 
@@ -49,13 +51,13 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findAll() {
-        log.debug("Repository: Finding all users");
+        log.debug("MyBatis Repository: Finding all users");
         return userDao.findAll();
     }
 
     @Override
     public Page<User> findAll(Pageable pageable) {
-        log.debug("Repository: Finding all users with pagination");
+        log.debug("MyBatis Repository: Finding all users with pagination");
         return userDao.findAll(pageable);
     }
 
@@ -66,7 +68,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteById(Long id) {
-        log.info("Repository: Deleting user by id: {}", id);
+        log.info("MyBatis Repository: Deleting user by id: {}", id);
         userDao.deleteById(id);
     }
 
@@ -77,25 +79,25 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public void deleteAll() {
-        log.warn("Repository: Deleting all users");
+        log.warn("MyBatis Repository: Deleting all users");
         userDao.deleteAll();
     }
 
     @Override
     public Optional<User> findByUsername(String username) {
-        log.debug("Repository: Finding user by username: {}", username);
+        log.debug("MyBatis Repository: Finding user by username: {}", username);
         return userDao.findByUsername(username);
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        log.debug("Repository: Finding user by email: {}", email);
+        log.debug("MyBatis Repository: Finding user by email: {}", email);
         return userDao.findByEmail(email);
     }
 
     @Override
     public Optional<User> findByUsernameOrEmail(String username, String email) {
-        log.debug("Repository: Finding user by username or email: {}/{}", username, email);
+        log.debug("MyBatis Repository: Finding user by username or email: {}/{}", username, email);
         return userDao.findByUsernameOrEmail(username, email);
     }
 
@@ -111,19 +113,19 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public List<User> findActiveUsersByRole(UserRole role) {
-        log.debug("Repository: Finding active users by role: {}", role);
+        log.debug("MyBatis Repository: Finding active users by role: {}", role);
         return userDao.findActiveUsersByRole(role);
     }
 
     @Override
     public List<User> findAllActiveUsers() {
-        log.debug("Repository: Finding all active users");
+        log.debug("MyBatis Repository: Finding all active users");
         return userDao.findAllActiveUsers();
     }
 
     @Override
     public List<User> findUnverifiedUsers() {
-        log.debug("Repository: Finding unverified users");
+        log.debug("MyBatis Repository: Finding unverified users");
         return userDao.findUnverifiedUsers();
     }
 }
