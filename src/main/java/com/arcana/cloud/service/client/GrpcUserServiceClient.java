@@ -4,6 +4,7 @@ import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.exception.ResourceNotFoundException;
 import com.arcana.cloud.exception.ServiceUnavailableException;
+import com.arcana.cloud.exception.UnauthorizedException;
 import com.arcana.cloud.grpc.CreateUserRequest;
 import com.arcana.cloud.grpc.GetUserByEmailRequest;
 import com.arcana.cloud.grpc.GetUserByUsernameRequest;
