@@ -1,6 +1,6 @@
 package com.arcana.cloud.repository.impl.mongodb;
 
-import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.dao.UserDao;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import org.junit.jupiter.api.BeforeEach;

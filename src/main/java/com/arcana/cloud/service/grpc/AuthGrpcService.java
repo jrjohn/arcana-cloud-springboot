@@ -12,7 +12,7 @@ import com.arcana.cloud.grpc.UserInfo;
 import com.arcana.cloud.grpc.ValidateTokenRequest;
 import com.arcana.cloud.grpc.ValidateTokenResponse;
 import com.arcana.cloud.security.JwtTokenProvider;
-import com.arcana.cloud.service.interfaces.AuthService;
+import com.arcana.cloud.service.AuthService;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;

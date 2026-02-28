@@ -1,4 +1,4 @@
-package com.arcana.cloud.repository.interfaces;
+package com.arcana.cloud.repository;
 
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;

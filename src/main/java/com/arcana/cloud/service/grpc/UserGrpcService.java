@@ -16,7 +16,7 @@ import com.arcana.cloud.grpc.PageInfo;
 import com.arcana.cloud.grpc.UpdateUserRequest;
 import com.arcana.cloud.grpc.UserResponse;
 import com.arcana.cloud.grpc.UserServiceGrpc;
-import com.arcana.cloud.service.interfaces.UserService;
+import com.arcana.cloud.service.UserService;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import lombok.RequiredArgsConstructor;

@@ -6,7 +6,7 @@ import com.arcana.cloud.dto.request.RegisterRequest;
 import com.arcana.cloud.dto.response.ApiResponse;
 import com.arcana.cloud.dto.response.AuthResponse;
 import com.arcana.cloud.security.SecurityService;
-import com.arcana.cloud.service.interfaces.AuthService;
+import com.arcana.cloud.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;

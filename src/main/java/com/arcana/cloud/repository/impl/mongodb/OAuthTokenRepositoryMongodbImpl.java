@@ -1,9 +1,9 @@
 package com.arcana.cloud.repository.impl.mongodb;
 
-import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.dao.OAuthTokenDao;
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;
-import com.arcana.cloud.repository.interfaces.OAuthTokenRepository;
+import com.arcana.cloud.repository.OAuthTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

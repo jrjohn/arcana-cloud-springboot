@@ -6,7 +6,7 @@ import com.arcana.cloud.dto.response.UserResponse;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.exception.ResourceNotFoundException;
-import com.arcana.cloud.service.interfaces.UserService;
+import com.arcana.cloud.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

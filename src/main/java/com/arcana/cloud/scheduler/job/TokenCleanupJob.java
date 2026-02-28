@@ -1,6 +1,6 @@
 package com.arcana.cloud.scheduler.job;
 
-import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.dao.OAuthTokenDao;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.springframework.beans.factory.annotation.Autowired;

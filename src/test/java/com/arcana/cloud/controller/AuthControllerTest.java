@@ -5,7 +5,7 @@ import com.arcana.cloud.dto.request.RegisterRequest;
 import com.arcana.cloud.dto.response.AuthResponse;
 import com.arcana.cloud.dto.response.UserResponse;
 import com.arcana.cloud.entity.UserRole;
-import com.arcana.cloud.service.interfaces.AuthService;
+import com.arcana.cloud.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import tools.jackson.databind.json.JsonMapper;
 import org.junit.jupiter.api.Test;

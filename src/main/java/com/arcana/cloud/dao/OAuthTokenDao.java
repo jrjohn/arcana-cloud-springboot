@@ -1,4 +1,4 @@
-package com.arcana.cloud.dao.interfaces;
+package com.arcana.cloud.dao;
 
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;

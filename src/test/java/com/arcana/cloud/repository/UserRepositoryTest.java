@@ -2,7 +2,7 @@ package com.arcana.cloud.repository;
 
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
-import com.arcana.cloud.repository.interfaces.UserRepository;
+import com.arcana.cloud.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

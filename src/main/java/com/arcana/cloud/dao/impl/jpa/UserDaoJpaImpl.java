@@ -1,7 +1,7 @@
 package com.arcana.cloud.dao.impl.jpa;
 
 import com.arcana.cloud.dao.impl.jpa.repository.UserJpaRepository;
-import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.dao.UserDao;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import lombok.RequiredArgsConstructor;

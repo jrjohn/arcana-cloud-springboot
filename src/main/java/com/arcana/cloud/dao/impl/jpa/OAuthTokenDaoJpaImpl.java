@@ -1,7 +1,7 @@
 package com.arcana.cloud.dao.impl.jpa;
 
 import com.arcana.cloud.dao.impl.jpa.repository.OAuthTokenJpaRepository;
-import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.dao.OAuthTokenDao;
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;
 import lombok.RequiredArgsConstructor;

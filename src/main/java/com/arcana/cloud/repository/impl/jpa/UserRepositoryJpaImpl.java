@@ -1,9 +1,9 @@
 package com.arcana.cloud.repository.impl.jpa;
 
-import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.dao.UserDao;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
-import com.arcana.cloud.repository.interfaces.UserRepository;
+import com.arcana.cloud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

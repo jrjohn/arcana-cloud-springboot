@@ -17,7 +17,7 @@ import com.arcana.cloud.grpc.UserServiceGrpc;
 import com.arcana.cloud.grpc.ExistsByUsernameRequest;
 import com.arcana.cloud.grpc.ExistsByEmailRequest;
 import com.arcana.cloud.grpc.DeleteUserRequest;
-import com.arcana.cloud.service.interfaces.UserService;
+import com.arcana.cloud.service.UserService;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.grpc.ManagedChannel;

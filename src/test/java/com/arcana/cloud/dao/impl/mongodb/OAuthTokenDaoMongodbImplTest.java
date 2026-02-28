@@ -1,6 +1,6 @@
 package com.arcana.cloud.dao.impl.mongodb;
 
-import com.arcana.cloud.dao.interfaces.UserDao;
+import com.arcana.cloud.dao.UserDao;
 import com.arcana.cloud.document.OAuthTokenDocument;
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;

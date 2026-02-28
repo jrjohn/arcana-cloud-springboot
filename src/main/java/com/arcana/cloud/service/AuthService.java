@@ -1,4 +1,4 @@
-package com.arcana.cloud.service.interfaces;
+package com.arcana.cloud.service;
 
 import com.arcana.cloud.dto.request.LoginRequest;
 import com.arcana.cloud.dto.request.RefreshTokenRequest;

@@ -5,7 +5,7 @@ import com.arcana.cloud.dto.response.PagedResponse;
 import com.arcana.cloud.dto.response.UserResponse;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.mapper.UserMapper;
-import com.arcana.cloud.service.interfaces.UserService;
+import com.arcana.cloud.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

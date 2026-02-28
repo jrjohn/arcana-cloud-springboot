@@ -12,7 +12,7 @@ import com.arcana.cloud.grpc.AuthServiceGrpc;
 import com.arcana.cloud.grpc.LogoutAllRequest;
 import com.arcana.cloud.grpc.LogoutRequest;
 import com.arcana.cloud.grpc.UserInfo;
-import com.arcana.cloud.service.interfaces.AuthService;
+import com.arcana.cloud.service.AuthService;
 import io.github.resilience4j.circuitbreaker.CircuitBreaker;
 import io.github.resilience4j.circuitbreaker.CallNotPermittedException;
 import io.grpc.ManagedChannel;

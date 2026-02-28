@@ -6,7 +6,7 @@ import com.arcana.cloud.dto.request.RegisterRequest;
 import com.arcana.cloud.dto.response.ApiResponse;
 import com.arcana.cloud.dto.response.AuthResponse;
 import com.arcana.cloud.exception.UnauthorizedException;
-import com.arcana.cloud.service.interfaces.AuthService;
+import com.arcana.cloud.service.AuthService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;

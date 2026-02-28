@@ -1,4 +1,4 @@
-package com.arcana.cloud.service.interfaces;
+package com.arcana.cloud.service;
 
 import com.arcana.cloud.entity.User;
 import org.springframework.data.domain.Page;

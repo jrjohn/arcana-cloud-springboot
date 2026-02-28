@@ -6,7 +6,7 @@ import com.arcana.cloud.dto.request.RegisterRequest;
 import com.arcana.cloud.dto.response.ApiResponse;
 import com.arcana.cloud.dto.response.AuthResponse;
 import com.arcana.cloud.security.JwtTokenProvider;
-import com.arcana.cloud.service.interfaces.AuthService;
+import com.arcana.cloud.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

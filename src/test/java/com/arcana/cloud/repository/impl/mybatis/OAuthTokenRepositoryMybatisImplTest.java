@@ -1,6 +1,6 @@
 package com.arcana.cloud.repository.impl.mybatis;
 
-import com.arcana.cloud.dao.interfaces.OAuthTokenDao;
+import com.arcana.cloud.dao.OAuthTokenDao;
 import com.arcana.cloud.entity.OAuthToken;
 import com.arcana.cloud.entity.User;
 import org.junit.jupiter.api.BeforeEach;
