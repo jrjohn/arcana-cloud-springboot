@@ -5,6 +5,7 @@ import com.arcana.cloud.scheduler.dto.JobDetailDto.JobStatus;
 import com.arcana.cloud.scheduler.dto.JobScheduleRequest;
 import com.arcana.cloud.scheduler.dto.JobScheduleRequest.TriggerConfig;
 import com.arcana.cloud.scheduler.dto.TriggerDetailDto;
+import com.arcana.cloud.scheduler.service.JobManagementService;
 import com.arcana.cloud.scheduler.service.impl.JobManagementServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -81,7 +82,7 @@ class JobManagementServiceImplTest {
 
             when(scheduler.scheduleJob(any(JobDetail.class), any(Trigger.class))).thenReturn(new Date());
             when(scheduler.getJobDetail(any(JobKey.class))).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(any(JobKey.class))).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(any(JobKey.class));
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             JobDetailDto result = jobManagementService.scheduleJob(request);
@@ -111,7 +112,7 @@ class JobManagementServiceImplTest {
 
             when(scheduler.scheduleJob(any(JobDetail.class), any(Trigger.class))).thenReturn(new Date());
             when(scheduler.getJobDetail(any(JobKey.class))).thenReturn(simpleDetail);
-            when(scheduler.getTriggersOfJob(any(JobKey.class))).thenReturn(List.of(simpleTrigger));
+            doReturn(List.of(simpleTrigger)).when(scheduler).getTriggersOfJob(any(JobKey.class));
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             JobDetailDto result = jobManagementService.scheduleJob(request);
@@ -170,7 +171,7 @@ class JobManagementServiceImplTest {
 
             when(scheduler.scheduleJob(any(JobDetail.class), any(Trigger.class))).thenReturn(new Date());
             when(scheduler.getJobDetail(any(JobKey.class))).thenReturn(dataDetail);
-            when(scheduler.getTriggersOfJob(any(JobKey.class))).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(any(JobKey.class));
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             JobDetailDto result = jobManagementService.scheduleJob(request);
@@ -193,7 +194,7 @@ class JobManagementServiceImplTest {
                     NoOpJob.class.getName(), "0 0 * * * ?");
 
             when(scheduler.checkExists(testJobKey)).thenReturn(true);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.rescheduleJob(any(TriggerKey.class), any(Trigger.class))).thenReturn(new Date());
             when(scheduler.getJobDetail(any(JobKey.class))).thenReturn(testJobDetail);
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
@@ -211,7 +212,7 @@ class JobManagementServiceImplTest {
                     NoOpJob.class.getName(), "0 0 * * * ?");
 
             when(scheduler.checkExists(testJobKey)).thenReturn(true);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(Collections.emptyList());
+            doReturn(Collections.emptyList()).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.scheduleJob(any(Trigger.class))).thenReturn(new Date());
             when(scheduler.getJobDetail(any(JobKey.class))).thenReturn(testJobDetail);
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
@@ -246,7 +247,7 @@ class JobManagementServiceImplTest {
         @DisplayName("Should return job details for existing job")
         void getJob_Exists_ReturnsDetails() throws SchedulerException {
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             JobDetailDto result = jobManagementService.getJob("testJob", "testGroup");
@@ -292,7 +293,7 @@ class JobManagementServiceImplTest {
             when(scheduler.getJobGroupNames()).thenReturn(List.of("testGroup"));
             when(scheduler.getJobKeys(any(GroupMatcher.class))).thenReturn(jobKeys);
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             List<JobDetailDto> result = jobManagementService.getAllJobs();
@@ -343,7 +344,7 @@ class JobManagementServiceImplTest {
 
             when(scheduler.getJobKeys(any(GroupMatcher.class))).thenReturn(jobKeys);
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             List<JobDetailDto> result = jobManagementService.getJobsByGroup("testGroup");
@@ -540,7 +541,7 @@ class JobManagementServiceImplTest {
         @Test
         @DisplayName("Should return triggers for a job")
         void getJobTriggers_ReturnsTriggers() throws SchedulerException {
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             List<TriggerDetailDto> result = jobManagementService.getJobTriggers("testJob", "testGroup");
@@ -552,7 +553,7 @@ class JobManagementServiceImplTest {
         @Test
         @DisplayName("Should return empty list when no triggers exist")
         void getJobTriggers_NoTriggers_ReturnsEmpty() throws SchedulerException {
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(Collections.emptyList());
+            doReturn(Collections.emptyList()).when(scheduler).getTriggersOfJob(testJobKey);
 
             List<TriggerDetailDto> result = jobManagementService.getJobTriggers("testJob", "testGroup");
 
@@ -729,7 +730,7 @@ class JobManagementServiceImplTest {
             when(ctx.getJobDetail()).thenReturn(testJobDetail);
 
             when(scheduler.getCurrentlyExecutingJobs()).thenReturn(List.of(ctx));
-            when(scheduler.getTriggersOfJob(any(JobKey.class))).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(any(JobKey.class));
             when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             List<JobDetailDto> result = jobManagementService.getCurrentlyExecutingJobs();
@@ -771,7 +772,7 @@ class JobManagementServiceImplTest {
         @DisplayName("Should return PAUSED status when all triggers are paused")
         void getJob_AllTriggersPaused_StatusPaused() throws SchedulerException {
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class)))
                     .thenReturn(Trigger.TriggerState.PAUSED);
 
@@ -784,7 +785,7 @@ class JobManagementServiceImplTest {
         @DisplayName("Should return ERROR status when a trigger is in error state")
         void getJob_TriggerError_StatusError() throws SchedulerException {
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class)))
                     .thenReturn(Trigger.TriggerState.ERROR);
 
@@ -797,7 +798,7 @@ class JobManagementServiceImplTest {
         @DisplayName("Should return BLOCKED status when a trigger is blocked")
         void getJob_TriggerBlocked_StatusBlocked() throws SchedulerException {
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class)))
                     .thenReturn(Trigger.TriggerState.BLOCKED);
 
@@ -810,7 +811,7 @@ class JobManagementServiceImplTest {
         @DisplayName("Should return NONE status when job has no triggers")
         void getJob_NoTriggers_StatusNone() throws SchedulerException {
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(Collections.emptyList());
+            doReturn(Collections.emptyList()).when(scheduler).getTriggersOfJob(testJobKey);
 
             JobDetailDto result = jobManagementService.getJob("testJob", "testGroup");
 
@@ -821,7 +822,7 @@ class JobManagementServiceImplTest {
         @DisplayName("Should return NORMAL status when trigger is running normally")
         void getJob_TriggerNormal_StatusNormal() throws SchedulerException {
             when(scheduler.getJobDetail(testJobKey)).thenReturn(testJobDetail);
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class)))
                     .thenReturn(Trigger.TriggerState.NORMAL);
 
@@ -841,7 +842,7 @@ class JobManagementServiceImplTest {
         @Test
         @DisplayName("Should map cron trigger with expression and timezone")
         void getJobTriggers_CronTrigger_MapsCorrectly() throws SchedulerException {
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(testCronTrigger));
+            doReturn(List.of(testCronTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class)))
                     .thenReturn(Trigger.TriggerState.NORMAL);
 
@@ -863,7 +864,7 @@ class JobManagementServiceImplTest {
                             .withRepeatCount(5))
                     .build();
 
-            when(scheduler.getTriggersOfJob(testJobKey)).thenReturn(List.of(simpleTrigger));
+            doReturn(List.of(simpleTrigger)).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.getTriggerState(any(TriggerKey.class)))
                     .thenReturn(Trigger.TriggerState.NORMAL);
 
