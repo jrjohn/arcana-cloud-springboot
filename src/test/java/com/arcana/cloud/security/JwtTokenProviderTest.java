@@ -44,7 +44,7 @@ class JwtTokenProviderTest {
         String token = tokenProvider.generateAccessToken(userPrincipal);
 
         assertNotNull(token);
-        assertTrue(token.length() > 0);
+        assertTrue(!token.isEmpty());
         assertTrue(token.contains("."));  // JWT format
     }
 
@@ -53,7 +53,7 @@ class JwtTokenProviderTest {
         String token = tokenProvider.generateRefreshToken(userPrincipal);
 
         assertNotNull(token);
-        assertTrue(token.length() > 0);
+        assertTrue(!token.isEmpty());
         assertTrue(token.contains("."));
     }
 

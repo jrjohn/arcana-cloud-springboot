@@ -18,7 +18,7 @@ db.createCollection('users', {
                 },
                 email: {
                     bsonType: 'string',
-                    pattern: '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+                    pattern: String.raw`^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$`
                 },
                 password: {
                     bsonType: 'string',
@@ -52,8 +52,7 @@ db.oauth_tokens.createIndex({ legacy_id: 1 }, { unique: true, sparse: true });
 
 // Insert default admin user (configure via ADMIN_PASSWORD_HASH env var)
 const adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
-if (!adminPasswordHash) { print('WARNING: ADMIN_PASSWORD_HASH not set, skipping admin user creation'); }
-else db.users.insertOne({
+if (adminPasswordHash) { db.users.insertOne({
     legacy_id: NumberLong(1),
     username: 'admin',
     email: 'admin@arcana-cloud.com',
@@ -66,5 +65,6 @@ else db.users.insertOne({
     created_at: new Date(),
     updated_at: new Date()
 });
+} else { print('WARNING: ADMIN_PASSWORD_HASH not set, skipping admin user creation'); }
 
 print('Arcana Cloud MongoDB initialization completed.');

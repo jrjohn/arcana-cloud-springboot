@@ -114,12 +114,6 @@ class UserServiceExtendedTest {
 
     @Test
     void testUpdateUser_DuplicateUsername() {
-        User anotherUser = User.builder()
-            .id(2L)
-            .username("existinguser")
-            .email("other@example.com")
-            .build();
-
         User userUpdate = User.builder()
             .username("existinguser")
             .build();

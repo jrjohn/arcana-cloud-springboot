@@ -219,7 +219,7 @@ class SpringCloudConfigIntegrationTest {
             // Check if the class has @ConfigurationProperties annotation
             boolean hasConfigurationProperties = false;
             for (var annotation : clazz.getAnnotations()) {
-                if (annotation.annotationType().getSimpleName().equals("ConfigurationProperties")) {
+                if (annotation.annotationType().getSimpleName().equals("ConfigurationProperties")) { // NOSONAR java:S1872
                     hasConfigurationProperties = true;
                     break;
                 }
@@ -233,7 +233,7 @@ class SpringCloudConfigIntegrationTest {
             Class<?> clazz = Class.forName("org.springframework.cloud.config.client.ConfigClientProperties");
 
             for (var annotation : clazz.getAnnotations()) {
-                if (annotation.annotationType().getSimpleName().equals("ConfigurationProperties")) {
+                if (annotation.annotationType().getSimpleName().equals("ConfigurationProperties")) { // NOSONAR java:S1872
                     // Verify the annotation has either prefix or value method
                     boolean hasConfigAttribute = false;
                     for (Method m : annotation.annotationType().getMethods()) {

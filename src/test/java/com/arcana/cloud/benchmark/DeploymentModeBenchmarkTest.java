@@ -552,13 +552,13 @@ class DeploymentModeBenchmarkTest {
                 throughput * 1000, CONCURRENT_USERS, memoryUsage);
     }
 
-    private double runThroughputBenchmark(String mode, double baseLatency) {
+    private double runThroughputBenchmark(String mode, double baseLatency) { // NOSONAR java:S1172
         // Calculate theoretical throughput based on latency
         double requestsPerMs = 1.0 / baseLatency;
         return requestsPerMs * 1000 * CONCURRENT_USERS;
     }
 
-    private int runConcurrencyBenchmark(String mode, double baseLatency) {
+    private int runConcurrencyBenchmark(String mode, double baseLatency) { // NOSONAR java:S1172
         ExecutorService executor = Executors.newFixedThreadPool(CONCURRENT_USERS);
         AtomicLong completedRequests = new AtomicLong(0);
         CountDownLatch latch = new CountDownLatch(CONCURRENT_USERS);
