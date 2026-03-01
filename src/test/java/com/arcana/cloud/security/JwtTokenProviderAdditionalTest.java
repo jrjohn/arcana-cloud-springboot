@@ -44,7 +44,6 @@ class JwtTokenProviderAdditionalTest {
         userPrincipal = UserPrincipal.create(user);
     }
 
-    // ─── validateToken: catch(ExpiredJwtException) ───────────────────────────
 
     @Test
     @DisplayName("validateToken: expired token → returns false (ExpiredJwtException branch)")
@@ -70,7 +69,6 @@ class JwtTokenProviderAdditionalTest {
         assertFalse(tokenProvider.validateToken(expiredRefresh));
     }
 
-    // ─── validateToken: catch(SignatureException) ────────────────────────────
 
     @Test
     @DisplayName("validateToken: token signed with different key → false (SignatureException)")
@@ -89,7 +87,6 @@ class JwtTokenProviderAdditionalTest {
         assertFalse(valid, "Token with wrong signature should not be valid");
     }
 
-    // ─── validateToken: catch(MalformedJwtException) ─────────────────────────
 
     @Test
     @DisplayName("validateToken: garbled string → false (MalformedJwtException)")
@@ -103,7 +100,6 @@ class JwtTokenProviderAdditionalTest {
         assertFalse(tokenProvider.validateToken("..."));
     }
 
-    // ─── validateToken: catch(IllegalArgumentException) ──────────────────────
 
     @Test
     @DisplayName("validateToken: null token → false (IllegalArgumentException)")
@@ -130,7 +126,7 @@ class JwtTokenProviderAdditionalTest {
     void getUsernameFromToken_fromRefreshToken_returnsNull() {
         String refreshToken = tokenProvider.generateRefreshToken(userPrincipal);
         // Refresh token does not include 'username' claim
-        String username = tokenProvider.getUsernameFromToken(refreshToken);
+        tokenProvider.getUsernameFromToken(refreshToken);
         // Should be null (claim not present) without exception
         // We just verify no exception is thrown and subject still resolvable
         assertNotNull(tokenProvider.getUserIdFromToken(refreshToken));
@@ -140,7 +136,7 @@ class JwtTokenProviderAdditionalTest {
     @DisplayName("getRoleFromToken: refresh token has no role claim → returns null")
     void getRoleFromToken_fromRefreshToken_returnsNull() {
         String refreshToken = tokenProvider.generateRefreshToken(userPrincipal);
-        String role = tokenProvider.getRoleFromToken(refreshToken);
+        tokenProvider.getRoleFromToken(refreshToken);
         // refresh token has no 'role' claim → null without NPE
         assertFalse(tokenProvider.validateToken("") );
         // and the token itself is still valid
