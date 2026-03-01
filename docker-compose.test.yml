@@ -7,4 +7,10 @@ services:
     working_dir: /app
     volumes:
       - ./build/reports:/output
+    networks:
+      - devops_default
     command: sh -c "timeout 300 gradle :test --no-daemon -Dspring.profiles.active=test 2>&1 || true; gradle :jacocoTestReport --no-daemon 2>&1 || true; cp -r /app/build/reports/* /output/ 2>/dev/null || true"
+
+networks:
+  devops_default:
+    external: true
