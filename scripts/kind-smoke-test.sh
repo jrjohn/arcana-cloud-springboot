@@ -57,9 +57,20 @@ echo ""
 # ── 1. Create Kind cluster ───────────────────────────────────
 echo "▶ [1/6] Creating Kind cluster '${CLUSTER}'..."
 kind create cluster --name "${CLUSTER}" --wait 60s
-kind get kubeconfig --name "${CLUSTER}" > "${KUBECONFIG_FILE}"
+
+# Jenkins runs inside Docker — replace 127.0.0.1 in kubeconfig with the
+# Kind control-plane container's real Docker network IP (reachable from Jenkins)
+CONTROL_PLANE_IP=$(docker inspect --format \
+    '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \
+    "${CLUSTER}-control-plane" 2>/dev/null | tail -1)
+echo "  Kind control-plane IP: ${CONTROL_PLANE_IP}"
+kind get kubeconfig --name "${CLUSTER}" | \
+    sed "s|https://127.0.0.1:[0-9]*|https://${CONTROL_PLANE_IP}:6443|g" \
+    > "${KUBECONFIG_FILE}"
 export KUBECONFIG="${KUBECONFIG_FILE}"
-echo "  ✓ Cluster ready"
+# Verify connectivity
+kubectl cluster-info --request-timeout=10s
+echo "  ✓ Cluster ready and reachable"
 
 # ── 2. Load app image into Kind ──────────────────────────────
 echo ""
