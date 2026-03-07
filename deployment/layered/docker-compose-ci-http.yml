@@ -55,8 +55,10 @@ services:
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
       SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
       # Disable DOWN health indicators — containers lack Mongo/Redis access in all layers
-      MANAGEMENT_HEALTH_MONGO_ENABLED: "false"
-      MANAGEMENT_HEALTH_REDIS_ENABLED: "false"
+      # Disable slow health contributors — MongoDB waits 30s to timeout
+      # causing Docker healthcheck (timeout:5s) to always fail.
+      MANAGEMENT_HEALTH_DEFAULTS_ENABLED: "false"
+      MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
       # Disable gRPC server in HTTP mode — service uses HTTP not gRPC inter-layer comms
       SPRING_GRPC_SERVER_ENABLED: "false"
       JAVA_OPTS: "-Xmx512m -Xms256m"
@@ -95,8 +97,10 @@ services:
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
       SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
       # Disable DOWN health indicators — containers lack Mongo/Redis access in all layers
-      MANAGEMENT_HEALTH_MONGO_ENABLED: "false"
-      MANAGEMENT_HEALTH_REDIS_ENABLED: "false"
+      # Disable slow health contributors — MongoDB waits 30s to timeout
+      # causing Docker healthcheck (timeout:5s) to always fail.
+      MANAGEMENT_HEALTH_DEFAULTS_ENABLED: "false"
+      MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
       JAVA_OPTS: "-Xmx512m -Xms256m"
     ports:
       - "8090:8090"
