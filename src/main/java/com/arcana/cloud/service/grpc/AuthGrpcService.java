@@ -28,7 +28,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@ConditionalOnExpression("'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'")
+@ConditionalOnExpression("('${communication.protocol:grpc}' == 'grpc') and ('${deployment.layer:}' == '' or '${deployment.layer:}' == 'service')")
 public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
 
     private final AuthService authService;

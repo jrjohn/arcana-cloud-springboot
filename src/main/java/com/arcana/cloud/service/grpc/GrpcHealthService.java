@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @see <a href="https://github.com/grpc/grpc/blob/master/doc/health-checking.md">gRPC Health Checking Protocol</a>
  */
 @GrpcService
-@ConditionalOnExpression("'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'")
+@ConditionalOnExpression("('${communication.protocol:grpc}' == 'grpc') and ('${deployment.layer:}' == '' or '${deployment.layer:}' == 'service')")
 public class GrpcHealthService extends HealthGrpc.HealthImplBase {
 
     private static final Logger log = LoggerFactory.getLogger(GrpcHealthService.class);

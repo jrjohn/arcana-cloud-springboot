@@ -55,7 +55,7 @@ services:
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
       # Disable gRPC server in HTTP mode — service uses HTTP not gRPC inter-layer comms
       SPRING_GRPC_SERVER_ENABLED: "false"
-      JAVA_OPTS: "-Xmx256m -Xms128m"
+      JAVA_OPTS: "-Xmx512m -Xms256m"
     expose:
       - "8081"
     depends_on:
@@ -89,7 +89,7 @@ services:
       SPRING_DATA_REDIS_PORT: "6379"
       SPRING_FLYWAY_ENABLED: "false"
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
-      JAVA_OPTS: "-Xmx256m -Xms128m"
+      JAVA_OPTS: "-Xmx512m -Xms256m"
     ports:
       - "8090:8090"
     depends_on:
