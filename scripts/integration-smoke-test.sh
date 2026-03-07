@@ -67,7 +67,7 @@ if [ "${REG_HTTP_CODE}" = "000" ]; then
     exit 1
 fi
 
-echo "  HTTP ${REG_HTTP_CODE} — $(cat /tmp/smoke-reg.json | python3 -c 'import json,sys; d=json.load(sys.stdin); print(f"token={d.get(\"accessToken\",\"?\")[:20]}...")' 2>/dev/null || cat /tmp/smoke-reg.json | head -c 200)"
+echo "  HTTP ${REG_HTTP_CODE} — $(cat /tmp/smoke-reg.json | python3 -c 'import json,sys; d=json.load(sys.stdin); dd=d.get('data',d); print(f"token={dd.get('accessToken','?')[:20]}...")' 2>/dev/null || cat /tmp/smoke-reg.json | head -c 200)"
 
 if [ "${REG_HTTP_CODE}" != "200" ] && [ "${REG_HTTP_CODE}" != "201" ]; then
     echo "  ✗ Registration failed — HTTP ${REG_HTTP_CODE}"
@@ -98,7 +98,7 @@ if [ "${LOGIN_HTTP_CODE}" != "200" ]; then
     exit 1
 fi
 
-TOKEN=$(python3 -c "import json,sys; print(json.load(sys.stdin).get('accessToken',''))" < /tmp/smoke-login.json)
+TOKEN=$(python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('data',d).get('accessToken',''))" < /tmp/smoke-login.json)
 if [ -z "${TOKEN}" ]; then
     echo "  ✗ No accessToken in login response"
     cat /tmp/smoke-login.json
