@@ -144,7 +144,7 @@ services:
       MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
       JAVA_OPTS: "-Xmx512m -Xms256m"
     ports:
-      - "8090:8090"
+      - "18091:8090"
     depends_on:
       service:
         condition: service_healthy
