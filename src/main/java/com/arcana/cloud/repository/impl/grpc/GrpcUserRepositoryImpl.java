@@ -264,6 +264,7 @@ public class GrpcUserRepositoryImpl implements UserRepository {
             .id(r.getId())
             .username(r.getUsername())
             .email(r.getEmail())
+            .password(r.getPassword().isEmpty() ? null : r.getPassword())
             .firstName(r.getFirstName().isEmpty() ? null : r.getFirstName())
             .lastName(r.getLastName().isEmpty() ? null : r.getLastName())
             .role(r.getRole().isEmpty() ? UserRole.USER : UserRole.valueOf(r.getRole()))

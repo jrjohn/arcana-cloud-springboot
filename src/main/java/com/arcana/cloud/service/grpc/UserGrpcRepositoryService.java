@@ -243,6 +243,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
             .setId(user.getId())
             .setUsername(user.getUsername())
             .setEmail(user.getEmail())
+            .setPassword(user.getPassword() != null ? user.getPassword() : "")
             .setFirstName(user.getFirstName() != null ? user.getFirstName() : "")
             .setLastName(user.getLastName() != null ? user.getLastName() : "")
             .setRole(user.getRole() != null ? user.getRole().name() : UserRole.USER.name())
