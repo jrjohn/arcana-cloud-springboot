@@ -10,6 +10,7 @@ import jakarta.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -81,7 +82,7 @@ public class GrpcConfig {
     private ManagedChannel repositoryChannel;
 
     @Bean
-    @ConditionalOnProperty(name = "deployment.layer", havingValue = "controller")
+    @ConditionalOnExpression("'${communication.protocol:grpc}' == 'grpc' and '${deployment.layer:}' == 'controller'")
     public ManagedChannel serviceChannel() {
         log.info("Creating gRPC service channel to {} (TLS: {})", serviceGrpcUrl, tlsEnabled);
         this.serviceChannel = createChannel(serviceGrpcUrl);
@@ -89,7 +90,7 @@ public class GrpcConfig {
     }
 
     @Bean
-    @ConditionalOnProperty(name = "deployment.layer", havingValue = "service")
+    @ConditionalOnExpression("'${communication.protocol:grpc}' == 'grpc' and '${deployment.layer:}' == 'service'")
     public ManagedChannel repositoryChannel() {
         log.info("Creating gRPC repository channel to {} (TLS: {})", repositoryGrpcUrl, tlsEnabled);
         this.repositoryChannel = createChannel(repositoryGrpcUrl);
@@ -185,15 +186,15 @@ public class GrpcConfig {
         // Retry policy for idempotent methods
         java.util.Map<String, Object> retryPolicy = new java.util.HashMap<>();
         retryPolicy.put("maxAttempts", (double) maxRetryAttempts);
-        retryPolicy.put("initialBackoff", initialBackoffMs + "ms");
-        retryPolicy.put("maxBackoff", maxBackoffMs + "ms");
+        retryPolicy.put("initialBackoff", (initialBackoffMs / 1000.0) + "s");
+        retryPolicy.put("maxBackoff", (maxBackoffMs / 1000.0) + "s");
         retryPolicy.put("backoffMultiplier", 2.0);
         retryPolicy.put("retryableStatusCodes", java.util.List.of("UNAVAILABLE", "DEADLINE_EXCEEDED"));
 
         java.util.Map<String, Object> methodConfig = new java.util.HashMap<>();
         methodConfig.put("name", java.util.List.of(java.util.Map.of()));
         methodConfig.put("retryPolicy", retryPolicy);
-        methodConfig.put("timeout", deadlineMs + "ms");
+        methodConfig.put("timeout", (deadlineMs / 1000.0) + "s");
 
         java.util.Map<String, Object> serviceConfig = new java.util.HashMap<>();
         serviceConfig.put("methodConfig", java.util.List.of(methodConfig));
