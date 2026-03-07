@@ -65,7 +65,7 @@ services:
       redis-ci-http:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:8081/actuator/health || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/actuator/health > /dev/null 2>&1 || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 18   # up to 3 min for Spring Boot startup
@@ -98,7 +98,7 @@ services:
       service:
         condition: service_healthy
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost:8090/actuator/health || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8090/actuator/health > /dev/null 2>&1 || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 12
