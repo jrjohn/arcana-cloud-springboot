@@ -1,0 +1,108 @@
+# CI Integration Test: Layered + HTTP Protocol
+# Controller (8090) → Service (8081, HTTP) → MySQL/Redis
+# Uses pre-built image: SPRINGBOOT_IMAGE env var
+# Run: SPRINGBOOT_IMAGE=<img> docker compose -f docker-compose-ci-http.yml up -d
+# Network: arcana-ci-http (isolated, avoids port conflicts with other tests)
+
+services:
+  mysql-ci-http:
+    image: mysql:8.0
+    container_name: arcana-ci-mysql-http
+    environment:
+      MYSQL_ROOT_PASSWORD: ci_root
+      MYSQL_DATABASE: arcana_ci_http
+      MYSQL_USER: arcana
+      MYSQL_PASSWORD: arcana_ci
+    ports:
+      - "13307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pci_root"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks:
+      - arcana-ci-http-net
+    tmpfs:
+      - /var/lib/mysql   # ephemeral — no volume persistence between CI runs
+
+  redis-ci-http:
+    image: redis:7.0-alpine
+    container_name: arcana-ci-redis-http
+    ports:
+      - "16380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 6
+    networks:
+      - arcana-ci-http-net
+
+  service:
+    image: ${SPRINGBOOT_IMAGE}
+    container_name: arcana-ci-service-http
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: service
+      COMMUNICATION_PROTOCOL: http
+      SERVER_PORT: "8081"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-ci-http:3306/arcana_ci_http?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_ci
+      SPRING_DATA_REDIS_HOST: redis-ci-http
+      SPRING_DATA_REDIS_PORT: "6379"
+      SPRING_FLYWAY_ENABLED: "true"
+      JWT_SECRET: ci-test-secret-key-32-chars-long-ok
+      JAVA_OPTS: "-Xmx256m -Xms128m"
+    expose:
+      - "8081"
+    depends_on:
+      mysql-ci-http:
+        condition: service_healthy
+      redis-ci-http:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8081/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 18   # up to 3 min for Spring Boot startup
+      start_period: 30s
+    networks:
+      - arcana-ci-http-net
+
+  controller:
+    image: ${SPRINGBOOT_IMAGE}
+    container_name: arcana-ci-controller-http
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: controller
+      COMMUNICATION_PROTOCOL: http
+      SERVER_PORT: "8090"
+      SERVICE_HTTP_URL: http://service:8081
+      # Controller doesn't touch DB directly; provided to satisfy Spring auto-config
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-ci-http:3306/arcana_ci_http?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_ci
+      SPRING_DATA_REDIS_HOST: redis-ci-http
+      SPRING_DATA_REDIS_PORT: "6379"
+      SPRING_FLYWAY_ENABLED: "false"
+      JWT_SECRET: ci-test-secret-key-32-chars-long-ok
+      JAVA_OPTS: "-Xmx256m -Xms128m"
+    ports:
+      - "8090:8090"
+    depends_on:
+      service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8090/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    networks:
+      - arcana-ci-http-net
+
+networks:
+  arcana-ci-http-net:
+    driver: bridge
+    name: arcana-ci-http-net
