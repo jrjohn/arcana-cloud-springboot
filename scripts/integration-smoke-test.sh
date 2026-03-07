@@ -57,7 +57,7 @@ REG_BODY=$(cat <<EOF
 EOF
 )
 
-REG_HTTP_CODE=$(curl -sf -o /tmp/smoke-reg.json -w "%{http_code}" \
+REG_HTTP_CODE=$(curl -s -o /tmp/smoke-reg.json -w "%{http_code}" \
     -X POST "${BASE_URL}/api/v1/auth/register" \
     -H "Content-Type: application/json" \
     -d "${REG_BODY}" 2>/dev/null || echo "000")
@@ -87,7 +87,7 @@ LOGIN_BODY=$(cat <<EOF
 EOF
 )
 
-LOGIN_HTTP_CODE=$(curl -sf -o /tmp/smoke-login.json -w "%{http_code}" \
+LOGIN_HTTP_CODE=$(curl -s -o /tmp/smoke-login.json -w "%{http_code}" \
     -X POST "${BASE_URL}/api/v1/auth/login" \
     -H "Content-Type: application/json" \
     -d "${LOGIN_BODY}" 2>/dev/null || echo "000")
@@ -109,7 +109,7 @@ echo "  ✓ Login OK — token: ${TOKEN:0:30}..."
 # ── 4. Authenticated call ────────────────────────────────────
 echo ""
 echo "▶ [4/4] Calling authenticated endpoint (GET /api/v1/users) ..."
-AUTH_HTTP_CODE=$(curl -sf -o /tmp/smoke-users.json -w "%{http_code}" \
+AUTH_HTTP_CODE=$(curl -s -o /tmp/smoke-users.json -w "%{http_code}" \
     "${BASE_URL}/api/v1/users?page=0&size=5" \
     -H "Authorization: Bearer ${TOKEN}" 2>/dev/null || echo "000")
 
