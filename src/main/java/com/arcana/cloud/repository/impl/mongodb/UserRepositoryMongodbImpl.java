@@ -6,7 +6,7 @@ import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -22,7 +22,7 @@ import java.util.Optional;
 @Repository
 @RequiredArgsConstructor
 @Slf4j
-@ConditionalOnProperty(name = "database.type", havingValue = "mongodb")
+@ConditionalOnExpression("'${database.type:}' == 'mongodb' and '${repository.mode:direct}' != 'grpc'")
 public class UserRepositoryMongodbImpl implements UserRepository {
 
     private final UserDao userDao;

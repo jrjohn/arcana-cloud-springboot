@@ -90,7 +90,7 @@ public class GrpcConfig {
     }
 
     @Bean
-    @ConditionalOnExpression("'${communication.protocol:grpc}' == 'grpc' and '${deployment.layer:}' == 'service'")
+    @ConditionalOnExpression("'${repository.mode:direct}' == 'grpc'")
     public ManagedChannel repositoryChannel() {
         log.info("Creating gRPC repository channel to {} (TLS: {})", repositoryGrpcUrl, tlsEnabled);
         this.repositoryChannel = createChannel(repositoryGrpcUrl);

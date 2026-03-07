@@ -1,12 +1,8 @@
-# CI Integration Test: Layered + gRPC Protocol (2-layer)
-# Controller (8090, HTTP REST) → Service (9090, gRPC) → MySQL/Redis
+# CI Integration Test: Layered + gRPC Protocol (3-layer)
+# Controller (8090, HTTP REST) → Service (9090, gRPC) → Repository (9091, gRPC) → MySQL/Redis
 # Uses pre-built image: SPRINGBOOT_IMAGE env var
 # Run: SPRINGBOOT_IMAGE=<img> docker compose -p arcana-ci-grpc -f docker-compose-ci-grpc.yml up -d
 # Network: arcana-ci-grpc-net (isolated, avoids port conflicts with HTTP tests)
-#
-# Note: The repository layer (@deployment.layer=repository) is not yet implemented
-# as a separate gRPC server. In 2-layer gRPC mode, the service layer connects
-# directly to MySQL/Redis for data access.
 
 services:
   mysql-ci-grpc:
@@ -42,15 +38,15 @@ services:
     networks:
       - arcana-ci-grpc-net
 
-  service:
+  repository:
     image: ${SPRINGBOOT_IMAGE}
-    container_name: arcana-ci-service-grpc
+    container_name: arcana-ci-repository-grpc
     environment:
       DEPLOYMENT_MODE: layered
-      DEPLOYMENT_LAYER: service
+      DEPLOYMENT_LAYER: repository
       COMMUNICATION_PROTOCOL: grpc
-      SERVER_PORT: "8081"
-      SPRING_GRPC_SERVER_PORT: "9090"
+      SERVER_PORT: "8082"
+      SPRING_GRPC_SERVER_PORT: "9091"
       SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-ci-grpc:3306/arcana_ci_grpc?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true"
       SPRING_DATASOURCE_USERNAME: arcana
       SPRING_DATASOURCE_PASSWORD: arcana_ci
@@ -61,12 +57,48 @@ services:
       SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
       JAVA_OPTS: "-Xmx512m -Xms256m"
     expose:
-      - "8081"
-      - "9090"
+      - "8082"
+      - "9091"
     depends_on:
       mysql-ci-grpc:
         condition: service_healthy
       redis-ci-grpc:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8082/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 18   # up to 3 min for Spring Boot startup
+      start_period: 30s
+    networks:
+      - arcana-ci-grpc-net
+
+  service:
+    image: ${SPRINGBOOT_IMAGE}
+    container_name: arcana-ci-service-grpc
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: service
+      COMMUNICATION_PROTOCOL: grpc
+      REPOSITORY_MODE: grpc
+      SERVER_PORT: "8081"
+      SPRING_GRPC_SERVER_PORT: "9090"
+      REPOSITORY_GRPC_URL: repository:9091
+      # Service layer needs MySQL for OAuthToken (tokens stay in service layer)
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-ci-grpc:3306/arcana_ci_grpc?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_ci
+      SPRING_DATA_REDIS_HOST: redis-ci-grpc
+      SPRING_DATA_REDIS_PORT: "6379"
+      SPRING_FLYWAY_ENABLED: "false"   # repository layer runs flyway
+      JWT_SECRET: ci-test-secret-key-32-chars-long-ok
+      SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+      JAVA_OPTS: "-Xmx512m -Xms256m"
+    expose:
+      - "8081"
+      - "9090"
+    depends_on:
+      repository:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -sf http://localhost:8081/actuator/health || exit 1"]
