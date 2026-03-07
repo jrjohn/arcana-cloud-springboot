@@ -53,6 +53,7 @@ services:
       SPRING_DATA_REDIS_PORT: "6379"
       SPRING_FLYWAY_ENABLED: "true"
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
+      SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
       # Disable gRPC server in HTTP mode — service uses HTTP not gRPC inter-layer comms
       SPRING_GRPC_SERVER_ENABLED: "false"
       JAVA_OPTS: "-Xmx512m -Xms256m"
@@ -89,6 +90,7 @@ services:
       SPRING_DATA_REDIS_PORT: "6379"
       SPRING_FLYWAY_ENABLED: "false"
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
+      SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
       JAVA_OPTS: "-Xmx512m -Xms256m"
     ports:
       - "8090:8090"
