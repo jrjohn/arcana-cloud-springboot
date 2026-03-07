@@ -142,6 +142,10 @@ spec:
           value: "ci-test-secret-key-32-chars-long-ok"
         - name: SPRING_AUTOCONFIGURE_EXCLUDE
           value: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+        - name: MANAGEMENT_HEALTH_MONGO_ENABLED
+          value: "false"
+        - name: MANAGEMENT_HEALTH_REDIS_ENABLED
+          value: "false"
         - name: JAVA_OPTS
           value: "-Xmx512m -Xms256m"
         ports:
@@ -222,6 +226,10 @@ spec:
           value: "ci-test-secret-key-32-chars-long-ok"
         - name: SPRING_AUTOCONFIGURE_EXCLUDE
           value: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+        - name: MANAGEMENT_HEALTH_MONGO_ENABLED
+          value: "false"
+        - name: MANAGEMENT_HEALTH_REDIS_ENABLED
+          value: "false"
         - name: JAVA_OPTS
           value: "-Xmx512m -Xms256m"
         ports:

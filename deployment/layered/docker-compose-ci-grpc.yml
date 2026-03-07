@@ -55,6 +55,9 @@ services:
       SPRING_FLYWAY_ENABLED: "true"
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
       SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+      # Disable DOWN health indicators — containers lack Mongo/Redis access in all layers
+      MANAGEMENT_HEALTH_MONGO_ENABLED: "false"
+      MANAGEMENT_HEALTH_REDIS_ENABLED: "false"
       JAVA_OPTS: "-Xmx512m -Xms256m"
     expose:
       - "8082"
@@ -93,6 +96,9 @@ services:
       SPRING_FLYWAY_ENABLED: "false"   # repository layer runs flyway
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
       SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+      # Disable DOWN health indicators — containers lack Mongo/Redis access in all layers
+      MANAGEMENT_HEALTH_MONGO_ENABLED: "false"
+      MANAGEMENT_HEALTH_REDIS_ENABLED: "false"
       JAVA_OPTS: "-Xmx512m -Xms256m"
     expose:
       - "8081"
@@ -127,6 +133,9 @@ services:
       SPRING_FLYWAY_ENABLED: "false"
       JWT_SECRET: ci-test-secret-key-32-chars-long-ok
       SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+      # Disable DOWN health indicators — containers lack Mongo/Redis access in all layers
+      MANAGEMENT_HEALTH_MONGO_ENABLED: "false"
+      MANAGEMENT_HEALTH_REDIS_ENABLED: "false"
       JAVA_OPTS: "-Xmx512m -Xms256m"
     ports:
       - "8090:8090"
