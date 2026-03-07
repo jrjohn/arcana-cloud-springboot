@@ -56,28 +56,35 @@ public class GrpcUserRepositoryImpl implements UserRepository {
     @Override
     public User save(User user) {
         if (user.getId() != null) {
-            log.debug("gRPC Repository: Updating user id={}", user.getId());
-            UpdateUserRequest.Builder builder = UpdateUserRequest.newBuilder()
-                .setUserId(user.getId());
-            if (user.getUsername() != null) builder.setUsername(user.getUsername());
-            if (user.getEmail() != null) builder.setEmail(user.getEmail());
-            if (user.getPassword() != null) builder.setPassword(user.getPassword());
-            if (user.getFirstName() != null) builder.setFirstName(user.getFirstName());
-            if (user.getLastName() != null) builder.setLastName(user.getLastName());
-            if (user.getIsActive() != null) builder.setIsActive(user.getIsActive());
-            if (user.getIsVerified() != null) builder.setIsVerified(user.getIsVerified());
-            return mapFromProto(stub.updateUser(builder.build()));
-        } else {
-            log.debug("gRPC Repository: Creating user username={}", user.getUsername());
-            CreateUserRequest request = CreateUserRequest.newBuilder()
-                .setUsername(user.getUsername() != null ? user.getUsername() : "")
-                .setEmail(user.getEmail() != null ? user.getEmail() : "")
-                .setPassword(user.getPassword() != null ? user.getPassword() : "")
-                .setFirstName(user.getFirstName() != null ? user.getFirstName() : "")
-                .setLastName(user.getLastName() != null ? user.getLastName() : "")
-                .build();
-            return mapFromProto(stub.createUser(request));
+            return performUpdate(user);
         }
+        return performCreate(user);
+    }
+
+    private User performUpdate(User user) {
+        log.debug("gRPC Repository: Updating user id={}", user.getId());
+        UpdateUserRequest.Builder builder = UpdateUserRequest.newBuilder()
+            .setUserId(user.getId());
+        if (user.getUsername() != null) builder.setUsername(user.getUsername());
+        if (user.getEmail() != null) builder.setEmail(user.getEmail());
+        if (user.getPassword() != null) builder.setPassword(user.getPassword());
+        if (user.getFirstName() != null) builder.setFirstName(user.getFirstName());
+        if (user.getLastName() != null) builder.setLastName(user.getLastName());
+        if (user.getIsActive() != null) builder.setIsActive(user.getIsActive());
+        if (user.getIsVerified() != null) builder.setIsVerified(user.getIsVerified());
+        return mapFromProto(stub.updateUser(builder.build()));
+    }
+
+    private User performCreate(User user) {
+        log.debug("gRPC Repository: Creating user username={}", user.getUsername());
+        CreateUserRequest request = CreateUserRequest.newBuilder()
+            .setUsername(user.getUsername() != null ? user.getUsername() : "")
+            .setEmail(user.getEmail() != null ? user.getEmail() : "")
+            .setPassword(user.getPassword() != null ? user.getPassword() : "")
+            .setFirstName(user.getFirstName() != null ? user.getFirstName() : "")
+            .setLastName(user.getLastName() != null ? user.getLastName() : "")
+            .build();
+        return mapFromProto(stub.createUser(request));
     }
 
     @Override
@@ -102,7 +109,7 @@ public class GrpcUserRepositoryImpl implements UserRepository {
                 return Optional.empty();
             }
             log.error("gRPC Repository: Error finding user by id={}", id, e);
-            throw new RuntimeException("gRPC error: " + e.getStatus(), e);
+            throw new GrpcRepositoryException("gRPC error: " + e.getStatus(), e);
         }
     }
 
@@ -173,7 +180,7 @@ public class GrpcUserRepositoryImpl implements UserRepository {
                 return Optional.empty();
             }
             log.error("gRPC Repository: Error finding user by username={}", username, e);
-            throw new RuntimeException("gRPC error: " + e.getStatus(), e);
+            throw new GrpcRepositoryException("gRPC error: " + e.getStatus(), e);
         }
     }
 
@@ -190,7 +197,7 @@ public class GrpcUserRepositoryImpl implements UserRepository {
                 return Optional.empty();
             }
             log.error("gRPC Repository: Error finding user by email={}", email, e);
-            throw new RuntimeException("gRPC error: " + e.getStatus(), e);
+            throw new GrpcRepositoryException("gRPC error: " + e.getStatus(), e);
         }
     }
 
