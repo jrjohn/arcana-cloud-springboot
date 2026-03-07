@@ -93,7 +93,7 @@ public class SecurityConfig {
                 .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                 .requestMatchers("/actuator/health", "/actuator/info").permitAll()
                 .requestMatchers("/actuator/**").authenticated()
-                .requestMatchers(INTERNAL_ENDPOINTS).authenticated()
+                .requestMatchers(INTERNAL_ENDPOINTS).permitAll()  // Network-level security via Docker isolation
                 .anyRequest().authenticated()
             )
             .authenticationProvider(authenticationProvider())
