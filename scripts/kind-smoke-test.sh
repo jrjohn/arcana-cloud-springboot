@@ -60,6 +60,9 @@ echo ""
 
 # ── 1. Create Kind cluster ───────────────────────────────────
 echo "▶ [1/6] Creating Kind cluster '${CLUSTER}'..."
+# Pre-cleanup: disconnect Jenkins from stale kind network and remove it
+# to avoid conflicts with new cluster creation
+docker network disconnect kind "${JENKINS_CONTAINER}" 2>/dev/null || true
 kind create cluster --name "${CLUSTER}" --wait 120s
 
 # Jenkins runs inside Docker on a different network from the Kind cluster.
