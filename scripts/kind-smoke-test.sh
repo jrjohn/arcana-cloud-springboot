@@ -60,7 +60,7 @@ echo ""
 
 # ── 1. Create Kind cluster ───────────────────────────────────
 echo "▶ [1/6] Creating Kind cluster '${CLUSTER}'..."
-kind create cluster --name "${CLUSTER}" --wait 60s
+kind create cluster --name "${CLUSTER}" --wait 120s
 
 # Jenkins runs inside Docker on a different network from the Kind cluster.
 # Connect Jenkins container to the 'kind' network so it can reach the
@@ -73,9 +73,13 @@ sleep 2
 CP_IP=$(docker inspect "${CLUSTER}-control-plane" --format '{{.NetworkSettings.Networks.kind.IPAddress}}' 2>/dev/null)
 echo "  Kind control-plane IP: ${CP_IP}"
 
-# Rewrite kubeconfig to use the container IP instead of 127.0.0.1
-# (Jenkins runs inside Docker, so 127.0.0.1 in kubeconfig points to Jenkins itself, not the host)
-kubectl config set-cluster "kind-${CLUSTER}" --server="https://${CP_IP}:6443" --insecure-skip-tls-verify=true
+# Rewrite kubeconfig: replace 127.0.0.1:PORT with the control-plane container IP
+# This preserves the certificate-authority-data and client certs from the original kubeconfig.
+# (Jenkins runs inside Docker, so 127.0.0.1 points to Jenkins itself, not the host)
+kind get kubeconfig --name "${CLUSTER}" | \
+    sed "s|https://127.0.0.1:[0-9]*|https://${CP_IP}:6443|g" \
+    > "${KUBECONFIG_FILE}"
+export KUBECONFIG="${KUBECONFIG_FILE}"
 
 # Verify connectivity to the API server
 kubectl cluster-info --request-timeout=15s
