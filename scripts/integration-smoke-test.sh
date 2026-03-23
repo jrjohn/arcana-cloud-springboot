@@ -67,7 +67,7 @@ if [ "${REG_HTTP_CODE}" = "000" ]; then
     exit 1
 fi
 
-echo "  HTTP ${REG_HTTP_CODE} — $(cat /tmp/smoke-reg.json | python3 -c 'import json,sys; d=json.load(sys.stdin); dd=d.get('data',d); print(f"token={dd.get('accessToken','?')[:20]}...")' 2>/dev/null || cat /tmp/smoke-reg.json | head -c 200)"
+echo "  HTTP ${REG_HTTP_CODE} — $(node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/smoke-reg.json','utf8')); const dd=d.data||d; process.stdout.write('token='+(dd.accessToken||'?').substring(0,20)+'...');" 2>/dev/null || head -c 200 /tmp/smoke-reg.json)"
 
 if [ "${REG_HTTP_CODE}" != "200" ] && [ "${REG_HTTP_CODE}" != "201" ]; then
     echo "  ✗ Registration failed — HTTP ${REG_HTTP_CODE}"
@@ -98,7 +98,7 @@ if [ "${LOGIN_HTTP_CODE}" != "200" ]; then
     exit 1
 fi
 
-TOKEN=$(python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('data',d).get('accessToken',''))" < /tmp/smoke-login.json)
+TOKEN=$(node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/smoke-login.json','utf8')); const dd=d.data||d; process.stdout.write(dd.accessToken||'');" 2>/dev/null)
 if [ -z "${TOKEN}" ]; then
     echo "  ✗ No accessToken in login response"
     cat /tmp/smoke-login.json
@@ -108,7 +108,7 @@ echo "  ✓ Login OK — token: ${TOKEN:0:30}..."
 
 # ── 4. Authenticated call ────────────────────────────────────
 # Use /api/v1/users/{id} (owner-accessible) instead of /api/v1/users (ADMIN-only)
-USER_ID=$(python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('data',{}).get('user',{}).get('id','1'))" < /tmp/smoke-reg.json 2>/dev/null || echo "1")
+USER_ID=$(node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/smoke-reg.json','utf8')); const dd=d.data||{}; const u=dd.user||dd; process.stdout.write(String(u.id||'1'));" 2>/dev/null || echo "1")
 echo ""
 echo "▶ [4/4] Calling authenticated endpoint (GET /api/v1/users/${USER_ID}) ..."
 AUTH_HTTP_CODE=$(curl -s -o /tmp/smoke-users.json -w "%{http_code}" \
@@ -121,7 +121,7 @@ if [ "${AUTH_HTTP_CODE}" != "200" ]; then
     exit 1
 fi
 
-USER_NAME=$(python3 -c "import json,sys; d=json.load(sys.stdin); print(d.get('data',{}).get('username','?'))" < /tmp/smoke-users.json 2>/dev/null || echo "?")
+USER_NAME=$(node -e "const d=JSON.parse(require('fs').readFileSync('/tmp/smoke-users.json','utf8')); process.stdout.write((d.data||{}).username||'?');" 2>/dev/null || echo "?")
 echo "  ✓ Auth call OK — user: ${USER_NAME}"
 
 # ── Summary ─────────────────────────────────────────────────

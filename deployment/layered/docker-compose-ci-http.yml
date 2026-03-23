@@ -33,8 +33,9 @@ services:
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
-      timeout: 3s
-      retries: 6
+      timeout: 5s
+      retries: 12
+      start_period: 5s
     networks:
       - arcana-ci-http-net
 

@@ -69,17 +69,13 @@ echo "  Connecting Jenkins container '${JENKINS_CONTAINER}' to kind network..."
 docker network connect kind "${JENKINS_CONTAINER}" 2>/dev/null || true
 sleep 2
 
-# Get the Kind control-plane container's IP on the kind network
-CONTROL_PLANE_IP=$(docker inspect --format \
-    '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' \
-    "${CLUSTER}-control-plane" 2>/dev/null | tail -1)
-echo "  Kind control-plane IP: ${CONTROL_PLANE_IP}"
+# Get the Kind control-plane container's IP specifically on the 'kind' network
+CP_IP=$(docker inspect "${CLUSTER}-control-plane" --format '{{.NetworkSettings.Networks.kind.IPAddress}}' 2>/dev/null)
+echo "  Kind control-plane IP: ${CP_IP}"
 
-# Replace 127.0.0.1:PORT with the real container IP:6443 in kubeconfig
-kind get kubeconfig --name "${CLUSTER}" | \
-    sed "s|https://127.0.0.1:[0-9]*|https://${CONTROL_PLANE_IP}:6443|g" \
-    > "${KUBECONFIG_FILE}"
-export KUBECONFIG="${KUBECONFIG_FILE}"
+# Rewrite kubeconfig to use the container IP instead of 127.0.0.1
+# (Jenkins runs inside Docker, so 127.0.0.1 in kubeconfig points to Jenkins itself, not the host)
+kubectl config set-cluster "kind-${CLUSTER}" --server="https://${CP_IP}:6443" --insecure-skip-tls-verify=true
 
 # Verify connectivity to the API server
 kubectl cluster-info --request-timeout=15s
