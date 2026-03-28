@@ -95,6 +95,15 @@ public class GlobalExceptionHandler {
             .body(ApiResponse.error("Access denied"));
     }
 
+    @ExceptionHandler(SchedulerOperationException.class)
+    public ResponseEntity<ApiResponse<Void>> handleSchedulerOperation(
+            SchedulerOperationException ex, WebRequest request) {
+        log.error("Scheduler operation failed: {}", ex.getMessage());
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .body(ApiResponse.error(ex.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleGenericException(
             Exception ex, WebRequest request) {
