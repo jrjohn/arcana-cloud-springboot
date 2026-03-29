@@ -81,6 +81,7 @@ message UserResponse {
   bool is_verified = 8;
   string created_at = 9;
   string updated_at = 10;
+  string password = 11;  // hashed password; internal gRPC only
 }
 
 message ExistsByUsernameRequest {

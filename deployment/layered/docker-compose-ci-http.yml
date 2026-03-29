@@ -1,0 +1,123 @@
+# CI Integration Test: Layered + HTTP Protocol
+# Controller (8090) → Service (8081, HTTP) → MySQL/Redis
+# Uses pre-built image: SPRINGBOOT_IMAGE env var
+# Run: SPRINGBOOT_IMAGE=<img> docker compose -f docker-compose-ci-http.yml up -d
+# Network: arcana-ci-http (isolated, avoids port conflicts with other tests)
+
+services:
+  mysql-ci-http:
+    image: mysql:8.0
+    container_name: arcana-ci-mysql-http
+    environment:
+      MYSQL_ROOT_PASSWORD: ci_root
+      MYSQL_DATABASE: arcana_ci_http
+      MYSQL_USER: arcana
+      MYSQL_PASSWORD: arcana_ci
+    ports:
+      - "13307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pci_root"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+    networks:
+      - arcana-ci-http-net
+    tmpfs:
+      - /var/lib/mysql   # ephemeral — no volume persistence between CI runs
+
+  redis-ci-http:
+    image: redis:7.0-alpine
+    container_name: arcana-ci-redis-http
+    ports:
+      - "16380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 12
+      start_period: 5s
+    networks:
+      - arcana-ci-http-net
+
+  service:
+    image: ${SPRINGBOOT_IMAGE}
+    container_name: arcana-ci-service-http
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: service
+      COMMUNICATION_PROTOCOL: http
+      SERVER_PORT: "8081"
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-ci-http:3306/arcana_ci_http?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true"
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_ci
+      SPRING_DATA_REDIS_HOST: redis-ci-http
+      SPRING_DATA_REDIS_PORT: "6379"
+      SPRING_FLYWAY_ENABLED: "true"
+      JWT_SECRET: ci-test-secret-key-32-chars-long-ok
+      SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+      # Disable DOWN health indicators — containers lack Mongo/Redis access in all layers
+      # Disable slow health contributors — MongoDB waits 30s to timeout
+      # causing Docker healthcheck (timeout:5s) to always fail.
+      MANAGEMENT_HEALTH_DEFAULTS_ENABLED: "false"
+      MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+      # Disable gRPC server in HTTP mode — service uses HTTP not gRPC inter-layer comms
+      SPRING_GRPC_SERVER_ENABLED: "false"
+      JAVA_OPTS: "-Xmx512m -Xms256m"
+    expose:
+      - "8081"
+    depends_on:
+      mysql-ci-http:
+        condition: service_healthy
+      redis-ci-http:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/actuator/health > /dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 18   # up to 3 min for Spring Boot startup
+      start_period: 30s
+    networks:
+      - arcana-ci-http-net
+
+  controller:
+    image: ${SPRINGBOOT_IMAGE}
+    container_name: arcana-ci-controller-http
+    environment:
+      DEPLOYMENT_MODE: layered
+      DEPLOYMENT_LAYER: controller
+      COMMUNICATION_PROTOCOL: http
+      SERVER_PORT: "8090"
+      SERVICE_HTTP_URL: http://service:8081
+      # Controller doesn't touch DB directly; provided to satisfy Spring auto-config
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql-ci-http:3306/arcana_ci_http?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+      SPRING_DATASOURCE_USERNAME: arcana
+      SPRING_DATASOURCE_PASSWORD: arcana_ci
+      SPRING_DATA_REDIS_HOST: redis-ci-http
+      SPRING_DATA_REDIS_PORT: "6379"
+      SPRING_FLYWAY_ENABLED: "false"
+      JWT_SECRET: ci-test-secret-key-32-chars-long-ok
+      SPRING_AUTOCONFIGURE_EXCLUDE: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+      # Disable DOWN health indicators — containers lack Mongo/Redis access in all layers
+      # Disable slow health contributors — MongoDB waits 30s to timeout
+      # causing Docker healthcheck (timeout:5s) to always fail.
+      MANAGEMENT_HEALTH_DEFAULTS_ENABLED: "false"
+      MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED: "true"
+      JAVA_OPTS: "-Xmx512m -Xms256m"
+    ports:
+      - "18090:8090"
+    depends_on:
+      service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8090/actuator/health > /dev/null 2>&1 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+    networks:
+      - arcana-ci-http-net
+
+networks:
+  arcana-ci-http-net:
+    driver: bridge
+    name: arcana-ci-http-net

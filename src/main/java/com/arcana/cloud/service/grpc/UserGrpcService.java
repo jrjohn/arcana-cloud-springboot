@@ -36,7 +36,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@ConditionalOnExpression("'${deployment.layer:}' == '' or '${deployment.layer:}' == 'service'")
+@ConditionalOnExpression("('${communication.protocol:grpc}' == 'grpc') and ('${deployment.layer:}' == '' or '${deployment.layer:}' == 'service')")
 @SuppressWarnings("java:S1068")
 public class UserGrpcService extends UserServiceGrpc.UserServiceImplBase {
 

@@ -1,6 +1,9 @@
 package com.arcana.cloud.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Service configuration for layered deployment.
@@ -13,5 +16,17 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ServiceConfiguration {
-    // Bean creation is handled via component scanning with @ConditionalOnProperty
+
+    /**
+     * RestTemplate used by HTTP-mode service clients and PluginProxyController.
+     * Spring Boot 3.x no longer auto-configures RestTemplate; define it explicitly.
+     * Using SimpleClientHttpRequestFactory with explicit timeouts (10s connect, 30s read).
+     */
+    @Bean
+    public RestTemplate restTemplate() {
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setConnectTimeout(10_000);
+        factory.setReadTimeout(30_000);
+        return new RestTemplate(factory);
+    }
 }

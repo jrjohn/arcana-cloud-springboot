@@ -1,5 +1,6 @@
 package com.arcana.cloud.scheduler.service.impl;
 
+import com.arcana.cloud.exception.SchedulerOperationException;
 import com.arcana.cloud.scheduler.dto.JobDetailDto;
 import com.arcana.cloud.scheduler.dto.JobDetailDto.JobStatus;
 import com.arcana.cloud.scheduler.dto.JobScheduleRequest;
@@ -62,8 +63,7 @@ public class JobManagementServiceImpl implements JobManagementService {
         } catch (ClassNotFoundException e) {
             throw new IllegalArgumentException("Job class not found: " + request.getJobClassName(), e);
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to schedule job: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to schedule job: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -93,8 +93,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             return getJob(jobName, jobGroup);
 
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to reschedule job: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to reschedule job: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -110,8 +109,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             return mapToJobDetailDto(jobDetail);
 
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to get job: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to get job: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -131,8 +129,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             return jobs;
 
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to get all jobs: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to get all jobs: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -150,8 +147,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             return jobs;
 
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to get jobs by group: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to get jobs by group: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -160,8 +156,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.pauseJob(JobKey.jobKey(jobName, jobGroup));
             log.info("Paused job: {}.{}", jobGroup, jobName);
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to pause job: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to pause job: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -170,8 +165,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.resumeJob(JobKey.jobKey(jobName, jobGroup));
             log.info("Resumed job: {}.{}", jobGroup, jobName);
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to resume job: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to resume job: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -185,8 +179,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.triggerJob(JobKey.jobKey(jobName, jobGroup), dataMap);
             log.info("Triggered job: {}.{}", jobGroup, jobName);
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to trigger job: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to trigger job: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -198,8 +191,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             }
             return deleted;
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to delete job: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to delete job: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -208,8 +200,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.pauseJobs(GroupMatcher.jobGroupEquals(jobGroup));
             log.info("Paused job group: {}", jobGroup);
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to pause job group: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to pause job group: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -218,8 +209,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.resumeJobs(GroupMatcher.jobGroupEquals(jobGroup));
             log.info("Resumed job group: {}", jobGroup);
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to resume job group: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to resume job group: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -230,8 +220,7 @@ public class JobManagementServiceImpl implements JobManagementService {
                     .map(this::mapToTriggerDetailDto)
                     .collect(Collectors.toList());
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to get job triggers: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to get job triggers: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -239,8 +228,7 @@ public class JobManagementServiceImpl implements JobManagementService {
         try {
             return scheduler.checkExists(JobKey.jobKey(jobName, jobGroup));
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to check job existence: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to check job existence: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -257,8 +245,7 @@ public class JobManagementServiceImpl implements JobManagementService {
                     metaData.getVersion()
             );
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to get scheduler status: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to get scheduler status: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -267,8 +254,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.start();
             log.info("Scheduler started");
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to start scheduler: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to start scheduler: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -277,8 +263,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.standby();
             log.info("Scheduler paused (standby mode)");
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to pause scheduler: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to pause scheduler: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -287,8 +272,7 @@ public class JobManagementServiceImpl implements JobManagementService {
             scheduler.shutdown(waitForJobsToComplete);
             log.info("Scheduler shutdown (waitForJobs={})", waitForJobsToComplete);
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to shutdown scheduler: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to shutdown scheduler: " + e.getMessage(), e);        }
     }
 
     @Override
@@ -305,8 +289,7 @@ public class JobManagementServiceImpl implements JobManagementService {
                     .filter(Objects::nonNull)
                     .collect(Collectors.toList());
         } catch (SchedulerException e) {
-            throw new RuntimeException("Failed to get currently executing jobs: " + e.getMessage(), e); // NOSONAR java:S112
-        }
+            throw new SchedulerOperationException("Failed to get currently executing jobs: " + e.getMessage(), e);        }
     }
 
     @SuppressWarnings("unchecked")
@@ -314,7 +297,7 @@ public class JobManagementServiceImpl implements JobManagementService {
         return (Class<? extends Job>) Class.forName(className);
     }
 
-    private Trigger buildTrigger(TriggerConfig config, String jobName, String jobGroup) { // NOSONAR java:S3776
+    private Trigger buildTrigger(TriggerConfig config, String jobName, String jobGroup) {
         String triggerName = config.getTriggerName() != null ? config.getTriggerName() : jobName + "Trigger";
         String triggerGroup = config.getTriggerGroup() != null ? config.getTriggerGroup() : jobGroup;
 
@@ -324,7 +307,19 @@ public class JobManagementServiceImpl implements JobManagementService {
                 .withPriority(config.getPriority())
                 .forJob(jobName, jobGroup);
 
-        // Set start time
+        configureTriggerTimes(triggerBuilder, config);
+
+        // Build schedule based on trigger type
+        if (config.getTriggerType() == TriggerConfig.TriggerType.CRON) {
+            triggerBuilder.withSchedule(buildCronSchedule(config));
+        } else {
+            triggerBuilder.withSchedule(buildSimpleSchedule(config));
+        }
+
+        return triggerBuilder.build();
+    }
+
+    private void configureTriggerTimes(TriggerBuilder<Trigger> triggerBuilder, TriggerConfig config) {
         if (config.getStartTime() != null) {
             triggerBuilder.startAt(Date.from(config.getStartTime()
                     .atZone(ZoneId.systemDefault()).toInstant()));
@@ -332,54 +327,50 @@ public class JobManagementServiceImpl implements JobManagementService {
             triggerBuilder.startNow();
         }
 
-        // Set end time
         if (config.getEndTime() != null) {
             triggerBuilder.endAt(Date.from(config.getEndTime()
                     .atZone(ZoneId.systemDefault()).toInstant()));
         }
+    }
 
-        // Build schedule based on trigger type
-        if (config.getTriggerType() == TriggerConfig.TriggerType.CRON) {
-            CronScheduleBuilder cronBuilder = CronScheduleBuilder.cronSchedule(config.getCronExpression());
+    private CronScheduleBuilder buildCronSchedule(TriggerConfig config) {
+        CronScheduleBuilder cronBuilder = CronScheduleBuilder.cronSchedule(config.getCronExpression());
 
-            if (config.getTimeZone() != null) {
-                cronBuilder.inTimeZone(TimeZone.getTimeZone(config.getTimeZone()));
-            }
-
-            // Set misfire instruction
-            switch (config.getMisfireInstruction()) {
-                case IGNORE_MISFIRE_POLICY -> cronBuilder.withMisfireHandlingInstructionIgnoreMisfires();
-                case FIRE_NOW -> cronBuilder.withMisfireHandlingInstructionFireAndProceed();
-                case DO_NOTHING -> cronBuilder.withMisfireHandlingInstructionDoNothing();
-                default -> { /* SMART_POLICY - use Quartz default misfire handling, no action needed */ }
-            }
-
-            triggerBuilder.withSchedule(cronBuilder);
-        } else {
-            SimpleScheduleBuilder simpleBuilder = SimpleScheduleBuilder.simpleSchedule();
-
-            if (config.getRepeatIntervalMs() != null) {
-                simpleBuilder.withIntervalInMilliseconds(config.getRepeatIntervalMs());
-            }
-
-            if (config.getRepeatCount() < 0) {
-                simpleBuilder.repeatForever();
-            } else {
-                simpleBuilder.withRepeatCount(config.getRepeatCount());
-            }
-
-            // Set misfire instruction
-            switch (config.getMisfireInstruction()) {
-                case IGNORE_MISFIRE_POLICY -> simpleBuilder.withMisfireHandlingInstructionIgnoreMisfires();
-                case FIRE_NOW -> simpleBuilder.withMisfireHandlingInstructionFireNow();
-                case DO_NOTHING -> simpleBuilder.withMisfireHandlingInstructionNextWithRemainingCount();
-                default -> { /* SMART_POLICY - use Quartz default misfire handling, no action needed */ }
-            }
-
-            triggerBuilder.withSchedule(simpleBuilder);
+        if (config.getTimeZone() != null) {
+            cronBuilder.inTimeZone(TimeZone.getTimeZone(config.getTimeZone()));
         }
 
-        return triggerBuilder.build();
+        switch (config.getMisfireInstruction()) {
+            case IGNORE_MISFIRE_POLICY -> cronBuilder.withMisfireHandlingInstructionIgnoreMisfires();
+            case FIRE_NOW -> cronBuilder.withMisfireHandlingInstructionFireAndProceed();
+            case DO_NOTHING -> cronBuilder.withMisfireHandlingInstructionDoNothing();
+            default -> { /* SMART_POLICY - use Quartz default misfire handling, no action needed */ }
+        }
+
+        return cronBuilder;
+    }
+
+    private SimpleScheduleBuilder buildSimpleSchedule(TriggerConfig config) {
+        SimpleScheduleBuilder simpleBuilder = SimpleScheduleBuilder.simpleSchedule();
+
+        if (config.getRepeatIntervalMs() != null) {
+            simpleBuilder.withIntervalInMilliseconds(config.getRepeatIntervalMs());
+        }
+
+        if (config.getRepeatCount() < 0) {
+            simpleBuilder.repeatForever();
+        } else {
+            simpleBuilder.withRepeatCount(config.getRepeatCount());
+        }
+
+        switch (config.getMisfireInstruction()) {
+            case IGNORE_MISFIRE_POLICY -> simpleBuilder.withMisfireHandlingInstructionIgnoreMisfires();
+            case FIRE_NOW -> simpleBuilder.withMisfireHandlingInstructionFireNow();
+            case DO_NOTHING -> simpleBuilder.withMisfireHandlingInstructionNextWithRemainingCount();
+            default -> { /* SMART_POLICY - use Quartz default misfire handling, no action needed */ }
+        }
+
+        return simpleBuilder;
     }
 
     private JobDetailDto mapToJobDetailDto(JobDetail jobDetail) throws SchedulerException {

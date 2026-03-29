@@ -2,6 +2,7 @@ package com.arcana.cloud.controller;
 
 import com.arcana.cloud.dto.response.UserResponse;
 import com.arcana.cloud.entity.UserRole;
+import com.arcana.cloud.repository.UserRepository;
 import com.arcana.cloud.security.JwtTokenProvider;
 import com.arcana.cloud.security.UserPrincipal;
 import com.arcana.cloud.entity.User;
@@ -16,6 +17,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -37,6 +39,9 @@ class PublicUserControllerTest {
     @MockitoBean
     private UserService userService;
 
+    @MockitoBean
+    private UserRepository userRepository;
+
     private String userToken;
     private User testUser;
 
@@ -55,6 +60,9 @@ class PublicUserControllerTest {
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
+
+        // Mock the repository so JwtAuthenticationFilter can load the user
+        when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
 
         UserPrincipal userPrincipal = UserPrincipal.create(testUser);
         userToken = tokenProvider.generateAccessToken(userPrincipal);

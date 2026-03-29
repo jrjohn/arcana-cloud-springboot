@@ -1,0 +1,358 @@
+# Kind CI Integration Test — K8s 3-layer gRPC
+# Creates a self-contained namespace with MySQL, Redis, and all 3 app layers.
+# Image: loaded via `kind load docker-image` — imagePullPolicy: Never
+#
+# Layer topology:
+#   Controller (HTTP REST :8090 → NodePort 30090)
+#     └─ Service (gRPC :9090) via arcana-ci-service:9090
+#          └─ Repository (gRPC :9091) via arcana-ci-repository:9091
+#               └─ MySQL :3306 / Redis :6379
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: arcana-ci-kind
+---
+# ──────────── MySQL ────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+  namespace: arcana-ci-kind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: ci_root
+        - name: MYSQL_DATABASE
+          value: arcana_ci_kind
+        - name: MYSQL_USER
+          value: arcana
+        - name: MYSQL_PASSWORD
+          value: arcana_ci
+        ports:
+        - containerPort: 3306
+        readinessProbe:
+          exec:
+            command: ["mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pci_root"]
+          initialDelaySeconds: 15
+          periodSeconds: 5
+          failureThreshold: 12
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: arcana-ci-kind
+spec:
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
+---
+# ──────────── Redis ────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: arcana-ci-kind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7.0-alpine
+        ports:
+        - containerPort: 6379
+        readinessProbe:
+          exec:
+            command: ["redis-cli", "ping"]
+          initialDelaySeconds: 5
+          periodSeconds: 3
+          failureThreshold: 6
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+  namespace: arcana-ci-kind
+spec:
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+    targetPort: 6379
+---
+# ──────────── Repository layer (gRPC :9091) ────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcana-ci-repository
+  namespace: arcana-ci-kind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arcana-ci-repository
+  template:
+    metadata:
+      labels:
+        app: arcana-ci-repository
+    spec:
+      containers:
+      - name: app
+        image: arcana-cloud-java:ci
+        imagePullPolicy: Never
+        env:
+        - name: DEPLOYMENT_MODE
+          value: layered
+        - name: DEPLOYMENT_LAYER
+          value: repository
+        - name: COMMUNICATION_PROTOCOL
+          value: grpc
+        - name: SERVER_PORT
+          value: "8082"
+        - name: SPRING_GRPC_SERVER_PORT
+          value: "9091"
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql:3306/arcana_ci_kind?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: arcana
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: arcana_ci
+        - name: SPRING_DATA_REDIS_HOST
+          value: redis
+        - name: SPRING_DATA_REDIS_PORT
+          value: "6379"
+        - name: SPRING_FLYWAY_ENABLED
+          value: "true"
+        - name: JWT_SECRET
+          value: "ci-test-secret-key-32-chars-long-ok"
+        - name: SPRING_AUTOCONFIGURE_EXCLUDE
+          value: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+        - name: MANAGEMENT_HEALTH_DEFAULTS_ENABLED
+          value: "false"
+        - name: MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED
+          value: "true"
+        - name: JAVA_OPTS
+          value: "-Xmx512m -Xms256m"
+        ports:
+        - containerPort: 8082
+          name: http
+        - containerPort: 9091
+          name: grpc
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8082
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 18
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8082
+          initialDelaySeconds: 60
+          periodSeconds: 15
+          failureThreshold: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-ci-repository
+  namespace: arcana-ci-kind
+spec:
+  selector:
+    app: arcana-ci-repository
+  ports:
+  - name: http
+    port: 8082
+    targetPort: 8082
+  - name: grpc
+    port: 9091
+    targetPort: 9091
+---
+# ──────────── Service layer (gRPC :9090) ────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcana-ci-service
+  namespace: arcana-ci-kind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arcana-ci-service
+  template:
+    metadata:
+      labels:
+        app: arcana-ci-service
+    spec:
+      containers:
+      - name: app
+        image: arcana-cloud-java:ci
+        imagePullPolicy: Never
+        env:
+        - name: DEPLOYMENT_MODE
+          value: layered
+        - name: DEPLOYMENT_LAYER
+          value: service
+        - name: COMMUNICATION_PROTOCOL
+          value: grpc
+        - name: REPOSITORY_MODE
+          value: grpc
+        - name: SERVER_PORT
+          value: "8081"
+        - name: SPRING_GRPC_SERVER_PORT
+          value: "9090"
+        - name: REPOSITORY_GRPC_URL
+          value: "arcana-ci-repository:9091"
+        # MySQL still needed for OAuthToken (tokens stay in service layer)
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql:3306/arcana_ci_kind?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: arcana
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: arcana_ci
+        - name: SPRING_DATA_REDIS_HOST
+          value: redis
+        - name: SPRING_DATA_REDIS_PORT
+          value: "6379"
+        - name: SPRING_FLYWAY_ENABLED
+          value: "false"
+        - name: JWT_SECRET
+          value: "ci-test-secret-key-32-chars-long-ok"
+        - name: SPRING_AUTOCONFIGURE_EXCLUDE
+          value: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+        - name: MANAGEMENT_HEALTH_DEFAULTS_ENABLED
+          value: "false"
+        - name: MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED
+          value: "true"
+        - name: JAVA_OPTS
+          value: "-Xmx512m -Xms256m"
+        ports:
+        - containerPort: 8081
+          name: http
+        - containerPort: 9090
+          name: grpc
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8081
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 18
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-ci-service
+  namespace: arcana-ci-kind
+spec:
+  selector:
+    app: arcana-ci-service
+  ports:
+  - name: http
+    port: 8081
+    targetPort: 8081
+  - name: grpc
+    port: 9090
+    targetPort: 9090
+---
+# ──────────── Controller layer (HTTP REST :8090 → NodePort 30090) ────────────
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: arcana-ci-controller
+  namespace: arcana-ci-kind
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: arcana-ci-controller
+  template:
+    metadata:
+      labels:
+        app: arcana-ci-controller
+    spec:
+      containers:
+      - name: app
+        image: arcana-cloud-java:ci
+        imagePullPolicy: Never
+        env:
+        - name: DEPLOYMENT_MODE
+          value: layered
+        - name: DEPLOYMENT_LAYER
+          value: controller
+        - name: COMMUNICATION_PROTOCOL
+          value: grpc
+        - name: SERVER_PORT
+          value: "8090"
+        - name: SERVICE_GRPC_URL
+          value: "arcana-ci-service:9090"
+        - name: SPRING_DATASOURCE_URL
+          value: "jdbc:mysql://mysql:3306/arcana_ci_kind?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true"
+        - name: SPRING_DATASOURCE_USERNAME
+          value: arcana
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: arcana_ci
+        - name: SPRING_DATA_REDIS_HOST
+          value: redis
+        - name: SPRING_DATA_REDIS_PORT
+          value: "6379"
+        - name: SPRING_FLYWAY_ENABLED
+          value: "false"
+        - name: JWT_SECRET
+          value: "ci-test-secret-key-32-chars-long-ok"
+        - name: SPRING_AUTOCONFIGURE_EXCLUDE
+          value: "org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration"
+        - name: MANAGEMENT_HEALTH_DEFAULTS_ENABLED
+          value: "false"
+        - name: MANAGEMENT_ENDPOINT_HEALTH_PROBES_ENABLED
+          value: "true"
+        - name: JAVA_OPTS
+          value: "-Xmx512m -Xms256m"
+        ports:
+        - containerPort: 8090
+          name: http
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8090
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 12
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-ci-controller
+  namespace: arcana-ci-kind
+spec:
+  type: NodePort
+  selector:
+    app: arcana-ci-controller
+  ports:
+  - name: http
+    port: 8090
+    targetPort: 8090
+    nodePort: 30090
