@@ -13,6 +13,8 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.context.request.WebRequest;
 
+import java.io.IOException;
+
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -150,5 +152,50 @@ class GlobalExceptionHandlerTest {
         Map<String, String> errors = (Map<String, String>) response.getBody().getErrors();
         assertNotNull(errors);
         assertEquals("Validation error", errors.get("field"));
+    }
+
+    @Test
+    void testHandleSchedulerOperation() {
+        SchedulerOperationException ex = new SchedulerOperationException(
+            "Scheduler job failed", new RuntimeException("cause"));
+        ResponseEntity<ApiResponse<Void>> response =
+            handler.handleSchedulerOperation(ex, webRequest);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertFalse(response.getBody().isSuccess());
+        assertEquals("Scheduler job failed", response.getBody().getMessage());
+    }
+
+    @Test
+    void testHandleSchedulerOperation_NullCause() {
+        SchedulerOperationException ex = new SchedulerOperationException(
+            "Quartz trigger error", new IOException("io cause"));
+        ResponseEntity<ApiResponse<Void>> response =
+            handler.handleSchedulerOperation(ex, webRequest);
+
+        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
+        assertFalse(response.getBody().isSuccess());
+        assertNotNull(response.getBody().getMessage());
+    }
+
+    @Test
+    void testHandleMethodArgumentNotValid_MultipleErrorsSameField_KeepsFirst() throws Exception {
+        BeanPropertyBindingResult bindingResult =
+            new BeanPropertyBindingResult(new Object(), "obj");
+        bindingResult.addError(new FieldError("obj", "email", "Email is required"));
+        bindingResult.addError(new FieldError("obj", "email", "Email must be valid"));
+
+        MethodArgumentNotValidException ex = mock(MethodArgumentNotValidException.class);
+        when(ex.getBindingResult()).thenReturn(bindingResult);
+
+        ResponseEntity<ApiResponse<Map<String, String>>> response =
+            handler.handleMethodArgumentNotValid(ex);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        @SuppressWarnings("unchecked")
+        Map<String, String> errors = (Map<String, String>) response.getBody().getErrors();
+        assertNotNull(errors);
+        assertEquals("Email is required", errors.get("email"));
     }
 }
