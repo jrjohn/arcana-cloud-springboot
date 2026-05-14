@@ -7,6 +7,7 @@ services:
     working_dir: /app
     volumes:
       - ./build/reports:/output
+      - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - devops_default
     command: sh -c "timeout 600 gradle :test --no-daemon -Dspring.profiles.active=test 2>&1 || true; gradle :jacocoTestReport --no-daemon 2>&1 || true; cp -r /app/build/reports/* /output/ 2>/dev/null || true"
