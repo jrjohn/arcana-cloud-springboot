@@ -60,9 +60,9 @@ grpc-netty-shaded = { module = "io.grpc:grpc-netty-shaded", version.ref = "grpc"
 protobuf-java = { module = "com.google.protobuf:protobuf-java", version.ref = "protobuf" }
 
 # JWT
-jjwt-api = { module = "io.jsonwebtoken: jjwt*[REDACTED]", version.ref = "jjwt" }
-jjwt-impl = { module = "io.jsonwebtoken: jjwt*[REDACTED]", version.ref = "jjwt" }
-jjwt-jackson = { module = "io.jsonwebtoken: jjwt*[REDACTED]", version.ref = "jjwt" }
+jjwt-api = { module = "io.jsonwebtoken:jjwt-api", version.ref = "jjwt" }
+jjwt-impl = { module = "io.jsonwebtoken:jjwt-impl", version.ref = "jjwt" }
+jjwt-jackson = { module = "io.jsonwebtoken:jjwt-jackson", version.ref = "jjwt" }
 
 # Database
 mysql-connector-j = { module = "com.mysql:mysql-connector-j" }
