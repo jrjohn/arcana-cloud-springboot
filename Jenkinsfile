@@ -61,27 +61,31 @@ pipeline {
 
         stage("Unit Tests") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh "docker compose -f docker-compose.test.yml run --rm --build test"
-                }
+                sh '''
+                    docker rm -f springboot-app-test 2>/dev/null || true
+                    docker compose -f docker-compose.test.yml run --build --name springboot-app-test test
+                    RC=$?
+                    mkdir -p build/reports
+                    docker cp springboot-app-test:/app/build/reports/. build/reports/ 2>/dev/null || true
+                    docker rm -f springboot-app-test 2>/dev/null || true
+                    exit $RC
+                '''
             }
         }
 
         stage("Integration: Layered HTTP") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh '''
-                        docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
-                        docker compose -p arcana-ci-grpc -f deployment/layered/docker-compose-ci-grpc.yml down -v --remove-orphans 2>/dev/null || true
-                        docker rm -f arcana-ci-mysql-http arcana-ci-redis-http arcana-ci-service-http arcana-ci-controller-http arcana-ci-mysql-grpc arcana-ci-redis-grpc arcana-ci-repository-grpc arcana-ci-service-grpc arcana-ci-controller-grpc 2>/dev/null || true
-                        SPRINGBOOT_IMAGE="${IMAGE_TAG}:build-${BUILD_NUMBER}" \
-                            docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml up -d
-                        JENKINS_ID=$(hostname)
-                        docker network connect arcana-ci-http-net $JENKINS_ID 2>/dev/null || true
-                        bash scripts/integration-smoke-test.sh http://arcana-ci-controller-http:8090 http 180
-                        docker network disconnect arcana-ci-http-net $JENKINS_ID 2>/dev/null || true
-                    '''
-                }
+                sh '''
+                    docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
+                    docker compose -p arcana-ci-grpc -f deployment/layered/docker-compose-ci-grpc.yml down -v --remove-orphans 2>/dev/null || true
+                    docker rm -f arcana-ci-mysql-http arcana-ci-redis-http arcana-ci-service-http arcana-ci-controller-http arcana-ci-mysql-grpc arcana-ci-redis-grpc arcana-ci-repository-grpc arcana-ci-service-grpc arcana-ci-controller-grpc 2>/dev/null || true
+                    SPRINGBOOT_IMAGE="${IMAGE_TAG}:build-${BUILD_NUMBER}" \
+                        docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml up -d
+                    JENKINS_ID=$(hostname)
+                    docker network connect arcana-ci-http-net $JENKINS_ID 2>/dev/null || true
+                    bash scripts/integration-smoke-test.sh http://arcana-ci-controller-http:8090 http 180
+                    docker network disconnect arcana-ci-http-net $JENKINS_ID 2>/dev/null || true
+                '''
             }
             post {
                 always {
@@ -94,19 +98,17 @@ pipeline {
 
         stage("Integration: Layered gRPC") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh '''
-                        docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
-                        docker compose -p arcana-ci-grpc -f deployment/layered/docker-compose-ci-grpc.yml down -v --remove-orphans 2>/dev/null || true
-                        docker rm -f arcana-ci-mysql-http arcana-ci-redis-http arcana-ci-service-http arcana-ci-controller-http arcana-ci-mysql-grpc arcana-ci-redis-grpc arcana-ci-repository-grpc arcana-ci-service-grpc arcana-ci-controller-grpc 2>/dev/null || true
-                        SPRINGBOOT_IMAGE="${IMAGE_TAG}:build-${BUILD_NUMBER}" \
-                            docker compose -p arcana-ci-grpc -f deployment/layered/docker-compose-ci-grpc.yml up -d
-                        JENKINS_ID=$(hostname)
-                        docker network connect arcana-ci-grpc-net $JENKINS_ID 2>/dev/null || true
-                        bash scripts/integration-smoke-test.sh http://arcana-ci-controller-grpc:8090 grpc 270
-                        docker network disconnect arcana-ci-grpc-net $JENKINS_ID 2>/dev/null || true
-                    '''
-                }
+                sh '''
+                    docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
+                    docker compose -p arcana-ci-grpc -f deployment/layered/docker-compose-ci-grpc.yml down -v --remove-orphans 2>/dev/null || true
+                    docker rm -f arcana-ci-mysql-http arcana-ci-redis-http arcana-ci-service-http arcana-ci-controller-http arcana-ci-mysql-grpc arcana-ci-redis-grpc arcana-ci-repository-grpc arcana-ci-service-grpc arcana-ci-controller-grpc 2>/dev/null || true
+                    SPRINGBOOT_IMAGE="${IMAGE_TAG}:build-${BUILD_NUMBER}" \
+                        docker compose -p arcana-ci-grpc -f deployment/layered/docker-compose-ci-grpc.yml up -d
+                    JENKINS_ID=$(hostname)
+                    docker network connect arcana-ci-grpc-net $JENKINS_ID 2>/dev/null || true
+                    bash scripts/integration-smoke-test.sh http://arcana-ci-controller-grpc:8090 grpc 270
+                    docker network disconnect arcana-ci-grpc-net $JENKINS_ID 2>/dev/null || true
+                '''
             }
             post {
                 always {
@@ -119,13 +121,11 @@ pipeline {
 
         stage("Integration: K8s HTTP") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh '''#!/bin/bash
-                        export PATH="/var/jenkins_home/bin:${PATH}"
-                        kind version || { echo "kind not found"; exit 1; }
-                        bash scripts/kind-smoke-test.sh "${IMAGE_TAG}:build-${BUILD_NUMBER}" http 480
-                    '''
-                }
+                sh '''#!/bin/bash
+                    export PATH="/var/jenkins_home/bin:${PATH}"
+                    kind version || { echo "kind not found"; exit 1; }
+                    bash scripts/kind-smoke-test.sh "${IMAGE_TAG}:build-${BUILD_NUMBER}" http 480
+                '''
             }
             post {
                 always {
@@ -141,14 +141,12 @@ pipeline {
 
         stage("Integration: K8s gRPC") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh '''#!/bin/bash
-                        export PATH="/var/jenkins_home/bin:${PATH}"
-                        kind version || { echo "kind not found"; exit 1; }
-                        kubectl version --client || true
-                        bash scripts/kind-smoke-test.sh "${IMAGE_TAG}:build-${BUILD_NUMBER}" grpc 600
-                    '''
-                }
+                sh '''#!/bin/bash
+                    export PATH="/var/jenkins_home/bin:${PATH}"
+                    kind version || { echo "kind not found"; exit 1; }
+                    kubectl version --client || true
+                    bash scripts/kind-smoke-test.sh "${IMAGE_TAG}:build-${BUILD_NUMBER}" grpc 600
+                '''
             }
             post {
                 always {
@@ -164,35 +162,51 @@ pipeline {
 
         stage("SonarQube Analysis") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    withSonarQubeEnv('SonarQube') {
-                        script {
-                            def prArgs = env.CHANGE_ID ? """ \
-                                -Dsonar.pullrequest.key=${env.CHANGE_ID} \
-                                -Dsonar.pullrequest.branch=${env.BRANCH_NAME} \
-                                -Dsonar.pullrequest.base=${env.CHANGE_TARGET}""" : ''
-                            sh """sonar-scanner -Dsonar.projectKey=springboot-app -Dsonar.scm.disabled=true${prArgs}"""
-                        }
-                    }
+                withSonarQubeEnv('SonarQube') {
+                    sh """sonar-scanner -Dsonar.projectKey=springboot-app -Dsonar.scm.disabled=true"""
+                    sh '''
+                        set -e
+                        TOKEN="${SONAR_AUTH_TOKEN:-$SONAR_TOKEN}"
+                        RT=.scannerwork/report-task.txt
+                        [ -f "$RT" ] || { echo "report-task.txt missing"; exit 1; }
+                        CE_TASK_ID=$(grep '^ceTaskId=' "$RT" | cut -d= -f2-)
+                        ANALYSIS_ID=""
+                        for i in $(seq 1 60); do
+                            RESP=$(curl -s -u "$TOKEN:" "$SONAR_HOST_URL/api/ce/task?id=$CE_TASK_ID")
+                            ST=$(echo "$RESP" | grep -o '"status":"[A-Z_]*"' | head -1 | cut -d'"' -f4)
+                            echo "  CE status: ${ST:-?} (try $i)"
+                            if [ "$ST" = "SUCCESS" ]; then ANALYSIS_ID=$(echo "$RESP" | grep -o '"analysisId":"[^"]*"' | head -1 | cut -d'"' -f4); break;
+                            elif [ "$ST" = "FAILED" ] || [ "$ST" = "CANCELED" ]; then echo "CE $ST"; exit 1; fi
+                            sleep 5
+                        done
+                        [ -n "$ANALYSIS_ID" ] || { echo "CE timeout"; exit 1; }
+                        GATE=$(curl -s -u "$TOKEN:" "$SONAR_HOST_URL/api/qualitygates/project_status?analysisId=$ANALYSIS_ID")
+                        GST=$(echo "$GATE" | grep -o '"status":"[A-Z]*"' | head -1 | cut -d'"' -f4)
+                        echo "Quality gate: ${GST:-UNKNOWN}"
+                        if [ "$GST" != "OK" ]; then echo "$GATE"; exit 1; fi
+                    '''
                 }
             }
         }
 
         stage("Architecture Qube") {
             steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'UNSTABLE') {
-                    sh '''
-                        mkdir -p arch-qube-reports
-                        docker run --rm \
-                            --network devops_default \
-                            -v $(pwd):/project \
-                            -v $(pwd)/arch-qube-reports:/output \
-                            arcana.boo/arcana/arch-qube:latest scan /project \
-                            --framework springboot --no-ai \
-                            --ci --format json,markdown \
-                            -o /output --threshold 90 || true
-                    '''
-                }
+                sh '''
+                    docker rm -f arcana-arch-qube-springboot 2>/dev/null || true
+                    docker create --name arcana-arch-qube-springboot --network devops_default \
+                        -v /src -v /output \
+                        arcana.boo/arcana/arch-qube:latest \
+                        scan /src --framework springboot --no-ai --ci \
+                        --format json,markdown -o /output --threshold 90 || exit 1
+                    tar --exclude=./.git --exclude=./build --exclude=./arch-qube-reports -C . -cf - . \
+                        | docker cp - arcana-arch-qube-springboot:/src || exit 1
+                    docker start -a arcana-arch-qube-springboot
+                    AQ_RC=$?
+                    mkdir -p arch-qube-reports
+                    docker cp arcana-arch-qube-springboot:/output/. arch-qube-reports/ 2>/dev/null || true
+                    docker rm -f arcana-arch-qube-springboot 2>/dev/null || true
+                    exit $AQ_RC
+                '''
             }
         }
 
