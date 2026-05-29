@@ -9,6 +9,15 @@
 [![Coverage](https://img.shields.io/badge/coverage-JaCoCo-brightgreen.svg)](#testing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
+<!-- agent-managed badges START -->
+[![Quality Gate](https://arcana.boo/sonarqube/api/project_badges/quality_gate?project=springboot-app)](https://arcana.boo/sonarqube/dashboard?id=springboot-app)
+[![Build](https://arcana.boo/jenkins/buildStatus/icon?job=springboot-app-pipeline-mb/main)](https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/)
+**Rank**: Quality Gate `ERROR` · Build `red` · Sonar coverage `0%`
+<!-- agent-managed badges END -->
+<!-- arch-rank START -->
+**Architecture**: arch-qube `100/100` · grade `A+` · `PASS`
+<!-- arch-rank END -->
+
 Enterprise-grade cloud platform with **dual-protocol architecture** (gRPC 2.5x faster / HTTP REST), **OSGi Plugin System** (Apache Felix) for hot-deployable extensions, **Server-Side Rendering** with GraalJS for React and Angular, supporting **five deployment modes** with full plugin synchronization across Kubernetes clusters. Includes **Spring Cloud Config** for centralized configuration and **Plugin API Versioning** for compatibility management.
 
 ## Architecture
