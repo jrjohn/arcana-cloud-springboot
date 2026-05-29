@@ -406,12 +406,13 @@ class HttpUserServiceClientTest {
 
     @Test
     void existsByUsername_exists_returnsTrue() {
+        HttpUserServiceClient.ExistsResponse existsResponse = new HttpUserServiceClient.ExistsResponse();
+        existsResponse.setExists(true);
         ApiResponse<Object> apiResponse = ApiResponse.builder()
             .success(true)
-            .data(new ExistsResponseHelper(true))
+            .data(existsResponse)
             .build();
 
-        // Use a custom response
         @SuppressWarnings("unchecked")
         ResponseEntity<ApiResponse<Object>> entity =
             (ResponseEntity<ApiResponse<Object>>) (ResponseEntity<?>) ResponseEntity.ok(apiResponse);
@@ -420,7 +421,7 @@ class HttpUserServiceClientTest {
             anyString(), eq(HttpMethod.GET), isNull(), any(ParameterizedTypeReference.class));
 
         boolean result = client.existsByUsername("user1");
-        assertThat(result).isFalse(); // data is not ExistsResponse type from inner class, falls to false
+        assertThat(result).isTrue();
     }
 
     @Test
@@ -439,12 +440,5 @@ class HttpUserServiceClientTest {
 
         boolean result = client.existsByEmail("user1@test.com");
         assertThat(result).isFalse();
-    }
-
-    // Helper class (not the inner private class in production)
-    static class ExistsResponseHelper {
-        private final boolean exists;
-        ExistsResponseHelper(boolean exists) { this.exists = exists; }
-        public boolean isExists() { return exists; }
     }
 }

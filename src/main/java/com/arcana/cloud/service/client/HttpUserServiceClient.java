@@ -263,7 +263,7 @@ public class HttpUserServiceClient implements UserService {
     }
 
     @lombok.Data
-    private static class ExistsResponse {
+    static class ExistsResponse {
         private boolean exists;
     }
 

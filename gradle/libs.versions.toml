@@ -5,8 +5,13 @@ spring-dependency-management = "1.1.7"
 spring-cloud = "2025.1.1"
 
 # gRPC and Protobuf (Spring gRPC for Spring Boot 4.0)
-grpc = "1.81.0"
-protobuf = "4.34.1"
+# Must match the io.grpc/protobuf versions pinned by spring-grpc-dependencies BOM
+# (spring-grpc 1.0.3 -> grpc 1.77.1, protobuf-java 4.33.4). Forcing newer io.grpc
+# here only upgrades the directly-declared artifacts (grpc-stub/-protobuf/-netty);
+# transitive grpc-api/-core stay at the BOM version, and the resulting ABI skew
+# throws AbstractMethodError in the in-process gRPC tests.
+grpc = "1.77.1"
+protobuf = "4.33.4"
 spring-grpc = "1.0.3"
 protobuf-plugin = "0.10.0"
 

@@ -215,7 +215,6 @@ class JobManagementServiceImplTest {
             doReturn(Collections.emptyList()).when(scheduler).getTriggersOfJob(testJobKey);
             when(scheduler.scheduleJob(any(Trigger.class))).thenReturn(new Date());
             when(scheduler.getJobDetail(any(JobKey.class))).thenReturn(testJobDetail);
-            when(scheduler.getTriggerState(any(TriggerKey.class))).thenReturn(Trigger.TriggerState.NORMAL);
 
             JobDetailDto result = jobManagementService.rescheduleJob("testJob", "testGroup", request);
 

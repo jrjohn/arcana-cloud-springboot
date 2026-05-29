@@ -89,7 +89,7 @@ class GrpcHealthServiceRealTest {
         healthService.setPluginsReady(true);
 
         HealthCheckResponse resp = stub.check(
-                HealthCheckRequest.newBuilder().setService("auth-service").build()
+                HealthCheckRequest.newBuilder().setService("arcana.cloud.AuthService").build()
         );
 
         assertEquals(HealthCheckResponse.ServingStatus.SERVING, resp.getStatus());
@@ -101,7 +101,7 @@ class GrpcHealthServiceRealTest {
         healthService.setPluginsReady(true);
 
         HealthCheckResponse resp = stub.check(
-                HealthCheckRequest.newBuilder().setService("user-service").build()
+                HealthCheckRequest.newBuilder().setService("arcana.cloud.UserService").build()
         );
 
         assertEquals(HealthCheckResponse.ServingStatus.SERVING, resp.getStatus());
