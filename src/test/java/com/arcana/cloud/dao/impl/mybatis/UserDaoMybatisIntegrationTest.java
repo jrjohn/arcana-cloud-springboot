@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest
 @ActiveProfiles("test-mybatis")
 @DisplayName("UserDaoMybatisImpl Integration Tests with MySQL")

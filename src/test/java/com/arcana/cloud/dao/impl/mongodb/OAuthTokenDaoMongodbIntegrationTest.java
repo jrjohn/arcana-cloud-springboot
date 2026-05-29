@@ -26,7 +26,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest
 @ActiveProfiles("test-mongodb")
 @DisplayName("OAuthTokenDaoMongodbImpl Integration Tests with MongoDB")

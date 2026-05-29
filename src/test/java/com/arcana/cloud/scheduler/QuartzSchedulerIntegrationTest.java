@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Uses Testcontainers with MySQL for realistic database testing.
  * Flyway migrations create QRTZ_* tables before Quartz starts via @DependsOn("flyway").
  */
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest
 @ActiveProfiles("test-quartz")
 @DisplayName("Quartz Scheduler Integration Tests")

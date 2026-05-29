@@ -22,7 +22,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest
 @ActiveProfiles("test-jpa")
 @DisplayName("UserDaoJpaImpl Integration Tests with MySQL")

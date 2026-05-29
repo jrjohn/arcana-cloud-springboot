@@ -24,7 +24,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
+@Testcontainers(disabledWithoutDocker = true)
 @SpringBootTest
 @ActiveProfiles("test-jpa")
 @DisplayName("OAuthTokenDaoJpaImpl Integration Tests with MySQL")
