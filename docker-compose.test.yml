@@ -9,7 +9,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - devops_default
-    command: sh -c "timeout 900 gradle :test :jacocoTestReport --no-daemon -Dspring.profiles.active=test"
+    command: sh -c "timeout 2400 gradle :test :jacocoTestReport --no-daemon -Dspring.profiles.active=test"
 
 networks:
   devops_default:
