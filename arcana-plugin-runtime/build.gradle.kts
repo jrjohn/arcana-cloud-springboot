@@ -38,7 +38,7 @@ dependencies {
 
     // Apache Felix OSGi Framework
     implementation("org.apache.felix:org.apache.felix.framework:7.0.5")
-    implementation("org.apache.felix:org.apache.felix.scr:2.2.6")
+    implementation("org.apache.felix:org.apache.felix.scr:2.2.18")
     implementation("org.apache.felix:org.apache.felix.fileinstall:3.7.4")
     implementation("org.apache.felix:org.apache.felix.configadmin:1.9.26")
 
