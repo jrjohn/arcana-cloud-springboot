@@ -11,7 +11,7 @@
 
 <!-- agent-managed badges START -->
 [![Quality Gate](https://img.shields.io/badge/Quality_Gate-OK-brightgreen)](https://arcana.boo/sonarqube/dashboard?id=springboot-app)
-[![Build](https://arcana.boo/jenkins/buildStatus/icon?job=springboot-app-pipeline-mb/main)](https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/)
+[![Build](https://img.shields.io/badge/Build-failing-red)](https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/)
 **Rank**: Quality Gate `OK` · Build `blue` · Sonar coverage `83.7%`
 <!-- agent-managed badges END -->
 <!-- arch-rank START -->
