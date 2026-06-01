@@ -10,12 +10,17 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 <!-- agent-managed badges START -->
-[![Quality Gate](https://img.shields.io/badge/Quality_Gate-OK-brightgreen)](https://arcana.boo/sonarqube/dashboard?id=springboot-app)
-[![Build](https://img.shields.io/badge/Build-failing-red)](https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/)
-**Rank**: Quality Gate `OK` · Build `blue` · Sonar coverage `83.7%`
+<p align="center">
+  <a href="https://arcana.boo/sonarqube/dashboard?id=springboot-app"><img src="https://img.shields.io/badge/Quality_Gate-OK-brightgreen?style=for-the-badge" alt="Quality Gate"></a>
+  <a href="https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/"><img src="https://img.shields.io/badge/Build-failing-red?style=for-the-badge" alt="Build"></a>
+</p>
 <!-- agent-managed badges END -->
 <!-- arch-rank START -->
-**Architecture**: arch-qube `100/100` · grade `A+` · `PASS`
+<p align="center">
+  <img src="https://img.shields.io/badge/arch--qube-100%2F100-blue?style=for-the-badge" alt="arch-qube">
+  <img src="https://img.shields.io/badge/Grade-A%2B-brightgreen?style=for-the-badge" alt="Grade">
+  <img src="https://img.shields.io/badge/Arch_Gate-PASS-brightgreen?style=for-the-badge" alt="Architecture Gate">
+</p>
 <!-- arch-rank END -->
 
 Enterprise-grade cloud platform with **dual-protocol architecture** (gRPC 2.5x faster / HTTP REST), **OSGi Plugin System** (Apache Felix) for hot-deployable extensions, **Server-Side Rendering** with GraalJS for React and Angular, supporting **five deployment modes** with full plugin synchronization across Kubernetes clusters. Includes **Spring Cloud Config** for centralized configuration and **Plugin API Versioning** for compatibility management.
