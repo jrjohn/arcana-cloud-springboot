@@ -50,7 +50,7 @@ dependencies {
 
     // XML parsing for arcana-plugin.xml
     implementation("jakarta.xml.bind:jakarta.xml.bind-api:4.0.5")
-    runtimeOnly("org.glassfish.jaxb:jaxb-runtime:4.0.3")
+    runtimeOnly("org.glassfish.jaxb:jaxb-runtime:4.0.9")
 
     // Flyway for plugin migrations
     implementation("org.flywaydb:flyway-core")
