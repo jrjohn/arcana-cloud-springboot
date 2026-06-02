@@ -3,7 +3,7 @@
 [![Architecture Rating](https://img.shields.io/badge/Architecture%20Rating-⭐⭐⭐⭐⭐%209.30%2F10-gold.svg)](#architecture-evaluation)
 [![Java](https://img.shields.io/badge/Java-25-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![gRPC](https://img.shields.io/badge/gRPC-1.60-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
+[![gRPC](https://img.shields.io/badge/gRPC-1.77-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
 [![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%207.0.5-FF6600.svg)](https://felix.apache.org/)
 [![Tests](https://img.shields.io/badge/tests-376%2F376_passing-brightgreen.svg)](docs/test-report/index.html)
 [![Coverage](https://img.shields.io/badge/coverage-JaCoCo-brightgreen.svg)](#testing)
@@ -12,7 +12,7 @@
 <!-- agent-managed badges START -->
 <p align="center">
   <a href="https://arcana.boo/sonarqube/dashboard?id=springboot-app"><img src="https://img.shields.io/badge/Quality_Gate-OK-brightgreen?style=for-the-badge" alt="Quality Gate"></a>
-  <a href="https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/"><img src="https://img.shields.io/badge/Build-building-blue?style=for-the-badge" alt="Build"></a>
+  <a href="https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/"><img src="https://img.shields.io/badge/Build-passing-brightgreen?style=for-the-badge" alt="Build"></a>
 </p>
 <!-- agent-managed badges END -->
 <!-- arch-rank START -->
