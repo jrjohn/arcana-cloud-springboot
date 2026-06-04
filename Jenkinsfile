@@ -73,6 +73,9 @@ pipeline {
         }
 
         stage("Integration: Layered HTTP") {
+            // Serialize this repo's layered-compose stage: main + PR builds share
+            // static compose project/network/container names and collide when concurrent.
+            options { lock('ci-springboot-layered') }
             steps {
                 sh '''
                     docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
@@ -96,6 +99,9 @@ pipeline {
         }
 
         stage("Integration: Layered gRPC") {
+            // Serialize this repo's layered-compose stage: main + PR builds share
+            // static compose project/network/container names and collide when concurrent.
+            options { lock('ci-springboot-layered') }
             steps {
                 sh '''
                     docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
@@ -119,6 +125,9 @@ pipeline {
         }
 
         stage("Integration: K8s HTTP") {
+            // Serialize ALL kind/k8s stages host-wide: concurrent kind clusters
+            // OOM-killed image imports on the 24G shared host (exit 137).
+            options { lock('ci-kind-global') }
             steps {
                 sh '''#!/bin/bash
                     export PATH="/var/jenkins_home/bin:${PATH}"
@@ -139,6 +148,9 @@ pipeline {
         }
 
         stage("Integration: K8s gRPC") {
+            // Serialize ALL kind/k8s stages host-wide: concurrent kind clusters
+            // OOM-killed image imports on the 24G shared host (exit 137).
+            options { lock('ci-kind-global') }
             steps {
                 sh '''#!/bin/bash
                     export PATH="/var/jenkins_home/bin:${PATH}"
