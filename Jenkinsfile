@@ -234,8 +234,13 @@ pipeline {
         stage("Push to Registry") {
             when { branch 'main' }
             steps {
+                // Derive the release tag from the registry-durable build-N image.
+                // The local :${VERSION} tag may have been reclaimed by host GC during
+                // the long build window (build-N is already pushed in Docker Compose
+                // Build), so pull build-N back, re-tag, and push the release tag.
+                sh "docker pull ${IMAGE_TAG}:build-${BUILD_NUMBER}"
+                sh "docker tag ${IMAGE_TAG}:build-${BUILD_NUMBER} ${IMAGE_TAG}:${VERSION}"
                 sh "docker push ${IMAGE_TAG}:${VERSION}"
-                sh "docker push ${IMAGE_TAG}:build-${BUILD_NUMBER}"
             }
         }
 
