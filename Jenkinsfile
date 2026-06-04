@@ -40,7 +40,6 @@ pipeline {
         stage("Cleanup Old Images") {
             steps {
                 sh '''
-                    docker image prune -f || true
                     docker images --format '{{.Repository}}:{{.Tag}}' \
                         | grep "${APP_NAME}.*build-" \
                         | sort -t- -k2 -rn \
@@ -56,24 +55,31 @@ pipeline {
             steps {
                 sh "VERSION=${VERSION} docker compose -f docker-compose.ci.yml build"
                 sh "docker tag localhost:5000/arcana/${APP_NAME}:${VERSION} ${IMAGE_TAG}:build-${BUILD_NUMBER}"
+                // Push build tag to the registry now, before the long unit-test window,
+                // so the integration stages can pull it even if host GC reclaims the
+                // local image mid-run (mirrors arcana-cloud-nodejs "Push Build Tag").
+                sh "docker push ${IMAGE_TAG}:build-${BUILD_NUMBER}"
             }
         }
 
         stage("Unit Tests") {
             steps {
                 sh '''
-                    docker rm -f springboot-app-test 2>/dev/null || true
-                    docker compose -f docker-compose.test.yml run --build --name springboot-app-test test
+                    docker rm -f springboot-app-test-${BUILD_NUMBER} 2>/dev/null || true
+                    docker compose -f docker-compose.test.yml run --build --name springboot-app-test-${BUILD_NUMBER} test
                     RC=$?
                     mkdir -p build/reports
-                    docker cp springboot-app-test:/app/build/reports/. build/reports/ 2>/dev/null || true
-                    docker rm -f springboot-app-test 2>/dev/null || true
+                    docker cp springboot-app-test-${BUILD_NUMBER}:/app/build/reports/. build/reports/ 2>/dev/null || true
+                    docker rm -f springboot-app-test-${BUILD_NUMBER} 2>/dev/null || true
                     exit $RC
                 '''
             }
         }
 
         stage("Integration: Layered HTTP") {
+            // Serialize this repo's layered-compose stage: main + PR builds share
+            // static compose project/network/container names and collide when concurrent.
+            options { lock('ci-springboot-layered') }
             steps {
                 sh '''
                     docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
@@ -97,6 +103,9 @@ pipeline {
         }
 
         stage("Integration: Layered gRPC") {
+            // Serialize this repo's layered-compose stage: main + PR builds share
+            // static compose project/network/container names and collide when concurrent.
+            options { lock('ci-springboot-layered') }
             steps {
                 sh '''
                     docker compose -p arcana-ci-http -f deployment/layered/docker-compose-ci-http.yml down -v --remove-orphans 2>/dev/null || true
@@ -120,6 +129,9 @@ pipeline {
         }
 
         stage("Integration: K8s HTTP") {
+            // Serialize ALL kind/k8s stages host-wide: concurrent kind clusters
+            // OOM-killed image imports on the 24G shared host (exit 137).
+            options { lock('ci-kind-global') }
             steps {
                 sh '''#!/bin/bash
                     export PATH="/var/jenkins_home/bin:${PATH}"
@@ -140,6 +152,9 @@ pipeline {
         }
 
         stage("Integration: K8s gRPC") {
+            // Serialize ALL kind/k8s stages host-wide: concurrent kind clusters
+            // OOM-killed image imports on the 24G shared host (exit 137).
+            options { lock('ci-kind-global') }
             steps {
                 sh '''#!/bin/bash
                     export PATH="/var/jenkins_home/bin:${PATH}"
@@ -192,19 +207,19 @@ pipeline {
         stage("Architecture Qube") {
             steps {
                 sh '''
-                    docker rm -f arcana-arch-qube-springboot 2>/dev/null || true
-                    docker create --name arcana-arch-qube-springboot --network devops_default \
+                    docker rm -f arcana-arch-qube-springboot-${BUILD_NUMBER} 2>/dev/null || true
+                    docker create --name arcana-arch-qube-springboot-${BUILD_NUMBER} --network devops_default \
                         -v /src -v /output \
                         arcana.boo/arcana/arch-qube:latest \
                         scan /src --framework springboot --no-ai --ci \
                         --format json,markdown -o /output --threshold 90 || exit 1
                     tar --exclude=./.git --exclude=./build --exclude=./arch-qube-reports -C . -cf - . \
-                        | docker cp - arcana-arch-qube-springboot:/src || exit 1
-                    docker start -a arcana-arch-qube-springboot
+                        | docker cp - arcana-arch-qube-springboot-${BUILD_NUMBER}:/src || exit 1
+                    docker start -a arcana-arch-qube-springboot-${BUILD_NUMBER}
                     AQ_RC=$?
                     mkdir -p arch-qube-reports
-                    docker cp arcana-arch-qube-springboot:/output/. arch-qube-reports/ 2>/dev/null || true
-                    docker rm -f arcana-arch-qube-springboot 2>/dev/null || true
+                    docker cp arcana-arch-qube-springboot-${BUILD_NUMBER}:/output/. arch-qube-reports/ 2>/dev/null || true
+                    docker rm -f arcana-arch-qube-springboot-${BUILD_NUMBER} 2>/dev/null || true
                     exit $AQ_RC
                 '''
             }
@@ -219,8 +234,13 @@ pipeline {
         stage("Push to Registry") {
             when { branch 'main' }
             steps {
+                // Derive the release tag from the registry-durable build-N image.
+                // The local :${VERSION} tag may have been reclaimed by host GC during
+                // the long build window (build-N is already pushed in Docker Compose
+                // Build), so pull build-N back, re-tag, and push the release tag.
+                sh "docker pull ${IMAGE_TAG}:build-${BUILD_NUMBER}"
+                sh "docker tag ${IMAGE_TAG}:build-${BUILD_NUMBER} ${IMAGE_TAG}:${VERSION}"
                 sh "docker push ${IMAGE_TAG}:${VERSION}"
-                sh "docker push ${IMAGE_TAG}:build-${BUILD_NUMBER}"
             }
         }
 
