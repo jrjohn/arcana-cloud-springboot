@@ -61,12 +61,12 @@ pipeline {
         stage("Unit Tests") {
             steps {
                 sh '''
-                    docker rm -f springboot-app-test 2>/dev/null || true
-                    docker compose -f docker-compose.test.yml run --build --name springboot-app-test test
+                    docker rm -f springboot-app-test-${BUILD_NUMBER} 2>/dev/null || true
+                    docker compose -f docker-compose.test.yml run --build --name springboot-app-test-${BUILD_NUMBER} test
                     RC=$?
                     mkdir -p build/reports
-                    docker cp springboot-app-test:/app/build/reports/. build/reports/ 2>/dev/null || true
-                    docker rm -f springboot-app-test 2>/dev/null || true
+                    docker cp springboot-app-test-${BUILD_NUMBER}:/app/build/reports/. build/reports/ 2>/dev/null || true
+                    docker rm -f springboot-app-test-${BUILD_NUMBER} 2>/dev/null || true
                     exit $RC
                 '''
             }
