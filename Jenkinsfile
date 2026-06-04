@@ -55,6 +55,10 @@ pipeline {
             steps {
                 sh "VERSION=${VERSION} docker compose -f docker-compose.ci.yml build"
                 sh "docker tag localhost:5000/arcana/${APP_NAME}:${VERSION} ${IMAGE_TAG}:build-${BUILD_NUMBER}"
+                // Push build tag to the registry now, before the long unit-test window,
+                // so the integration stages can pull it even if host GC reclaims the
+                // local image mid-run (mirrors arcana-cloud-nodejs "Push Build Tag").
+                sh "docker push ${IMAGE_TAG}:build-${BUILD_NUMBER}"
             }
         }
 
