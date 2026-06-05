@@ -34,7 +34,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     // GraalJS for server-side JavaScript execution
-    implementation("org.graalvm.polyglot:polyglot:23.1.1")
+    implementation("org.graalvm.polyglot:polyglot:23.1.11")
     implementation("org.graalvm.polyglot:js:23.1.11")
 
     // Redis for caching (optional)
