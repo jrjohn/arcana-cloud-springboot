@@ -29,8 +29,8 @@ dependencies {
     compileOnly("jakarta.validation:jakarta.validation-api:3.0.2")
 
     // Optional Spring dependencies for convenience annotations
-    compileOnly("org.springframework:spring-web:6.2.0")
-    compileOnly("org.springframework:spring-context:6.2.0")
+    compileOnly("org.springframework:spring-web:6.2.19")
+    compileOnly("org.springframework:spring-context:6.2.19")
 
     // Test dependencies
     testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
