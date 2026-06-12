@@ -870,7 +870,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-**Built with Spring Boot 4.0 | Java 25 | Spring Cloud 2024.0 | Gradle 9.2.1 | Apache Felix OSGi 7.0.5 | gRPC | GraalJS**
+**Built with Spring Boot 4.0 | Java 25 | Spring Cloud 2025.1 | Gradle 9.2.1 | Apache Felix OSGi 7.0.5 | gRPC | GraalJS**
 
 [View Test Report](docs/test-report/index.html)
 
