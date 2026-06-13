@@ -2,7 +2,7 @@
 # Spring Boot Multi-Stage Dockerfile (CI)
 # Java 25 / Gradle 9.2
 # ============================================
-FROM eclipse-temurin:26.0.1_8-jdk AS builder
+FROM eclipse-temurin:25.0.3_9-jdk AS builder
 WORKDIR /app
 
 # Install Gradle directly (wrapper jar missing from git)
