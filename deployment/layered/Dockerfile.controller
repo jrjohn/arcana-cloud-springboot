@@ -7,7 +7,7 @@ COPY src ./src
 
 RUN gradle build -x test --no-daemon
 
-FROM eclipse-temurin:21.0.11_10-jre-alpine
+FROM eclipse-temurin:26.0.1_8-jre-alpine
 
 WORKDIR /app
 COPY --from=build /app/build/libs/*.jar app.jar
