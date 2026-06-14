@@ -2,6 +2,8 @@
 # Spring Boot Multi-Stage Dockerfile (CI)
 # Java 25 / Gradle 9.2
 # ============================================
+# builder JDK must match the Gradle toolchain pin in build.gradle.kts (JavaLanguageVersion.of(25));
+# Renovate's v26 bump breaks `gradle build` (no JDK 25, toolchain download not configured). Runtime -jre stays at 26.
 FROM eclipse-temurin:25.0.3_9-jdk AS builder
 WORKDIR /app
 
