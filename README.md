@@ -5,8 +5,8 @@
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![gRPC](https://img.shields.io/badge/gRPC-1.77-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
 [![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%207.0.5-FF6600.svg)](https://felix.apache.org/)
-[![Tests](https://img.shields.io/badge/tests-376%2F376_passing-brightgreen.svg)](docs/test-report/index.html)
-[![Coverage](https://img.shields.io/badge/coverage-JaCoCo-brightgreen.svg)](#testing)
+[![Tests](https://img.shields.io/badge/tests-1231%2F1231_passing-brightgreen.svg)](docs/test-report/index.html)
+[![Coverage](https://img.shields.io/badge/coverage-83.7%25-brightgreen.svg)](#testing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 <!-- agent-managed badges START -->
