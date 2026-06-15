@@ -6,7 +6,7 @@ version: '3.8'
 
 services:
   mysql-mono:
-    image: mysql:8.0
+    image: mysql:9.7
     container_name: arcana-java-mono-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root_pass

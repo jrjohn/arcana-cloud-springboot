@@ -6,7 +6,7 @@
 
 services:
   mysql-ci-http:
-    image: mysql:8.0
+    image: mysql:9.7
     container_name: arcana-ci-mysql-http
     environment:
       MYSQL_ROOT_PASSWORD: ci_root
