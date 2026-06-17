@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.1...v1.2.2) (2026-06-17)
+
+
+### Bug Fixes
+
+* **test:** add Testcontainers MySQL withStartupTimeout + raise JUnit timeout ([#35](https://github.com/jrjohn/arcana-cloud-springboot/issues/35)) ([b8507fe](https://github.com/jrjohn/arcana-cloud-springboot/commit/b8507fe5fe65a72bc265da144e30a28705be1dec))
+
 ## [1.2.1](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.0...v1.2.1) (2026-06-17)
 
 
