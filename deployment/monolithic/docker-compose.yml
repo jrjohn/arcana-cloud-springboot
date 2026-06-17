@@ -22,7 +22,7 @@ services:
       - arcana-network
 
   redis:
-    image: redis:7.0-alpine
+    image: redis:8.8-alpine
     container_name: arcana-redis
     ports:
       - "6379:6379"

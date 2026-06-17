@@ -26,7 +26,7 @@ services:
       - /var/lib/mysql   # ephemeral — no volume persistence between CI runs
 
   redis-ci-http:
-    image: redis:7.0-alpine
+    image: redis:8.8-alpine
     container_name: arcana-ci-redis-http
     ports:
       - "16380:6379"
