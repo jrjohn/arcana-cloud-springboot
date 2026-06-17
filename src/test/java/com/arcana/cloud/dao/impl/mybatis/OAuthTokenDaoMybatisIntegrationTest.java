@@ -33,6 +33,7 @@ class OAuthTokenDaoMybatisIntegrationTest {
     @SuppressWarnings("resource")
     @Container
     static MySQLContainer<?> mysql = new MySQLContainer<>("mysql:8.0")
+            .withStartupTimeout(java.time.Duration.ofMinutes(2))
             .withDatabaseName("arcana_cloud_test")
             .withUsername("test")
             .withPassword("test")

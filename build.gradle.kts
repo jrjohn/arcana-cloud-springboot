@@ -148,7 +148,7 @@ tasks.withType<Test> {
     // Limit max parallel forks to prevent resource exhaustion
     maxParallelForks = 1
     // Set timeouts to prevent infinite hangs
-    systemProperty("junit.jupiter.execution.timeout.default", "30s")
+    systemProperty("junit.jupiter.execution.timeout.default", "120s")
     // Ensure Gradle test executor exits cleanly + suppress Felix Unsafe warnings on Java 21+
     jvmArgs(
         "-XX:+HeapDumpOnOutOfMemoryError",
