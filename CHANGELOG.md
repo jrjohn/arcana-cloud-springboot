@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.0...v1.2.1) (2026-06-17)
+
+
+### Bug Fixes
+
+* **ci:** bump sonar.java.source 21-&gt;24 to match the project's Java 24/25 ([7749f78](https://github.com/jrjohn/arcana-cloud-springboot/commit/7749f78509b18255ca615fae4d72cbd574b830ac))
+
 ## [1.2.0](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.1.0...v1.2.0) (2026-06-12)
 
 
