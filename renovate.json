@@ -1,4 +1,14 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["github>jrjohn/renovate-config"]
+  "extends": ["github>jrjohn/renovate-config"],
+  "packageRules": [
+    {
+      "description": "Builder stage in Dockerfile.ci is pinned to JDK 25 to match the Gradle toolchain (build.gradle.kts languageVersion=25); bumping it to 26 breaks `gradle build` (no JDK 25 toolchain, download not configured). Only the JRE runtime tracks newer majors. Remove this rule when the Gradle toolchain moves off 25.",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["eclipse-temurin"],
+      "matchFileNames": ["Dockerfile.ci"],
+      "matchCurrentValue": "/^25\\./",
+      "enabled": false
+    }
+  ]
 }
