@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.5](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.4...v1.2.5) (2026-06-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency express to v5 ([#54](https://github.com/jrjohn/arcana-cloud-springboot/issues/54)) ([3147b4e](https://github.com/jrjohn/arcana-cloud-springboot/commit/3147b4eb71b560f7ec0b792928dbd9fe2a60b568))
+
 ## [1.2.4](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.3...v1.2.4) (2026-06-22)
 
 
