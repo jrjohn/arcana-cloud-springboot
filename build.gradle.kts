@@ -113,7 +113,7 @@ dependencies {
     // Plugin testing dependencies
     testImplementation(project(":arcana-plugin-api"))
     testImplementation(project(":arcana-plugin-runtime"))
-    testImplementation("com.squareup.okhttp3:mockwebserver:4.12.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:5.4.0")
     // Real gRPC in-process transport for integration tests (no mock StreamObserver)
     testImplementation("io.grpc:grpc-inprocess:${grpcVersion}")
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
