@@ -114,6 +114,9 @@ dependencies {
     testImplementation(project(":arcana-plugin-api"))
     testImplementation(project(":arcana-plugin-runtime"))
     testImplementation("com.squareup.okhttp3:mockwebserver:5.4.0")
+    // mockwebserver 5.x dropped the transitive junit4 that v4 carried; the legacy
+    // okhttp3.mockwebserver.MockWebServer is a JUnit4 TestRule and needs it at runtime
+    testImplementation("junit:junit:4.13.2")
     // Real gRPC in-process transport for integration tests (no mock StreamObserver)
     testImplementation("io.grpc:grpc-inprocess:${grpcVersion}")
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
