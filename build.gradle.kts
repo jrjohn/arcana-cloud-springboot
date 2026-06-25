@@ -43,6 +43,14 @@ dependencyManagement {
         mavenBom("org.springframework.grpc:spring-grpc-dependencies:$springGrpcVersion")
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
+    dependencies {
+        // mockwebserver 5.x delegates to mockwebserver3, which is built against okhttp 5.x.
+        // spring-cloud-dependencies (via a nested BOM) pins com.squareup.okhttp3:okhttp to
+        // 4.12.0, downgrading mockwebserver3's okhttp at runtime -> NoClassDefFoundError at
+        // MockWebServer.kt:100 (delegate.url). okhttp is test-only here (no src/main usage),
+        // so align it to 5.x to match the bumped mockwebserver.
+        dependency("com.squareup.okhttp3:okhttp:5.4.0")
+    }
 }
 
 dependencies {
@@ -114,9 +122,6 @@ dependencies {
     testImplementation(project(":arcana-plugin-api"))
     testImplementation(project(":arcana-plugin-runtime"))
     testImplementation("com.squareup.okhttp3:mockwebserver:5.4.0")
-    // mockwebserver 5.x dropped the transitive junit4 that v4 carried; the legacy
-    // okhttp3.mockwebserver.MockWebServer is a JUnit4 TestRule and needs it at runtime
-    testImplementation("junit:junit:4.13.2")
     // Real gRPC in-process transport for integration tests (no mock StreamObserver)
     testImplementation("io.grpc:grpc-inprocess:${grpcVersion}")
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
