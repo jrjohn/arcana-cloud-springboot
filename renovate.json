@@ -9,6 +9,12 @@
       "matchFileNames": ["Dockerfile.ci"],
       "matchCurrentValue": "/^25\\./",
       "enabled": false
+    },
+    {
+      "description": "testcontainers 2.x ships core-only: the modular artifacts (org.testcontainers:mysql/postgresql/mongodb/junit-jupiter) were dropped and have no 2.x release (Maven Central maven-metadata latest = 1.21.4), while org.testcontainers:testcontainers jumped to 2.0.x. gradle/libs.versions.toml pins all five modules to one `testcontainers` version ref, so any v2 bump fails `:extractIncludeTestProto` with `Could not find org.testcontainers:mysql:2.x` (see closed PR-65 and branch renovate/major-testcontainers-java-monorepo build #2). Block the major until the modular artifacts publish a 2.x; remove this rule then.",
+      "matchDatasources": ["maven"],
+      "matchPackageNames": ["org.testcontainers:**"],
+      "allowedVersions": "<2"
     }
   ]
 }
