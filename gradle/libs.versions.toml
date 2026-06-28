@@ -28,7 +28,7 @@ javax-annotation = "1.3.2"
 springdoc = "3.0.3"
 
 # Testing
-testcontainers = "1.21.4"
+testcontainers = "2.0.5"
 
 # Code Quality
 checkstyle = "13.4.2"
