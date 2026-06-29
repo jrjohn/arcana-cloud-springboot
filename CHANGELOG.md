@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.10](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.9...v1.2.10) (2026-06-29)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.data:spring-data-jpa to v4 ([#64](https://github.com/jrjohn/arcana-cloud-springboot/issues/64)) ([02f6a19](https://github.com/jrjohn/arcana-cloud-springboot/commit/02f6a190d3ef2e8a26f29ce9f2438c9beda81c50))
+* **renovate:** block testcontainers v2 major (modular artifacts dropped, no 2.x) ([#66](https://github.com/jrjohn/arcana-cloud-springboot/issues/66)) ([fc53fa0](https://github.com/jrjohn/arcana-cloud-springboot/commit/fc53fa04331dd0ba63211fc19aed51196dad95c9))
+
 ## [1.2.9](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.8...v1.2.9) (2026-06-28)
 
 
