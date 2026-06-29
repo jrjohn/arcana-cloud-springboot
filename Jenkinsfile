@@ -15,6 +15,7 @@ pipeline {
         timeout(time: 90, unit: 'MINUTES')
         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '1'))
         disableConcurrentBuilds()
+        lock('ci-springboot-build')  // serialize whole pipeline across ALL branches: host RAM can't run concurrent springboot builds (testcontainers MySQL OOM -> exit124 rebuild loop, 2026-06-29)
         timestamps()
     }
 
