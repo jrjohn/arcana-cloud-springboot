@@ -33,8 +33,8 @@ dependencies {
     compileOnly("org.springframework:spring-context:6.2.19")
 
     // Test dependencies
-    testImplementation("org.junit.jupiter:junit-jupiter:5.11.3")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.3")
+    testImplementation("org.junit.jupiter:junit-jupiter:6.1.1")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:6.1.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
