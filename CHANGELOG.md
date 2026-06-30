@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.11](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.10...v1.2.11) (2026-06-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zod to v4 ([#68](https://github.com/jrjohn/arcana-cloud-springboot/issues/68)) ([1d77b11](https://github.com/jrjohn/arcana-cloud-springboot/commit/1d77b11ada3204dbe5ee9b9cc3ed0da72078ef19))
+* **deps:** update junit-framework monorepo to v6 ([#71](https://github.com/jrjohn/arcana-cloud-springboot/issues/71)) ([2f7cec1](https://github.com/jrjohn/arcana-cloud-springboot/commit/2f7cec164835c49235cf7d32a009e40b27a14d84))
+
 ## [1.2.10](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.9...v1.2.10) (2026-06-29)
 
 
