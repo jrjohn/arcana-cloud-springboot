@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.2.12](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.11...v1.2.12) (2026-07-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zustand to v5 ([#69](https://github.com/jrjohn/arcana-cloud-springboot/issues/69)) ([3aff6e2](https://github.com/jrjohn/arcana-cloud-springboot/commit/3aff6e262a7ad915a3fba90686684d1e1361a033))
+* **deps:** update nextjs monorepo to v16 ([#72](https://github.com/jrjohn/arcana-cloud-springboot/issues/72)) ([d3f29f2](https://github.com/jrjohn/arcana-cloud-springboot/commit/d3f29f23349e629705eeb5825c28b55954e9e15e))
+* **deps:** update spring core to v7 ([#75](https://github.com/jrjohn/arcana-cloud-springboot/issues/75)) ([3688c07](https://github.com/jrjohn/arcana-cloud-springboot/commit/3688c07a8527bf35f91ee1770d0a92a2d17085e4))
+
 ## [1.2.11](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.10...v1.2.11) (2026-06-30)
 
 
