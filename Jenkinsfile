@@ -12,7 +12,9 @@ pipeline {
     agent any
 
     options {
-        timeout(time: 90, unit: 'MINUTES')
+        // timeout moved into the "Pipeline" wrapper stage below (after the
+        // ci-springboot-build lock is acquired) so lock-wait does NOT count
+        // toward it; raised 90 -> 150min for slow contended runs (2026-07-02)
         buildDiscarder(logRotator(numToKeepStr: '20', artifactNumToKeepStr: '1'))
         disableConcurrentBuilds()
         lock('ci-springboot-build')  // serialize whole pipeline across ALL branches: host RAM can't run concurrent springboot builds (testcontainers MySQL OOM -> exit124 rebuild loop, 2026-06-29)
@@ -27,6 +29,11 @@ pipeline {
     }
 
     stages {
+      stage("Pipeline") {
+        // timeout wraps only execution; the pipeline-level lock('ci-springboot-build')
+        // is acquired before this stage, so time spent waiting for the lock is excluded.
+        options { timeout(time: 150, unit: 'MINUTES') }
+        stages {
         stage("Checkout") {
             steps {
                 checkout scm
@@ -255,6 +262,8 @@ pipeline {
                 }
             }
         }
+        }
+      }
     }
 
     post {
