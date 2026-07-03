@@ -40,7 +40,7 @@ resilience4j = "2.4.0"
 mybatis-spring-boot = "4.0.1"
 
 # Additional Databases
-postgresql = "42.7.11"
+postgresql = "42.7.12"
 
 [libraries]
 # Spring Boot Starters
