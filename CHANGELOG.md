@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.16](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.15...v1.2.16) (2026-07-03)
+
+
+### Bug Fixes
+
+* **deps:** update angular-cli monorepo to v22.0.5 ([#81](https://github.com/jrjohn/arcana-cloud-springboot/issues/81)) ([c23a60a](https://github.com/jrjohn/arcana-cloud-springboot/commit/c23a60a39fe62e904392de496032df6077499630))
+* **deps:** update dependency org.postgresql:postgresql to v42.7.12 ([#82](https://github.com/jrjohn/arcana-cloud-springboot/issues/82)) ([01db418](https://github.com/jrjohn/arcana-cloud-springboot/commit/01db418b4fbde47d49fb6de3a4f815bd57b1b8b3))
+
 ## [1.2.15](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.14...v1.2.15) (2026-07-03)
 
 
