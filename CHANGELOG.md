@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.15](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.14...v1.2.15) (2026-07-03)
+
+
+### Bug Fixes
+
+* **ci:** stop Quartz test shutdown hang against reaped Testcontainers MySQL ([e2498de](https://github.com/jrjohn/arcana-cloud-springboot/commit/e2498dec44ab04f496b315f47dc8cfa71bfca263))
+
 ## [1.2.14](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.13...v1.2.14) (2026-07-02)
 
 
