@@ -62,6 +62,12 @@ class QuartzSchedulerIntegrationTest {
         registry.add("spring.grpc.server.enabled", () -> "false");
         registry.add("spring.grpc.server.port", () -> "-1");
         registry.add("grpc.server.port", () -> "-1");
+        // Don't block context shutdown waiting on Quartz workers: the Testcontainers MySQL
+        // container is reaped before Spring's shutdown hook runs, so a worker stuck retrying
+        // JDBC against the now-dead container hangs indefinitely (observed: 13+ min hang,
+        // build killed by the 2400s pipeline timeout). Production keeps wait=true; only the
+        // test context needs a non-blocking shutdown.
+        registry.add("spring.quartz.wait-for-jobs-to-complete-on-shutdown", () -> "false");
     }
 
     @Autowired
