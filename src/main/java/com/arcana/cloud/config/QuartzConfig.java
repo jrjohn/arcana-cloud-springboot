@@ -55,6 +55,9 @@ public class QuartzConfig {
     @Value("${quartz.job-store.misfire-threshold:60000}")
     private long misfireThreshold;
 
+    @Value("${spring.quartz.wait-for-jobs-to-complete-on-shutdown:true}")
+    private boolean waitForJobsToCompleteOnShutdown;
+
     @Value("${HOSTNAME:#{null}}")
     private String hostname;
 
@@ -110,7 +113,10 @@ public class QuartzConfig {
         factory.setSchedulerName(schedulerName);
         factory.setQuartzProperties(quartzProperties());
         factory.setOverwriteExistingJobs(true);
-        factory.setWaitForJobsToCompleteOnShutdown(true);
+        // Configurable so tests can opt out (see QuartzSchedulerIntegrationTest): a worker
+        // stuck retrying JDBC against a reaped Testcontainers MySQL container hangs the
+        // Spring shutdown hook forever when this is hardcoded true.
+        factory.setWaitForJobsToCompleteOnShutdown(waitForJobsToCompleteOnShutdown);
         factory.setAutoStartup(true);
 
         log.info("Configuring Quartz Scheduler for deployment mode: {}", deploymentMode);
