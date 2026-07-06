@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.17](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.16...v1.2.17) (2026-07-06)
+
+
+### Bug Fixes
+
+* **ci:** honor spring.quartz.wait-for-jobs-to-complete-on-shutdown ([be6549f](https://github.com/jrjohn/arcana-cloud-springboot/commit/be6549f5956bc3390c893873236c7a78338e0530))
+* **deps:** update nextjs monorepo to v16.2.10 ([#85](https://github.com/jrjohn/arcana-cloud-springboot/issues/85)) ([c0c5aff](https://github.com/jrjohn/arcana-cloud-springboot/commit/c0c5affdba79a2dccf20e4e7848f5a9e57ebe109))
+
 ## [1.2.16](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.15...v1.2.16) (2026-07-03)
 
 
