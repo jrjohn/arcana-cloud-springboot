@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.18](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.17...v1.2.18) (2026-07-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.postgresql:postgresql to v42.7.13 ([#92](https://github.com/jrjohn/arcana-cloud-springboot/issues/92)) ([055c96a](https://github.com/jrjohn/arcana-cloud-springboot/commit/055c96a0b31b002e1527eafabe5d83b3e9a70bba))
+
 ## [1.2.17](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.16...v1.2.17) (2026-07-06)
 
 
