@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.19](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.18...v1.2.19) (2026-07-11)
+
+
+### Bug Fixes
+
+* **deps:** update angular monorepo to v22.0.6 ([#96](https://github.com/jrjohn/arcana-cloud-springboot/issues/96)) ([a186546](https://github.com/jrjohn/arcana-cloud-springboot/commit/a186546afd976d6e031a297dc073e3f51d48f87b))
+
 ## [1.2.18](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.17...v1.2.18) (2026-07-09)
 
 
