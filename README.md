@@ -2,7 +2,7 @@
 
 [![Architecture Rating](https://img.shields.io/badge/Architecture%20Rating-⭐⭐⭐⭐⭐%209.30%2F10-gold.svg)](#architecture-evaluation)
 [![Java](https://img.shields.io/badge/Java-25-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.0.6-6DB33F.svg?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![gRPC](https://img.shields.io/badge/gRPC-1.77-00ADD8.svg?logo=grpc&logoColor=white)](https://grpc.io/)
 [![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%207.0.5-FF6600.svg)](https://felix.apache.org/)
 [![Tests](https://img.shields.io/badge/tests-1231%2F1231_passing-brightgreen.svg)](docs/test-report/index.html)
