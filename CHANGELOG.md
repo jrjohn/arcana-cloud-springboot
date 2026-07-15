@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.21](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.20...v1.2.21) (2026-07-15)
+
+
+### Bug Fixes
+
+* **deps:** update junit-framework monorepo to v6.1.2 ([#103](https://github.com/jrjohn/arcana-cloud-springboot/issues/103)) ([c399775](https://github.com/jrjohn/arcana-cloud-springboot/commit/c3997755e27e2f62e3fccf01f3b95e567eceb081))
+
 ## [1.2.20](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.19...v1.2.20) (2026-07-13)
 
 
