@@ -1,6 +1,6 @@
 [versions]
 # Spring Boot 4.0
-spring-boot = "4.0.6"
+spring-boot = "4.1.0"
 spring-dependency-management = "1.1.7"
 spring-cloud = "2025.1.2"
 
