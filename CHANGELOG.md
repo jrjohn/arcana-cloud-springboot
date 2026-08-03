@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.2.25](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.24...v1.2.25) (2026-08-03)
+
+
+### Bug Fixes
+
+* **deps:** update angular monorepo to v22.0.8 ([#119](https://github.com/jrjohn/arcana-cloud-springboot/issues/119)) ([88af020](https://github.com/jrjohn/arcana-cloud-springboot/commit/88af0202d9662d8c382c1bdf2ec8f9c1a98b576b))
+* **deps:** update angular monorepo to v22.1.0 ([#132](https://github.com/jrjohn/arcana-cloud-springboot/issues/132)) ([3c9c24c](https://github.com/jrjohn/arcana-cloud-springboot/commit/3c9c24c7ff38d175c920b10e6182a16515211a2c))
+* **deps:** update angular-cli monorepo to v22.0.8 ([#120](https://github.com/jrjohn/arcana-cloud-springboot/issues/120)) ([e9478f9](https://github.com/jrjohn/arcana-cloud-springboot/commit/e9478f9d43cc8ce6e3c7c653aeed0f00b5bf5917))
+* **deps:** update angular-cli monorepo to v22.0.9 ([#130](https://github.com/jrjohn/arcana-cloud-springboot/issues/130)) ([43f7468](https://github.com/jrjohn/arcana-cloud-springboot/commit/43f7468e043f9f816c4386849a8edc9272fccbaa))
+* **deps:** update angular-cli monorepo to v22.1.2 ([#135](https://github.com/jrjohn/arcana-cloud-springboot/issues/135)) ([3670d06](https://github.com/jrjohn/arcana-cloud-springboot/commit/3670d061c7b71a74cd63efa4542c9ec594162c67))
+* **deps:** update dependency @hookform/resolvers to v5.5.7 ([#124](https://github.com/jrjohn/arcana-cloud-springboot/issues/124)) ([de10776](https://github.com/jrjohn/arcana-cloud-springboot/commit/de10776c5586f1dce8b8e3aff52eb0674d4e7e12))
+* **deps:** update dependency @hookform/resolvers to v5.6.0 ([#136](https://github.com/jrjohn/arcana-cloud-springboot/issues/136)) ([01e08bb](https://github.com/jrjohn/arcana-cloud-springboot/commit/01e08bbe5b050fe7919d036313410d5022ba8b80))
+* **deps:** update dependency @hookform/resolvers to v5.7.1 ([#138](https://github.com/jrjohn/arcana-cloud-springboot/issues/138)) ([1f74b74](https://github.com/jrjohn/arcana-cloud-springboot/commit/1f74b74d95845d1efea6bac812a92f0bea9d86a0))
+* **deps:** update dependency @tanstack/react-query to v5.101.4 ([#122](https://github.com/jrjohn/arcana-cloud-springboot/issues/122)) ([41d6222](https://github.com/jrjohn/arcana-cloud-springboot/commit/41d6222c17f072d54627409c72ede15aa962c197))
+* **deps:** update dependency axios to v1.19.0 ([#137](https://github.com/jrjohn/arcana-cloud-springboot/issues/137)) ([76d6565](https://github.com/jrjohn/arcana-cloud-springboot/commit/76d65658271031dcafa08afc8780c7fc5c94437c))
+* **deps:** update nextjs monorepo to v16.2.12 ([#125](https://github.com/jrjohn/arcana-cloud-springboot/issues/125)) ([e9bcac1](https://github.com/jrjohn/arcana-cloud-springboot/commit/e9bcac1e684469bc59ef3b9f9751ad84e1500305))
+* **deps:** update react monorepo to v19.2.8 ([#126](https://github.com/jrjohn/arcana-cloud-springboot/issues/126)) ([28ec79b](https://github.com/jrjohn/arcana-cloud-springboot/commit/28ec79bf3481ff0101d77f41dcfcb304e469c945))
+
 ## [1.2.24](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.23...v1.2.24) (2026-07-22)
 
 
