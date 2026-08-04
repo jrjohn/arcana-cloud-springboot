@@ -11,7 +11,7 @@ spring-cloud = "2025.1.2"
 # transitive grpc-api/-core stay at the BOM version, and the resulting ABI skew
 # throws AbstractMethodError in the in-process gRPC tests.
 grpc = "1.77.1"
-protobuf = "4.33.4"
+protobuf = "4.35.1"
 spring-grpc = "1.0.3"
 protobuf-plugin = "0.10.0"
 
