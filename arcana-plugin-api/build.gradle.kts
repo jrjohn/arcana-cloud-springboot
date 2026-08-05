@@ -25,7 +25,7 @@ dependencies {
     compileOnly("org.osgi:org.osgi.service.component.annotations:1.5.1")
 
     // Jakarta APIs
-    compileOnly("jakarta.servlet:jakarta.servlet-api:6.0.0")
+    compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
     compileOnly("jakarta.validation:jakarta.validation-api:3.0.2")
 
     // Optional Spring dependencies for convenience annotations
