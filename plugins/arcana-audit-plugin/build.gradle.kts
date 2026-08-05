@@ -27,7 +27,7 @@ dependencies {
     compileOnly("org.osgi:org.osgi.service.component.annotations:1.5.1")
 
     // Jakarta APIs (provided by host)
-    compileOnly("jakarta.persistence:jakarta.persistence-api:3.1.0")
+    compileOnly("jakarta.persistence:jakarta.persistence-api:3.2.0")
     compileOnly("jakarta.validation:jakarta.validation-api:3.0.2")
 
     // Spring (provided by host)
