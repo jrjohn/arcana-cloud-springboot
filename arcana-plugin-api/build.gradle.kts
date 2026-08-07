@@ -26,7 +26,7 @@ dependencies {
 
     // Jakarta APIs
     compileOnly("jakarta.servlet:jakarta.servlet-api:6.1.0")
-    compileOnly("jakarta.validation:jakarta.validation-api:3.0.2")
+    compileOnly("jakarta.validation:jakarta.validation-api:3.1.1")
 
     // Optional Spring dependencies for convenience annotations
     compileOnly("org.springframework:spring-web:7.0.8")

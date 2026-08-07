@@ -28,7 +28,7 @@ dependencies {
 
     // Jakarta APIs (provided by host)
     compileOnly("jakarta.persistence:jakarta.persistence-api:3.2.0")
-    compileOnly("jakarta.validation:jakarta.validation-api:3.0.2")
+    compileOnly("jakarta.validation:jakarta.validation-api:3.1.1")
 
     // Spring (provided by host)
     compileOnly("org.springframework:spring-web:7.0.8")
