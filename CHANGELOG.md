@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.2.26](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.25...v1.2.26) (2026-08-08)
+
+
+### Bug Fixes
+
+* **deps:** update angular-cli monorepo to v22.1.3 ([#145](https://github.com/jrjohn/arcana-cloud-springboot/issues/145)) ([6c5fc16](https://github.com/jrjohn/arcana-cloud-springboot/commit/6c5fc16845d8182a838e470c2333933708198203))
+* **deps:** update dependency clsx to v2.1.1 ([#139](https://github.com/jrjohn/arcana-cloud-springboot/issues/139)) ([b5bd7ed](https://github.com/jrjohn/arcana-cloud-springboot/commit/b5bd7ed98db1edaf1ec917ac175f866363e0405e))
+* **deps:** update dependency com.google.protobuf:protobuf-java to v4.35.1 ([#143](https://github.com/jrjohn/arcana-cloud-springboot/issues/143)) ([e91d664](https://github.com/jrjohn/arcana-cloud-springboot/commit/e91d664d3e265d3a15be97ccff10b4e6e3fecb64))
+* **deps:** update dependency jakarta.persistence:jakarta.persistence-api to v3.2.0 ([#144](https://github.com/jrjohn/arcana-cloud-springboot/issues/144)) ([a3ce90f](https://github.com/jrjohn/arcana-cloud-springboot/commit/a3ce90f7913439802254ae9ca884ba883ebfb882))
+* **deps:** update dependency jakarta.servlet:jakarta.servlet-api to v6.1.0 ([#146](https://github.com/jrjohn/arcana-cloud-springboot/issues/146)) ([ba1e881](https://github.com/jrjohn/arcana-cloud-springboot/commit/ba1e8814b581c97af3b291ffdc562fce0a6bf280))
+* **deps:** update dependency jakarta.validation:jakarta.validation-api to v3.1.1 ([#148](https://github.com/jrjohn/arcana-cloud-springboot/issues/148)) ([d8527eb](https://github.com/jrjohn/arcana-cloud-springboot/commit/d8527eb0d78929a6a88d240232b5dffeea5b0d08))
+* **deps:** update dependency lucide-react to v1.30.0 ([#149](https://github.com/jrjohn/arcana-cloud-springboot/issues/149)) ([f46a392](https://github.com/jrjohn/arcana-cloud-springboot/commit/f46a392a0d8ce3ea79a177cfdd3165d90ca25957))
+
 ## [1.2.25](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.24...v1.2.25) (2026-08-03)
 
 
