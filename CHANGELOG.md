@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.30](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.29...v1.2.30) (2026-08-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.graalvm.polyglot:js to v25.2.4 ([#155](https://github.com/jrjohn/arcana-cloud-springboot/issues/155)) ([8b3a457](https://github.com/jrjohn/arcana-cloud-springboot/commit/8b3a45701b9a7cb745401c83ffa8b016d1a47e6b))
+* **deps:** update dependency org.graalvm.polyglot:polyglot to v25.2.4 ([#160](https://github.com/jrjohn/arcana-cloud-springboot/issues/160)) ([7eec047](https://github.com/jrjohn/arcana-cloud-springboot/commit/7eec047923ac58fac2dde670de978cc10cef4b77))
+
 ## [1.2.29](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.28...v1.2.29) (2026-08-11)
 
 
