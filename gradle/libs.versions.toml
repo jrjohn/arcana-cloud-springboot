@@ -12,7 +12,7 @@ spring-cloud = "2025.1.2"
 # throws AbstractMethodError in the in-process gRPC tests.
 grpc = "1.77.1"
 protobuf = "4.35.1"
-spring-grpc = "1.0.3"
+spring-grpc = "1.1.0"
 protobuf-plugin = "0.10.0"
 
 # JWT
