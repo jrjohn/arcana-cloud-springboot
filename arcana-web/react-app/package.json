@@ -35,7 +35,7 @@
     "autoprefixer": "10.5.4",
     "postcss": "8.5.26",
     "tailwindcss": "4.3.3",
-    "@testing-library/react": "16.3.2",
+    "@testing-library/react": "16.3.3",
     "@testing-library/jest-dom": "7.0.1",
     "jest": "30.4.2",
     "jest-environment-jsdom": "30.4.1",
