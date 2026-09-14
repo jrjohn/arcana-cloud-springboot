@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.34](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.33...v1.2.34) (2026-09-14)
+
+
+### Bug Fixes
+
+* **deps:** update react monorepo to v19.3.0 ([#173](https://github.com/jrjohn/arcana-cloud-springboot/issues/173)) ([103151a](https://github.com/jrjohn/arcana-cloud-springboot/commit/103151aa573365fca197bebea74824c2f7ace0db))
+
 ## [1.2.33](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.32...v1.2.33) (2026-08-16)
 
 
