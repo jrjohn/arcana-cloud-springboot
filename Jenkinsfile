@@ -9,7 +9,11 @@
 //   * `dir("${env.PROJECTS_DIR}/...")` blocks removed  — multibranch uses workspace root
 
 pipeline {
-    agent any
+    // agent none at the top on purpose: the executor is taken by the "Pipeline" wrapper
+    // stage below, i.e. only AFTER lock('ci-springboot-build') is acquired. With `agent any`
+    // here, a build waiting for the lock sat on one of the two Built-In executors doing
+    // nothing and starved every other repo's queue (same bug found on android 2026-09-15).
+    agent none
 
     options {
         // timeout moved into the "Pipeline" wrapper stage below (after the
@@ -33,6 +37,7 @@ pipeline {
         // timeout wraps only execution; the pipeline-level lock('ci-springboot-build')
         // is acquired before this stage, so time spent waiting for the lock is excluded.
         options { timeout(time: 150, unit: 'MINUTES') }
+        agent any
         stages {
         stage("Checkout") {
             steps {
@@ -263,22 +268,22 @@ pipeline {
             }
         }
         }
+      // post runs on the stage's executor (its sh steps need a node; top-level has none)
+      post {
+          success {
+              echo "Pipeline SUCCESS - ${APP_NAME}:${VERSION} branch=${env.BRANCH_NAME ?: '?'} pr=${env.CHANGE_ID ?: 'no'}"
+              sh '''
+                  # self-clean: keep only THIS build's image locally; previous
+                  # build-N tags stay pullable from the registry
+                  docker images --format '{{.Repository}}:{{.Tag}}' \
+                      | grep -E "^${IMAGE_TAG}:build-[0-9]+$" \
+                      | grep -v ":build-${BUILD_NUMBER}$" \
+                      | xargs -r docker rmi 2>/dev/null || true
+              '''
+          }
+          failure { echo "Pipeline FAILED - branch=${env.BRANCH_NAME ?: '?'} pr=${env.CHANGE_ID ?: 'no'}" }
+          always  { echo "Build number ${BUILD_NUMBER} done" }
       }
-    }
-
-    post {
-        success {
-            echo "Pipeline SUCCESS - ${APP_NAME}:${VERSION} branch=${env.BRANCH_NAME ?: '?'} pr=${env.CHANGE_ID ?: 'no'}"
-            sh '''
-                # self-clean: keep only THIS build's image locally; previous
-                # build-N tags stay pullable from the registry
-                docker images --format '{{.Repository}}:{{.Tag}}' \
-                    | grep -E "^${IMAGE_TAG}:build-[0-9]+$" \
-                    | grep -v ":build-${BUILD_NUMBER}$" \
-                    | xargs -r docker rmi 2>/dev/null || true
-            '''
-        }
-        failure { echo "Pipeline FAILED - branch=${env.BRANCH_NAME ?: '?'} pr=${env.CHANGE_ID ?: 'no'}" }
-        always  { echo "Build number ${BUILD_NUMBER} done" }
+      }
     }
 }
