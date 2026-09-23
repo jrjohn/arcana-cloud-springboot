@@ -9,7 +9,13 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - devops_default
-    command: sh -c "timeout 2400 gradle :test :jacocoTestReport --no-daemon -Dspring.profiles.active=test"
+    # 5400s (90 min), was 2400. The suite (565 tests) takes ~32 min on an idle host, but PR
+    # builds usually land in the Renovate burst when the 4-core CI host is saturated: PR-178 #7
+    # had finished only 324/565 tests when the 40 min limit killed it (exit 124) — the same
+    # tests, ~2.3x slower, zero failures. PR-178 failed 6 builds in a row this way, and a
+    # workflow-only PR (#179) did too, while main (usually built off-peak) stayed green.
+    # 90 min still catches a hung Gradle/testcontainers run and fits the 150 min stage timeout.
+    command: sh -c "timeout 5400 gradle :test :jacocoTestReport --no-daemon -Dspring.profiles.active=test"
 
 networks:
   devops_default:
