@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.39](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.38...v1.2.39) (2026-09-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.slf4j:slf4j-api to v2.0.20 ([#186](https://github.com/jrjohn/arcana-cloud-springboot/issues/186)) ([e6eddec](https://github.com/jrjohn/arcana-cloud-springboot/commit/e6eddecb7b4ed442f73f134c148fe3595aa52144))
+
 ## [1.2.38](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.37...v1.2.38) (2026-09-25)
 
 
