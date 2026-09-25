@@ -36,7 +36,7 @@ dependencies {
     compileOnly("org.springframework.data:spring-data-jpa:4.1.0")
 
     // Logging
-    compileOnly("org.slf4j:slf4j-api:2.0.18")
+    compileOnly("org.slf4j:slf4j-api:2.0.20")
 }
 
 tasks.jar {
