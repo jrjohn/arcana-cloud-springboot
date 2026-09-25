@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.38](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.37...v1.2.38) (2026-09-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency jasmine-core to v7.0.2 ([#184](https://github.com/jrjohn/arcana-cloud-springboot/issues/184)) ([a40661a](https://github.com/jrjohn/arcana-cloud-springboot/commit/a40661a1006da90c274877bdca96a6d18d6db948))
+
 ## [1.2.37](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.36...v1.2.37) (2026-09-24)
 
 
