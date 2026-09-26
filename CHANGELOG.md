@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.40](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.39...v1.2.40) (2026-09-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springdoc:springdoc-openapi-starter-webmvc-ui to v3.1.1 ([#188](https://github.com/jrjohn/arcana-cloud-springboot/issues/188)) ([e8641e9](https://github.com/jrjohn/arcana-cloud-springboot/commit/e8641e9d9f8609f364f2f8af886e9eefc25addd1))
+
 ## [1.2.39](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.38...v1.2.39) (2026-09-25)
 
 
