@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.42](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.41...v1.2.42) (2026-10-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/jasmine to v7 ([#192](https://github.com/jrjohn/arcana-cloud-springboot/issues/192)) ([bc6f98b](https://github.com/jrjohn/arcana-cloud-springboot/commit/bc6f98b08046f231d3cdf6a7eccdaa002126c884))
+
 ## [1.2.41](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.40...v1.2.41) (2026-10-01)
 
 
