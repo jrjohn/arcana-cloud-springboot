@@ -131,6 +131,12 @@ protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:$protobufVersion"
     }
+    // Spring Boot 4.1.1+ only wires grpc-java codegen (protoc-gen-grpc-java artifact,
+    // version aligned to io.grpc on the runtime classpath, and the per-task "grpc"
+    // plugin) when a protoc plugin named "grpc" is declared. 4.1.0 added it implicitly.
+    plugins {
+        id("grpc")
+    }
 }
 
 tasks.withType<Test> {
