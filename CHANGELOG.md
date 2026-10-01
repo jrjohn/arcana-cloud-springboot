@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.41](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.40...v1.2.41) (2026-10-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.boot to v4.1.1 ([#190](https://github.com/jrjohn/arcana-cloud-springboot/issues/190)) ([889b237](https://github.com/jrjohn/arcana-cloud-springboot/commit/889b237e49ac7da4788aef608649997c0eb67474))
+
 ## [1.2.40](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.39...v1.2.40) (2026-09-26)
 
 
