@@ -34,7 +34,7 @@ spec:
           value: "repository"
         - name: SERVER_PORT
           value: "8082"
-        - name: GRPC_SERVER_PORT
+        - name: SPRING_GRPC_SERVER_PORT
           value: "9091"
         - name: SPRING_DATASOURCE_URL
           valueFrom:
