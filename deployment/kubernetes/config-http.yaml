@@ -48,10 +48,11 @@ data:
   communication.protocol: "grpc"
 
   # Service Layer gRPC URL (used by Controller)
-  service.grpc.url: "arcana-service:9090"
+  # Headless Service (see services.yaml) so round_robin sees every pod
+  service.grpc.url: "dns:///arcana-service-grpc:9090"
 
   # Repository Layer gRPC URL (used by Service)
-  repository.grpc.url: "arcana-repository:9091"
+  repository.grpc.url: "dns:///arcana-repository-grpc:9091"
 
   # Redis Configuration
   redis.host: "redis"

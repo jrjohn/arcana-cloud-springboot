@@ -10,5 +10,7 @@ data:
   redis.port: "6379"
   deployment.mode: layered
   communication.protocol: grpc
-  service.grpc.url: arcana-service:9090
-  repository.grpc.url: arcana-repository:9091
+  # Headless Services (see services.yaml): DNS returns every pod so the client's
+  # round_robin policy balances per request instead of pinning to one pod.
+  service.grpc.url: dns:///arcana-service-grpc:9090
+  repository.grpc.url: dns:///arcana-repository-grpc:9091
