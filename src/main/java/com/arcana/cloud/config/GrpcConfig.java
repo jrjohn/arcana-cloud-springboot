@@ -99,13 +99,36 @@ public class GrpcConfig {
 
     /**
      * Creates a managed gRPC channel with configured resilience and security settings.
+     *
+     * <p>The target is normalized to an explicit {@code dns:///} URI when it has no scheme,
+     * so the DNS resolver returns every address behind the name (e.g. a Kubernetes headless
+     * Service) and the {@code round_robin} policy spreads calls across all of them.</p>
      */
-    private ManagedChannel createChannel(String target) {
+    ManagedChannel createChannel(String rawTarget) {
+        String target = normalizeTarget(rawTarget);
         if (tlsEnabled) {
             return createSecureChannel(target);
         } else {
             return createPlaintextChannel(target);
         }
+    }
+
+    /**
+     * Returns {@code dns:///host:port} for a scheme-less {@code host:port} target; targets that
+     * already carry a scheme (e.g. {@code dns:///}, {@code static://}, {@code unix:}) are kept.
+     *
+     * <p>grpc-java would fall back to DNS for {@code host:port} anyway, but only after trying to
+     * parse {@code host} as a URI scheme; spelling the scheme out makes the resolver explicit.</p>
+     */
+    static String normalizeTarget(String target) {
+        if (target == null) {
+            return null;
+        }
+        String trimmed = target.trim();
+        if (trimmed.isEmpty() || trimmed.contains("://") || trimmed.startsWith("unix:")) {
+            return trimmed;
+        }
+        return "dns:///" + trimmed;
     }
 
     /**
@@ -144,9 +167,12 @@ public class GrpcConfig {
                 .defaultServiceConfig(getDefaultServiceConfig())
                 .build();
 
-        } catch (SSLException e) {
-            log.error("Failed to create secure gRPC channel, falling back to plaintext", e);
-            return createPlaintextChannel(target);
+        } catch (SSLException | IllegalArgumentException e) {
+            // Never fall back to plaintext: TLS was explicitly requested, and a silent downgrade
+            // would send every inter-tier call (credentials, user data) unencrypted.
+            throw new IllegalStateException(
+                "gRPC TLS is enabled (grpc.client.tls.enabled=true) but the TLS context for '"
+                    + target + "' could not be built: " + e.getMessage(), e);
         }
     }
 
@@ -156,27 +182,40 @@ public class GrpcConfig {
     private SslContext buildSslContext() throws SSLException {
         SslContextBuilder builder = GrpcSslContexts.forClient();
 
+        // A configured path that does not exist is a misconfiguration, not a reason to quietly use
+        // the JVM's default trust store (trust cert) or drop mutual TLS (client cert/key).
+
         // Trust certificate (CA certificate for server verification)
-        if (trustCertPath != null && !trustCertPath.isEmpty()) {
-            File trustCert = new File(trustCertPath);
-            if (trustCert.exists()) {
-                builder.trustManager(trustCert);
-                log.info("Loaded trust certificate from: {}", trustCertPath);
-            }
+        if (isSet(trustCertPath)) {
+            builder.trustManager(requireFile("grpc.client.tls.trust-cert-path", trustCertPath));
+            log.info("Loaded trust certificate from: {}", trustCertPath);
         }
 
-        // Client certificate and key (for mTLS)
-        if (clientCertPath != null && !clientCertPath.isEmpty()
-            && clientKeyPath != null && !clientKeyPath.isEmpty()) {
-            File clientCert = new File(clientCertPath);
-            File clientKey = new File(clientKeyPath);
-            if (clientCert.exists() && clientKey.exists()) {
-                builder.keyManager(clientCert, clientKey);
-                log.info("Loaded client certificate for mTLS from: {}", clientCertPath);
-            }
+        // Client certificate and key (for mTLS) — both or neither
+        if (isSet(clientCertPath) != isSet(clientKeyPath)) {
+            throw new IllegalStateException(
+                "mTLS needs both grpc.client.tls.client-cert-path and grpc.client.tls.client-key-path"
+                    + " (only one is set)");
+        }
+        if (isSet(clientCertPath)) {
+            builder.keyManager(requireFile("grpc.client.tls.client-cert-path", clientCertPath),
+                requireFile("grpc.client.tls.client-key-path", clientKeyPath));
+            log.info("Loaded client certificate for mTLS from: {}", clientCertPath);
         }
 
         return builder.build();
+    }
+
+    private static boolean isSet(String path) {
+        return path != null && !path.isBlank();
+    }
+
+    private static File requireFile(String property, String path) {
+        File file = new File(path);
+        if (!file.isFile()) {
+            throw new IllegalStateException(property + " points to a missing file: " + path);
+        }
+        return file;
     }
 
     /**

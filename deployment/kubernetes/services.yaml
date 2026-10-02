@@ -56,3 +56,47 @@ spec:
     port: 9091
     targetPort: 9091
   type: ClusterIP
+
+---
+# Headless Service for service-tier gRPC (controller -> service).
+# clusterIP: None makes DNS return one A record per ready pod instead of a single
+# virtual IP, so the client's round_robin policy opens a connection to every pod
+# and balances per request. Through the ClusterIP Service above, kube-proxy only
+# balances per connection, and gRPC keeps one long-lived HTTP/2 connection, so all
+# calls from a controller pod would pin to a single service pod.
+# The ClusterIP Service above stays for HTTP clients.
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-service-grpc
+  namespace: arcana-cloud
+  labels:
+    app: arcana-service
+spec:
+  clusterIP: None
+  selector:
+    app: arcana-service
+    layer: service
+  ports:
+  - name: grpc
+    port: 9090
+    targetPort: 9090
+
+---
+# Headless Service for repository-tier gRPC (service -> repository). See above.
+apiVersion: v1
+kind: Service
+metadata:
+  name: arcana-repository-grpc
+  namespace: arcana-cloud
+  labels:
+    app: arcana-repository
+spec:
+  clusterIP: None
+  selector:
+    app: arcana-repository
+    layer: repository
+  ports:
+  - name: grpc
+    port: 9091
+    targetPort: 9091

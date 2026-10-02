@@ -34,7 +34,7 @@ spec:
           value: "service"
         - name: SERVER_PORT
           value: "8081"
-        - name: GRPC_SERVER_PORT
+        - name: SPRING_GRPC_SERVER_PORT
           value: "9090"
         - name: COMMUNICATION_PROTOCOL
           valueFrom:
