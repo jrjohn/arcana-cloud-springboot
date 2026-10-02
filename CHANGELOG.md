@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.44](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.43...v1.2.44) (2026-10-02)
+
+
+### Bug Fixes
+
+* **grpc:** balance inter-tier gRPC across replicas; fix repository port; TLS fails fast ([#197](https://github.com/jrjohn/arcana-cloud-springboot/issues/197)) ([2ef473e](https://github.com/jrjohn/arcana-cloud-springboot/commit/2ef473e00433f6188fd0599b22ffa83fa32e07ba))
+
 ## [1.2.43](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.42...v1.2.43) (2026-10-02)
 
 
