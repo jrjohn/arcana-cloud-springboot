@@ -1,6 +1,5 @@
 package com.arcana.cloud.service.grpc;
 
-import com.arcana.cloud.dao.UserDao;
 import com.arcana.cloud.entity.User;
 import com.arcana.cloud.entity.UserRole;
 import com.arcana.cloud.grpc.CreateUserRequest;
@@ -18,10 +17,13 @@ import com.arcana.cloud.grpc.PageInfo;
 import com.arcana.cloud.grpc.UpdateUserRequest;
 import com.arcana.cloud.grpc.UserResponse;
 import com.arcana.cloud.grpc.UserServiceGrpc;
+import com.arcana.cloud.repository.UserRepository;
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,8 +34,15 @@ import java.time.format.DateTimeFormatter;
 /**
  * gRPC server for UserService — Repository layer.
  * Active only in the repository layer of the 3-layer deployment (deployment.layer=repository).
- * Exposes raw data-access operations over gRPC for the service layer to consume.
- * Backed directly by UserDao (JPA/MyBatis).
+ * Exposes data-access operations over gRPC for the service layer to consume.
+ *
+ * <p>Goes through {@link UserRepository} like every other caller instead of reaching past it to
+ * UserDao (arch-qube layer-direction: a class under service/ must not skip the repository layer).
+ * On this node {@code repository.mode} is {@code direct} (the default), so UserRepository resolves
+ * to the JPA / MyBatis / MongoDB implementation, each of which only delegates to UserDao —
+ * behaviour is unchanged. If this node were started with {@code repository.mode=grpc},
+ * UserRepository would be the gRPC client and every call would loop back to this server, so
+ * startup is refused instead (see {@link #requireDirectRepository(String)}).</p>
  */
 @Service
 @RequiredArgsConstructor
@@ -45,14 +54,35 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
     private static final String USER_NOT_FOUND_MSG = "User not found";
     private static final String INTERNAL_ERROR_MSG = "Internal error";
 
-    private final UserDao userDao;
+    private final UserRepository userRepository;
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+
+    @Value("${repository.mode:direct}")
+    private String repositoryMode = "direct";
+
+    @PostConstruct
+    void checkRepositoryMode() {
+        requireDirectRepository(repositoryMode);
+    }
+
+    /**
+     * The repository layer must read its own data store. With repository.mode=grpc its
+     * UserRepository is the gRPC client for this very server: an infinite call loop.
+     */
+    static void requireDirectRepository(String mode) {
+        if ("grpc".equalsIgnoreCase(mode)) {
+            throw new IllegalStateException(
+                "deployment.layer=repository cannot run with repository.mode=grpc: UserRepository "
+                    + "would be the gRPC client of this server and every call would loop back to it. "
+                    + "Leave repository.mode unset (direct) on the repository layer.");
+        }
+    }
 
     @Override
     public void getUser(GetUserRequest request, StreamObserver<UserResponse> responseObserver) {
         try {
             log.debug("gRPC Repository: Getting user by id={}", request.getUserId());
-            userDao.findById(request.getUserId())
+            userRepository.findById(request.getUserId())
                 .map(this::toGrpcResponse)
                 .ifPresentOrElse(
                     resp -> {
@@ -75,7 +105,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
     public void getUserByUsername(GetUserByUsernameRequest request, StreamObserver<UserResponse> responseObserver) {
         try {
             log.debug("gRPC Repository: Getting user by username={}", request.getUsername());
-            userDao.findByUsername(request.getUsername())
+            userRepository.findByUsername(request.getUsername())
                 .map(this::toGrpcResponse)
                 .ifPresentOrElse(
                     resp -> {
@@ -98,7 +128,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
     public void getUserByEmail(GetUserByEmailRequest request, StreamObserver<UserResponse> responseObserver) {
         try {
             log.debug("gRPC Repository: Getting user by email={}", request.getEmail());
-            userDao.findByEmail(request.getEmail())
+            userRepository.findByEmail(request.getEmail())
                 .map(this::toGrpcResponse)
                 .ifPresentOrElse(
                     resp -> {
@@ -128,7 +158,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
                 .firstName(request.getFirstName().isEmpty() ? null : request.getFirstName())
                 .lastName(request.getLastName().isEmpty() ? null : request.getLastName())
                 .build();
-            User saved = userDao.save(user);
+            User saved = userRepository.save(user);
             responseObserver.onNext(toGrpcResponse(saved));
             responseObserver.onCompleted();
         } catch (Exception e) {
@@ -143,7 +173,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
     public void updateUser(UpdateUserRequest request, StreamObserver<UserResponse> responseObserver) {
         try {
             log.debug("gRPC Repository: Updating user id={}", request.getUserId());
-            User existing = userDao.findById(request.getUserId())
+            User existing = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException(USER_NOT_FOUND_MSG));
 
             if (request.hasUsername()) existing.setUsername(request.getUsername());
@@ -154,7 +184,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
             if (request.hasIsActive()) existing.setIsActive(request.getIsActive());
             if (request.hasIsVerified()) existing.setIsVerified(request.getIsVerified());
 
-            User saved = userDao.save(existing);
+            User saved = userRepository.save(existing);
             responseObserver.onNext(toGrpcResponse(saved));
             responseObserver.onCompleted();
         } catch (Exception e) {
@@ -169,7 +199,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
     public void deleteUser(DeleteUserRequest request, StreamObserver<DeleteUserResponse> responseObserver) {
         try {
             log.debug("gRPC Repository: Deleting user id={}", request.getUserId());
-            userDao.deleteById(request.getUserId());
+            userRepository.deleteById(request.getUserId());
             responseObserver.onNext(DeleteUserResponse.newBuilder()
                 .setSuccess(true)
                 .setMessage("User deleted successfully")
@@ -189,7 +219,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
             log.debug("gRPC Repository: Listing users page={}, size={}", request.getPage(), request.getSize());
             int size = request.getSize() > 0 ? request.getSize() : 20;
             PageRequest pageRequest = PageRequest.of(request.getPage(), size);
-            Page<User> usersPage = userDao.findAll(pageRequest);
+            Page<User> usersPage = userRepository.findAll(pageRequest);
 
             ListUsersResponse.Builder builder = ListUsersResponse.newBuilder();
             usersPage.getContent().forEach(user -> builder.addUsers(toGrpcResponse(user)));
@@ -213,7 +243,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
     @Override
     public void existsByUsername(ExistsByUsernameRequest request, StreamObserver<ExistsResponse> responseObserver) {
         try {
-            boolean exists = userDao.existsByUsername(request.getUsername());
+            boolean exists = userRepository.existsByUsername(request.getUsername());
             responseObserver.onNext(ExistsResponse.newBuilder().setExists(exists).build());
             responseObserver.onCompleted();
         } catch (Exception e) {
@@ -227,7 +257,7 @@ public class UserGrpcRepositoryService extends UserServiceGrpc.UserServiceImplBa
     @Override
     public void existsByEmail(ExistsByEmailRequest request, StreamObserver<ExistsResponse> responseObserver) {
         try {
-            boolean exists = userDao.existsByEmail(request.getEmail());
+            boolean exists = userRepository.existsByEmail(request.getEmail());
             responseObserver.onNext(ExistsResponse.newBuilder().setExists(exists).build());
             responseObserver.onCompleted();
         } catch (Exception e) {
