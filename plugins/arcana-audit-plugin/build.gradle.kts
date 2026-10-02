@@ -33,7 +33,7 @@ dependencies {
     // Spring (provided by host)
     compileOnly("org.springframework:spring-web:7.0.8")
     compileOnly("org.springframework:spring-context:7.0.8")
-    compileOnly("org.springframework.data:spring-data-jpa:4.1.0")
+    compileOnly("org.springframework.data:spring-data-jpa:4.1.1")
 
     // Logging
     compileOnly("org.slf4j:slf4j-api:2.0.20")
