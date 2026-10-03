@@ -31,8 +31,8 @@ dependencies {
     compileOnly("jakarta.validation:jakarta.validation-api:3.1.1")
 
     // Spring (provided by host)
-    compileOnly("org.springframework:spring-web:7.0.8")
-    compileOnly("org.springframework:spring-context:7.0.8")
+    compileOnly("org.springframework:spring-web:7.0.9")
+    compileOnly("org.springframework:spring-context:7.0.9")
     compileOnly("org.springframework.data:spring-data-jpa:4.1.1")
 
     // Logging
