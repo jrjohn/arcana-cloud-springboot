@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.47](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.46...v1.2.47) (2026-10-03)
+
+
+### Bug Fixes
+
+* **deps:** update eclipse-temurin docker tag to v27 ([#203](https://github.com/jrjohn/arcana-cloud-springboot/issues/203)) ([6e9e943](https://github.com/jrjohn/arcana-cloud-springboot/commit/6e9e9437a47eaab1051929a1a929f1eccc966b82))
+
 ## [1.2.46](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.45...v1.2.46) (2026-10-03)
 
 
