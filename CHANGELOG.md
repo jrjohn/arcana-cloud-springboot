@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.46](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.45...v1.2.46) (2026-10-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency postcss to v8.5.28 ([#201](https://github.com/jrjohn/arcana-cloud-springboot/issues/201)) ([f695c33](https://github.com/jrjohn/arcana-cloud-springboot/commit/f695c332b6a80c58fe6e4fea1e783385a0bf1cab))
+
 ## [1.2.45](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.44...v1.2.45) (2026-10-02)
 
 
