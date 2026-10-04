@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.48](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.47...v1.2.48) (2026-10-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zustand to v5.0.15 ([#205](https://github.com/jrjohn/arcana-cloud-springboot/issues/205)) ([2a0eeb9](https://github.com/jrjohn/arcana-cloud-springboot/commit/2a0eeb9126a1a8c89e44f6e0140f4daa97c52511))
+* **deps:** update spring core to v7.0.9 ([#206](https://github.com/jrjohn/arcana-cloud-springboot/issues/206)) ([73c6bd2](https://github.com/jrjohn/arcana-cloud-springboot/commit/73c6bd290177464117b910c40340363bfc76138f))
+
 ## [1.2.47](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.46...v1.2.47) (2026-10-03)
 
 
