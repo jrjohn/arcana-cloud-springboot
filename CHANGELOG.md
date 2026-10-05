@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.51](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.50...v1.2.51) (2026-10-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tanstack/react-query to v5.104.1 ([#214](https://github.com/jrjohn/arcana-cloud-springboot/issues/214)) ([ac39694](https://github.com/jrjohn/arcana-cloud-springboot/commit/ac396949f1af59aac3d1b7261c53287f1e547933))
+* **deps:** update dependency postcss to v8.5.29 ([#213](https://github.com/jrjohn/arcana-cloud-springboot/issues/213)) ([46b8867](https://github.com/jrjohn/arcana-cloud-springboot/commit/46b88677b2333b501ef07c335d5f94a3f4e83bd1))
+
 ## [1.2.50](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.49...v1.2.50) (2026-10-05)
 
 
