@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.52](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.51...v1.2.52) (2026-10-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/node to v24.19.1 ([#216](https://github.com/jrjohn/arcana-cloud-springboot/issues/216)) ([6ce5a1e](https://github.com/jrjohn/arcana-cloud-springboot/commit/6ce5a1e73e71debb639f8da93d83a551929ca83d))
+* **deps:** update dependency autoprefixer to v10.6.1 ([#217](https://github.com/jrjohn/arcana-cloud-springboot/issues/217)) ([129e200](https://github.com/jrjohn/arcana-cloud-springboot/commit/129e200146291444006f76900e44b7a93a824bb0))
+
 ## [1.2.51](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.50...v1.2.51) (2026-10-05)
 
 
