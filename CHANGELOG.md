@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.53](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.52...v1.2.53) (2026-10-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v1.20.0 ([#219](https://github.com/jrjohn/arcana-cloud-springboot/issues/219)) ([8146a8a](https://github.com/jrjohn/arcana-cloud-springboot/commit/8146a8acd4b03276b55c6bedd4c4d6aeeefb5107))
+* **deps:** update dependency com.google.protobuf:protobuf-java to v4.36.2 ([#220](https://github.com/jrjohn/arcana-cloud-springboot/issues/220)) ([dc08bf8](https://github.com/jrjohn/arcana-cloud-springboot/commit/dc08bf81e5560aae5317b6c13c2d3876e64e9731))
+
 ## [1.2.52](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.51...v1.2.52) (2026-10-06)
 
 
