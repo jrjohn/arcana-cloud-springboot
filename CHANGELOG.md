@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.55](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.54...v1.2.55) (2026-10-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.squareup.okhttp3:mockwebserver to v5.5.0 ([#222](https://github.com/jrjohn/arcana-cloud-springboot/issues/222)) ([014e6da](https://github.com/jrjohn/arcana-cloud-springboot/commit/014e6dae366dcb50be89ccbe851037791d3f732e))
+
 ## [1.2.54](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.53...v1.2.54) (2026-10-07)
 
 
