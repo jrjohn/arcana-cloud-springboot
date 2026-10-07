@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.54](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.53...v1.2.54) (2026-10-07)
+
+
+### Bug Fixes
+
+* **deps:** update dependency com.squareup.okhttp3:okhttp to v5.5.0 ([#223](https://github.com/jrjohn/arcana-cloud-springboot/issues/223)) ([3b8b3b0](https://github.com/jrjohn/arcana-cloud-springboot/commit/3b8b3b041ebeca5588a04dcc6ee65da83af4be91))
+
 ## [1.2.53](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.52...v1.2.53) (2026-10-06)
 
 
