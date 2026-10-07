@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.56](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.55...v1.2.56) (2026-10-07)
+
+
+### Bug Fixes
+
+* **deps:** update angular-cli monorepo to v22.2.2 ([#226](https://github.com/jrjohn/arcana-cloud-springboot/issues/226)) ([f4af1a2](https://github.com/jrjohn/arcana-cloud-springboot/commit/f4af1a2fd8bc4e9365436daebd3e50accd352f2d))
+* **deps:** update dependency eslint to v10.12.0 ([#227](https://github.com/jrjohn/arcana-cloud-springboot/issues/227)) ([e30b62c](https://github.com/jrjohn/arcana-cloud-springboot/commit/e30b62c72c7621dea0ed002d44b80fcb6560e451))
+
 ## [1.2.55](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.54...v1.2.55) (2026-10-07)
 
 
