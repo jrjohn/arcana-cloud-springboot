@@ -49,7 +49,7 @@ dependencyManagement {
         // 4.12.0, downgrading mockwebserver3's okhttp at runtime -> NoClassDefFoundError at
         // MockWebServer.kt:100 (delegate.url). okhttp is test-only here (no src/main usage),
         // so align it to 5.x to match the bumped mockwebserver.
-        dependency("com.squareup.okhttp3:okhttp:5.4.0")
+        dependency("com.squareup.okhttp3:okhttp:5.5.0")
     }
 }
 
