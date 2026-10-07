@@ -48,7 +48,10 @@ dependencyManagement {
         // spring-cloud-dependencies (via a nested BOM) pins com.squareup.okhttp3:okhttp to
         // 4.12.0, downgrading mockwebserver3's okhttp at runtime -> NoClassDefFoundError at
         // MockWebServer.kt:100 (delegate.url). okhttp is test-only here (no src/main usage),
-        // so align it to 5.x to match the bumped mockwebserver.
+        // so align it to the same version as the mockwebserver testImplementation below —
+        // keep these two in lockstep on every mockwebserver bump (NoSuchMethodError at
+        // MockWebServer.kt:331 if they drift, as happened bumping mockwebserver 5.4.0->5.5.0
+        // while this stayed pinned at 5.4.0).
         dependency("com.squareup.okhttp3:okhttp:5.5.0")
     }
 }
@@ -121,7 +124,7 @@ dependencies {
     // Plugin testing dependencies
     testImplementation(project(":arcana-plugin-api"))
     testImplementation(project(":arcana-plugin-runtime"))
-    testImplementation("com.squareup.okhttp3:mockwebserver:5.4.0")
+    testImplementation("com.squareup.okhttp3:mockwebserver:5.5.0")
     // Real gRPC in-process transport for integration tests (no mock StreamObserver)
     testImplementation("io.grpc:grpc-inprocess:${grpcVersion}")
     testImplementation("io.grpc:grpc-testing:${grpcVersion}")
