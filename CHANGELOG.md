@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.57](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.56...v1.2.57) (2026-10-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency karma-jasmine-html-reporter to v2.3.0 ([#230](https://github.com/jrjohn/arcana-cloud-springboot/issues/230)) ([d215ad1](https://github.com/jrjohn/arcana-cloud-springboot/commit/d215ad110da4918246e314f098be6c2dbb5b7bb6))
+* **deps:** update dependency org.postgresql:postgresql to v42.7.14 ([#229](https://github.com/jrjohn/arcana-cloud-springboot/issues/229)) ([5ec9bc1](https://github.com/jrjohn/arcana-cloud-springboot/commit/5ec9bc12ca4135e4d038ad9685a5b00f571a1e57))
+
 ## [1.2.56](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.55...v1.2.56) (2026-10-07)
 
 
