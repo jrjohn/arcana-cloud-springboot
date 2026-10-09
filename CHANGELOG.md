@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.59](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.58...v1.2.59) (2026-10-09)
+
+
+### Bug Fixes
+
+* **deps:** update angular monorepo to v22.2.2 ([#235](https://github.com/jrjohn/arcana-cloud-springboot/issues/235)) ([2d87626](https://github.com/jrjohn/arcana-cloud-springboot/commit/2d876266885fd31231283d2531b0f9491b2abd03))
+* **deps:** update dependency org.graalvm.polyglot:polyglot to v25.4.4.1.1 ([#236](https://github.com/jrjohn/arcana-cloud-springboot/issues/236)) ([339186b](https://github.com/jrjohn/arcana-cloud-springboot/commit/339186b11a98513bb35bf0287c45fffd0acde938))
+
 ## [1.2.58](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.57...v1.2.58) (2026-10-08)
 
 
