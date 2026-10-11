@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.63](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.62...v1.2.63) (2026-10-11)
+
+
+### Bug Fixes
+
+* **deps:** update dependency tslib to v2.8.1 ([#246](https://github.com/jrjohn/arcana-cloud-springboot/issues/246)) ([0ca6754](https://github.com/jrjohn/arcana-cloud-springboot/commit/0ca6754a35a105e5581db41a9fe672472309d41f))
+* **deps:** update dependency zod to v4.6.5 ([#247](https://github.com/jrjohn/arcana-cloud-springboot/issues/247)) ([487c7e3](https://github.com/jrjohn/arcana-cloud-springboot/commit/487c7e3b337929142c49ce527e1c15657672aff7))
+
 ## [1.2.62](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.61...v1.2.62) (2026-10-10)
 
 
