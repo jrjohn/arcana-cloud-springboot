@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.64](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.63...v1.2.64) (2026-10-11)
+
+
+### Bug Fixes
+
+* **deps:** update jest monorepo to v30.5.2 ([#250](https://github.com/jrjohn/arcana-cloud-springboot/issues/250)) ([c018579](https://github.com/jrjohn/arcana-cloud-springboot/commit/c018579d358ebf595df16058bd3bb493c5b842c0))
+
 ## [1.2.63](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.62...v1.2.63) (2026-10-11)
 
 
