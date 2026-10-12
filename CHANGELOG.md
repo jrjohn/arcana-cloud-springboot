@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.67](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.66...v1.2.67) (2026-10-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency react-hook-form to v7.90.0 ([#256](https://github.com/jrjohn/arcana-cloud-springboot/issues/256)) ([84ea3a8](https://github.com/jrjohn/arcana-cloud-springboot/commit/84ea3a8330e3ab51e11aba63cdcaf9c4affce04a))
+
 ## [1.2.66](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.65...v1.2.66) (2026-10-12)
 
 
