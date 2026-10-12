@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.66](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.65...v1.2.66) (2026-10-12)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tanstack/react-query to v5.104.2 ([#253](https://github.com/jrjohn/arcana-cloud-springboot/issues/253)) ([927b745](https://github.com/jrjohn/arcana-cloud-springboot/commit/927b745ef65b04d07a67c0e832fb91541ebb212b))
+* **deps:** update dependency zod to v4.6.6 ([#254](https://github.com/jrjohn/arcana-cloud-springboot/issues/254)) ([ea73f57](https://github.com/jrjohn/arcana-cloud-springboot/commit/ea73f57572e686ae85a8475d8c3f5372fed72979))
+
 ## [1.2.65](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.64...v1.2.65) (2026-10-11)
 
 
