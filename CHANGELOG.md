@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.68](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.67...v1.2.68) (2026-10-12)
+
+
+### Bug Fixes
+
+* **deps:** update grpc-java monorepo to v1.84.2 ([#257](https://github.com/jrjohn/arcana-cloud-springboot/issues/257)) ([2c16ff7](https://github.com/jrjohn/arcana-cloud-springboot/commit/2c16ff75c83e70fbcabc1af943e90eab967183ad))
+
 ## [1.2.67](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.66...v1.2.67) (2026-10-12)
 
 
