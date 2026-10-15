@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.75](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.74...v1.2.75) (2026-10-15)
+
+
+### Bug Fixes
+
+* **ci:** block io.grpc Renovate bumps past the spring-grpc 1.0.3 BOM pin ([0b2011c](https://github.com/jrjohn/arcana-cloud-springboot/commit/0b2011cef34f55029984a42e6d0b1000c81eb9c2))
+* **deps:** update react monorepo to v19.3.1 ([#274](https://github.com/jrjohn/arcana-cloud-springboot/issues/274)) ([6011d8b](https://github.com/jrjohn/arcana-cloud-springboot/commit/6011d8b5a941ab0feae0e668944811661451254a))
+
 ## [1.2.74](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.73...v1.2.74) (2026-10-14)
 
 
