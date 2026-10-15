@@ -15,6 +15,12 @@
       "matchDatasources": ["maven"],
       "matchPackageNames": ["org.testcontainers:**"],
       "allowedVersions": "<2"
+    },
+    {
+      "description": "gradle/libs.versions.toml pins grpc.version=1.77.1 to match the io.grpc version managed by the spring-grpc-dependencies 1.0.3 BOM. Forcing a newer io.grpc only upgrades the directly-declared artifacts (grpc-stub/-protobuf/-netty-shaded); transitive grpc-api/-core stay at 1.77.1, and the resulting ABI skew throws AbstractMethodError in the in-process gRPC tests (6+ recurrences: PR-249/257/264/267/271/275, each confirmed by the same test failure signature). Block io.grpc bumps until spring-grpc-dependencies is upgraded off 1.0.3 (1.1.1+ no longer pins grpc.version in its BOM at all, so that upgrade needs its own compatibility pass); remove this rule then.",
+      "matchDatasources": ["maven"],
+      "matchPackageNames": ["io.grpc:**"],
+      "allowedVersions": "<=1.77.1"
     }
   ]
 }
