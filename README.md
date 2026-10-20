@@ -68,10 +68,10 @@ flowchart TB
     end
 
     subgraph Data["Data Layer"]
-        MYSQL[(MySQL 8.0)]
+        MYSQL[(MySQL 26.7)]
         PGSQL[(PostgreSQL)]
         MONGO[(MongoDB)]
-        REDIS[(Redis 7.0)]
+        REDIS[(Redis 8.10)]
     end
 
     WEB --> SSR
@@ -507,7 +507,7 @@ sequenceDiagram
 - Gradle 9.2.1+
 - Docker & Docker Compose
 - Node.js 20+ (for web apps)
-- MySQL 8.0+ / Redis 7.0+
+- MySQL 26.7+ / Redis 8.10+
 
 ### IDE Setup (Eclipse)
 
