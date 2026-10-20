@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.77](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.76...v1.2.77) (2026-10-20)
+
+
+### Bug Fixes
+
+* **deps:** update angular monorepo to v22.2.3 ([#277](https://github.com/jrjohn/arcana-cloud-springboot/issues/277)) ([f5c700e](https://github.com/jrjohn/arcana-cloud-springboot/commit/f5c700ee2172a3776e533b817d2a6f0642903049))
+* **deps:** update dependency @hookform/resolvers to v5.9.2 ([#280](https://github.com/jrjohn/arcana-cloud-springboot/issues/280)) ([e162c7b](https://github.com/jrjohn/arcana-cloud-springboot/commit/e162c7b8e6abd18cbaa5794334a5b51fc6ee4e2a))
+
 ## [1.2.76](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.75...v1.2.76) (2026-10-17)
 
 
