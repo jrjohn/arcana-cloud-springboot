@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.80](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.79...v1.2.80) (2026-10-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency lucide-react to v1.61.0 ([#288](https://github.com/jrjohn/arcana-cloud-springboot/issues/288)) ([8f25b41](https://github.com/jrjohn/arcana-cloud-springboot/commit/8f25b414914965eb1ad7a8252cd7ec0e6b38df86))
+* **deps:** update mybatis.spring.boot to v4.1.0 ([#289](https://github.com/jrjohn/arcana-cloud-springboot/issues/289)) ([3ffaf5f](https://github.com/jrjohn/arcana-cloud-springboot/commit/3ffaf5f377f895dbd87ca257f8317c77d25b2ff1))
+
 ## [1.2.79](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.78...v1.2.79) (2026-10-21)
 
 
