@@ -37,7 +37,7 @@ checkstyle = "13.4.2"
 resilience4j = "2.4.0"
 
 # MyBatis (4.0.0 for Spring Boot 4.0)
-mybatis-spring-boot = "4.0.1"
+mybatis-spring-boot = "4.1.0"
 
 # Additional Databases
 postgresql = "42.7.14"
