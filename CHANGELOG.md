@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.79](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.78...v1.2.79) (2026-10-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint to v10.13.0 ([#286](https://github.com/jrjohn/arcana-cloud-springboot/issues/286)) ([48cb169](https://github.com/jrjohn/arcana-cloud-springboot/commit/48cb169bf93c47ea694092d952ddb1fca8ba1ea3))
+* **deps:** update dependency postcss to v8.5.31 ([#285](https://github.com/jrjohn/arcana-cloud-springboot/issues/285)) ([7caa769](https://github.com/jrjohn/arcana-cloud-springboot/commit/7caa769b697d34d798260c0e1703659d52feffdc))
+
 ## [1.2.78](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.77...v1.2.78) (2026-10-20)
 
 
