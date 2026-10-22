@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.81](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.80...v1.2.81) (2026-10-22)
+
+
+### Bug Fixes
+
+* **deps:** update mysql docker tag to v26.10 ([#291](https://github.com/jrjohn/arcana-cloud-springboot/issues/291)) ([637c6cc](https://github.com/jrjohn/arcana-cloud-springboot/commit/637c6cc4970ec7ec438f96a67f422136ff869abd))
+* **deps:** update nextjs monorepo to v16.4.2 ([#292](https://github.com/jrjohn/arcana-cloud-springboot/issues/292)) ([e3ca739](https://github.com/jrjohn/arcana-cloud-springboot/commit/e3ca7399abd844981d1e99d59c014b45f1406d95))
+
 ## [1.2.80](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.79...v1.2.80) (2026-10-21)
 
 
