@@ -52,7 +52,7 @@ dependencyManagement {
         // keep these two in lockstep on every mockwebserver bump (NoSuchMethodError at
         // MockWebServer.kt:331 if they drift, as happened bumping mockwebserver 5.4.0->5.5.0
         // while this stayed pinned at 5.4.0).
-        dependency("com.squareup.okhttp3:okhttp:5.5.0")
+        dependency("com.squareup.okhttp3:okhttp:5.5.1")
     }
 }
 
