@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.84](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.83...v1.2.84) (2026-10-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency org.springframework.cloud:spring-cloud-dependencies to v2025.1.4 ([#300](https://github.com/jrjohn/arcana-cloud-springboot/issues/300)) ([122f3e5](https://github.com/jrjohn/arcana-cloud-springboot/commit/122f3e58700587ee920139aa62711019259a126f))
+* **deps:** update dependency org.springframework.data:spring-data-jpa to v4.1.2 ([#301](https://github.com/jrjohn/arcana-cloud-springboot/issues/301)) ([fb446cd](https://github.com/jrjohn/arcana-cloud-springboot/commit/fb446cdd776451a80f6315b5cbe01df62d7ccc54))
+
 ## [1.2.83](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.82...v1.2.83) (2026-10-23)
 
 
