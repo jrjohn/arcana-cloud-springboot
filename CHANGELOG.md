@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.86](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.85...v1.2.86) (2026-10-24)
+
+
+### Bug Fixes
+
+* **deps:** update spring core to v7.0.10 ([#306](https://github.com/jrjohn/arcana-cloud-springboot/issues/306)) ([d5c8376](https://github.com/jrjohn/arcana-cloud-springboot/commit/d5c8376e0db07c3dac0b281782c349a61a99426f))
+
 ## [1.2.85](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.84...v1.2.85) (2026-10-24)
 
 
