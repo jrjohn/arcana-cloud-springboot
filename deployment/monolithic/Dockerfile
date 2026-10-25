@@ -1,5 +1,5 @@
 # Multi-stage build for Monolithic Mode
-FROM gradle:8.14-jdk21 AS build
+FROM gradle:9.8-jdk21 AS build
 
 WORKDIR /app
 COPY build.gradle.kts settings.gradle.kts gradle.properties ./
