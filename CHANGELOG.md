@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.88](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.87...v1.2.88) (2026-10-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency react-hook-form to v7.91.0 ([#311](https://github.com/jrjohn/arcana-cloud-springboot/issues/311)) ([73e95ef](https://github.com/jrjohn/arcana-cloud-springboot/commit/73e95efbe8ec2bb2b7a43c21fa352471f1d85475))
+* **deps:** update plugin biz.aqute.bnd.builder to v7.4.0 ([#312](https://github.com/jrjohn/arcana-cloud-springboot/issues/312)) ([c4daf1e](https://github.com/jrjohn/arcana-cloud-springboot/commit/c4daf1e8064552aec7b3516a6a1a9abfb869c5a8))
+
 ## [1.2.87](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.86...v1.2.87) (2026-10-25)
 
 
