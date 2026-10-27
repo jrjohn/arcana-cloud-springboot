@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.91](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.90...v1.2.91) (2026-10-27)
+
+
+### Bug Fixes
+
+* **deps:** update dependency autoprefixer to v10.6.2 ([#318](https://github.com/jrjohn/arcana-cloud-springboot/issues/318)) ([1854340](https://github.com/jrjohn/arcana-cloud-springboot/commit/18543400d42cae9fb8953f4e19e01f9854f24452))
+* **deps:** update dependency postcss to v8.5.32 ([#319](https://github.com/jrjohn/arcana-cloud-springboot/issues/319)) ([8930ca0](https://github.com/jrjohn/arcana-cloud-springboot/commit/8930ca0f96dd31a66588531a44d1fb132d49a6ef))
+
 ## [1.2.90](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.89...v1.2.90) (2026-10-26)
 
 
