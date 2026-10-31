@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.100](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.99...v1.2.100) (2026-10-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @hookform/resolvers to v7 ([#341](https://github.com/jrjohn/arcana-cloud-springboot/issues/341)) ([76560b7](https://github.com/jrjohn/arcana-cloud-springboot/commit/76560b70f96c9c2402458de5bc7c2a27496b1b64))
+* **deps:** update dependency lucide-react to v1.66.0 ([#342](https://github.com/jrjohn/arcana-cloud-springboot/issues/342)) ([7e65b8a](https://github.com/jrjohn/arcana-cloud-springboot/commit/7e65b8a996bddcc522f00e13a242ca65056ab981))
+
 ## [1.2.99](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.98...v1.2.99) (2026-10-31)
 
 
