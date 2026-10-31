@@ -68,7 +68,7 @@ flowchart TB
     end
 
     subgraph Data["Data Layer"]
-        MYSQL[(MySQL 26.7)]
+        MYSQL[(MySQL 26.10)]
         PGSQL[(PostgreSQL)]
         MONGO[(MongoDB)]
         REDIS[(Redis 8.10)]
@@ -507,7 +507,7 @@ sequenceDiagram
 - Gradle 9.8.2+
 - Docker & Docker Compose
 - Node.js 20+ (for web apps)
-- MySQL 26.7+ / Redis 8.10+
+- MySQL 26.10+ / Redis 8.10+
 
 ### IDE Setup (Eclipse)
 
