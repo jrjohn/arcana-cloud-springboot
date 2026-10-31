@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.99](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.98...v1.2.99) (2026-10-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint to v10.14.0 ([#338](https://github.com/jrjohn/arcana-cloud-springboot/issues/338)) ([d3676d7](https://github.com/jrjohn/arcana-cloud-springboot/commit/d3676d7395a08512ef35c8fabdb93b23219d2717))
+* **deps:** update dependency tslib to v2.9.1 ([#339](https://github.com/jrjohn/arcana-cloud-springboot/issues/339)) ([597a4c0](https://github.com/jrjohn/arcana-cloud-springboot/commit/597a4c0bca31681a50477d1dd5761cdc8ce3acb6))
+
 ## [1.2.98](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.97...v1.2.98) (2026-10-30)
 
 
