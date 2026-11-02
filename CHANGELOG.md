@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.102](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.101...v1.2.102) (2026-11-02)
+
+
+### Bug Fixes
+
+* **deps:** update nextjs monorepo to v16.4.4 ([#347](https://github.com/jrjohn/arcana-cloud-springboot/issues/347)) ([8484528](https://github.com/jrjohn/arcana-cloud-springboot/commit/848452899d5b8241a1acac0864a3be30fb146a57))
+
 ## [1.2.101](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.100...v1.2.101) (2026-11-01)
 
 
