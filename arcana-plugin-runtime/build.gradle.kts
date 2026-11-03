@@ -37,7 +37,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
 
     // Apache Felix OSGi Framework
-    implementation("org.apache.felix:org.apache.felix.framework:7.0.5")
+    implementation("org.apache.felix:org.apache.felix.framework:8.0.0")
     implementation("org.apache.felix:org.apache.felix.scr:2.2.18")
     implementation("org.apache.felix:org.apache.felix.fileinstall:3.7.4")
     implementation("org.apache.felix:org.apache.felix.configadmin:1.9.26")
