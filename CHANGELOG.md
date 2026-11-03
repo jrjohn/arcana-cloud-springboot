@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.103](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.102...v1.2.103) (2026-11-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tanstack/react-query to v5.105.3 ([#350](https://github.com/jrjohn/arcana-cloud-springboot/issues/350)) ([05ae22a](https://github.com/jrjohn/arcana-cloud-springboot/commit/05ae22ab1028945552dc28373dcecddb90a86a8e))
+* **deps:** update dependency org.apache.felix:org.apache.felix.framework to v8 ([#349](https://github.com/jrjohn/arcana-cloud-springboot/issues/349)) ([663bf1f](https://github.com/jrjohn/arcana-cloud-springboot/commit/663bf1fa26e5654c7459f9cd2ee3212a37e03c83))
+
 ## [1.2.102](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.101...v1.2.102) (2026-11-02)
 
 
