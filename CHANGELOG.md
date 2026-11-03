@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.104](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.103...v1.2.104) (2026-11-03)
+
+
+### Bug Fixes
+
+* **deps:** update dependency lucide-react to v1.67.0 ([#353](https://github.com/jrjohn/arcana-cloud-springboot/issues/353)) ([15b7b7a](https://github.com/jrjohn/arcana-cloud-springboot/commit/15b7b7a7804e01468c3bf6daa12ac5b5db57b828))
+* **deps:** update dependency tailwindcss to v4.3.4 ([#352](https://github.com/jrjohn/arcana-cloud-springboot/issues/352)) ([bd48306](https://github.com/jrjohn/arcana-cloud-springboot/commit/bd48306632f4363c023b0e79e0be3be65d651a4f))
+
 ## [1.2.103](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.102...v1.2.103) (2026-11-03)
 
 
