@@ -4,7 +4,7 @@
 [![Java](https://img.shields.io/badge/Java-25-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
 [![Spring Boot](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/jrjohn/arcana-cloud-springboot/main/gradle/libs.versions.toml&query=%24.versions%5B%27spring-boot%27%5D&label=Spring%20Boot&color=6DB33F&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
 [![gRPC](https://img.shields.io/badge/dynamic/toml?url=https://raw.githubusercontent.com/jrjohn/arcana-cloud-springboot/main/gradle/libs.versions.toml&query=%24.versions.grpc&label=gRPC&color=00ADD8&logo=grpc&logoColor=white)](https://grpc.io/)
-[![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%207.0.5-FF6600.svg)](https://felix.apache.org/)
+[![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%208.0.0-FF6600.svg)](https://felix.apache.org/)
 [![Tests](https://img.shields.io/badge/tests-1250%2F1250_passing-brightgreen.svg)](docs/test-report/index.html)
 [![Coverage](https://img.shields.io/badge/coverage-83.7%25-brightgreen.svg)](#testing)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
@@ -870,7 +870,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-**Built with Spring Boot 4.1 | Java 25 | Spring Cloud 2025.1 | Gradle 9.8.2 | Apache Felix OSGi 7.0.5 | gRPC | GraalJS**
+**Built with Spring Boot 4.1 | Java 25 | Spring Cloud 2025.1 | Gradle 9.8.2 | Apache Felix OSGi 8.0.0 | gRPC | GraalJS**
 
 [View Test Report](docs/test-report/index.html)
 
