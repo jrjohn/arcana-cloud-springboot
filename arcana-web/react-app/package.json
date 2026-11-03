@@ -34,7 +34,7 @@
     "typescript": "7.0.2",
     "autoprefixer": "10.6.2",
     "postcss": "8.5.32",
-    "tailwindcss": "4.3.3",
+    "tailwindcss": "4.3.4",
     "@testing-library/react": "16.3.3",
     "@testing-library/jest-dom": "7.0.1",
     "jest": "30.5.2",
