@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.105](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.104...v1.2.105) (2026-11-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @hookform/resolvers to v7.0.2 ([#355](https://github.com/jrjohn/arcana-cloud-springboot/issues/355)) ([68b1ea0](https://github.com/jrjohn/arcana-cloud-springboot/commit/68b1ea0cd100b031bb4e5e47670fc915f3611c69))
+* **deps:** update nextjs monorepo to v16.4.5 ([#356](https://github.com/jrjohn/arcana-cloud-springboot/issues/356)) ([8867cc9](https://github.com/jrjohn/arcana-cloud-springboot/commit/8867cc9d0e30ab5dbef7d7eb92e77f6da0975575))
+
 ## [1.2.104](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.103...v1.2.104) (2026-11-03)
 
 
