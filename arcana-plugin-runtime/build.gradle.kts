@@ -40,7 +40,7 @@ dependencies {
     implementation("org.apache.felix:org.apache.felix.framework:8.0.0")
     implementation("org.apache.felix:org.apache.felix.scr:2.2.18")
     implementation("org.apache.felix:org.apache.felix.fileinstall:3.7.4")
-    implementation("org.apache.felix:org.apache.felix.configadmin:1.9.26")
+    implementation("org.apache.felix:org.apache.felix.configadmin:1.10.0")
 
     // OSGi API
     implementation("org.osgi:osgi.core:8.0.0")
