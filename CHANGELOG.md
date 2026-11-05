@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.107](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.106...v1.2.107) (2026-11-05)
+
+
+### Bug Fixes
+
+* **deps:** update angular-cli monorepo to v22.2.6 ([#361](https://github.com/jrjohn/arcana-cloud-springboot/issues/361)) ([3ed2490](https://github.com/jrjohn/arcana-cloud-springboot/commit/3ed249049bb63b7bddf132acc74a9fe2161d03d1))
+* **deps:** update dependency com.google.protobuf to v0.10.1 ([#362](https://github.com/jrjohn/arcana-cloud-springboot/issues/362)) ([81a16c6](https://github.com/jrjohn/arcana-cloud-springboot/commit/81a16c67e8bb9f0d8d56368876c34a345834bc52))
+
 ## [1.2.106](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.105...v1.2.106) (2026-11-04)
 
 
