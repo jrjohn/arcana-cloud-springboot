@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.108](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.107...v1.2.108) (2026-11-05)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @hookform/resolvers to v7.0.3 ([#364](https://github.com/jrjohn/arcana-cloud-springboot/issues/364)) ([6970918](https://github.com/jrjohn/arcana-cloud-springboot/commit/69709183aeb4a9a3b462f3013b6f9e02ca77d508))
+* **deps:** update dependency @tanstack/react-query to v5.106.1 ([#365](https://github.com/jrjohn/arcana-cloud-springboot/issues/365)) ([7667638](https://github.com/jrjohn/arcana-cloud-springboot/commit/7667638fdc6f8fa684c2df1ecfbc75038fc8f19d))
+
 ## [1.2.107](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.106...v1.2.107) (2026-11-05)
 
 
