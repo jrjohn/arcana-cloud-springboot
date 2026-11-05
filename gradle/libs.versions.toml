@@ -13,7 +13,7 @@ spring-cloud = "2025.1.4"
 grpc = "1.77.1"
 protobuf = "4.36.2"
 spring-grpc = "1.0.3"
-protobuf-plugin = "0.10.0"
+protobuf-plugin = "0.10.1"
 
 # JWT
 jjwt = "0.13.0"
