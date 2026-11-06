@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.110](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.109...v1.2.110) (2026-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency lucide-react to v1.70.0 ([#371](https://github.com/jrjohn/arcana-cloud-springboot/issues/371)) ([6b4ddb3](https://github.com/jrjohn/arcana-cloud-springboot/commit/6b4ddb39077e7dbcb7ffed702e742a963253b216))
+* **deps:** update dependency org.graalvm.polyglot:js to v25.5.5.0.3 ([#372](https://github.com/jrjohn/arcana-cloud-springboot/issues/372)) ([f04a4d4](https://github.com/jrjohn/arcana-cloud-springboot/commit/f04a4d4a6efccd9863ddc5e09ee0a6ddaffedbc3))
+
 ## [1.2.109](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.108...v1.2.109) (2026-11-06)
 
 
