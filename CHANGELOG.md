@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.109](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.108...v1.2.109) (2026-11-06)
+
+
+### Bug Fixes
+
+* **deps:** update dependency lucide-react to v1.69.0 ([#367](https://github.com/jrjohn/arcana-cloud-springboot/issues/367)) ([82c2160](https://github.com/jrjohn/arcana-cloud-springboot/commit/82c21604f3b2595e1a6054e93f09c550272516b5))
+* **deps:** update dependency org.apache.felix:org.apache.felix.scr to v2.3.0 ([#368](https://github.com/jrjohn/arcana-cloud-springboot/issues/368)) ([ab9444e](https://github.com/jrjohn/arcana-cloud-springboot/commit/ab9444e0058be30738041d1194c8dab8b57e754d))
+
 ## [1.2.108](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.107...v1.2.108) (2026-11-05)
 
 
