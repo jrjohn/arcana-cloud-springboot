@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.111](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.110...v1.2.111) (2026-11-07)
+
+
+### Bug Fixes
+
+* **deps:** update angular monorepo to v22.2.5 ([#374](https://github.com/jrjohn/arcana-cloud-springboot/issues/374)) ([817d019](https://github.com/jrjohn/arcana-cloud-springboot/commit/817d019d2e98a55a913611aa5cd719eb87c6349a))
+* **deps:** update dependency tailwindcss to v4.3.5 ([#375](https://github.com/jrjohn/arcana-cloud-springboot/issues/375)) ([2368284](https://github.com/jrjohn/arcana-cloud-springboot/commit/2368284d3bd502999a098798de50887894630613))
+
 ## [1.2.110](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.109...v1.2.110) (2026-11-06)
 
 
