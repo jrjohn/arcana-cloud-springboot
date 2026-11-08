@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.113](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.112...v1.2.113) (2026-11-08)
+
+
+### Bug Fixes
+
+* **deps:** update dependency zustand to v5.1.0 ([#380](https://github.com/jrjohn/arcana-cloud-springboot/issues/380)) ([3a6a5d8](https://github.com/jrjohn/arcana-cloud-springboot/commit/3a6a5d80ab3f1ea959f8763a68d74e31db7ee8e1))
+* **deps:** update gradle to v9.9.0 ([#381](https://github.com/jrjohn/arcana-cloud-springboot/issues/381)) ([c5e8c68](https://github.com/jrjohn/arcana-cloud-springboot/commit/c5e8c6851e77db89e48596ee02179e1af1b5fa64))
+
 ## [1.2.112](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.111...v1.2.112) (2026-11-07)
 
 
