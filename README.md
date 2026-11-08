@@ -504,7 +504,7 @@ sequenceDiagram
 ### Prerequisites
 
 - Java 25 (OpenJDK 25.0.1 recommended)
-- Gradle 9.8.2+
+- Gradle 9.9.0+
 - Docker & Docker Compose
 - Node.js 20+ (for web apps)
 - MySQL 26.10+ / Redis 8.10+
