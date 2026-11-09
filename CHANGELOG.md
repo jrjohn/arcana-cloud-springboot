@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.114](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.113...v1.2.114) (2026-11-09)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @hookform/resolvers to v7.0.5 ([#383](https://github.com/jrjohn/arcana-cloud-springboot/issues/383)) ([106400a](https://github.com/jrjohn/arcana-cloud-springboot/commit/106400a1b16f6d9a83dc147f828fc3b33f0e8646))
+
 ## [1.2.113](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.112...v1.2.113) (2026-11-08)
 
 
