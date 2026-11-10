@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.115](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.114...v1.2.115) (2026-11-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency axios to v1.21.1 ([#385](https://github.com/jrjohn/arcana-cloud-springboot/issues/385)) ([f33ffee](https://github.com/jrjohn/arcana-cloud-springboot/commit/f33ffeed7bc2f52e6cba8e8b3097e9ac8893b9cc))
+* **deps:** update nextjs monorepo to v16.4.6 ([#386](https://github.com/jrjohn/arcana-cloud-springboot/issues/386)) ([f92e4ed](https://github.com/jrjohn/arcana-cloud-springboot/commit/f92e4ed2ec8b9e103bb573587e828f1699be8fa9))
+
 ## [1.2.114](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.113...v1.2.114) (2026-11-09)
 
 
