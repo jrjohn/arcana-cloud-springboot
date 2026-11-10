@@ -1,4 +1,4 @@
-FROM eclipse-temurin:27_35-jre-alpine
+FROM eclipse-temurin:27.0.1.0-jre-alpine
 WORKDIR /app
 COPY build/libs/arcana-cloud-java-1.0.0-SNAPSHOT.jar app.jar
 ENV JAVA_OPTS="-Xmx512m -Xms256m -XX:+UseG1GC"
