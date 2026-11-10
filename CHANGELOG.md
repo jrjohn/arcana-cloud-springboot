@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.116](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.115...v1.2.116) (2026-11-10)
+
+
+### Bug Fixes
+
+* **deps:** update dependency lucide-react to v1.71.0 ([#389](https://github.com/jrjohn/arcana-cloud-springboot/issues/389)) ([b679393](https://github.com/jrjohn/arcana-cloud-springboot/commit/b679393766fc6407d186483a00baf2ac8f2c124a))
+* **deps:** update eclipse-temurin docker tag ([#388](https://github.com/jrjohn/arcana-cloud-springboot/issues/388)) ([78201f8](https://github.com/jrjohn/arcana-cloud-springboot/commit/78201f8dccf5f321fd898f9d6d6ff93eceaabfb6))
+
 ## [1.2.115](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.114...v1.2.115) (2026-11-10)
 
 
