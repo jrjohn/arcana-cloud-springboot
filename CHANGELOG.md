@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.117](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.116...v1.2.117) (2026-11-11)
+
+
+### Bug Fixes
+
+* **deps:** update gradle to v9.9.1 ([#391](https://github.com/jrjohn/arcana-cloud-springboot/issues/391)) ([67728ac](https://github.com/jrjohn/arcana-cloud-springboot/commit/67728ac45ced8633420b6b6f70515c0fad57a85c))
+
 ## [1.2.116](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.115...v1.2.116) (2026-11-10)
 
 
