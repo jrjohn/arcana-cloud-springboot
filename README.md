@@ -805,7 +805,7 @@ open build/reports/jacoco/test/html/index.html
 | **Security** | 9.5/10 | JWT + OAuth2, TLS/mTLS, plugin bean whitelisting, JAR signature verification, audit logging |
 | **Resilience** | 9.5/10 | Resilience4j circuit breakers with configurable thresholds, fallback handling |
 | **Testing** | 9.0/10 | 376 tests with 100% pass rate across all deployment modes |
-| **Modern Stack** | 9.5/10 | Java 25, Spring Boot 4.1, Spring Cloud 2025.1, Gradle 9.9.0, GraalJS |
+| **Modern Stack** | 9.5/10 | Java 25, Spring Boot 4.1, Spring Cloud 2025.1, Gradle 9.9.1, GraalJS |
 
 ### Strengths
 
@@ -870,7 +870,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 <div align="center">
 
-**Built with Spring Boot 4.1 | Java 25 | Spring Cloud 2025.1 | Gradle 9.9.0 | Apache Felix OSGi 8.0.0 | gRPC | GraalJS**
+**Built with Spring Boot 4.1 | Java 25 | Spring Cloud 2025.1 | Gradle 9.9.1 | Apache Felix OSGi 8.0.0 | gRPC | GraalJS**
 
 [View Test Report](docs/test-report/index.html)
 
