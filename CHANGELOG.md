@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.121](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.120...v1.2.121) (2026-11-13)
+
+
+### Bug Fixes
+
+* **deps:** update angular-cli monorepo to v22.2.7 ([#401](https://github.com/jrjohn/arcana-cloud-springboot/issues/401)) ([555fae6](https://github.com/jrjohn/arcana-cloud-springboot/commit/555fae64c0949621aa9a2deffb5843aac342f9b6))
+* **deps:** update plugin biz.aqute.bnd.builder to v7.5.0 ([#402](https://github.com/jrjohn/arcana-cloud-springboot/issues/402)) ([4e353b8](https://github.com/jrjohn/arcana-cloud-springboot/commit/4e353b8cce3b3c11233b5ccbc96fea6b3877701b))
+
 ## [1.2.120](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.119...v1.2.120) (2026-11-12)
 
 
