@@ -1,7 +1,7 @@
 plugins {
     java
     eclipse
-    id("biz.aQute.bnd.builder") version "7.4.0"
+    id("biz.aQute.bnd.builder") version "7.5.0"
 }
 
 group = "com.arcana.plugin"
