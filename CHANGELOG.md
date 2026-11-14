@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.122](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.121...v1.2.122) (2026-11-14)
+
+
+### Bug Fixes
+
+* **deps:** update dependency eslint to v10.15.0 ([#405](https://github.com/jrjohn/arcana-cloud-springboot/issues/405)) ([6f07215](https://github.com/jrjohn/arcana-cloud-springboot/commit/6f0721576809a971259c2091ac2db62893272632))
+
 ## [1.2.121](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.120...v1.2.121) (2026-11-13)
 
 
