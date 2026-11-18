@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.126](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.125...v1.2.126) (2026-11-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tanstack/react-query to v5.108.0 ([#411](https://github.com/jrjohn/arcana-cloud-springboot/issues/411)) ([54dd6a2](https://github.com/jrjohn/arcana-cloud-springboot/commit/54dd6a27bd9b2a161f1b5c30894da1ff963075f5))
+* **deps:** update dependency lucide-react to v1.74.0 ([#413](https://github.com/jrjohn/arcana-cloud-springboot/issues/413)) ([bf84a78](https://github.com/jrjohn/arcana-cloud-springboot/commit/bf84a78d69d160e7f003c936a8824f97ab005f10))
+
 ## [1.2.125](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.124...v1.2.125) (2026-11-17)
 
 
