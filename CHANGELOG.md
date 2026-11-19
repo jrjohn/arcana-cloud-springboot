@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.129](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.128...v1.2.129) (2026-11-19)
+
+
+### Bug Fixes
+
+* **deps:** update angular-cli monorepo to v22.3.0 ([#418](https://github.com/jrjohn/arcana-cloud-springboot/issues/418)) ([5b9b1f5](https://github.com/jrjohn/arcana-cloud-springboot/commit/5b9b1f57d6184ac902387bfe184477f54bbbef9e))
+* **deps:** update dependency @testing-library/jest-dom to v8 ([#421](https://github.com/jrjohn/arcana-cloud-springboot/issues/421)) ([a93b3b8](https://github.com/jrjohn/arcana-cloud-springboot/commit/a93b3b8210c332c487ec4b69a59124d18084f401))
+
 ## [1.2.128](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.127...v1.2.128) (2026-11-19)
 
 
