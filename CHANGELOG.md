@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.130](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.129...v1.2.130) (2026-11-20)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tanstack/react-query to v5.108.1 ([#424](https://github.com/jrjohn/arcana-cloud-springboot/issues/424)) ([c0487e0](https://github.com/jrjohn/arcana-cloud-springboot/commit/c0487e063a725d84cb350f6c828674d45a9da39a))
+
 ## [1.2.129](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.128...v1.2.129) (2026-11-19)
 
 
