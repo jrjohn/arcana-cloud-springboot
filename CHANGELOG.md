@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.132](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.131...v1.2.132) (2026-11-21)
+
+
+### Bug Fixes
+
+* **ci:** pin eclipse-temurin runtime image to 27_35-jre, latest tag with linux/arm64 ([154af6f](https://github.com/jrjohn/arcana-cloud-springboot/commit/154af6f3a295ca2f78abad3aa89a579ff4a82710))
+* **deps:** update dependency @hookform/resolvers to v7.0.8 ([#428](https://github.com/jrjohn/arcana-cloud-springboot/issues/428)) ([a7a931e](https://github.com/jrjohn/arcana-cloud-springboot/commit/a7a931e221fd364c4255399b8bc8aa5d11bf09a4))
+
 ## [1.2.131](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.130...v1.2.131) (2026-11-20)
 
 
