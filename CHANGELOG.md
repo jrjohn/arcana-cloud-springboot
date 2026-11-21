@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.133](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.132...v1.2.133) (2026-11-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @tanstack/react-query to v5.108.2 ([#430](https://github.com/jrjohn/arcana-cloud-springboot/issues/430)) ([fb68894](https://github.com/jrjohn/arcana-cloud-springboot/commit/fb6889416c5b90c7e04c4bb6a255a46877323f43))
+* **deps:** update dependency org.springdoc:springdoc-openapi-starter-webmvc-ui to v3.2.1 ([#431](https://github.com/jrjohn/arcana-cloud-springboot/issues/431)) ([a7db482](https://github.com/jrjohn/arcana-cloud-springboot/commit/a7db482c8d881bd354bd362f6426e20f6cff14cb))
+
 ## [1.2.132](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.131...v1.2.132) (2026-11-21)
 
 
