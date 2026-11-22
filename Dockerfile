@@ -1,4 +1,4 @@
-FROM eclipse-temurin:27.0.1.0-jre-alpine
+FROM eclipse-temurin:27.0.1.1_4-jre-alpine
 
 # Install wget for healthchecks (alpine: busybox provides it;
 # ubuntu/debian variants: install explicitly)
