@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.136](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.135...v1.2.136) (2026-11-22)
+
+
+### Bug Fixes
+
+* **deps:** update dependency autoprefixer to v10.7.0 ([#438](https://github.com/jrjohn/arcana-cloud-springboot/issues/438)) ([7ade4a7](https://github.com/jrjohn/arcana-cloud-springboot/commit/7ade4a7f48cbc3a423a4c0b10330c85c725e65c5))
+
 ## [1.2.135](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.134...v1.2.135) (2026-11-22)
 
 
