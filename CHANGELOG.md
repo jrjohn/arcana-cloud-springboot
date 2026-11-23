@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.138](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.137...v1.2.138) (2026-11-23)
+
+
+### Bug Fixes
+
+* **deps:** update dependency lucide-react to v1.78.0 ([#442](https://github.com/jrjohn/arcana-cloud-springboot/issues/442)) ([fc0b753](https://github.com/jrjohn/arcana-cloud-springboot/commit/fc0b7530ffc8735932e8b25e0a3a3ffbe4bbf194))
+
 ## [1.2.137](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.136...v1.2.137) (2026-11-23)
 
 
