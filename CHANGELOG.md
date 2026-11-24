@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.0](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.139...v1.3.0) (2026-11-24)
+
+
+### Features
+
+* make the template self-explaining to AI coding agents ([#447](https://github.com/jrjohn/arcana-cloud-springboot/issues/447)) ([2672f98](https://github.com/jrjohn/arcana-cloud-springboot/commit/2672f98ca775434c1b2aed70ebddd2e0738559f1))
+* make the template self-explaining to AI coding agents (AGENTS.md + scaffolding + hook) ([2672f98](https://github.com/jrjohn/arcana-cloud-springboot/commit/2672f98ca775434c1b2aed70ebddd2e0738559f1))
+
 ## [1.2.139](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.138...v1.2.139) (2026-11-24)
 
 
