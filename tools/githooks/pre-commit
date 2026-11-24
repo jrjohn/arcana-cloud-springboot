@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+# Fast layering check on every commit (no Docker, no Gradle). The full scan is
+# tools/arch-check.sh and the Jenkins stage "Architecture Qube". Rules: AGENTS.md §3.
+#
+# Regex, not `case` globs: in a case pattern `*` also matches `/`, so `src/main/java/*.java`
+# would match every correctly layered file too (this exact bug false-blocked good files in an
+# earlier version of this hook in another arcana template).
+set -euo pipefail
+
+fail=0
+ALLOWED='controller|service|repository|dao|entity|document|dto|mapper|config|security|exception|scheduler'
+
+# The base package is the directory holding the @SpringBootApplication class
+# (tools/new-app.sh may rename com/arcana/cloud to anything).
+APP_FILE="$(git ls-files 'src/main/java/*Application.java' | head -1)"
+if [ -z "$APP_FILE" ]; then
+    APP_FILE="$(git diff --cached --name-only --diff-filter=A | grep -E '^src/main/java/.+Application\.java$' | head -1 || true)"
+fi
+BASE="${APP_FILE%/*}"          # e.g. src/main/java/com/arcana/cloud
+
+# R4 — no NEW .java file outside a layer package of the application module.
+while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    [[ "$f" =~ ^src/main/java/.+\.java$ ]] || continue
+    [ -n "$BASE" ] || { echo "pre-commit: cannot find the @SpringBootApplication class under src/main/java" >&2; fail=1; break; }
+    [ "$f" = "$APP_FILE" ] && continue
+    rel="${f#"$BASE"/}"
+    if [ "$rel" = "$f" ]; then
+        echo "pre-commit: $f — outside the base package ${BASE#src/main/java/}. Put it in a layer package (AGENTS.md §2)" >&2
+        fail=1; continue
+    fi
+    if [[ ! "$rel" =~ ^($ALLOWED)/.+\.java$ ]]; then
+        echo "pre-commit: $f — not in a layer package ($ALLOWED). Put it in a layer package (AGENTS.md §2) or run tools/new-feature.sh" >&2
+        fail=1
+    fi
+done <<< "$(git diff --cached --name-only --diff-filter=AR)"
+
+# R2 — a concrete *Impl class is referenced only by Spring configuration (config/), by impl
+# code itself (files under an impl/ package) and by tests. Everyone else injects the
+# interface. Only ADDED lines are checked, so editing a legacy file does not fail on old code.
+# Spring's own PageImpl / SliceImpl are not ours and are not matched.
+IMPL_RE='^[[:space:]]*import[[:space:]]+(static[[:space:]]+)?[A-Za-z0-9_.]+\.impl\.|\b[A-Z][A-Za-z0-9]*(Service|Repository|Dao|Client|Mapper)[A-Za-z0-9]*Impl\b'
+while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    [[ "$f" =~ ^src/main/java/.+\.java$ ]] || continue
+    if [[ "$f" =~ /impl/ ]] || [[ "$f" =~ /config/[^/]+\.java$ ]]; then continue; fi
+    hits="$(git diff --cached -U0 -- "$f" | grep -E '^\+[^+]' | sed 's/^+//' \
+        | grep -E "$IMPL_RE" | grep -vE '^[[:space:]]*(//|\*|/\*)' || true)"
+    [ -n "$hits" ] || continue
+    echo "pre-commit: $f references a concrete *Impl — inject the interface and let Spring wire it (AGENTS.md R2):" >&2
+    printf '    %s\n' "$hits" >&2
+    fail=1
+done <<< "$(git diff --cached --name-only --diff-filter=ACMR)"
+
+if [ "$fail" -ne 0 ]; then
+    echo "pre-commit: blocked. Full check: tools/arch-check.sh" >&2
+    exit 1
+fi

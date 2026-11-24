@@ -223,9 +223,11 @@ pipeline {
             steps {
                 sh '''
                     docker rm -f arcana-arch-qube-springboot-${BUILD_NUMBER} 2>/dev/null || true
+                    # version pinned in tools/arch-qube.version (shared with tools/arch-check.sh)
+                    AQ_VERSION=$(tr -d "[:space:]" < tools/arch-qube.version)
                     docker create --name arcana-arch-qube-springboot-${BUILD_NUMBER} --network devops_default \
                         -v /src -v /output \
-                        arcana.boo/arcana/arch-qube:latest \
+                        arcana.boo/arcana/arch-qube:${AQ_VERSION} \
                         scan /src --framework springboot --no-ai --ci \
                         --format json,markdown -o /output --threshold 90 || exit 1
                     tar --exclude=./.git --exclude=./build --exclude=./arch-qube-reports -C . -cf - . \
