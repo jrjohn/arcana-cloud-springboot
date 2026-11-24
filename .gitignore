@@ -47,3 +47,6 @@ temp/
 *.tmp
 /plugins/.cache
 /.metadata
+
+# arch-qube reports (tools/arch-check.sh, Jenkins stage "Architecture Qube")
+arch-qube-reports/
