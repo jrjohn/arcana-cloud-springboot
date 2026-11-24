@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.1](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.3.0...v1.3.1) (2026-11-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @hookform/resolvers to v7.0.9 ([#449](https://github.com/jrjohn/arcana-cloud-springboot/issues/449)) ([9a993a9](https://github.com/jrjohn/arcana-cloud-springboot/commit/9a993a9aca2b1c1117d8186a7566dd0635bd11f1))
+* **deps:** update dependency org.postgresql:postgresql to v42.7.15 ([#450](https://github.com/jrjohn/arcana-cloud-springboot/issues/450)) ([9e411b5](https://github.com/jrjohn/arcana-cloud-springboot/commit/9e411b5e98bbe67dc551f1292dc712283efb3632))
+
 ## [1.3.0](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.2.139...v1.3.0) (2026-11-24)
 
 
