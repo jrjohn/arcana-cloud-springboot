@@ -25,6 +25,17 @@
 
 Enterprise-grade cloud platform with **dual-protocol architecture** (gRPC 2.5x faster / HTTP REST), **OSGi Plugin System** (Apache Felix) for hot-deployable extensions, **Server-Side Rendering** with GraalJS for React and Angular, supporting **five deployment modes** with full plugin synchronization across Kubernetes clusters. Includes **Spring Cloud Config** for centralized configuration and **Plugin API Versioning** for compatibility management.
 
+## Start here
+
+| Task | Command / rule |
+|---|---|
+| AI coding agents (Claude Code, Codex, Cursor, Copilot, Gemini) | Read [`AGENTS.md`](AGENTS.md) first — it is the single source of the layering rules. A task is not done until `tools/arch-check.sh` exits 0. |
+| New product | `tools/new-app.sh <app-name> <dest-dir> [base-package]` — copies the full layered skeleton + `AGENTS.md` + checks and installs the git hooks. Do **not** copy individual folders into a new project: the rules and checks would not come along. |
+| New feature | `tools/new-feature.sh <FeatureName>` |
+| Fresh clone of this repo | Run `tools/install-hooks.sh` once (git does not install hooks on clone). |
+| Architecture check | `tools/arch-check.sh` — needs Docker only; pulls the pinned arch-qube image (version in `tools/arch-qube.version`, kept current by Renovate) from public ghcr.io, no login. No Docker: use the `pipx` command in `AGENTS.md`. |
+| No CI server needed | Run `tools/arch-check.sh` before every commit/PR (AI agents must run it before reporting done). If you do have CI, wire the same script in. |
+
 ## Architecture
 
 ```mermaid
