@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.3.2](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.3.1...v1.3.2) (2026-11-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/node to v26.6.7 ([#452](https://github.com/jrjohn/arcana-cloud-springboot/issues/452)) ([e3a15ea](https://github.com/jrjohn/arcana-cloud-springboot/commit/e3a15ea4fcc27a721b82a3df63f7bedf0bad84ce))
+* **deps:** update dependency @types/react to v19.3.1 ([#453](https://github.com/jrjohn/arcana-cloud-springboot/issues/453)) ([8679748](https://github.com/jrjohn/arcana-cloud-springboot/commit/8679748acea263d9097c3798bec7b32b0faa50ca))
+
 ## [1.3.1](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.3.0...v1.3.1) (2026-11-24)
 
 
