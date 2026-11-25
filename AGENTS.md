@@ -119,6 +119,17 @@ layering rules above and fails below a score threshold.
 
 `tools/arch-qube.version` is bumped automatically by Renovate when arch-qube releases; do not edit the version anywhere else.
 
+### What enforces the check locally (there is no CI server)
+
+| Trigger | Mechanism | Blocks when |
+|---|---|---|
+| Claude Code finishes a turn | `.claude/settings.json` Stop hook → `tools/claude-stop-arch-check.sh` | source under `src/`, `arcana-*/`, `plugins/` changed and `tools/arch-check.sh` fails (gives up after 3 blocks, saying the work is NOT done) |
+| `git push` | `tools/githooks/pre-push` | pushed commits touch `src/`, `arcana-*/`, `plugins/` and the check fails or cannot run |
+| `git commit` | `tools/githooks/pre-commit` | fast layering checks (no Docker) |
+
+Claude Code asks once whether to trust this project's settings: answer yes, or the Stop hook never runs.
+Git hooks run only after `tools/install-hooks.sh`.
+
 ## 7. Reference
 
 - Optional detail: `arcana-springboot-developer-skill`
