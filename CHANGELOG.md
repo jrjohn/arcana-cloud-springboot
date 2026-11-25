@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.0](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.3.2...v1.4.0) (2026-11-25)
+
+
+### Features
+
+* enforce arch-check locally (Claude Code Stop hook + pre-push) ([#458](https://github.com/jrjohn/arcana-cloud-springboot/issues/458)) ([b5e60a6](https://github.com/jrjohn/arcana-cloud-springboot/commit/b5e60a6f69a0a3c1117de0a488b3532f59663397))
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/node to v26.6.10 ([#459](https://github.com/jrjohn/arcana-cloud-springboot/issues/459)) ([75abae3](https://github.com/jrjohn/arcana-cloud-springboot/commit/75abae319be8d1244b52c7a7c55c9e153dfaed51))
+
 ## [1.3.2](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.3.1...v1.3.2) (2026-11-25)
 
 
