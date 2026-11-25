@@ -97,17 +97,21 @@ arch-qube (https://github.com/jrjohn/arcana-arch-qube; usage skill
 https://github.com/jrjohn/arcana-skills/tree/main/arch-qube-skill) scans the source for the
 layering rules above and fails below a score threshold.
 
-- **Run it:** `tools/arch-check.sh`. It uses the image `arcana.boo/arcana/arch-qube:<v>` with
-  `<v>` from `tools/arch-qube.version` — the same file the Jenkinsfile reads — and the same
+- **Run it:** `tools/arch-check.sh`. It uses `ghcr.io/jrjohn/arch-qube:<v>` (public,
+  multi-arch), then `arcana.boo/arcana/arch-qube:<v>` — no `:latest` fallback — with `<v>`
+  from `tools/arch-qube.version` (0.5.6), the same file the Jenkinsfile reads, and the same
   `--framework springboot --threshold 90` and exclusions as the Jenkins stage.
-- **Without Docker:** `pipx run --spec "git+https://github.com/jrjohn/arcana-arch-qube@v0.5.5" arch-qube scan . --framework springboot --no-ai --ci --format json,markdown -o arch-qube-reports --threshold 90`
-  (or `pip install "git+https://github.com/jrjohn/arcana-arch-qube@v0.5.5"` into a venv). Use the
+- **Without Docker:** `pipx run --spec "git+https://github.com/jrjohn/arcana-arch-qube@v0.5.6" arch-qube scan . --framework springboot --no-ai --ci --format json,markdown -o arch-qube-reports --threshold 90`
+  (or `pip install "git+https://github.com/jrjohn/arcana-arch-qube@v0.5.6"` into a venv). Use the
   tag that matches `tools/arch-qube.version`.
 - **Exit codes:** 0 = pass; 2 = could not check (no Docker, image unavailable) — that is NOT
   a pass; anything else = fail.
+- **Pass:** score ≥ threshold **and** zero violations in every CRITICAL rule — a 99 can
+  still FAIL.
+- **`--ci` prints nothing on failure.** Rerun without `--ci` (or open `arch-qube.md`) to see why.
 - **Report:** `arch-qube-reports/arch-qube.md` and `arch-qube.json`. The score alone is not
-  enough: read every rule row and the violations list. A rule under "Not evaluated" says
-  nothing about the code, so it is not a pass for a layer you touched. In the JSON, check
+  enough: read every rule row and the violations list. A rule under "Not evaluated"
+  (NOT EVALUATED) says nothing about the code, so it is not a pass for a layer you touched. In the JSON, check
   `files_checked` for each rule — a rule that checked 0 files proved nothing. A project
   without layer packages scores 0 on "Layer Direction Enforcement".
 - **False positive:** open an issue on https://github.com/jrjohn/arcana-arch-qube with the
