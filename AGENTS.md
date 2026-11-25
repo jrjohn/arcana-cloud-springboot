@@ -99,10 +99,10 @@ layering rules above and fails below a score threshold.
 
 - **Run it:** `tools/arch-check.sh`. It uses `ghcr.io/jrjohn/arch-qube:<v>` (public,
   multi-arch), then `arcana.boo/arcana/arch-qube:<v>` — no `:latest` fallback — with `<v>`
-  from `tools/arch-qube.version` (0.5.6), the same file the Jenkinsfile reads, and the same
+  from `tools/arch-qube.version`, the same file the Jenkinsfile reads, and the same
   `--framework springboot --threshold 90` and exclusions as the Jenkins stage.
-- **Without Docker:** `pipx run --spec "git+https://github.com/jrjohn/arcana-arch-qube@v0.5.6" arch-qube scan . --framework springboot --no-ai --ci --format json,markdown -o arch-qube-reports --threshold 90`
-  (or `pip install "git+https://github.com/jrjohn/arcana-arch-qube@v0.5.6"` into a venv). Use the
+- **Without Docker:** `pipx run --spec "git+https://github.com/jrjohn/arcana-arch-qube@v$(cat tools/arch-qube.version)" arch-qube scan . --framework springboot --no-ai --ci --format json,markdown -o arch-qube-reports --threshold 90`
+  (or `pip install "git+https://github.com/jrjohn/arcana-arch-qube@v$(cat tools/arch-qube.version)"` into a venv). Use the
   tag that matches `tools/arch-qube.version`.
 - **Exit codes:** 0 = pass; 2 = could not check (no Docker, image unavailable) — that is NOT
   a pass; anything else = fail.
@@ -116,6 +116,8 @@ layering rules above and fails below a score threshold.
   without layer packages scores 0 on "Layer Direction Enforcement".
 - **False positive:** open an issue on https://github.com/jrjohn/arcana-arch-qube with the
   report attached. Never lower `--threshold`, add exclusions or move code to dodge a rule.
+
+`tools/arch-qube.version` is bumped automatically by Renovate when arch-qube releases; do not edit the version anywhere else.
 
 ## 7. Reference
 
