@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.4.1...v1.4.2) (2026-11-26)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @types/node to v26.6.11 ([#464](https://github.com/jrjohn/arcana-cloud-springboot/issues/464)) ([3205018](https://github.com/jrjohn/arcana-cloud-springboot/commit/320501807700f4ce7f3a358a9e4eb52d7151c6ec))
+
 ## [1.4.1](https://github.com/jrjohn/arcana-cloud-springboot/compare/v1.4.0...v1.4.1) (2026-11-26)
 
 
