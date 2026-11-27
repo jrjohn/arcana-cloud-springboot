@@ -1,25 +1,25 @@
 # Arcana Cloud Spring Boot - Enterprise Java Microservices Platform
 
-[![Architecture Rating](https://img.shields.io/badge/Architecture%20Rating-⭐⭐⭐⭐⭐%209.30%2F10-gold.svg)](#architecture-evaluation)
-[![Java](https://img.shields.io/badge/Java-25-ED8B00.svg?logo=openjdk&logoColor=white)](https://openjdk.org/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.1.2-6DB33F?logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
-[![gRPC](https://img.shields.io/badge/gRPC-1.77.1-00ADD8?logo=grpc&logoColor=white)](https://grpc.io/)
-[![OSGi](https://img.shields.io/badge/OSGi-Apache%20Felix%208.0.0-FF6600.svg)](https://felix.apache.org/)
-[![Tests](https://img.shields.io/badge/tests-1250%2F1250_passing-brightgreen.svg)](docs/test-report/index.html)
-[![Coverage](https://img.shields.io/badge/coverage-83.7%25-brightgreen.svg)](#testing)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Architecture Rating](.github/badges/architecture-rating-9-30-10-gold-svg-d7dc796f.svg)](#architecture-evaluation)
+[![Java](.github/badges/java-25-ed8b00-svg-478acb0f.svg)](https://openjdk.org/)
+[![Spring Boot](.github/badges/spring-boot-4-1-2-6db33f-66eb84c4.svg)](https://spring.io/projects/spring-boot)
+[![gRPC](.github/badges/grpc-1-77-1-00add8-06643c3a.svg)](https://grpc.io/)
+[![OSGi](.github/badges/osgi-apache-felix-8-0-0-ff6600-svg-a0306305.svg)](https://felix.apache.org/)
+[![Tests](.github/badges/tests-1250-1250-passing-brightgreen-svg-0e043334.svg)](docs/test-report/index.html)
+[![Coverage](.github/badges/coverage-83-7-brightgreen-svg-47a5a4c4.svg)](#testing)
+[![License](.github/badges/license-mit-blue-svg-cd905e0a.svg)](LICENSE)
 
 <!-- agent-managed badges START -->
 <p align="center">
-  <a href="https://arcana.boo/sonarqube/dashboard?id=springboot-app"><img src="https://img.shields.io/badge/Quality_Gate-OK-brightgreen?style=for-the-badge" alt="Quality Gate"></a>
-  <a href="https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/"><img src="https://img.shields.io/badge/Build-passing-brightgreen?style=for-the-badge" alt="Build"></a>
+  <a href="https://arcana.boo/sonarqube/dashboard?id=springboot-app"><img src=".github/badges/quality-gate-ok-brightgreen-7365c32e.svg" alt="Quality Gate"></a>
+  <a href="https://arcana.boo/jenkins/job/springboot-app-pipeline-mb/job/main/"><img src=".github/badges/build-passing-brightgreen-f2a434e1.svg" alt="Build"></a>
 </p>
 <!-- agent-managed badges END -->
 <!-- arch-rank START -->
 <p align="center">
-  <img src="https://img.shields.io/badge/arch--qube-100%2F100-blue?style=for-the-badge" alt="arch-qube">
-  <img src="https://img.shields.io/badge/Grade-A%2B-brightgreen?style=for-the-badge" alt="Grade">
-  <img src="https://img.shields.io/badge/Arch_Gate-PASS-brightgreen?style=for-the-badge" alt="Architecture Gate">
+  <img src=".github/badges/arch-qube-100-100-blue-2f391344.svg" alt="arch-qube">
+  <img src=".github/badges/grade-a-brightgreen-1f1e6c73.svg" alt="Grade">
+  <img src=".github/badges/arch-gate-pass-brightgreen-887cab17.svg" alt="Architecture Gate">
 </p>
 <!-- arch-rank END -->
 
